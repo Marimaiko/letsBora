@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		09E3CF8A2D8E25F500D4A4CD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E3CF892D8E25F500D4A4CD /* HomeViewController.swift */; };
 		539D7B822D8D9C050061BB67 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539D7B812D8D9C050061BB67 /* AppDelegate.swift */; };
 		539D7B842D8D9C050061BB67 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539D7B832D8D9C050061BB67 /* SceneDelegate.swift */; };
 		539D7B862D8D9C050061BB67 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539D7B852D8D9C050061BB67 /* ViewController.swift */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		09E3CF892D8E25F500D4A4CD /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		539D7B7E2D8D9C050061BB67 /* LetsBora.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LetsBora.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		539D7B812D8D9C050061BB67 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		539D7B832D8D9C050061BB67 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -37,6 +39,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		09E3CF882D8E25D600D4A4CD /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				09E3CF892D8E25F500D4A4CD /* HomeViewController.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		539D7B752D8D9C040061BB67 = {
 			isa = PBXGroup;
 			children = (
@@ -56,6 +66,7 @@
 		539D7B802D8D9C050061BB67 /* LetsBora */ = {
 			isa = PBXGroup;
 			children = (
+				09E3CF882D8E25D600D4A4CD /* Views */,
 				539D7B812D8D9C050061BB67 /* AppDelegate.swift */,
 				539D7B832D8D9C050061BB67 /* SceneDelegate.swift */,
 				539D7B852D8D9C050061BB67 /* ViewController.swift */,
@@ -141,6 +152,7 @@
 				539D7B862D8D9C050061BB67 /* ViewController.swift in Sources */,
 				539D7B822D8D9C050061BB67 /* AppDelegate.swift in Sources */,
 				539D7B842D8D9C050061BB67 /* SceneDelegate.swift in Sources */,
+				09E3CF8A2D8E25F500D4A4CD /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
