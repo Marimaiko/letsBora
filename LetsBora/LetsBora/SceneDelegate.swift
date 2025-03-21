@@ -15,8 +15,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         let windowScene = (scene as? UIWindowScene)
         window = UIWindow(windowScene: windowScene!)
-        // TODO: Temporarily using ProfileViewController as root - will be replaced with ViewController in future implementation
-        let mainViewController = ProfileEditViewController()
+        
+        let mainViewController = ViewController()
         let navigationController = UINavigationController(rootViewController: mainViewController)
         
         window?.rootViewController = navigationController
