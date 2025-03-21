@@ -10,10 +10,33 @@ import UIKit
 class ProfileEditViewController: UIViewController {
     // MARK: - UI Components
     
-    /// Name component
-    private lazy var nameLabel: UILabel = createLabel(withText: "Nome")
+    private lazy var nameLabel: UILabel = createLabel(withText: "Nome ")
     private lazy var nameTextField: UITextField = createTextField()
-    lazy var stackView: UIStackView = createStackView(arrangedSubviews: [nameLabel, nameTextField])
+    private lazy var nameStackView: UIStackView = createStackView(subViews: [nameLabel,nameTextField])
+    
+    private lazy var emailLabel: UILabel = createLabel(withText: "Email")
+    private lazy var emailTextField: UITextField = createTextField()
+    private lazy var emailStackView: UIStackView = createStackView(subViews: [emailLabel,emailTextField])
+    
+    private lazy var newPasswordLabel: UILabel = createLabel(withText: "Nova Senha")
+    private lazy var newPasswordTextField: UITextField = createTextField()
+    private lazy var newPasswordStackView: UIStackView = createStackView(subViews: [newPasswordLabel, newPasswordTextField])
+    
+    private lazy var confirmPwdLabel: UILabel = createLabel(withText: "Confirmar Senha")
+    private lazy var confirmPwdTextField: UITextField = createTextField()
+    private lazy var confirmPwdStackView: UIStackView = createStackView(subViews: [confirmPwdLabel,confirmPwdTextField])
+    
+    private lazy var saveButton: UIButton = createButton(withTitle: "Salvar")
+    
+    lazy var stackView: UIStackView = createStackView(
+        subViews: [ nameStackView,
+                    emailStackView,
+                    newPasswordStackView,
+                    confirmPwdStackView,
+                    saveButton],
+        spacing: 16)
+    
+    
     
     // MARK: - LifeCycle
     
@@ -70,12 +93,24 @@ class ProfileEditViewController: UIViewController {
         textField.heightAnchor.constraint(equalToConstant: height).isActive = true
         return textField
     }
+    private func createButton(withTitle title: String,height:CGFloat = 50) -> UIButton {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle(title, for: .normal)
+        button.backgroundColor = .systemBlue
+        button.layer.cornerRadius = 12
+        NSLayoutConstraint.activate([
+            button.heightAnchor.constraint(equalToConstant: height)
+        ])
+        
+        return button
+    }
     
-    private func createStackView(arrangedSubviews: [UIView]) -> UIStackView {
-        let stackView = UIStackView(arrangedSubviews: arrangedSubviews)
+    private func createStackView(subViews: [UIView], spacing: CGFloat = 8) -> UIStackView {
+        let stackView = UIStackView(arrangedSubviews: subViews)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.spacing = 8
+        stackView.spacing = spacing
         return stackView
     }
     
@@ -86,5 +121,5 @@ class ProfileEditViewController: UIViewController {
 // MARK: - Preview Profile
 @available(iOS 17.0,*)
 #Preview(traits: .portrait, body: {
-    ProfileEditViewController().stackView
+    ProfileEditViewController()
 })
