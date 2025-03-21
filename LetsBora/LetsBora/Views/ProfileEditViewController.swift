@@ -76,3 +76,8 @@ class ProfileEditViewController: UIViewController {
         NSLayoutConstraint.activate(constraints)
     }
 }
+
+@available(iOS 17.0,*)
+#Preview(traits: .portrait, body: {
+    ProfileEditViewController()
+})
