@@ -10,37 +10,10 @@ import UIKit
 class ProfileEditViewController: UIViewController {
     // MARK: - UI Components
     
-    /// Label that displays "Nome" (Name) above the text field
-    private lazy var nameLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false // Disable autoresizing mask
-        label.font = UIFont.systemFont(ofSize: 16,weight: .medium) // Set medium weight system font
-        label.text = "Nome" // Set label text
-        label.textColor = .black // Set text color
-        
-        return label
-    }()
-    
-    /// Text field for user to input their name
-    private lazy var nameTextField: UITextField = {
-        let textField = UITextField()
-        textField.translatesAutoresizingMaskIntoConstraints = false // Disable autoresizing mask
-        textField.borderStyle = .roundedRect // Add rounded border to text field
-        // Set fixed height of 40 points
-        textField.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        return textField
-    }()
-    
-    /// Stack view that contains the name label and text field
-    private lazy var stackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews:[nameLabel,nameTextField])
-        stackView.translatesAutoresizingMaskIntoConstraints = false // Disable autoresizing mask
-        stackView.distribution = .fill // Use natural sizes of arranged views
-        stackView.axis = .vertical // Arrange views vertically
-        stackView.spacing = 8 // Set spacing between arranged views
-        
-        return stackView
-    }()
+    /// Name component
+    private lazy var nameLabel: UILabel = createLabel(withText: "Nome")
+    private lazy var nameTextField: UITextField = createTextField()
+    lazy var stackView: UIStackView = createStackView(arrangedSubviews: [nameLabel, nameTextField])
     
     // MARK: - LifeCycle
     
@@ -75,9 +48,43 @@ class ProfileEditViewController: UIViewController {
         ]
         NSLayoutConstraint.activate(constraints)
     }
+    
+    // MARK: - Factory Components
+    /// Function to factory labels with diferent texts
+    /// - Parameter text: text to Label
+    /// - Returns: return a UILabel componet
+    private func createLabel(withText text: String) -> UILabel {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = text
+        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        label.textColor = .black
+        return label
+    }
+    
+    private func createTextField(height: CGFloat = 40) -> UITextField {
+        let textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.borderStyle = .roundedRect
+        textField.font = UIFont.systemFont(ofSize: 16)
+        textField.heightAnchor.constraint(equalToConstant: height).isActive = true
+        return textField
+    }
+    
+    private func createStackView(arrangedSubviews: [UIView]) -> UIStackView {
+        let stackView = UIStackView(arrangedSubviews: arrangedSubviews)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.spacing = 8
+        return stackView
+    }
+    
 }
 
+
+
+// MARK: - Preview Profile
 @available(iOS 17.0,*)
 #Preview(traits: .portrait, body: {
-    ProfileEditViewController()
+    ProfileEditViewController().stackView
 })
