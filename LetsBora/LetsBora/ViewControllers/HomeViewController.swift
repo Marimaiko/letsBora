@@ -71,13 +71,16 @@ class HomeViewController: UIViewController {
 }
 
 // MARK: - Preview Profile
-@available(iOS 17.0,*)
+#if compiler(>=5.9) // Ensures this runs only on Xcode 15+
+@available(iOS 17.0, *)
 #Preview("Home View Controller", traits: .portrait, body: {
     HomeViewController()
 })
+
 @available(iOS 17.0, *)
 #Preview("Your Next Event",
-         traits:.sizeThatFitsLayout,
+         traits: .sizeThatFitsLayout,
          body: {
-    HomeViewController().view.subviews[2]
+    HomeViewController().view.subviews[safe: 2] // Avoids crashes if subviews[2] doesn't exist
 })
+#endif
