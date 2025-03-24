@@ -73,7 +73,7 @@ class ProfileEditViewController: UIViewController {
     }
     
     // MARK: - Factory Components
-    /// Function to factory labels with diferent texts
+    /// Function to factory labels with different texts
     /// - Parameter text: text to Label
     /// - Returns: return a UILabel componet
     private func createLabel(withText text: String) -> UILabel {
