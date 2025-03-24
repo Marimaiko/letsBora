@@ -6,13 +6,13 @@
 //
 
 import UIKit
-
+import SwiftUI
 class HomeViewController: UIViewController {
     // MARK: - UI Components
     private lazy var titleLabel = createLabel(withText: "Let's Bora",fontSize: 48)
     private lazy var yourNextEventLabel = createLabel(withText: "Seu próximo rolê",fontSize: 24)
     
-    private lazy var eventCardView = EventCardView(
+    lazy var eventCardView = EventCardView(
         title:"Aniversário do João",
         location:"Casa do João",
         tag: "Particular"
@@ -83,4 +83,13 @@ class HomeViewController: UIViewController {
          body: {
     HomeViewController().view.subviews[safe: 2] // Avoids crashes if subviews[2] doesn't exist
 })
+#else
+
+struct HomePreview_Previews: PreviewProvider{
+    static var previews: some View {
+        HomeViewController().showPreview()
+            .previewDisplayName("Home View Controller")
+    }
+}
+
 #endif

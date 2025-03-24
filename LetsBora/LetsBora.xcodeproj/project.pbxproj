@@ -16,6 +16,8 @@
 		539D7B892D8D9C050061BB67 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 539D7B872D8D9C050061BB67 /* Main.storyboard */; };
 		539D7B8B2D8D9C070061BB67 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 539D7B8A2D8D9C070061BB67 /* Assets.xcassets */; };
 		539D7B8E2D8D9C070061BB67 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 539D7B8C2D8D9C070061BB67 /* LaunchScreen.storyboard */; };
+		53CD9A272D91FB010090E5D7 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CD9A262D91FB010090E5D7 /* UIView+Extension.swift */; };
+		53CD9A292D91FB120090E5D7 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CD9A282D91FB120090E5D7 /* UIViewController+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		539D7B8A2D8D9C070061BB67 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		539D7B8D2D8D9C070061BB67 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		539D7B8F2D8D9C070061BB67 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		53CD9A262D91FB010090E5D7 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		53CD9A282D91FB120090E5D7 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +83,7 @@
 		539D7B802D8D9C050061BB67 /* LetsBora */ = {
 			isa = PBXGroup;
 			children = (
+				53CD9A252D91FACB0090E5D7 /* Extensions */,
 				09E3CF882D8E25D600D4A4CD /* Views */,
 				09E3CF8B2D8E4AE200D4A4CD /* ViewControllers */,
 				539D7B812D8D9C050061BB67 /* AppDelegate.swift */,
@@ -90,6 +95,15 @@
 				539D7B8F2D8D9C070061BB67 /* Info.plist */,
 			);
 			path = LetsBora;
+			sourceTree = "<group>";
+		};
+		53CD9A252D91FACB0090E5D7 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				53CD9A262D91FB010090E5D7 /* UIView+Extension.swift */,
+				53CD9A282D91FB120090E5D7 /* UIViewController+Extension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,7 +177,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53CD9A292D91FB120090E5D7 /* UIViewController+Extension.swift in Sources */,
 				539D7B862D8D9C050061BB67 /* ViewController.swift in Sources */,
+				53CD9A272D91FB010090E5D7 /* UIView+Extension.swift in Sources */,
 				539D7B822D8D9C050061BB67 /* AppDelegate.swift in Sources */,
 				539D7B842D8D9C050061BB67 /* SceneDelegate.swift in Sources */,
 				09E3CF8A2D8E25F500D4A4CD /* HomeViewController.swift in Sources */,
