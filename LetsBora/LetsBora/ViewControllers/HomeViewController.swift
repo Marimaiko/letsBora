@@ -84,6 +84,12 @@ class HomeViewController: UIViewController {
          body: {
     HomeViewController().view.subviews[2]
 })
+
+@available(iOS 17.0, *)
+#Preview("Event Card View",traits: .fixedLayout(width: 300, height: 130)) {
+    EventCardView(title: "Sample Card", location: "Sample Location", tag: "Private",date: "15 Marc")
+}
+
 #else
 
 struct HomePreview_Previews: PreviewProvider{
