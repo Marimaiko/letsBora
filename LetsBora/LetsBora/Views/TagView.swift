@@ -44,3 +44,8 @@ class TagView: UIView {
          ])
      }
 }
+
+@available(iOS 17.0, *)
+#Preview("Tag View", traits: .sizeThatFitsLayout) {
+    TagView(text: "Sample Tag")
+}

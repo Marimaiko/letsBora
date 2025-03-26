@@ -15,7 +15,8 @@ class HomeViewController: UIViewController {
     lazy var eventCardView = EventCardView(
         title:"Aniversário do João",
         location:"Casa do João",
-        tag: "Particular"
+        tag: "Particular",
+        date: "15 Marc"
     )
     
     
@@ -81,7 +82,7 @@ class HomeViewController: UIViewController {
 #Preview("Your Next Event",
          traits: .sizeThatFitsLayout,
          body: {
-    HomeViewController().view.subviews[safe: 2] // Avoids crashes if subviews[2] doesn't exist
+    HomeViewController().view.subviews[2]
 })
 #else
 
