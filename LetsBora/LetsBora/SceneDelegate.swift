@@ -15,8 +15,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         let windowScene = (scene as? UIWindowScene)
         window = UIWindow(windowScene: windowScene!)
-        /// Temporarily using Home View Controler, but correct is the ViewController
-        let mainViewController = HomeViewController()
+        
+        let mainViewController = ViewController()
         let navigationController = UINavigationController(rootViewController: mainViewController)
         
         window?.rootViewController = navigationController
