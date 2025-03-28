@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		092082392D971BCF0023D9B6 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092082382D971BCF0023D9B6 /* HomeViewController.swift */; };
+		0920823F2D9725660023D9B6 /* AvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0920823E2D9725660023D9B6 /* AvatarImageView.swift */; };
 		09E3CF8D2D8E4B1200D4A4CD /* EventCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E3CF8C2D8E4B1200D4A4CD /* EventCardView.swift */; };
 		09E3CF8F2D8E4D4F00D4A4CD /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E3CF8E2D8E4D4F00D4A4CD /* TagView.swift */; };
 		09FE21512D94B5A20040C84E /* AvatarGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FE21502D94B5A20040C84E /* AvatarGroupView.swift */; };
@@ -24,6 +25,7 @@
 
 /* Begin PBXFileReference section */
 		092082382D971BCF0023D9B6 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		0920823E2D9725660023D9B6 /* AvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarImageView.swift; sourceTree = "<group>"; };
 		09E3CF8C2D8E4B1200D4A4CD /* EventCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCardView.swift; sourceTree = "<group>"; };
 		09E3CF8E2D8E4D4F00D4A4CD /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 		09FE21502D94B5A20040C84E /* AvatarGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarGroupView.swift; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 				09E3CF8C2D8E4B1200D4A4CD /* EventCardView.swift */,
 				09E3CF8E2D8E4D4F00D4A4CD /* TagView.swift */,
 				09FE21502D94B5A20040C84E /* AvatarGroupView.swift */,
+				0920823E2D9725660023D9B6 /* AvatarImageView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -194,6 +197,7 @@
 				09FE21512D94B5A20040C84E /* AvatarGroupView.swift in Sources */,
 				53CD9A292D91FB120090E5D7 /* UIViewController+Extension.swift in Sources */,
 				539D7B862D8D9C050061BB67 /* ViewController.swift in Sources */,
+				0920823F2D9725660023D9B6 /* AvatarImageView.swift in Sources */,
 				09FE21532D94B6960040C84E /* HomeView.swift in Sources */,
 				53CD9A272D91FB010090E5D7 /* UIView+Extension.swift in Sources */,
 				092082392D971BCF0023D9B6 /* HomeViewController.swift in Sources */,
