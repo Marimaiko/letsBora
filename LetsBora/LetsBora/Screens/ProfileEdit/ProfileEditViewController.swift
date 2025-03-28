@@ -32,6 +32,7 @@ class ProfileEditViewController: UIViewController {
     
     /// Adds subviews to the view hierarchy
     private func setHierarchy(){
+        view.backgroundColor = .white   
         view.addSubview(profileEditView)
     }
     
@@ -42,6 +43,7 @@ class ProfileEditViewController: UIViewController {
             profileEditView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             profileEditView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             profileEditView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            profileEditView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ]
         NSLayoutConstraint.activate(constraints)
     }
