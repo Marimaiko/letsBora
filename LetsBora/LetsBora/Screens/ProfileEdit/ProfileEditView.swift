@@ -1,13 +1,13 @@
 //
-//  ProfileEditViewController.swift
+//  ProfileEditView.swift
 //  LetsBora
 //
-//  Created by Davi  on 21/03/25.
+//  Created by Davi Paiva on 28/03/25.
 //
 
 import UIKit
 
-class ProfileEditViewController: UIViewController {
+class ProfileEditView: UIView {
     // MARK: - UI Components
     
     private lazy var nameLabel: UILabel = createLabel(withText: "Nome ")
@@ -36,38 +36,32 @@ class ProfileEditViewController: UIViewController {
                     saveButton],
         spacing: 16)
     
-    
-    
     // MARK: - LifeCycle
-    
-    /// Called after the view controller's view is loaded into memory
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Set light gray background color
-        view.backgroundColor = UIColor(red: 242/255, green: 242/255, blue: 247/255, alpha: 1.0)
+    init(){
+        super.init(frame: .zero)
         setupView()
     }
-    
+    required init?(coder:NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     // MARK: - Setup View
-    
-    /// Sets up the view hierarchy and constraints
-    private func setupView(){
+    private func setupView() {
         setHierarchy()
         setConstraints()
+        // Set light gray background color
+        self.backgroundColor = UIColor(red: 242/255, green: 242/255, blue: 247/255, alpha: 1.0)
     }
-    
     /// Adds subviews to the view hierarchy
     private func setHierarchy(){
-        view.addSubview(stackView)
+        addSubview(stackView)
     }
-    
     /// Sets up Auto Layout constraints for the stack view
     private func setConstraints(){
         let constraints: [NSLayoutConstraint] = [
             // Position stack view at the top of safe area with 16pt horizontal margins
-            stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor,constant: 16),
-            stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor,constant: -16),
+            stackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            stackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor,constant: 16),
+            stackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor,constant: -16),
         ]
         NSLayoutConstraint.activate(constraints)
     }
@@ -115,11 +109,7 @@ class ProfileEditViewController: UIViewController {
     }
     
 }
-
-
-
-// MARK: - Preview Profile
 @available(iOS 17.0,*)
 #Preview(traits: .portrait, body: {
-    ProfileEditViewController()
+    ProfileEditView()
 })
