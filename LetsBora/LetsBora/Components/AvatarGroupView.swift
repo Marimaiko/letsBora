@@ -17,7 +17,7 @@ class AvatarGroupView: UIView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
-        stackView.spacing = -10
+        stackView.spacing = 2
         stackView.alignment = .center
         
         return stackView

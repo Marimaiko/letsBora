@@ -12,13 +12,14 @@ class HomeView: UIView {
     // MARK: - UI Components
     private lazy var titleLabel = createLabel(withText: "Let's Bora",fontSize: 48)
     private lazy var yourNextEventLabel = createLabel(withText: "Seu próximo rolê",fontSize: 24)
+    private lazy var highlightEventLabel = createLabel(withText: "Destaques",fontSize: 24)
     
     lazy var eventCardView = EventCardView(
         title:"Aniversário do João",
         location:"Casa do João",
         tag: "Particular",
         date: "15 Marc",
-        avatars: ["Jim", "Julia", "John"],
+        avatars: ["Jim", "John", "Julia"],
         extraCountAvatars: 1
     )
     
@@ -31,6 +32,7 @@ class HomeView: UIView {
     required init?(coder:NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     // MARK: - Setup View
     private func setupView() {
         setHierarchy()
@@ -41,6 +43,7 @@ class HomeView: UIView {
         self.addSubview(titleLabel)
         self.addSubview(yourNextEventLabel)
         self.addSubview(eventCardView)
+        self.addSubview(highlightEventLabel)
     }
     
     private func setConstraints() {
@@ -57,10 +60,17 @@ class HomeView: UIView {
             eventCardView.topAnchor.constraint(equalTo: yourNextEventLabel.bottomAnchor, constant: 15),
             eventCardView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
             eventCardView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            eventCardView.heightAnchor.constraint(equalToConstant: 143)
+            eventCardView.heightAnchor.constraint(equalToConstant: 143),
+            
+            // Highligh Event Label contraints
+            highlightEventLabel.topAnchor.constraint(equalTo: eventCardView.bottomAnchor, constant: 10),
+            highlightEventLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            
+            
         ]
         NSLayoutConstraint.activate(constraints)
     }
+    
     // MARK: - Factory Components
     private func createLabel(withText text: String,
                              fontSize: CGFloat = 17,
