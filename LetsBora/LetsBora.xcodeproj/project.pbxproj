@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0988AB9F2D9711D3006D5D43 /* ProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0988AB9E2D9711D3006D5D43 /* ProfileEditView.swift */; };
 		539D7B822D8D9C050061BB67 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539D7B812D8D9C050061BB67 /* AppDelegate.swift */; };
 		539D7B842D8D9C050061BB67 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539D7B832D8D9C050061BB67 /* SceneDelegate.swift */; };
 		539D7B862D8D9C050061BB67 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539D7B852D8D9C050061BB67 /* ViewController.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0988AB9E2D9711D3006D5D43 /* ProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditView.swift; sourceTree = "<group>"; };
 		539D7B7E2D8D9C050061BB67 /* LetsBora.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LetsBora.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		539D7B812D8D9C050061BB67 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		539D7B832D8D9C050061BB67 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -39,6 +41,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0988AB9D2D97117A006D5D43 /* ProfileEdit */ = {
+			isa = PBXGroup;
+			children = (
+				539D7B982D8DA8840061BB67 /* ProfileEditViewController.swift */,
+				0988AB9E2D9711D3006D5D43 /* ProfileEditView.swift */,
+			);
+			path = ProfileEdit;
+			sourceTree = "<group>";
+		};
 		539D7B752D8D9C040061BB67 = {
 			isa = PBXGroup;
 			children = (
@@ -58,7 +69,7 @@
 		539D7B802D8D9C050061BB67 /* LetsBora */ = {
 			isa = PBXGroup;
 			children = (
-				539D7B952D8DA8530061BB67 /* Views */,
+				539D7B952D8DA8530061BB67 /* Screens */,
 				539D7B812D8D9C050061BB67 /* AppDelegate.swift */,
 				539D7B832D8D9C050061BB67 /* SceneDelegate.swift */,
 				539D7B852D8D9C050061BB67 /* ViewController.swift */,
@@ -70,12 +81,12 @@
 			path = LetsBora;
 			sourceTree = "<group>";
 		};
-		539D7B952D8DA8530061BB67 /* Views */ = {
+		539D7B952D8DA8530061BB67 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				539D7B982D8DA8840061BB67 /* ProfileEditViewController.swift */,
+				0988AB9D2D97117A006D5D43 /* ProfileEdit */,
 			);
-			path = Views;
+			path = Screens;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -151,6 +162,7 @@
 			files = (
 				539D7B992D8DA8840061BB67 /* ProfileEditViewController.swift in Sources */,
 				539D7B862D8D9C050061BB67 /* ViewController.swift in Sources */,
+				0988AB9F2D9711D3006D5D43 /* ProfileEditView.swift in Sources */,
 				539D7B822D8D9C050061BB67 /* AppDelegate.swift in Sources */,
 				539D7B842D8D9C050061BB67 /* SceneDelegate.swift in Sources */,
 			);
