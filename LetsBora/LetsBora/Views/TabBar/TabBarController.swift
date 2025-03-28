@@ -23,10 +23,10 @@ class TabBarController: UITabBarController {
         let myEvents = UINavigationController(rootViewController: UIViewController())
         let profile = UINavigationController(rootViewController: UIViewController())
         
-        highlights.tabBarItem = UITabBarItem(title: "Destaques", image: UIImage(systemName: "star"), tag: 0)
+        highlights.tabBarItem = UITabBarItem(title: "Início", image: UIImage(systemName: "house"), tag: 0)
         search.tabBarItem = UITabBarItem(title: "Buscar", image: UIImage(systemName: "magnifyingglass"), tag: 1)
-        createEvent.tabBarItem = UITabBarItem(title: "Criar", image: UIImage(systemName: "plus.circle"), tag: 2)
-        myEvents.tabBarItem = UITabBarItem(title: "Meus Eventos", image: UIImage(systemName: "calendar"), tag: 3)
+        createEvent.tabBarItem = UITabBarItem(title: "Criar Evento", image: UIImage(systemName: "plus.circle"), tag: 2)
+        myEvents.tabBarItem = UITabBarItem(title: "Meus Eventos", image: UIImage(systemName: "heart"), tag: 3)
         profile.tabBarItem = UITabBarItem(title: "Perfil", image: UIImage(systemName: "person"), tag: 4)
         
         self.viewControllers = [highlights, search, createEvent, myEvents, profile]
