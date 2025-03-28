@@ -13,15 +13,25 @@ class EventCardView: UIView {
     private let tagView: TagView
     private let dateLabel: UILabel
     private let detailButton: UIButton
+    private let avatarGroupView: AvatarGroupView
     
-    init(title: String, location: String, tag: String, date:String, buttonTitle: String = "Ver detalhes") {
+    init(title: String,
+         location: String,
+         tag: String = "Private",
+         date:String,
+         avatars: [String] = [],
+         extraCountAvatars: Int = 0,
+         buttonTitle: String = "Ver detalhes"){
+        
         self.titleLabel = UILabel()
         self.locationLabel = UILabel()
         self.tagView = TagView(text: tag)
         self.dateLabel  = UILabel()
         self.detailButton = UIButton(type: .system)
+        self.avatarGroupView = AvatarGroupView(avatars: avatars,extraCount: extraCountAvatars)
         
         super.init(frame: .zero)
+        
         setupUI(title: title, location:location, date: date, button: buttonTitle)
     }
     required init?(coder:NSCoder) {
@@ -64,8 +74,12 @@ class EventCardView: UIView {
         tagDateStackView.spacing = 4
         tagDateStackView.distribution = .fill
         
-        let stackView = UIStackView(
-            arrangedSubviews:[ tagDateStackView, titleLabel, locationLabel])
+        let stackView = UIStackView(arrangedSubviews:
+                                        [ tagDateStackView,
+                                          titleLabel,
+                                          locationLabel,
+                                          avatarGroupView
+                                        ])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 3
@@ -92,6 +106,12 @@ class EventCardView: UIView {
 }
 
 @available(iOS 17.0, *)
-#Preview("Home View Controller", traits: .portrait, body: {
-    EventCardView(title: "Titulo de teste", location: "Local de  Teste", tag: "Tag de Teste", date: "15 05 2021", buttonTitle: "Ver  detalhes")
+#Preview("Event Card View", traits: .sizeThatFitsLayout, body: {
+    EventCardView(title: "Titulo de teste",
+                  location: "Local de  Teste",
+                  tag:"Privado",
+                  date: "15 05 2021",
+                  avatars: ["Jim", "Julia", "John"],
+                  extraCountAvatars: 2,
+                  buttonTitle: "Ver  detalhes")
 })

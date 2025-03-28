@@ -17,7 +17,9 @@ class HomeView: UIView {
         title:"Aniversário do João",
         location:"Casa do João",
         tag: "Particular",
-        date: "15 Marc"
+        date: "15 Marc",
+        avatars: ["Jim", "Julia", "John"],
+        extraCountAvatars: 1
     )
     
     

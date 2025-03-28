@@ -52,6 +52,7 @@ class AvatarGroupView: UIView {
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             stackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor),
             stackView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor),
+            
         ])
     }
     private func configure(with avatars: [String], extraCount: Int) {
@@ -62,6 +63,7 @@ class AvatarGroupView: UIView {
         }
         
         if extraCount > 0 {
+            // TODO: use +10 leading pad
             countLabel.text = "+\(extraCount)"
             stackView.addArrangedSubview(countLabel)
             

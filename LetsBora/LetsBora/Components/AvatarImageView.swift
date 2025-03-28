@@ -9,7 +9,7 @@ import UIKit
 
 class AvatarImageView: UIImageView {
     // MARK: - Initializer
-    init(with image: UIImage, size: CGFloat = 40, borderWidth: CGFloat = 2){
+    init(with image: UIImage, size: CGFloat = 30, borderWidth: CGFloat = 2){
         super.init(frame: .zero)
         self.image = image
         setupImageView(size: size,borderWidth: borderWidth)
