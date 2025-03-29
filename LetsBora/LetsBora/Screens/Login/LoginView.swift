@@ -75,6 +75,7 @@ class LoginView: UIView {
         button.setTitleColor(.black, for: .normal)
         button.layer.cornerRadius = 8
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -259,6 +260,19 @@ extension LoginView {
             socialButtonsStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -16),
             socialButtonsStackView.heightAnchor.constraint(equalToConstant: 150)
         ])
+    }
+    // temporary function for testing only
+    @objc func loginButtonTapped() {
+        let tabBarController = TabBarController()
+           let navigationController = UINavigationController(rootViewController: tabBarController)
+
+           // Ensure we access the correct scene delegate
+           if let sceneDelegate = UIApplication.shared.connectedScenes
+               .first?.delegate as? SceneDelegate,
+              let window = sceneDelegate.window {
+               window.rootViewController = navigationController
+               window.makeKeyAndVisible()
+           }
     }
 }
 

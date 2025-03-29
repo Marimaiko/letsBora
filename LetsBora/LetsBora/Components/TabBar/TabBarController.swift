@@ -17,7 +17,7 @@ class TabBarController: UITabBarController {
     /// Sets up the tabs for the bar
     private func setupTabs() {
         // TODO: trocar as UIViewController pelas Controllers das telas
-        let highlights = UINavigationController(rootViewController: LoginViewController())
+        let highlights = UINavigationController(rootViewController: UIViewController())
         let search = UINavigationController(rootViewController: UIViewController())
         let createEvent = UINavigationController(rootViewController: UIViewController())
         let myEvents = UINavigationController(rootViewController: UIViewController())
