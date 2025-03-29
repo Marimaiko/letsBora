@@ -17,3 +17,8 @@ class LoginViewController: UIViewController {
         self.view = loginView
     }
 }
+// MARK: - Preview Profile
+@available(iOS 17.0,*)
+#Preview(traits: .portrait, body: {
+    LoginViewController()
+})
