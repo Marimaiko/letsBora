@@ -14,6 +14,7 @@
 		539D7B8B2D8D9C070061BB67 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 539D7B8A2D8D9C070061BB67 /* Assets.xcassets */; };
 		539D7B8E2D8D9C070061BB67 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 539D7B8C2D8D9C070061BB67 /* LaunchScreen.storyboard */; };
 		928E72902D924A080041567A /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928E728F2D924A080041567A /* CreateEventViewController.swift */; };
+		9299036D2D9B4A8500F9400A /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 9299036C2D9B4A8500F9400A /* FSCalendar */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9299036D2D9B4A8500F9400A /* FSCalendar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,6 +124,9 @@
 				Base,
 			);
 			mainGroup = 539D7B752D8D9C040061BB67;
+			packageReferences = (
+				9299036B2D9B4A8500F9400A /* XCRemoteSwiftPackageReference "FSCalendar" */,
+			);
 			productRefGroup = 539D7B7F2D8D9C050061BB67 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -368,6 +373,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9299036B2D9B4A8500F9400A /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/WenchaoD/FSCalendar";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9299036C2D9B4A8500F9400A /* FSCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9299036B2D9B4A8500F9400A /* XCRemoteSwiftPackageReference "FSCalendar" */;
+			productName = FSCalendar;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 539D7B762D8D9C040061BB67 /* Project object */;
 }
