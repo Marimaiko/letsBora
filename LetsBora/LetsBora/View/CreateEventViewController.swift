@@ -46,7 +46,8 @@ class CreateEventViewController: UIViewController, FSCalendarDelegate, FSCalenda
         calendar.locale = Locale(identifier: "pt_BR")
         return calendar
     }()
-
+    
+    //Data e Hora <--
     private lazy var dateTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -127,13 +128,400 @@ class CreateEventViewController: UIViewController, FSCalendarDelegate, FSCalenda
         view.isHidden = true // Inicialmente escondido
         return view
     }()
+    
+    //Localização <--
+    private lazy var locationTextField: UITextField = {
+        let textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.borderStyle = .roundedRect
+        textField.textColor = .black
+        textField.font = UIFont.systemFont(ofSize: 16)
+        textField.heightAnchor.constraint(equalToConstant: 42).isActive = true
+
+        // Criando o container para o ícone da localização e a label
+        let leftContainerView = UIView(frame: CGRect(x: 0, y: 0, width: 140, height: 42))
+
+        // Ícone da localização
+        let locationIcon = UIImageView(image: UIImage(systemName: "pin"))
+        locationIcon.translatesAutoresizingMaskIntoConstraints = false
+        locationIcon.contentMode = .scaleAspectFit
+        locationIcon.tintColor = .black
+
+        // Label "Data e Hora"
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Localização"
+        label.textColor = .black
+        label.font = UIFont.systemFont(ofSize: 16)
+
+        // Criando um StackView para o ícone e label
+        let leftStackView = UIStackView(arrangedSubviews: [locationIcon, label])
+        leftStackView.translatesAutoresizingMaskIntoConstraints = false
+        leftStackView.axis = .horizontal
+        leftStackView.spacing = 6
+        leftStackView.alignment = .center
+
+        leftContainerView.addSubview(leftStackView)
+
+        NSLayoutConstraint.activate([
+            leftStackView.leadingAnchor.constraint(equalTo: leftContainerView.leadingAnchor, constant: 8),
+            leftStackView.trailingAnchor.constraint(equalTo: leftContainerView.trailingAnchor),
+            leftStackView.centerYAnchor.constraint(equalTo: leftContainerView.centerYAnchor),
+
+            locationIcon.widthAnchor.constraint(equalToConstant: 20),
+            locationIcon.heightAnchor.constraint(equalToConstant: 20)
+        ])
+
+        // Definir o stack como leftView
+        textField.leftView = leftContainerView
+        textField.leftViewMode = .always
+
+        // Criando a seta à direita
+        let arrowContainerView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 42)) // Garante altura correta
+        let arrowIcon = UIImageView(image: UIImage(systemName: "chevron.right"))
+        arrowIcon.translatesAutoresizingMaskIntoConstraints = false
+        arrowIcon.contentMode = .scaleAspectFit
+        arrowIcon.tintColor = .gray
+
+        arrowContainerView.addSubview(arrowIcon)
+
+        NSLayoutConstraint.activate([
+            arrowIcon.trailingAnchor.constraint(equalTo: arrowContainerView.trailingAnchor, constant: -16),
+            arrowIcon.centerYAnchor.constraint(equalTo: arrowContainerView.centerYAnchor),
+            arrowIcon.widthAnchor.constraint(equalToConstant: 14),
+            arrowIcon.heightAnchor.constraint(equalToConstant: 14)
+        ])
+
+        // Definir o ícone como rightView
+        textField.rightView = arrowContainerView
+        textField.rightViewMode = .always
+
+        return textField
+    }()
+    
+    private let locationContainerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 10
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.2
+        view.layer.shadowOffset = CGSize(width: 0, height: 2)
+        view.isHidden = true
+        return view
+    }()
+    
+    //Categoria <--
+    private lazy var categoryTextField: UITextField = {
+        let textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.borderStyle = .roundedRect
+        textField.textColor = .black
+        textField.font = UIFont.systemFont(ofSize: 16)
+        textField.heightAnchor.constraint(equalToConstant: 42).isActive = true
+
+        // Criando o container para o ícone da Categoria e a label
+        let leftContainerView = UIView(frame: CGRect(x: 0, y: 0, width: 140, height: 42))
+
+        // Ícone da localização
+        let categoryIcon = UIImageView(image: UIImage(systemName: "face.smiling"))
+        categoryIcon.translatesAutoresizingMaskIntoConstraints = false
+        categoryIcon.contentMode = .scaleAspectFit
+        categoryIcon.tintColor = .black
+
+        // Label "Categoria"
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Categoria"
+        label.textColor = .black
+        label.font = UIFont.systemFont(ofSize: 16)
+
+        // Criando um StackView para o ícone e label
+        let leftStackView = UIStackView(arrangedSubviews: [categoryIcon, label])
+        leftStackView.translatesAutoresizingMaskIntoConstraints = false
+        leftStackView.axis = .horizontal
+        leftStackView.spacing = 6
+        leftStackView.alignment = .center
+
+        leftContainerView.addSubview(leftStackView)
+
+        NSLayoutConstraint.activate([
+            leftStackView.leadingAnchor.constraint(equalTo: leftContainerView.leadingAnchor, constant: 8),
+            leftStackView.trailingAnchor.constraint(equalTo: leftContainerView.trailingAnchor),
+            leftStackView.centerYAnchor.constraint(equalTo: leftContainerView.centerYAnchor),
+
+            categoryIcon.widthAnchor.constraint(equalToConstant: 20),
+            categoryIcon.heightAnchor.constraint(equalToConstant: 20)
+        ])
+
+        // Definir o stack como leftView
+        textField.leftView = leftContainerView
+        textField.leftViewMode = .always
+
+        // Criando a seta à direita
+        let arrowContainerView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 42)) // Garante altura correta
+        let arrowIcon = UIImageView(image: UIImage(systemName: "chevron.right"))
+        arrowIcon.translatesAutoresizingMaskIntoConstraints = false
+        arrowIcon.contentMode = .scaleAspectFit
+        arrowIcon.tintColor = .gray
+
+        arrowContainerView.addSubview(arrowIcon)
+
+        NSLayoutConstraint.activate([
+            arrowIcon.trailingAnchor.constraint(equalTo: arrowContainerView.trailingAnchor, constant: -16),
+            arrowIcon.centerYAnchor.constraint(equalTo: arrowContainerView.centerYAnchor),
+            arrowIcon.widthAnchor.constraint(equalToConstant: 14),
+            arrowIcon.heightAnchor.constraint(equalToConstant: 14)
+        ])
+
+        // Definir o ícone como rightView
+        textField.rightView = arrowContainerView
+        textField.rightViewMode = .always
+
+        return textField
+    }()
+    
+    private let categoryContainerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 10
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.2
+        view.layer.shadowOffset = CGSize(width: 0, height: 2)
+        view.isHidden = true // Inicialmente escondido
+        return view
+    }()
+    
+    //Público/Privado <--
+    private lazy var publicOrPrivateTextField: UITextField = {
+        let textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.borderStyle = .roundedRect
+        textField.textColor = .black
+        textField.font = UIFont.systemFont(ofSize: 16)
+        textField.heightAnchor.constraint(equalToConstant: 42).isActive = true
+
+        // Criando o container para o ícone e o label
+        let leftContainerView = UIView(frame: CGRect(x: 0, y: 0, width: 140, height: 42))
+
+        // Ícone de cadeado (evento privado)
+        let categoryIcon = UIImageView(image: UIImage(systemName: "lock"))
+        categoryIcon.translatesAutoresizingMaskIntoConstraints = false
+        categoryIcon.contentMode = .scaleAspectFit
+        categoryIcon.tintColor = .black
+
+        // Label "Evento Privado"
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Evento Privado"
+        label.textColor = .black
+        label.font = UIFont.systemFont(ofSize: 16)
+
+        // Criando um StackView para o ícone e o label
+        let leftStackView = UIStackView(arrangedSubviews: [categoryIcon, label])
+        leftStackView.translatesAutoresizingMaskIntoConstraints = false
+        leftStackView.axis = .horizontal
+        leftStackView.spacing = 6
+        leftStackView.alignment = .center
+
+        leftContainerView.addSubview(leftStackView)
+
+        NSLayoutConstraint.activate([
+            leftStackView.leadingAnchor.constraint(equalTo: leftContainerView.leadingAnchor, constant: 8),
+            leftStackView.trailingAnchor.constraint(equalTo: leftContainerView.trailingAnchor),
+            leftStackView.centerYAnchor.constraint(equalTo: leftContainerView.centerYAnchor),
+
+            categoryIcon.widthAnchor.constraint(equalToConstant: 20),
+            categoryIcon.heightAnchor.constraint(equalToConstant: 20)
+        ])
+
+        // Definir o stack como leftView
+        textField.leftView = leftContainerView
+        textField.leftViewMode = .always
+
+        // Criando um container para o UISwitch
+        let switchContainerView = UIView(frame: CGRect(x: 0, y: 0, width: 80, height: 42))
+
+        // Criando o UISwitch
+        let toggleSwitch = UISwitch()
+        toggleSwitch.isOn = false
+        toggleSwitch.onTintColor = .systemBlue
+        toggleSwitch.translatesAutoresizingMaskIntoConstraints = false
+
+        switchContainerView.addSubview(toggleSwitch)
+
+        // Posicionando o switch afastado da borda direita
+        NSLayoutConstraint.activate([
+            toggleSwitch.centerYAnchor.constraint(equalTo: switchContainerView.centerYAnchor),
+            toggleSwitch.leadingAnchor.constraint(equalTo: switchContainerView.leadingAnchor, constant: 304) // Afastamento da direita
+        ])
+
+        // Definir o switch como rightView do textField
+        textField.rightView = switchContainerView
+        textField.rightViewMode = .always
+
+        return textField
+    }()
+
+    
+    private let publicOrPrivateContainerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 10
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.2
+        view.layer.shadowOffset = CGSize(width: 0, height: 2)
+        view.isHidden = true // Inicialmente escondido
+        return view
+    }()
+    
+    //Convidar participantes <-
+    private lazy var participantsView: UIView = {
+        let containerView = UIView()
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.backgroundColor = .white
+        containerView.layer.cornerRadius = 10
+        containerView.layer.shadowColor = UIColor.black.cgColor
+        containerView.layer.shadowOpacity = 0.2
+        containerView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        
+        // Ícone
+        let iconImageView = UIImageView(image: UIImage(systemName: "person"))
+        iconImageView.translatesAutoresizingMaskIntoConstraints = false
+        iconImageView.contentMode = .scaleAspectFit
+        iconImageView.tintColor = .black
+        
+        // Label "Participantes"
+        let titleLabel = UILabel()
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.text = "Participantes"
+        titleLabel.textColor = .black
+        titleLabel.font = UIFont.systemFont(ofSize: 16)
+        
+        // Botão "Convidar"
+        let inviteButton = UIButton(type: .system)
+        inviteButton.translatesAutoresizingMaskIntoConstraints = false
+        inviteButton.setTitle("Convidar", for: .normal)
+        inviteButton.setTitleColor(.systemBlue, for: .normal)
+        
+        // Stack para ícone e label
+        let titleStackView = UIStackView(arrangedSubviews: [iconImageView, titleLabel])
+        titleStackView.translatesAutoresizingMaskIntoConstraints = false
+        titleStackView.axis = .horizontal
+        titleStackView.spacing = 6
+        titleStackView.alignment = .center
+        
+        // Stack horizontal para organizar tudo
+        let topStackView = UIStackView(arrangedSubviews: [titleStackView, inviteButton])
+        topStackView.translatesAutoresizingMaskIntoConstraints = false
+        topStackView.axis = .horizontal
+        topStackView.spacing = 10
+        topStackView.alignment = .center
+        topStackView.distribution = .equalSpacing
+        
+        containerView.addSubview(topStackView)
+        
+        // Stack para as imagens dos participantes
+        let participantsStackView = UIStackView()
+        participantsStackView.translatesAutoresizingMaskIntoConstraints = false
+        participantsStackView.axis = .horizontal
+        participantsStackView.spacing = 8
+        participantsStackView.alignment = .center
+        
+        // Adicionando imagens de exemplo (substituir por dados reais depois)
+        for _ in 0..<4 {
+            let imageView = UIImageView()
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+            imageView.layer.cornerRadius = 16 // Arredondando as imagens
+            imageView.clipsToBounds = true
+            imageView.backgroundColor = .lightGray // Cor temporária para teste
+            imageView.widthAnchor.constraint(equalToConstant: 32).isActive = true
+            imageView.heightAnchor.constraint(equalToConstant: 32).isActive = true
+            participantsStackView.addArrangedSubview(imageView)
+        }
+        
+        containerView.addSubview(participantsStackView)
+        
+        NSLayoutConstraint.activate([
+            topStackView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 10),
+            topStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 10),
+            topStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -10),
+            
+            participantsStackView.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: 10),
+            participantsStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 10),
+            participantsStackView.trailingAnchor.constraint(lessThanOrEqualTo: containerView.trailingAnchor, constant: -10),
+            participantsStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -10)
+        ])
+        
+        return containerView
+    }()
+    
+    //Botões <--
+    private lazy var actionButtonsView: UIView = {
+        let containerView = UIView()
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.backgroundColor = .clear // Fundo transparente
+        
+        // Botão Confirmar
+        let confirmButton = UIButton(type: .system)
+        confirmButton.translatesAutoresizingMaskIntoConstraints = false
+        confirmButton.setTitle("Publicar Evento", for: .normal)
+        confirmButton.setTitleColor(.systemBlue, for: .normal)
+        confirmButton.backgroundColor = .clear
+        confirmButton.layer.cornerRadius = 4
+        confirmButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        confirmButton.layer.shadowColor = UIColor.black.cgColor
+        confirmButton.layer.shadowOpacity = 0.2
+        confirmButton.layer.shadowOffset = CGSize(width: 0, height: 2)
+        confirmButton.layer.shadowRadius = 4
+        
+        // Botão Salvar Rascunho
+        let draftButton = UIButton(type: .system)
+        draftButton.translatesAutoresizingMaskIntoConstraints = false
+        draftButton.setTitle("Salvar Rascunho", for: .normal)
+        draftButton.setTitleColor(.black, for: .normal)
+        draftButton.backgroundColor = UIColor(red: 236/255, green: 236/255, blue: 239/255, alpha: 1.0)
+        draftButton.layer.cornerRadius = 4
+        draftButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        draftButton.layer.shadowColor = UIColor.black.cgColor
+        draftButton.layer.shadowOpacity = 0.2
+        draftButton.layer.shadowOffset = CGSize(width: 0, height: 2)
+        draftButton.layer.shadowRadius = 4
+        
+        // StackView para alinhar os botões lado a lado
+        let buttonStackView = UIStackView(arrangedSubviews: [draftButton, confirmButton])
+        buttonStackView.translatesAutoresizingMaskIntoConstraints = false
+        buttonStackView.axis = .horizontal
+        buttonStackView.spacing = 16
+        buttonStackView.distribution = .fillEqually
+        
+        containerView.addSubview(buttonStackView)
+        
+        NSLayoutConstraint.activate([
+            buttonStackView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 26),
+            buttonStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            buttonStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            buttonStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            buttonStackView.heightAnchor.constraint(equalToConstant: 44)
+        ])
+        
+        return containerView
+    }()
+
 
     private lazy var stackView: UIStackView = createStackView(
         subViews: [
             titleLabel,
             nameEventTextField,
             descriptionEventTextField,
-            dateTextField
+            dateTextField,
+            locationTextField,
+            categoryTextField,
+            publicOrPrivateTextField,
+            participantsView,
+            actionButtonsView,
         ],
         spacing: 16
     )
@@ -189,7 +577,8 @@ class CreateEventViewController: UIViewController, FSCalendarDelegate, FSCalenda
             calendar.bottomAnchor.constraint(equalTo: calendarContainerView.bottomAnchor),
         ])
     }
-
+    
+    //Função para gerar a stack
     private func createStackView(subViews: [UIView], spacing: CGFloat = 8) -> UIStackView {
         let stackView = UIStackView(arrangedSubviews: subViews)
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -215,7 +604,7 @@ class CreateEventViewController: UIViewController, FSCalendarDelegate, FSCalenda
         dateFormatter.dateFormat = "dd/MM/yyyy"
         dateTextField.text = dateFormatter.string(from: date)
 
-        // Esconde o calendário após a seleção
+        //Esconde o calendário após a seleção
         calendarContainerView.isHidden = true
     }
 }
