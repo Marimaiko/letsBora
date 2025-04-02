@@ -25,15 +25,18 @@ class CreateEventViewController: UIViewController, FSCalendarDelegate, FSCalenda
         return textField
     }()
 
-    private lazy var descriptionEventTextField: UITextField = {
-        let textField = UITextField()
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "Descrição"
-        textField.borderStyle = .roundedRect
-        textField.textColor = .black
-        textField.font = UIFont.systemFont(ofSize: 16)
-        textField.heightAnchor.constraint(equalToConstant: 108).isActive = true
-        return textField
+    private lazy var descriptionEventTextView: UITextView = {
+        let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.text = "Descrição"
+        textView.textColor = .black
+        textView.font = UIFont.systemFont(ofSize: 16)
+        textView.layer.borderColor = UIColor.gray.cgColor
+        textView.layer.cornerRadius = 5
+        textView.isScrollEnabled = true
+        textView.textContainerInset = UIEdgeInsets(top: 8, left: 5, bottom: 8, right: 5)
+        textView.heightAnchor.constraint(equalToConstant: 108).isActive = true
+        return textView
     }()
     
     //Data e Hora <--
@@ -140,7 +143,7 @@ class CreateEventViewController: UIViewController, FSCalendarDelegate, FSCalenda
            return picker
        }()
 
-       private let confirmButton: UIButton = {
+        private lazy var confirmButton: UIButton = {
            let button = UIButton(type: .system)
            button.translatesAutoresizingMaskIntoConstraints = false
            button.setTitle("Confirmar", for: .normal)
@@ -149,6 +152,7 @@ class CreateEventViewController: UIViewController, FSCalendarDelegate, FSCalenda
            button.layer.cornerRadius = 8
            button.heightAnchor.constraint(equalToConstant: 44).isActive = true
            button.titleLabel?.font = UIFont.systemFont(ofSize: 22)
+           button.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
            return button
        }()
     
@@ -538,7 +542,7 @@ class CreateEventViewController: UIViewController, FSCalendarDelegate, FSCalenda
         subViews: [
             titleLabel,
             nameEventTextField,
-            descriptionEventTextField,
+            descriptionEventTextView,
             dateTextField,
             locationTextField,
             categoryTextField,
@@ -639,7 +643,7 @@ class CreateEventViewController: UIViewController, FSCalendarDelegate, FSCalenda
 
     // Função para fechar o calendário
     @objc private func doneButtonTapped() {
-        view.endEditing(true) // Fecha o teclado
+        view.endEditing(true)
         
         calendarContainerView.isHidden = true
     }
