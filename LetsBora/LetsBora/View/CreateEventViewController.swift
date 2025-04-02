@@ -35,99 +35,122 @@ class CreateEventViewController: UIViewController, FSCalendarDelegate, FSCalenda
         textField.heightAnchor.constraint(equalToConstant: 108).isActive = true
         return textField
     }()
-
-    private let calendar: FSCalendar = {
-        let calendar = FSCalendar()
-        calendar.translatesAutoresizingMaskIntoConstraints = false
-        calendar.appearance.headerTitleColor = .systemBlue
-        calendar.appearance.weekdayTextColor = .darkGray
-        calendar.appearance.selectionColor = .systemRed
-        calendar.appearance.headerTitleOffset = CGPoint(x: 75, y: 0)
-        calendar.locale = Locale(identifier: "pt_BR")
-        return calendar
-    }()
     
     //Data e Hora <--
     private lazy var dateTextField: UITextField = {
-        let textField = UITextField()
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.borderStyle = .roundedRect
-        textField.textColor = .black
-        textField.font = UIFont.systemFont(ofSize: 16)
-        textField.heightAnchor.constraint(equalToConstant: 42).isActive = true
+           let textField = UITextField()
+           textField.translatesAutoresizingMaskIntoConstraints = false
+           textField.borderStyle = .roundedRect
+           textField.textColor = .black
+           textField.font = UIFont.systemFont(ofSize: 16)
+           textField.heightAnchor.constraint(equalToConstant: 42).isActive = true
 
-        // Criando o container para o ícone do calendário e a label
-        let leftContainerView = UIView(frame: CGRect(x: 0, y: 0, width: 140, height: 42)) // Define uma altura igual ao textField
+           // Criando o container para o ícone do calendário e a label
+           let leftContainerView = UIView(frame: CGRect(x: 0, y: 0, width: 140, height: 42))
 
-        // Ícone do calendário
-        let calendarIcon = UIImageView(image: UIImage(systemName: "calendar"))
-        calendarIcon.translatesAutoresizingMaskIntoConstraints = false
-        calendarIcon.contentMode = .scaleAspectFit
-        calendarIcon.tintColor = .black
+           // Ícone do calendário
+           let calendarIcon = UIImageView(image: UIImage(systemName: "calendar"))
+           calendarIcon.translatesAutoresizingMaskIntoConstraints = false
+           calendarIcon.contentMode = .scaleAspectFit
+           calendarIcon.tintColor = .black
 
-        // Label "Data e Hora"
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Data e Hora"
-        label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 16)
+           // Label "Data e Hora"
+           let label = UILabel()
+           label.translatesAutoresizingMaskIntoConstraints = false
+           label.text = "Data e Hora"
+           label.textColor = .black
+           label.font = UIFont.systemFont(ofSize: 16)
 
-        // Criando um StackView para o ícone e label
-        let leftStackView = UIStackView(arrangedSubviews: [calendarIcon, label])
-        leftStackView.translatesAutoresizingMaskIntoConstraints = false
-        leftStackView.axis = .horizontal
-        leftStackView.spacing = 6
-        leftStackView.alignment = .center
+           // StackView para o ícone e label
+           let leftStackView = UIStackView(arrangedSubviews: [calendarIcon, label])
+           leftStackView.translatesAutoresizingMaskIntoConstraints = false
+           leftStackView.axis = .horizontal
+           leftStackView.spacing = 6
+           leftStackView.alignment = .center
 
-        leftContainerView.addSubview(leftStackView)
+           leftContainerView.addSubview(leftStackView)
 
-        NSLayoutConstraint.activate([
-            leftStackView.leadingAnchor.constraint(equalTo: leftContainerView.leadingAnchor, constant: 8),
-            leftStackView.trailingAnchor.constraint(equalTo: leftContainerView.trailingAnchor),
-            leftStackView.centerYAnchor.constraint(equalTo: leftContainerView.centerYAnchor),
+           NSLayoutConstraint.activate([
+               leftStackView.leadingAnchor.constraint(equalTo: leftContainerView.leadingAnchor, constant: 8),
+               leftStackView.trailingAnchor.constraint(equalTo: leftContainerView.trailingAnchor),
+               leftStackView.centerYAnchor.constraint(equalTo: leftContainerView.centerYAnchor),
 
-            calendarIcon.widthAnchor.constraint(equalToConstant: 20),
-            calendarIcon.heightAnchor.constraint(equalToConstant: 20)
-        ])
+               calendarIcon.widthAnchor.constraint(equalToConstant: 20),
+               calendarIcon.heightAnchor.constraint(equalToConstant: 20)
+           ])
 
-        // Definir o stack como leftView
-        textField.leftView = leftContainerView
-        textField.leftViewMode = .always
+           // Definir o stack como leftView
+           textField.leftView = leftContainerView
+           textField.leftViewMode = .always
 
-        // Criando a seta à direita
-        let arrowContainerView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 42)) // Garante altura correta
-        let arrowIcon = UIImageView(image: UIImage(systemName: "chevron.right"))
-        arrowIcon.translatesAutoresizingMaskIntoConstraints = false
-        arrowIcon.contentMode = .scaleAspectFit
-        arrowIcon.tintColor = .gray
+           // Criando a seta à direita
+           let arrowContainerView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 42))
+           let arrowIcon = UIImageView(image: UIImage(systemName: "chevron.right"))
+           arrowIcon.translatesAutoresizingMaskIntoConstraints = false
+           arrowIcon.contentMode = .scaleAspectFit
+           arrowIcon.tintColor = .gray
 
-        arrowContainerView.addSubview(arrowIcon)
+           arrowContainerView.addSubview(arrowIcon)
 
-        NSLayoutConstraint.activate([
-            arrowIcon.trailingAnchor.constraint(equalTo: arrowContainerView.trailingAnchor, constant: -16),
-            arrowIcon.centerYAnchor.constraint(equalTo: arrowContainerView.centerYAnchor),
-            arrowIcon.widthAnchor.constraint(equalToConstant: 14),
-            arrowIcon.heightAnchor.constraint(equalToConstant: 14)
-        ])
+           NSLayoutConstraint.activate([
+               arrowIcon.trailingAnchor.constraint(equalTo: arrowContainerView.trailingAnchor, constant: -16),
+               arrowIcon.centerYAnchor.constraint(equalTo: arrowContainerView.centerYAnchor),
+               arrowIcon.widthAnchor.constraint(equalToConstant: 14),
+               arrowIcon.heightAnchor.constraint(equalToConstant: 14)
+           ])
 
-        // Definir o ícone como rightView
-        textField.rightView = arrowContainerView
-        textField.rightViewMode = .always
+           // Definir o ícone como rightView
+           textField.rightView = arrowContainerView
+           textField.rightViewMode = .always
 
-        return textField
-    }()
+           // Adicionar ação ao tocar no campo
+           let tapGesture = UITapGestureRecognizer(target: self, action: #selector(showCalendar))
+           textField.addGestureRecognizer(tapGesture)
+           
+           return textField
+       }()
 
-    private let calendarContainerView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 10
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOpacity = 0.2
-        view.layer.shadowOffset = CGSize(width: 0, height: 2)
-        view.isHidden = true // Inicialmente escondido
-        return view
-    }()
+       private let calendarContainerView: UIView = {
+           let view = UIView()
+           view.translatesAutoresizingMaskIntoConstraints = false
+           view.backgroundColor = .white
+           view.layer.cornerRadius = 10
+           view.layer.shadowColor = UIColor.black.cgColor
+           view.layer.shadowOpacity = 0.2
+           view.layer.shadowOffset = CGSize(width: 0, height: 2)
+           view.isHidden = true
+           return view
+       }()
+
+       private let calendar: FSCalendar = {
+           let calendar = FSCalendar()
+           calendar.translatesAutoresizingMaskIntoConstraints = false
+           calendar.appearance.headerTitleColor = .systemBlue
+           calendar.appearance.weekdayTextColor = .darkGray
+           calendar.appearance.selectionColor = .systemRed
+           calendar.locale = Locale(identifier: "pt_BR")
+           return calendar
+       }()
+
+       private let timePicker: UIDatePicker = {
+           let picker = UIDatePicker()
+           picker.translatesAutoresizingMaskIntoConstraints = false
+           picker.datePickerMode = .time
+           picker.preferredDatePickerStyle = .wheels
+           return picker
+       }()
+
+       private let confirmButton: UIButton = {
+           let button = UIButton(type: .system)
+           button.translatesAutoresizingMaskIntoConstraints = false
+           button.setTitle("Confirmar", for: .normal)
+           button.setTitleColor(.systemBlue, for: .normal)
+           button.backgroundColor = UIColor(red: 238/255, green: 238/255, blue: 238/255, alpha: 1.0)
+           button.layer.cornerRadius = 8
+           button.heightAnchor.constraint(equalToConstant: 44).isActive = true
+           button.titleLabel?.font = UIFont.systemFont(ofSize: 22)
+           return button
+       }()
     
     //Localização <--
     private lazy var locationTextField: UITextField = {
@@ -534,6 +557,8 @@ class CreateEventViewController: UIViewController, FSCalendarDelegate, FSCalenda
         // Adiciona o calendário na tela
         view.addSubview(calendarContainerView)
         calendarContainerView.addSubview(calendar)
+        calendarContainerView.addSubview(timePicker)
+        calendarContainerView.addSubview(confirmButton)
 
         // Configura o calendário
         calendar.delegate = self
@@ -565,18 +590,36 @@ class CreateEventViewController: UIViewController, FSCalendarDelegate, FSCalenda
             stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
         ])
         
-        // Configurar o layout do calendário
-        NSLayoutConstraint.activate([
-            calendarContainerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            calendarContainerView.topAnchor.constraint(equalTo: dateTextField.bottomAnchor, constant: 10), // Posição abaixo do textField
-            calendarContainerView.widthAnchor.constraint(equalToConstant: 300),
-            calendarContainerView.heightAnchor.constraint(equalToConstant: 350),
-            calendar.topAnchor.constraint(equalTo: calendarContainerView.topAnchor),
-            calendar.leadingAnchor.constraint(equalTo: calendarContainerView.leadingAnchor),
-            calendar.trailingAnchor.constraint(equalTo: calendarContainerView.trailingAnchor),
-            calendar.bottomAnchor.constraint(equalTo: calendarContainerView.bottomAnchor),
-        ])
-    }
+        // Adicionar elementos ao calendário
+           calendarContainerView.addSubview(calendar)
+           calendarContainerView.addSubview(timePicker)
+           calendarContainerView.addSubview(confirmButton)
+           
+           // Configurar o layout do calendário
+           NSLayoutConstraint.activate([
+               calendarContainerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+               calendarContainerView.topAnchor.constraint(equalTo: dateTextField.bottomAnchor, constant: 10),
+               calendarContainerView.widthAnchor.constraint(equalToConstant: 300),
+               calendarContainerView.bottomAnchor.constraint(equalTo: confirmButton.bottomAnchor, constant: 16), // Ajustando a altura automaticamente
+
+               // Layout do calendário
+               calendar.topAnchor.constraint(equalTo: calendarContainerView.topAnchor, constant: 16),
+               calendar.leadingAnchor.constraint(equalTo: calendarContainerView.leadingAnchor),
+               calendar.trailingAnchor.constraint(equalTo: calendarContainerView.trailingAnchor),
+               calendar.heightAnchor.constraint(equalToConstant: 250),
+
+               // Layout do seletor de hora
+               timePicker.topAnchor.constraint(equalTo: calendar.bottomAnchor, constant: 8),
+               timePicker.leadingAnchor.constraint(equalTo: calendarContainerView.leadingAnchor),
+               timePicker.trailingAnchor.constraint(equalTo: calendarContainerView.trailingAnchor),
+               timePicker.heightAnchor.constraint(equalToConstant: 100),
+
+               // Layout do botão de confirmação
+               confirmButton.topAnchor.constraint(equalTo: timePicker.bottomAnchor, constant: 8),
+               confirmButton.centerXAnchor.constraint(equalTo: calendarContainerView.centerXAnchor),
+               confirmButton.widthAnchor.constraint(equalToConstant: 200),
+               confirmButton.heightAnchor.constraint(equalToConstant: 44),
+           ])    }
     
     //Função para gerar a stack
     private func createStackView(subViews: [UIView], spacing: CGFloat = 8) -> UIStackView {
@@ -591,11 +634,14 @@ class CreateEventViewController: UIViewController, FSCalendarDelegate, FSCalenda
     // Função para mostrar o calendário
     @objc private func showCalendar() {
         calendarContainerView.isHidden = false
+        view.bringSubviewToFront(calendarContainerView)
     }
 
     // Função para fechar o calendário
     @objc private func doneButtonTapped() {
         view.endEditing(true) // Fecha o teclado
+        
+        calendarContainerView.isHidden = true
     }
 
     // Método chamado quando uma data é selecionada
@@ -603,9 +649,6 @@ class CreateEventViewController: UIViewController, FSCalendarDelegate, FSCalenda
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
         dateTextField.text = dateFormatter.string(from: date)
-
-        //Esconde o calendário após a seleção
-        calendarContainerView.isHidden = true
     }
 }
 
