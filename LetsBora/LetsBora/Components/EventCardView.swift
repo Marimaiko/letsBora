@@ -9,8 +9,8 @@ import UIKit
 
 class EventCardView: UIView {
     // MARK: - UI Components
-    private lazy var titleLabel = ReusableLabel(labelType: .H3,colorStyle: .black)
-    private lazy var locationLabel = ReusableLabel(labelType: .H6, colorStyle: .tertiary)
+    private lazy var titleLabel = ReusableLabel(labelType: .h3,colorStyle: .black)
+    private lazy var locationLabel = ReusableLabel(labelType: .h6, colorStyle: .tertiary)
     private lazy var tagView: TagView = TagView(text: "Private")
     private lazy var dateLabel = ReusableLabel(labelType: .caption, colorStyle: .black)
     private lazy var cardImageView: UIImageView = {
@@ -146,12 +146,9 @@ extension EventCardView: ViewCode {
 // MARK: - Preview
 @available(iOS 17.0, *)
 #Preview("Event Card View", traits: .fixedLayout(width: 400, height: 500), body: {
-    
     EventCardView()
         .setTitleLabel("Evento Teste")
-        .setDateLabel("15 May")
+        .setDateLabel("May 15, 2025")
         .setLocationLabel("Local de Teste")
         .setAvatars(["Junior","Marcos","Ana"],2)
-        
-    
 })
