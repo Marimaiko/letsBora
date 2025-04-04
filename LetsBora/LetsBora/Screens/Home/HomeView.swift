@@ -59,8 +59,7 @@ class HomeView: UIView {
             // Event Card constraints
             eventCardView.topAnchor.constraint(equalTo: yourNextEventLabel.bottomAnchor, constant: 15),
             eventCardView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            eventCardView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            eventCardView.heightAnchor.constraint(equalToConstant: 143),
+            eventCardView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),            
             
             // Highligh Event Label contraints
             highlightEventLabel.topAnchor.constraint(equalTo: eventCardView.bottomAnchor, constant: 10),

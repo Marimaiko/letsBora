@@ -50,19 +50,11 @@ class EventCardView: UIView {
         stackView.spacing = 3
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        stackView.widthAnchor.constraint(equalToConstant:  200).isActive = true
-        stackView.heightAnchor.constraint(equalToConstant: 120).isActive = true
-        
         return stackView
     }()
-    private lazy var tagDateLabelStackView: UIStackView = {
-        let stackView = UIStackView()
+    private lazy var tagDateLabelView: UIView = {
+        let stackView = UIView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .horizontal
-        stackView.spacing = 4
-        stackView.distribution = .fill
-        stackView.widthAnchor.constraint(lessThanOrEqualToConstant: 200).isActive = true
-        
         return stackView
     }()
     private lazy var cardView: UIView = {
@@ -75,6 +67,7 @@ class EventCardView: UIView {
         view.layer.shadowOffset = CGSize(width: 0, height: 4)
         view.layer.shadowRadius = 4
         
+        view.heightAnchor.constraint(equalToConstant: 143).isActive = true
         
         return view
     }()
@@ -99,10 +92,10 @@ class EventCardView: UIView {
     }
     
     private func setupView(){
-        tagDateLabelStackView.addArrangedSubview(tagView)
-        tagDateLabelStackView.addArrangedSubview(dateLabel)
+        tagDateLabelView.addSubview(tagView)
+        tagDateLabelView.addSubview(dateLabel)
         
-        stackView.addArrangedSubview(tagDateLabelStackView)
+        stackView.addArrangedSubview(tagDateLabelView)
         stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(locationLabel)
         stackView.addArrangedSubview(avatarGroupView)
@@ -126,12 +119,24 @@ class EventCardView: UIView {
         avatarGroupView.setAvatars(["","",""])
         avatarGroupView.setExtraCount(3)
         
-        
         // set constraints
         NSLayoutConstraint.activate([
+            tagView.topAnchor.constraint(equalTo: tagDateLabelView.topAnchor),
+            tagView.leadingAnchor.constraint(equalTo: tagDateLabelView.leadingAnchor),
+            
+            dateLabel.centerYAnchor.constraint(equalTo: tagDateLabelView.centerYAnchor),
+            dateLabel.leadingAnchor.constraint(equalTo: tagView.trailingAnchor,constant: 8),
+            
+            tagDateLabelView.topAnchor.constraint(equalTo: stackView.topAnchor),
+            tagDateLabelView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
+            tagDateLabelView.bottomAnchor.constraint(equalTo: tagView.bottomAnchor,constant: 2),
+            
+            
+            
             stackView.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 10),
             stackView.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 10),
             stackView.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -10),
+            
             detailButton.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -10),
             detailButton.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -10),
             
