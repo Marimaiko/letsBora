@@ -8,6 +8,11 @@
 import UIKit
 
 class EventCardView: UIView {
+    // MARK - UI Properties
+    private let cardHeightId: String = "cardHeightId"
+    private let noImageCardHeight: CGFloat = 135
+    private let imageHeight: CGFloat = 120
+    
     // MARK: - UI Components
     private lazy var titleLabel = ReusableLabel(labelType: .h3,colorStyle: .black)
     private lazy var locationLabel = ReusableLabel(labelType: .h6, colorStyle: .tertiary)
@@ -15,8 +20,12 @@ class EventCardView: UIView {
     private lazy var dateLabel = ReusableLabel(labelType: .caption, colorStyle: .black)
     private lazy var cardImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 24
+        imageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        
         return imageView
     }()
     private let detailButton: UIButton = {
@@ -45,16 +54,23 @@ class EventCardView: UIView {
     private lazy var cardView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 24
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOpacity = 0.25
-        view.layer.shadowOffset = CGSize(width: 0, height: 4)
-        view.layer.shadowRadius = 4
-        
-        view.heightAnchor.constraint(equalToConstant: 135).isActive = true
+        view.height(id: cardHeightId, constant: noImageCardHeight)
         
         return view
+    }()
+    
+    private lazy var cardStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.backgroundColor  = .white
+        stackView.layer.cornerRadius = 24
+        stackView.layer.shadowColor = UIColor.black.cgColor
+        stackView.layer.shadowOpacity = 0.25
+        stackView.layer.shadowOffset = CGSize(width: 0, height: 4)
+        stackView.layer.shadowRadius = 4
+        stackView.spacing = 0
+        return stackView
     }()
     
     // MARK: - Init
@@ -94,7 +110,16 @@ class EventCardView: UIView {
         self.avatarGroupView.setExtraCount(extraCount)
         return self
     }
-  
+    public func setImage(_ name: String) -> EventCardView {
+        self.cardImageView.image = UIImage(named: name)
+        self.cardImageView.height(constant: 120)
+        
+        if !cardStackView.arrangedSubviews.contains(cardImageView) {
+            cardStackView.insertArrangedSubview(cardImageView, at: 0)
+        }
+        return self
+    }
+    
 }
 
 // MARK: - ViewCode Extension
@@ -111,44 +136,77 @@ extension EventCardView: ViewCode {
         cardView.addSubview(detailButton)
         cardView.addSubview(stackView)
         
-        self.addSubview(cardView)
+        cardStackView.addArrangedSubview(cardView)
+        
+        self.addSubview(cardStackView)
     }
     
     func setConstraints() {
-        NSLayoutConstraint.activate([
-            tagView.topAnchor.constraint(equalTo: tagDateLabelView.topAnchor),
-            tagView.leadingAnchor.constraint(equalTo: tagDateLabelView.leadingAnchor),
+        tagView
+            .top(anchor: tagDateLabelView.topAnchor)
+            .leading(anchor: tagDateLabelView.leadingAnchor)
             
-            dateLabel.centerYAnchor.constraint(equalTo: tagDateLabelView.centerYAnchor),
-            dateLabel.leadingAnchor.constraint(equalTo: tagView.trailingAnchor,constant: 8),
+        
+        dateLabel
+            .centerY(tagView.centerYAnchor)
+            .leading(anchor: tagView.trailingAnchor,constant: 8)
+        
+        tagDateLabelView
+            .top(anchor: stackView.topAnchor)
+            .leading(anchor: stackView.leadingAnchor)
+            .bottom(anchor: tagView.bottomAnchor,constant: 2)
             
-            tagDateLabelView.topAnchor.constraint(equalTo: stackView.topAnchor),
-            tagDateLabelView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
-            tagDateLabelView.bottomAnchor.constraint(equalTo: tagView.bottomAnchor,constant: 2),
-            
-            stackView.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 10),
-            stackView.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 10),
-            stackView.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -10),
-            
-            detailButton.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -10),
-            detailButton.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -10),
-            
-            cardView.topAnchor.constraint(equalTo: self.topAnchor),
-            cardView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            cardView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            cardView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-            
-        ])
+        
+        stackView
+            .top(anchor: cardView.topAnchor, constant: 10)
+            .leading(anchor: cardView.leadingAnchor,constant: 10)
+            .bottom(anchor: cardView.bottomAnchor,constant: -10)
+        
+        detailButton
+            .bottom(anchor: cardView.bottomAnchor, constant: -10)
+            .trailing(anchor: cardView.trailingAnchor, constant: -10)
+        
+        cardStackView
+            .setContraintsToParent(self)
     }
     
     
 }
 // MARK: - Preview
 @available(iOS 17.0, *)
-#Preview("Event Card View", traits: .fixedLayout(width: 400, height: 500), body: {
-    EventCardView()
+#Preview("Event Card View", traits: .sizeThatFitsLayout, body: {
+    let cell1 = EventCardView()
         .setTitleLabel("Evento Teste")
+        .setDateLabel("May 15, 2025")
+        .setLocationLabel("Local de Teste 1")
+        .setAvatars(["Junior","Marcos","Ana"],2)
+    
+    let cell2 = EventCardView()
+        .setTitleLabel("Evento Teste 2")
+        .setDateLabel("May 15, 2025")
+        .setLocationLabel("Local de Teste")
+        .setAvatars(["Junior","Marcos","Ana"],5)
+        .setImage("imageCard2")
+    let cell3 = EventCardView()
+        .setTitleLabel("Evento Teste 3")
         .setDateLabel("May 15, 2025")
         .setLocationLabel("Local de Teste")
         .setAvatars(["Junior","Marcos","Ana"],2)
+        .setImage("imageCard1")
+    
+    
+    let cells = [
+        cell1,
+        cell2,
+        cell3,
+    ]
+    
+    let stackView = UIStackView(arrangedSubviews: cells)
+    stackView.translatesAutoresizingMaskIntoConstraints = false
+    stackView.axis = .vertical
+    stackView.spacing = 10
+    stackView.isLayoutMarginsRelativeArrangement = true
+    stackView.layoutMargins = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+    
+    return stackView
 })

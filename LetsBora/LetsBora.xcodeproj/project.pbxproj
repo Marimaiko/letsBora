@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		09104BF02DA0142F00FE5FA9 /* ReusableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09104BEF2DA0142F00FE5FA9 /* ReusableLabel.swift */; };
 		09104BF22DA01BEA00FE5FA9 /* ViewCode+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09104BF12DA01BE200FE5FA9 /* ViewCode+Extension.swift */; };
+		09104BF42DA0249B00FE5FA9 /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09104BF32DA0248D00FE5FA9 /* UIView+Constraints.swift */; };
 		092082392D971BCF0023D9B6 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092082382D971BCF0023D9B6 /* HomeViewController.swift */; };
 		0920823F2D9725660023D9B6 /* AvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0920823E2D9725660023D9B6 /* AvatarImageView.swift */; };
 		09E3CF8D2D8E4B1200D4A4CD /* EventCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E3CF8C2D8E4B1200D4A4CD /* EventCardView.swift */; };
@@ -28,6 +29,7 @@
 /* Begin PBXFileReference section */
 		09104BEF2DA0142F00FE5FA9 /* ReusableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableLabel.swift; sourceTree = "<group>"; };
 		09104BF12DA01BE200FE5FA9 /* ViewCode+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewCode+Extension.swift"; sourceTree = "<group>"; };
+		09104BF32DA0248D00FE5FA9 /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
 		092082382D971BCF0023D9B6 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		0920823E2D9725660023D9B6 /* AvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarImageView.swift; sourceTree = "<group>"; };
 		09E3CF8C2D8E4B1200D4A4CD /* EventCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCardView.swift; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 		53CD9A252D91FACB0090E5D7 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				09104BF32DA0248D00FE5FA9 /* UIView+Constraints.swift */,
 				09104BF12DA01BE200FE5FA9 /* ViewCode+Extension.swift */,
 				53CD9A262D91FB010090E5D7 /* UIView+Extension.swift */,
 				53CD9A282D91FB120090E5D7 /* UIViewController+Extension.swift */,
@@ -157,7 +160,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1620;
+				LastUpgradeCheck = 1630;
 				TargetAttributes = {
 					539D7B7D2D8D9C050061BB67 = {
 						CreatedOnToolsVersion = 14.2;
@@ -203,6 +206,7 @@
 				09FE21512D94B5A20040C84E /* AvatarGroupView.swift in Sources */,
 				09104BF02DA0142F00FE5FA9 /* ReusableLabel.swift in Sources */,
 				53CD9A292D91FB120090E5D7 /* UIViewController+Extension.swift in Sources */,
+				09104BF42DA0249B00FE5FA9 /* UIView+Constraints.swift in Sources */,
 				539D7B862D8D9C050061BB67 /* ViewController.swift in Sources */,
 				0920823F2D9725660023D9B6 /* AvatarImageView.swift in Sources */,
 				09104BF22DA01BEA00FE5FA9 /* ViewCode+Extension.swift in Sources */,
@@ -242,6 +246,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -303,6 +308,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
