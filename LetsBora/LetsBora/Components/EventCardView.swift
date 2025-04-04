@@ -9,40 +9,19 @@ import UIKit
 
 class EventCardView: UIView {
     // MARK: - UI Components
-    private lazy var titleLabel: UILabel = {
-       let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .boldSystemFont(ofSize: 20)
-        return label
-    }()
-    private let locationLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 16, weight: .light)
-        label.textColor = .darkGray
-        return label
-    }()
-    private lazy var tagView: TagView = {
-        let tagView = TagView()
-        
-        return tagView
-    }()
-    private lazy var dateLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 14, weight: .light)
-        return label
-    }()
+    private lazy var titleLabel = ReusableUILabel(labelType: .H3,colorStyle: .black)
+    private lazy var locationLabel = ReusableUILabel(labelType: .H6, colorStyle: .tertiary)
+    private lazy var tagView: TagView = TagView()
+    private lazy var dateLabel = ReusableUILabel(labelType: .caption, colorStyle: .black)
+    
     private let detailButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.configuration = UIButton.Configuration.filled()
         return button
     }()
-    private let avatarGroupView: AvatarGroupView = {
-        let avatarGroupView = AvatarGroupView()
-        return avatarGroupView
-    }()
+    private let avatarGroupView: AvatarGroupView = AvatarGroupView()
+    
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -72,7 +51,7 @@ class EventCardView: UIView {
         return view
     }()
     
-
+    
     
     init(title: String,
          location: String,
@@ -151,7 +130,7 @@ class EventCardView: UIView {
 }
 
 @available(iOS 17.0, *)
-#Preview("Event Card View", traits: .fixedLayout(width: 400, height: 300), body: {
+#Preview("Event Card View", traits: .fixedLayout(width: 400, height: 500), body: {
     
     EventCardView(title: "Titulo de teste",
                   location: "Local de  Teste",
