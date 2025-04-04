@@ -51,23 +51,20 @@ extension UIView {
         return self
     }
     @discardableResult
-    func updateHeight(id: String, to constant: CGFloat) -> UIView {
-        // Deactivate any existing constraint with the same ID
-        if let existing = constraints.first(where: {
-            $0.identifier == id && $0.firstAttribute == .height
-        }) {
-            existing.isActive = false
-            removeConstraint(existing)
-        }
-
-        // Create and activate new constraint
-        let newConstraint = heightAnchor.constraint(equalToConstant: constant)
-        newConstraint.identifier = id
-        newConstraint.isActive = true
-        addConstraint(newConstraint)
-
+    func width(id: String? = nil, constant: CGFloat) -> UIView {
+        let constraint = widthAnchor.constraint(equalToConstant: constant)
+        constraint.isActive = true
+        constraint.identifier = id
         return self
     }
+    @discardableResult
+    func width(id: String? = nil, anchor: NSLayoutAnchor<NSLayoutDimension>) -> UIView {
+        let constraint = widthAnchor.constraint(equalTo: anchor)
+        constraint.isActive = true
+        constraint.identifier = id
+        return self
+    }
+    
     func setContraintsToParent(_ parent: UIView){
         NSLayoutConstraint.activate([
             self.topAnchor.constraint(equalTo: parent.topAnchor),
