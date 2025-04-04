@@ -179,9 +179,10 @@ extension EventCardView: ViewCode {
 @available(iOS 17.0, *)
 #Preview("Event Card View", traits: .sizeThatFitsLayout, body: {
     let cell1 = EventCardView()
-        .setTitleLabel("Evento Teste")
+        .setTitleLabel("Aniversário do João")
+        .setTagViewTextColor(text: "Partiular")
         .setDateLabel("May 15, 2025")
-        .setLocationLabel("Local de Teste 1")
+        .setLocationLabel("Casa do  João")
         .setAvatars(["Junior","Marcos","Ana"],2)
     
     let cell2 = EventCardView()

@@ -10,7 +10,7 @@ import UIKit
 class ReusableLabel: UILabel {
     
     enum LabelType {
-        case h1, h2, h3, h4, h5, h6, body, caption
+        case h1, h2, h3, h4, h5, h6, body, caption, title
     }
     
     enum ColorStyle {
@@ -19,7 +19,7 @@ class ReusableLabel: UILabel {
 
     init(text: String? = nil,
          labelType: LabelType = .body,
-         colorStyle: ColorStyle = .primary) {
+         colorStyle: ColorStyle = .black) {
         
         super.init(frame: .zero)
         self.translatesAutoresizingMaskIntoConstraints = false
@@ -37,7 +37,7 @@ class ReusableLabel: UILabel {
         case .h1:
             self.font = .systemFont(ofSize: 34, weight: .bold)
         case .h2:
-            self.font = .systemFont(ofSize: 24, weight: .bold)
+            self.font = .systemFont(ofSize: 24, weight: .regular)
         case .h3:
             self.font = .systemFont(ofSize: 20, weight: .bold)
         case .h4:
@@ -50,6 +50,8 @@ class ReusableLabel: UILabel {
             self.font = .systemFont(ofSize: 17)
         case .caption:
             self.font = .systemFont(ofSize: 14, weight: .light)
+        case .title:
+            self.font = .systemFont(ofSize: 48, weight: .regular)
         }
     }
 

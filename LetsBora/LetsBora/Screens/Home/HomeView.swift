@@ -10,18 +10,17 @@ import UIKit
 class HomeView: UIView {
     
     // MARK: - UI Components
-    private lazy var titleLabel = createLabel(withText: "Let's Bora",fontSize: 48)
-    private lazy var yourNextEventLabel = createLabel(withText: "Seu próximo rolê",fontSize: 24)
-    private lazy var highlightEventLabel = createLabel(withText: "Destaques",fontSize: 24)
+    private lazy var titleLabel = ReusableLabel(text: "Let's Bora",labelType: .title)
+    private lazy var yourNextEventLabel = ReusableLabel(text: "Seu próximo rolê",labelType: .h2)
+    private lazy var highlightEventLabel = ReusableLabel(text: "Destaques",labelType: .h2)
+
     
-    lazy var eventCardView = EventCardView()
-    //title:"Aniversário do João",
-    //location:"Casa do João",
-    //tag: "Particular",
-    //date: "15 Marc",
-    //avatars: ["Jim", "John", "Julia"],
-    //extraCountAvatars: 1
-    
+    lazy var eventCardView1 = EventCardView()
+                            .setTitleLabel("Aniversário do João")
+                            .setLocationLabel("Casa do João")
+                            .setTagViewTextColor(text: "Particular")
+                            .setDateLabel("15 Marc")
+                            .setAvatars(["Jim", "John", "Julia"],25)
     
     // MARK: - LifeCycle
     init(){
@@ -33,26 +32,13 @@ class HomeView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Factory Components
-    private func createLabel(withText text: String,
-                             fontSize: CGFloat = 17,
-                             color: UIColor = .black,
-                             weight: UIFont.Weight = .regular) -> UILabel {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = text
-        label.font = .systemFont(ofSize: fontSize, weight: weight)
-        label.textColor = color
-        return label
-    }
-    
 }
 extension HomeView: ViewCode {
     
     func setHierarchy(){
         self.addSubview(titleLabel)
         self.addSubview(yourNextEventLabel)
-        self.addSubview(eventCardView)
+        self.addSubview(eventCardView1)
         self.addSubview(highlightEventLabel)
     }
     
@@ -67,12 +53,12 @@ extension HomeView: ViewCode {
             yourNextEventLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 18),
             
             // Event Card constraints
-            eventCardView.topAnchor.constraint(equalTo: yourNextEventLabel.bottomAnchor, constant: 15),
-            eventCardView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            eventCardView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            eventCardView1.topAnchor.constraint(equalTo: yourNextEventLabel.bottomAnchor, constant: 15),
+            eventCardView1.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            eventCardView1.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
             
             // Highligh Event Label contraints
-            highlightEventLabel.topAnchor.constraint(equalTo: eventCardView.bottomAnchor, constant: 10),
+            highlightEventLabel.topAnchor.constraint(equalTo: eventCardView1.bottomAnchor, constant: 10),
             highlightEventLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 20),
         ]
         NSLayoutConstraint.activate(constraints)
