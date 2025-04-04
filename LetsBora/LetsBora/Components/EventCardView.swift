@@ -8,12 +8,78 @@
 import UIKit
 
 class EventCardView: UIView {
-    private let titleLabel: UILabel
-    private let locationLabel: UILabel
-    private let tagView: TagView
-    private let dateLabel: UILabel
-    private let detailButton: UIButton
-    private let avatarGroupView: AvatarGroupView
+    // MARK: - UI Components
+    private lazy var titleLabel: UILabel = {
+       let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .boldSystemFont(ofSize: 20)
+        return label
+    }()
+    private let locationLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .systemFont(ofSize: 16, weight: .light)
+        label.textColor = .darkGray
+        return label
+    }()
+    private lazy var tagView: TagView = {
+        let tagView = TagView()
+        
+        return tagView
+    }()
+    private lazy var dateLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .systemFont(ofSize: 14, weight: .light)
+        return label
+    }()
+    private let detailButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.configuration = UIButton.Configuration.filled()
+        return button
+    }()
+    private let avatarGroupView: AvatarGroupView = {
+        let avatarGroupView = AvatarGroupView()
+        return avatarGroupView
+    }()
+    private lazy var stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.spacing = 3
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        stackView.widthAnchor.constraint(equalToConstant:  200).isActive = true
+        stackView.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        
+        return stackView
+    }()
+    private lazy var tagDateLabelStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.spacing = 4
+        stackView.distribution = .fill
+        stackView.widthAnchor.constraint(lessThanOrEqualToConstant: 200).isActive = true
+        
+        return stackView
+    }()
+    private lazy var cardView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 24
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.25
+        view.layer.shadowOffset = CGSize(width: 0, height: 4)
+        view.layer.shadowRadius = 4
+        
+        
+        return view
+    }()
+    
+
     
     init(title: String,
          location: String,
@@ -23,82 +89,56 @@ class EventCardView: UIView {
          extraCountAvatars: Int = 0,
          buttonTitle: String = "Ver detalhes"){
         
-        self.titleLabel = UILabel()
-        self.locationLabel = UILabel()
-        self.tagView = TagView(text: tag)
-        self.dateLabel  = UILabel()
-        self.detailButton = UIButton(type: .system)
-        self.avatarGroupView = AvatarGroupView(avatars: avatars,extraCount: extraCountAvatars)
-        
         super.init(frame: .zero)
-        
-        setupUI(title: title, location:location, date: date, button: buttonTitle)
+        setupView()
+        configure(title: title, location: location, date: date, button: buttonTitle, tag: tag)
     }
+    
     required init?(coder:NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    private func setupUI(title: String, location: String, date:String, button: String) {
-        translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = .white
-        layer.cornerRadius = 24
-        layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOpacity = 0.25
-        layer.shadowOffset = CGSize(width: 0, height: 4)
-        layer.shadowRadius = 4
+    
+    private func setupView(){
+        tagDateLabelStackView.addArrangedSubview(tagView)
+        tagDateLabelStackView.addArrangedSubview(dateLabel)
         
-        // Configure title label
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        stackView.addArrangedSubview(tagDateLabelStackView)
+        stackView.addArrangedSubview(titleLabel)
+        stackView.addArrangedSubview(locationLabel)
+        stackView.addArrangedSubview(avatarGroupView)
+        
+        cardView.addSubview(detailButton)
+        cardView.addSubview(stackView)
+        
+        addSubview(cardView)
+    }
+    
+    private func configure(title: String, location: String, date:String, button: String, tag: String) {
+        // configure self view
+        self.translatesAutoresizingMaskIntoConstraints = false
+        
+        // configure components
         titleLabel.text = title
-        titleLabel.font = .boldSystemFont(ofSize: 20)
-        
-        // Configure location label
-        locationLabel.translatesAutoresizingMaskIntoConstraints = false
         locationLabel.text = location
-        locationLabel.font = .systemFont(ofSize: 16, weight: .light)
-        locationLabel.textColor = .darkGray
-        
-        // Configure date label
-        dateLabel.translatesAutoresizingMaskIntoConstraints = false
         dateLabel.text = date
-        dateLabel.font = .systemFont(ofSize: 14, weight: .light)
+        detailButton.configuration?.title = button
+        tagView.setText(tag)
+        avatarGroupView.setAvatars(["","",""])
+        avatarGroupView.setExtraCount(3)
         
-        // configure the Button
-        var config = UIButton.Configuration.filled()
-        detailButton.translatesAutoresizingMaskIntoConstraints = false
-        config.title = button
-        detailButton.configuration = config
         
-        let tagDateStackView: UIStackView = UIStackView(arrangedSubviews: [tagView,dateLabel])
-        tagDateStackView.translatesAutoresizingMaskIntoConstraints = false
-        tagDateStackView.axis = .horizontal
-        tagDateStackView.spacing = 4
-        tagDateStackView.distribution = .fill
-        
-        let stackView = UIStackView(arrangedSubviews:
-                                        [ tagDateStackView,
-                                          titleLabel,
-                                          locationLabel,
-                                          avatarGroupView
-                                        ])
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .vertical
-        stackView.spacing = 3
-        stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        
-        addSubview(detailButton)
-        addSubview(stackView)
-        
+        // set constraints
         NSLayoutConstraint.activate([
-            tagDateStackView.widthAnchor.constraint(lessThanOrEqualToConstant: 200),
+            stackView.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 10),
+            stackView.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 10),
+            stackView.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -10),
+            detailButton.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -10),
+            detailButton.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -10),
             
-            stackView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
-            stackView.widthAnchor.constraint(greaterThanOrEqualToConstant: 200),
-            
-            detailButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
-            detailButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            cardView.topAnchor.constraint(equalTo: self.topAnchor),
+            cardView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            cardView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            cardView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
             
         ])
     }
@@ -106,7 +146,8 @@ class EventCardView: UIView {
 }
 
 @available(iOS 17.0, *)
-#Preview("Event Card View", traits: .sizeThatFitsLayout, body: {
+#Preview("Event Card View", traits: .fixedLayout(width: 400, height: 300), body: {
+    
     EventCardView(title: "Titulo de teste",
                   location: "Local de  Teste",
                   tag:"Privado",
@@ -114,4 +155,5 @@ class EventCardView: UIView {
                   avatars: ["Jim", "Julia", "John"],
                   extraCountAvatars: 2,
                   buttonTitle: "Ver  detalhes")
+    
 })

@@ -11,7 +11,7 @@ class TagView: UIView {
 
     private let label: UILabel
 
-     init(text: String) {
+     init(text: String = "") {
          self.label = UILabel()
          super.init(frame: .zero)
          setupUI(text: text)
@@ -20,14 +20,17 @@ class TagView: UIView {
      required init?(coder: NSCoder) {
          fatalError("init(coder:) has not been implemented")
      }
-
-     private func setupUI(text: String) {
+    
+    public func setText(_ text: String) {
+        label.text = text
+    }
+     private func setupUI(text: String?) {
          translatesAutoresizingMaskIntoConstraints = false
          backgroundColor = .black
          layer.cornerRadius = 12
 
          label.translatesAutoresizingMaskIntoConstraints = false
-         label.text = text
+         label.text = text ?? ""
          label.textColor = .white
          label.font = .systemFont(ofSize: 10, weight: .bold)
          label.textAlignment = .center
