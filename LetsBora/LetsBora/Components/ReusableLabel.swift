@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ReusableUILabel: UILabel {
+class ReusableLabel: UILabel {
     
     enum labelTypeEnum {
         case H1
@@ -44,14 +44,14 @@ class ReusableUILabel: UILabel {
         self.configureLabelStyle()
         
         self.translatesAutoresizingMaskIntoConstraints = false
-        self.attributedText = NSMutableAttributedString(string: self.labelText ?? "Label")
+        self.attributedText = NSMutableAttributedString(string: self.labelText ?? "")
     }
     required init?(coder:NSCoder) {
         fatalError( "init(coder:) has not been implemented" )
     }
     
 }
-extension ReusableUILabel {
+extension ReusableLabel {
     private func configureLabelColor() {
         let colorStyle: colorStyleEnum = self.colorStyle ?? .primary
         
