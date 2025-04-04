@@ -26,6 +26,13 @@ class TagView: UIView {
     public func setText(_ text: String) {
         label.text = text
     }
+    public func setTextColor(_ color: UIColor) {
+        label.textColor = color
+    }
+    public func setBackgroundColor(_ color: UIColor) {
+        tagView.backgroundColor = color
+    }
+    
     private func setupUI(text: String?) {
         // Hierarchy
         tagView.addSubview(label)
@@ -41,7 +48,7 @@ class TagView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = text ?? ""
         label.textColor = .white
-        label.font = .systemFont(ofSize: 10, weight: .bold)
+        label.font = .systemFont(ofSize: 12, weight: .medium)
         label.textAlignment = .center
         
         // constraints

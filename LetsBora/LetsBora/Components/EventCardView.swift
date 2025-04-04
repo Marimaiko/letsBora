@@ -9,9 +9,8 @@ import UIKit
 
 class EventCardView: UIView {
     // MARK - UI Properties
-    private let cardHeightId: String = "cardHeightId"
     private let noImageCardHeight: CGFloat = 135
-    private let imageHeight: CGFloat = 120
+    private let imageHeight: CGFloat = 140
     
     // MARK: - UI Components
     private lazy var titleLabel = ReusableLabel(labelType: .h3,colorStyle: .black)
@@ -43,7 +42,7 @@ class EventCardView: UIView {
         stackView.axis = .vertical
         stackView.spacing = 3
         stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        stackView.layoutMargins = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         return stackView
     }()
     private lazy var tagDateLabelView: UIView = {
@@ -54,7 +53,7 @@ class EventCardView: UIView {
     private lazy var cardView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.height(id: cardHeightId, constant: noImageCardHeight)
+        view.height(constant: noImageCardHeight)
         
         return view
     }()
@@ -101,8 +100,12 @@ class EventCardView: UIView {
         self.detailButton.configuration?.title = title
         return self
     }
-    public func setTagViewText(_ text: String) -> EventCardView {
+    public func setTagViewTextColor(text: String,
+                                    textColor: UIColor = .white, backgroundColor: UIColor = .black
+    ) -> EventCardView {
         self.tagView.setText(text)
+        self.tagView.setTextColor(textColor)
+        self.tagView.setBackgroundColor(backgroundColor)
         return self
     }
     public func setAvatars(_ avatars: [String], _ extraCount: Int = 0) -> EventCardView {
@@ -112,7 +115,7 @@ class EventCardView: UIView {
     }
     public func setImage(_ name: String) -> EventCardView {
         self.cardImageView.image = UIImage(named: name)
-        self.cardImageView.height(constant: 120)
+        self.cardImageView.height(constant: imageHeight)
         
         if !cardStackView.arrangedSubviews.contains(cardImageView) {
             cardStackView.insertArrangedSubview(cardImageView, at: 0)
@@ -187,11 +190,14 @@ extension EventCardView: ViewCode {
         .setLocationLabel("Local de Teste")
         .setAvatars(["Junior","Marcos","Ana"],5)
         .setImage("imageCard2")
+    
     let cell3 = EventCardView()
-        .setTitleLabel("Evento Teste 3")
-        .setDateLabel("May 15, 2025")
-        .setLocationLabel("Local de Teste")
-        .setAvatars(["Junior","Marcos","Ana"],2)
+        .setTitleLabel("Festival de Verão 2025")
+        .setDateLabel("25 Marc")
+        .setLocationLabel("Arena Show - São Paulo,SP")
+        .setTagViewTextColor(text: "Show", textColor: .white, backgroundColor: .systemPurple)
+        .setDetailButtonTitle("Participar")
+        .setAvatars(["John","Julia","Jim"],25)
         .setImage("imageCard1")
     
     
