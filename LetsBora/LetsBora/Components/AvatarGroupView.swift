@@ -74,10 +74,18 @@ class AvatarGroupView: UIView {
     }
     
     public func setAvatars(_ avatars: [String]) {
-        stackView.arrangedSubviews.forEach { $0.removeFromSuperview() } // Clear existing views
-        
+        // Clear existing views
+        stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+
         for avatar in avatars.prefix(maxVisibleAvatars) {
-            let image = UIImage(named: avatar) ?? defaultImage ?? UIImage()
+            let image: UIImage
+
+            if avatar.isEmpty {
+                image = defaultImage ?? UIImage()
+            } else {
+                image = UIImage(named: avatar) ?? defaultImage ?? UIImage()
+            }
+
             let avatarView = AvatarImageView(with: image, size: avatarSize)
             stackView.addArrangedSubview(avatarView)
         }

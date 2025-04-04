@@ -29,15 +29,15 @@ class HomeView: UIView {
         .setAvatars(["","",""],12)
         .setDetailButtonTitle("Participar")
         .setImage("imageCard1")
+    
     lazy var nextCardView2 = EventCardView()
         .setTitleLabel("Show dos Casca de Bala")
         .setLocationLabel("Kukukaya - Uberlândia, MG")
         .setDateLabel("30 Ago")
         .setTagViewTextColor(text: "Show",textColor: .black,backgroundColor: .systemYellow)
-        .setAvatars([])
+        .setAvatars(["",""])
         .setDetailButtonTitle("Participar")
         .setImage("imageCard2")
-    
     
     lazy var nextCardView3 = EventCardView()
         .setTitleLabel("Vôlei de Praia")
@@ -53,19 +53,16 @@ class HomeView: UIView {
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.showsVerticalScrollIndicator = true
-        scrollView.isScrollEnabled = true
         
         return scrollView
     }()
     
-    private lazy var containerView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
     private lazy var stackView: UIStackView = {
-        let stackView = UIStackView()
+        let stackView = UIStackView(
+            arrangedSubviews: [ nextCardView1,
+                                nextCardView2,
+                                nextCardView3
+                              ])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 20
@@ -89,60 +86,54 @@ extension HomeView: ViewCode {
     
     func setHierarchy() {
         self.addSubview(scrollView)
-        scrollView.addSubview(containerView)
         
-        containerView.addSubview(titleLabel)
-        containerView.addSubview(yourNextEventLabel)
-        containerView.addSubview(eventCardView1)
-        containerView.addSubview(highlightEventLabel)
-        containerView.addSubview(stackView)
+        scrollView.addSubview(titleLabel)
+        scrollView.addSubview(yourNextEventLabel)
+        scrollView.addSubview(eventCardView1)
+        scrollView.addSubview(highlightEventLabel)
+        scrollView.addSubview(stackView)
         
-        stackView.addArrangedSubview(nextCardView1)
-        stackView.addArrangedSubview(nextCardView2)
-        stackView.addArrangedSubview(nextCardView3)
     }
     
     func setConstraints() {
         
         // scrollView Constraints
         scrollView
-            .top(anchor: safeAreaLayoutGuide.topAnchor)
+            .top(anchor: self.safeAreaLayoutGuide.topAnchor)
             .leading(anchor: self.leadingAnchor)
             .trailing(anchor: self.trailingAnchor)
-            .bottom(anchor: self.bottomAnchor)
+            .bottom(anchor: self.safeAreaLayoutGuide.bottomAnchor)
         
-        // container constraints
-        containerView
-            .width(anchor: scrollView.widthAnchor)
-            .setContraintsToParent(scrollView)
         
         // title constraints
         titleLabel
-            .top(anchor: containerView.topAnchor)
-            .leading(anchor: containerView.leadingAnchor,constant: 18)
+            .top(anchor: scrollView.topAnchor)
+            .leading(anchor: scrollView.leadingAnchor,constant: 18)
         
         // next event label  constraints
         yourNextEventLabel
-            .top(anchor: titleLabel.bottomAnchor,constant: 44)
-            .leading(anchor: containerView.leadingAnchor,constant: 18)
+            .top(anchor: titleLabel.bottomAnchor,constant: 20)
+            .leading(anchor: scrollView.leadingAnchor,constant: 18)
         
         // event card view
         eventCardView1
             .top(anchor: yourNextEventLabel.bottomAnchor, constant: 15)
-            .leading(anchor: containerView.leadingAnchor, constant: 16)
-            .trailing(anchor: containerView.trailingAnchor, constant: -16)
+            .leading(anchor: scrollView.leadingAnchor, constant: 16)
+            .trailing(anchor: self.trailingAnchor, constant: -16)
         
         // Highlight Event Label constraints
         highlightEventLabel
             .top(anchor: eventCardView1.bottomAnchor, constant: 10)
-            .leading(anchor: containerView.leadingAnchor,constant: 20)
-            .bottom(anchor: containerView.bottomAnchor,constant: -20)
+            .leading(anchor: scrollView.leadingAnchor,constant: 20)
         
         // Stack View Events constraints
         stackView
             .top(anchor: highlightEventLabel.bottomAnchor,constant: 8)
-            .leading(anchor: containerView.leadingAnchor, constant: 16)
-            .trailing(anchor: containerView.trailingAnchor, constant: -16)
+            .leading(anchor: scrollView.leadingAnchor, constant: 16)
+            .trailing(anchor: self.trailingAnchor, constant: -16)
+            .bottom(anchor: scrollView.bottomAnchor,constant: -16)
+        
+        
     }
 }
 

@@ -51,6 +51,20 @@ extension UIView {
         return self
     }
     @discardableResult
+    func height(id: String? = nil,  anchor: NSLayoutAnchor<NSLayoutDimension>) -> UIView {
+        let constraint = heightAnchor.constraint(equalTo: anchor)
+        constraint.isActive = true
+        constraint.identifier = id
+        return self
+    }
+    @discardableResult
+    func height(id: String? = nil,  anchor: NSLayoutAnchor<NSLayoutDimension>,constant:CGFloat) -> UIView {
+        let constraint = heightAnchor.constraint(equalTo: anchor,constant: constant)
+        constraint.isActive = true
+        constraint.identifier = id
+        return self
+    }
+    @discardableResult
     func width(id: String? = nil, constant: CGFloat) -> UIView {
         let constraint = widthAnchor.constraint(equalToConstant: constant)
         constraint.isActive = true
@@ -60,6 +74,13 @@ extension UIView {
     @discardableResult
     func width(id: String? = nil, anchor: NSLayoutAnchor<NSLayoutDimension>) -> UIView {
         let constraint = widthAnchor.constraint(equalTo: anchor)
+        constraint.isActive = true
+        constraint.identifier = id
+        return self
+    }
+    @discardableResult
+    func width(id: String? = nil,  anchor: NSLayoutAnchor<NSLayoutDimension>,constant:CGFloat) -> UIView {
+        let constraint = widthAnchor.constraint(equalTo: anchor,constant: constant)
         constraint.isActive = true
         constraint.identifier = id
         return self

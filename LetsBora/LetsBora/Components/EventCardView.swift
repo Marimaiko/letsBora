@@ -41,8 +41,6 @@ class EventCardView: UIView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 3
-        stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.layoutMargins = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         return stackView
     }()
     private lazy var tagDateLabelView: UIView = {
@@ -82,7 +80,12 @@ class EventCardView: UIView {
     required init?(coder:NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+    // MARK: - Layout
+       override func layoutSubviews() {
+           super.layoutSubviews()
+           cardStackView.layer.shadowPath = UIBezierPath(roundedRect: cardStackView.bounds, cornerRadius: 24).cgPath
+       }
+
     // MARK: - Public Configuration
     public func setTitleLabel(_ title: String) -> EventCardView {
         self.titleLabel.text = title
@@ -155,11 +158,8 @@ extension EventCardView: ViewCode {
             .leading(anchor: tagView.trailingAnchor,constant: 8)
         
         tagDateLabelView
-            .top(anchor: stackView.topAnchor)
-            .leading(anchor: stackView.leadingAnchor)
-            .bottom(anchor: tagView.bottomAnchor,constant: 2)
+            .height(anchor: tagView.heightAnchor, constant: 1)
             
-        
         stackView
             .top(anchor: cardView.topAnchor, constant: 10)
             .leading(anchor: cardView.leadingAnchor,constant: 10)
