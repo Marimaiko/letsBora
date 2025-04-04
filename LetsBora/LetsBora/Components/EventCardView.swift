@@ -17,6 +17,7 @@ class EventCardView: UIView {
     private lazy var locationLabel = ReusableLabel(labelType: .h6, colorStyle: .tertiary)
     private lazy var tagView: TagView = TagView(text: "Private")
     private lazy var dateLabel = ReusableLabel(labelType: .caption, colorStyle: .black)
+    
     private lazy var cardImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -27,6 +28,7 @@ class EventCardView: UIView {
         
         return imageView
     }()
+    
     private let detailButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -34,6 +36,7 @@ class EventCardView: UIView {
         button.configuration?.title = "Ver Detalhes"
         return button
     }()
+    
     private let avatarGroupView: AvatarGroupView = AvatarGroupView()
     
     private lazy var stackView: UIStackView = {
@@ -43,16 +46,16 @@ class EventCardView: UIView {
         stackView.spacing = 3
         return stackView
     }()
+    
     private lazy var tagDateLabelView: UIView = {
         let stackView = UIView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
+    
     private lazy var cardView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        
-        
         return view
     }()
     
