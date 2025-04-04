@@ -8,7 +8,7 @@
 import UIKit
 
 class EventCardView: UIView {
-    // MARK - UI Properties
+    // MARK: - UI Properties
     private let noImageCardHeight: CGFloat = 135
     private let imageHeight: CGFloat = 140
     
@@ -51,7 +51,7 @@ class EventCardView: UIView {
     private lazy var cardView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.height(constant: noImageCardHeight)
+        
         
         return view
     }()
@@ -80,12 +80,13 @@ class EventCardView: UIView {
     required init?(coder:NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     // MARK: - Layout
-       override func layoutSubviews() {
-           super.layoutSubviews()
-           cardStackView.layer.shadowPath = UIBezierPath(roundedRect: cardStackView.bounds, cornerRadius: 24).cgPath
-       }
-
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        cardStackView.layer.shadowPath = UIBezierPath(roundedRect: cardStackView.bounds, cornerRadius: 24).cgPath
+    }
+    
     // MARK: - Public Configuration
     public func setTitleLabel(_ title: String) -> EventCardView {
         self.titleLabel.text = title
@@ -104,7 +105,8 @@ class EventCardView: UIView {
         return self
     }
     public func setTagViewTextColor(text: String,
-                                    textColor: UIColor = .white, backgroundColor: UIColor = .black
+                                    textColor: UIColor = .white,
+                                    backgroundColor: UIColor = .black
     ) -> EventCardView {
         self.tagView.setText(text)
         self.tagView.setTextColor(textColor)
@@ -131,27 +133,42 @@ class EventCardView: UIView {
 // MARK: - ViewCode Extension
 extension EventCardView: ViewCode {
     func setHierarchy() {
+        self.addSubview(cardStackView)
+        
         tagDateLabelView.addSubview(tagView)
         tagDateLabelView.addSubview(dateLabel)
+        
+        cardStackView.addArrangedSubview(cardView)
+        
+        cardView.addSubview(detailButton)
+        cardView.addSubview(stackView)
         
         stackView.addArrangedSubview(tagDateLabelView)
         stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(locationLabel)
         stackView.addArrangedSubview(avatarGroupView)
         
-        cardView.addSubview(detailButton)
-        cardView.addSubview(stackView)
-        
-        cardStackView.addArrangedSubview(cardView)
-        
-        self.addSubview(cardStackView)
     }
     
     func setConstraints() {
+        cardStackView
+            .setContraintsToParent(self)
+        
+        cardView
+            .height(constant: noImageCardHeight)
+        
+        detailButton
+            .bottom(anchor: cardView.bottomAnchor, constant: -10)
+            .trailing(anchor: cardView.trailingAnchor, constant: -10)
+        
+        stackView
+            .top(anchor: cardView.topAnchor, constant: 10)
+            .leading(anchor: cardView.leadingAnchor,constant: 10)
+            .bottom(anchor: cardView.bottomAnchor,constant: -10)
+        
         tagView
             .top(anchor: tagDateLabelView.topAnchor)
             .leading(anchor: tagDateLabelView.leadingAnchor)
-            
         
         dateLabel
             .centerY(tagView.centerYAnchor)
@@ -159,18 +176,6 @@ extension EventCardView: ViewCode {
         
         tagDateLabelView
             .height(anchor: tagView.heightAnchor, constant: 1)
-            
-        stackView
-            .top(anchor: cardView.topAnchor, constant: 10)
-            .leading(anchor: cardView.leadingAnchor,constant: 10)
-            .bottom(anchor: cardView.bottomAnchor,constant: -10)
-        
-        detailButton
-            .bottom(anchor: cardView.bottomAnchor, constant: -10)
-            .trailing(anchor: cardView.trailingAnchor, constant: -10)
-        
-        cardStackView
-            .setContraintsToParent(self)
     }
     
     

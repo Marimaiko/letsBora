@@ -48,8 +48,6 @@ class HomeView: UIView {
         .setDetailButtonTitle("Participar")
         .setImage("imageCard3")
     
-    
-    
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -81,8 +79,8 @@ class HomeView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 }
-
-extension HomeView: ViewCode {
+// MARK: - ViewCode Extension
+extension  HomeView: ViewCode {
     
     func setHierarchy() {
         self.addSubview(scrollView)
@@ -103,7 +101,6 @@ extension HomeView: ViewCode {
             .leading(anchor: self.leadingAnchor)
             .trailing(anchor: self.trailingAnchor)
             .bottom(anchor: self.safeAreaLayoutGuide.bottomAnchor)
-        
         
         // title constraints
         titleLabel
@@ -138,7 +135,10 @@ extension HomeView: ViewCode {
 }
 
 // MARK: - Preview
+
 @available(iOS 17.0, *)
 #Preview("Home View ", traits: .portrait, body: {
+    
     HomeView()
+    
 })
