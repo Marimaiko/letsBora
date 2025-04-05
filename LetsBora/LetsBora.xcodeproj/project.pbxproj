@@ -15,6 +15,7 @@
 		539D7B8E2D8D9C070061BB67 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 539D7B8C2D8D9C070061BB67 /* LaunchScreen.storyboard */; };
 		928E72902D924A080041567A /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928E728F2D924A080041567A /* CreateEventViewController.swift */; };
 		9299036D2D9B4A8500F9400A /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 9299036C2D9B4A8500F9400A /* FSCalendar */; };
+		929903902D9F7C8C00F9400A /* CreateEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9299038F2D9F7C8C00F9400A /* CreateEventView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		539D7B8D2D8D9C070061BB67 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		539D7B8F2D8D9C070061BB67 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		928E728F2D924A080041567A /* CreateEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventViewController.swift; sourceTree = "<group>"; };
+		9299038F2D9F7C8C00F9400A /* CreateEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				928E728F2D924A080041567A /* CreateEventViewController.swift */,
+				9299038F2D9F7C8C00F9400A /* CreateEventView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -156,6 +159,7 @@
 			files = (
 				539D7B862D8D9C050061BB67 /* ViewController.swift in Sources */,
 				539D7B822D8D9C050061BB67 /* AppDelegate.swift in Sources */,
+				929903902D9F7C8C00F9400A /* CreateEventView.swift in Sources */,
 				539D7B842D8D9C050061BB67 /* SceneDelegate.swift in Sources */,
 				928E72902D924A080041567A /* CreateEventViewController.swift in Sources */,
 			);
