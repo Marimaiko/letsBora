@@ -12,6 +12,9 @@
 		09104BF42DA0249B00FE5FA9 /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09104BF32DA0248D00FE5FA9 /* UIView+Constraints.swift */; };
 		092082392D971BCF0023D9B6 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092082382D971BCF0023D9B6 /* HomeViewController.swift */; };
 		0920823F2D9725660023D9B6 /* AvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0920823E2D9725660023D9B6 /* AvatarImageView.swift */; };
+		097D50122DA450F40022ADA4 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097D50112DA450F40022ADA4 /* Event.swift */; };
+		097D50142DA451BC0022ADA4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097D50132DA451BA0022ADA4 /* User.swift */; };
+		097D50172DA4524F0022ADA4 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097D50162DA4524D0022ADA4 /* Category.swift */; };
 		09E3CF8D2D8E4B1200D4A4CD /* EventCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E3CF8C2D8E4B1200D4A4CD /* EventCardView.swift */; };
 		09E3CF8F2D8E4D4F00D4A4CD /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E3CF8E2D8E4D4F00D4A4CD /* TagView.swift */; };
 		09FE21512D94B5A20040C84E /* AvatarGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FE21502D94B5A20040C84E /* AvatarGroupView.swift */; };
@@ -32,6 +35,9 @@
 		09104BF32DA0248D00FE5FA9 /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
 		092082382D971BCF0023D9B6 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		0920823E2D9725660023D9B6 /* AvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarImageView.swift; sourceTree = "<group>"; };
+		097D50112DA450F40022ADA4 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		097D50132DA451BA0022ADA4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		097D50162DA4524D0022ADA4 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		09E3CF8C2D8E4B1200D4A4CD /* EventCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCardView.swift; sourceTree = "<group>"; };
 		09E3CF8E2D8E4D4F00D4A4CD /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 		09FE21502D94B5A20040C84E /* AvatarGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarGroupView.swift; sourceTree = "<group>"; };
@@ -80,6 +86,16 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		097D500F2DA44E970022ADA4 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				097D50162DA4524D0022ADA4 /* Category.swift */,
+				097D50132DA451BA0022ADA4 /* User.swift */,
+				097D50112DA450F40022ADA4 /* Event.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		09E3CF882D8E25D600D4A4CD /* Screens */ = {
 			isa = PBXGroup;
 			children = (
@@ -107,6 +123,7 @@
 		539D7B802D8D9C050061BB67 /* LetsBora */ = {
 			isa = PBXGroup;
 			children = (
+				097D500F2DA44E970022ADA4 /* Models */,
 				53CD9A252D91FACB0090E5D7 /* Extensions */,
 				092082372D971B920023D9B6 /* Components */,
 				09E3CF882D8E25D600D4A4CD /* Screens */,
@@ -207,11 +224,14 @@
 				09104BF02DA0142F00FE5FA9 /* ReusableLabel.swift in Sources */,
 				53CD9A292D91FB120090E5D7 /* UIViewController+Extension.swift in Sources */,
 				09104BF42DA0249B00FE5FA9 /* UIView+Constraints.swift in Sources */,
+				097D50142DA451BC0022ADA4 /* User.swift in Sources */,
+				097D50122DA450F40022ADA4 /* Event.swift in Sources */,
 				539D7B862D8D9C050061BB67 /* ViewController.swift in Sources */,
 				0920823F2D9725660023D9B6 /* AvatarImageView.swift in Sources */,
 				09104BF22DA01BEA00FE5FA9 /* ViewCode+Extension.swift in Sources */,
 				09FE21532D94B6960040C84E /* HomeView.swift in Sources */,
 				53CD9A272D91FB010090E5D7 /* UIView+Extension.swift in Sources */,
+				097D50172DA4524F0022ADA4 /* Category.swift in Sources */,
 				092082392D971BCF0023D9B6 /* HomeViewController.swift in Sources */,
 				539D7B822D8D9C050061BB67 /* AppDelegate.swift in Sources */,
 				539D7B842D8D9C050061BB67 /* SceneDelegate.swift in Sources */,
