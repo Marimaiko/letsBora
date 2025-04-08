@@ -14,7 +14,22 @@ class LoginViewController: UIViewController {
     
     override func loadView() {
         let loginView = LoginView()
+        loginView.delegate = self
         self.view = loginView
+    }
+}
+extension LoginViewController: LoginViewDelegate {
+    func didTapLoginButton() {
+        let tabBarController = TabBarController()
+        let navigationController = UINavigationController(rootViewController: tabBarController)
+        
+        // Ensure we access the correct scene delegate
+        if let sceneDelegate = UIApplication.shared.connectedScenes
+            .first?.delegate as? SceneDelegate,
+           let window = sceneDelegate.window {
+            window.rootViewController = navigationController
+            window.makeKeyAndVisible()
+        }
     }
 }
 // MARK: - Preview Profile

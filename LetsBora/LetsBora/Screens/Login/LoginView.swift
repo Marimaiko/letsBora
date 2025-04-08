@@ -6,9 +6,13 @@
 //
 
 import UIKit
-
+protocol LoginViewDelegate: AnyObject {
+    func didTapLoginButton()
+}
 class LoginView: UIView {
     private let gradientLayer = CAGradientLayer()
+    
+    weak var delegate: LoginViewDelegate?
     
     lazy private var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -263,16 +267,7 @@ extension LoginView {
     }
     // temporary function for testing only
     @objc func loginButtonTapped() {
-        let tabBarController = TabBarController()
-           let navigationController = UINavigationController(rootViewController: tabBarController)
-
-           // Ensure we access the correct scene delegate
-           if let sceneDelegate = UIApplication.shared.connectedScenes
-               .first?.delegate as? SceneDelegate,
-              let window = sceneDelegate.window {
-               window.rootViewController = navigationController
-               window.makeKeyAndVisible()
-           }
+        delegate?.didTapLoginButton()
     }
 }
 
