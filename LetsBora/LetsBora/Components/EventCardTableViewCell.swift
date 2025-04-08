@@ -18,6 +18,9 @@ class EventCardTableViewCell: UITableViewCell {
        override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
            super.init(style: style, reuseIdentifier: reuseIdentifier)
            setupView()
+           
+           self.backgroundColor = .clear
+           contentView.backgroundColor = .clear
        }
 
        required init?(coder: NSCoder) {
@@ -26,11 +29,13 @@ class EventCardTableViewCell: UITableViewCell {
 
        // MARK: - Public Method
        public func setupCell(with event: Event) {
+           // set mandatory arguments
            eventCard.setTitleLabel(event.title)
            eventCard.setLocationLabel(event.location)
            eventCard.setDateLabel(event.date)
            eventCard.setDetailButtonTitle("Participar")
            
+           // set optionals
            if let image = event.image {
                eventCard.setImage(image)
            }
@@ -42,11 +47,9 @@ class EventCardTableViewCell: UITableViewCell {
            }
            
            if let participants = event.participants {
-               
                let listOfNames = participants
                    .prefix(3)
                    .map{$0.name}
-           
                if participants.count > 0 {
                    let indicatorNumber: Int = participants.count > 3  ? participants.count - 3 : 0
                    eventCard.setAvatars(listOfNames, indicatorNumber )
@@ -61,10 +64,10 @@ extension EventCardTableViewCell : ViewCode {
     
     func setConstraints() {
         eventCard
-            .top(anchor: contentView.topAnchor, constant: 12)
-            .leading(anchor: contentView.leadingAnchor, constant: 16)
-            .trailing(anchor: contentView.trailingAnchor,constant: -16)
-            .bottom(anchor: contentView.bottomAnchor, constant: -12)
+            .top(anchor: contentView.topAnchor, constant: 8)
+            .bottom(anchor: contentView.bottomAnchor, constant: -8)
+            .leading(anchor: contentView.leadingAnchor)
+            .trailing(anchor: contentView.trailingAnchor)
     }
     
     

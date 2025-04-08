@@ -8,16 +8,35 @@
 import UIKit
 
 class HomeViewController: UIViewController {
-    
+    //MARK: Properties
+    private let mainView = HomeView()
+    private var events: [Event] = MockData.events
     
     // MARK: - LifeCycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
     /// before didLoad used to ref view
     override func loadView() {
-        self.view = HomeView()
+        self.view = mainView
     }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        configureTableView()
+    }
+    func configureTableView() {
+        mainView.tableView.register(EventCardTableViewCell.self, forCellReuseIdentifier: EventCardTableViewCell.identifier)
+        mainView.tableView.dataSource = self
+    }
+
+}
+extension HomeViewController : UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+           return events.count
+       }
+
+       func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+           let cell = tableView.dequeueReusableCell(withIdentifier: EventCardTableViewCell.identifier, for: indexPath) as? EventCardTableViewCell
+           cell?.setupCell(with: events[indexPath.row])
+           return cell ?? UITableViewCell()
+       }
 }
 
 // MARK: - Preview

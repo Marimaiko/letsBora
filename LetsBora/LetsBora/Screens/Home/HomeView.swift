@@ -14,7 +14,7 @@ class HomeView: UIView {
     private lazy var yourNextEventLabel = ReusableLabel(text: "Seu próximo rolê", labelType: .h2)
     private lazy var highlightEventLabel = ReusableLabel(text: "Destaques", labelType: .h2)
     
-    var eventCardView1:EventCardView{
+    private lazy var eventCardView1 : EventCardView = {
         let eventCard = EventCardView()
         eventCard.setTitleLabel("Aniversário do João")
         eventCard.setLocationLabel("Casa do João")
@@ -23,53 +23,17 @@ class HomeView: UIView {
         eventCard.setAvatars(["Jim", "John", "Julia"], 25)
         
         return eventCard
-    }
-    
-    lazy var nextCardView1 = EventCardView()
-    //.setTitleLabel("Festival de Verão 2025")
-      //  .setLocationLabel("Arena Show - São Paulo, SP")
-        //.setDateLabel("25 Mar")
-        //.setTagViewTextColor(text: "Show",textColor: .black, backgroundColor: .systemYellow)
-    //.setAvatars(["","",""],12)
-    //  .setDetailButtonTitle("Participar")
-    //  .setImage("imageCard1")
-    
-    lazy var nextCardView2 = EventCardView()
-    //  .setTitleLabel("Show dos Casca de Bala")
-    //  .setLocationLabel("Kukukaya - Uberlândia, MG")
-    //  .setDateLabel("30 Ago")
-    //  .setTagViewTextColor(text: "Show",textColor: .black,backgroundColor: .systemYellow)
-    //  .setAvatars(["",""])
-    // .setDetailButtonTitle("Participar")
-    //  .setImage("imageCard2")
-    
-    lazy var nextCardView3 = EventCardView()
-    // .setTitleLabel("Vôlei de Praia")
-    //  .setLocationLabel("Praia do Futuro - Fortaleza, CE")
-    //  .setDateLabel("30 Abr")
-    //  .setTagViewTextColor(text: "Jogos",textColor: .black,backgroundColor: .green)
-    //  .setAvatars(["","",""],2)
-    //  .setDetailButtonTitle("Participar")
-    //  .setImage("imageCard3")
-    
-    private lazy var scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        
-        return scrollView
     }()
     
-    private lazy var stackView: UIStackView = {
-        let stackView = UIStackView(
-            arrangedSubviews: [ nextCardView1,
-                                nextCardView2,
-                                nextCardView3
-                              ])
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .vertical
-        stackView.spacing = 20
-        
-        return stackView
+    
+    lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.backgroundColor =  .clear
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.separatorStyle = .none
+        tableView.showsVerticalScrollIndicator = false
+        return tableView
     }()
     
     // MARK: - LifeCycle
@@ -87,54 +51,42 @@ class HomeView: UIView {
 extension  HomeView: ViewCode {
     
     func setHierarchy() {
-        self.addSubview(scrollView)
-        
-        scrollView.addSubview(titleLabel)
-        scrollView.addSubview(yourNextEventLabel)
-        scrollView.addSubview(eventCardView1)
-        scrollView.addSubview(highlightEventLabel)
-        scrollView.addSubview(stackView)
+        self.addSubview(titleLabel)
+        self.addSubview(yourNextEventLabel)
+        self.addSubview(eventCardView1)
+        self.addSubview(highlightEventLabel)
+        self.addSubview(tableView)
         
     }
     
     func setConstraints() {
-        
-        // scrollView Constraints
-        scrollView
-            .top(anchor: self.safeAreaLayoutGuide.topAnchor)
-            .leading(anchor: self.leadingAnchor)
-            .trailing(anchor: self.trailingAnchor)
-            .bottom(anchor: self.safeAreaLayoutGuide.bottomAnchor)
-        
         // title constraints
         titleLabel
-            .top(anchor: scrollView.topAnchor)
-            .leading(anchor: scrollView.leadingAnchor,constant: 18)
+            .top(anchor: self.safeAreaLayoutGuide.topAnchor)
+            .leading(anchor: self.leadingAnchor,constant: 18)
         
         // next event label  constraints
         yourNextEventLabel
             .top(anchor: titleLabel.bottomAnchor,constant: 20)
-            .leading(anchor: scrollView.leadingAnchor,constant: 18)
+            .leading(anchor: self.leadingAnchor,constant: 18)
         
         // event card view
         eventCardView1
             .top(anchor: yourNextEventLabel.bottomAnchor, constant: 15)
-            .leading(anchor: scrollView.leadingAnchor, constant: 16)
+            .leading(anchor: self.leadingAnchor, constant: 16)
             .trailing(anchor: self.trailingAnchor, constant: -16)
         
         // Highlight Event Label constraints
         highlightEventLabel
             .top(anchor: eventCardView1.bottomAnchor, constant: 10)
-            .leading(anchor: scrollView.leadingAnchor,constant: 20)
+            .leading(anchor: self.leadingAnchor,constant: 20)
         
-        // Stack View Events constraints
-        stackView
+        // table View Events constraints
+        tableView
             .top(anchor: highlightEventLabel.bottomAnchor,constant: 8)
-            .leading(anchor: scrollView.leadingAnchor, constant: 16)
+            .leading(anchor: self.leadingAnchor, constant: 16)
             .trailing(anchor: self.trailingAnchor, constant: -16)
-            .bottom(anchor: scrollView.bottomAnchor,constant: -16)
-        
-        
+            .bottom(anchor: self.bottomAnchor,constant: -16)
     }
 }
 
@@ -143,6 +95,6 @@ extension  HomeView: ViewCode {
 @available(iOS 17.0, *)
 #Preview("Home View ", traits: .portrait, body: {
     
-    HomeView()
+    HomeViewController()
     
 })

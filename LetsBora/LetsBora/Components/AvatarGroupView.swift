@@ -21,6 +21,7 @@ class AvatarGroupView: UIView {
         stackView.distribution = .fill
         stackView.spacing = 4
         stackView.alignment = .center
+
         return stackView
     }()
     
@@ -60,10 +61,10 @@ class AvatarGroupView: UIView {
         addSubview(stackView)
         
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: topAnchor),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            stackView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor),
-            stackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor)
+            stackView.topAnchor.constraint(equalTo: topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            stackView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor)
         ])
     }
     

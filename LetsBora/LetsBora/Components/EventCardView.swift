@@ -151,9 +151,6 @@ extension EventCardView: ViewCode {
         cardStackView
             .setContraintsToParent(self)
         
-        cardView
-            .height(constant: noImageCardHeight)
-        
         detailButton
             .bottom(anchor: cardView.bottomAnchor, constant: -10)
             .trailing(anchor: cardView.trailingAnchor, constant: -10)
