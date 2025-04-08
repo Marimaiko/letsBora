@@ -5,46 +5,66 @@
 //  Created by Davi Paiva on 07/04/25.
 //
 import Foundation
-//.setTitleLabel("Festival de Verão 2025")
-//  .setLocationLabel("Arena Show - São Paulo, SP")
-//.setDateLabel("25 Mar")
-//.setTagViewTextColor(text: "Show",textColor: .black, backgroundColor: .systemYellow)
-//.setAvatars(["","",""],12)
-//  .setDetailButtonTitle("Participar")
-let eventMock1: Event = .init(
-    title: "Festival de Verão 2025",
-    image: "imageCard1",
-    category: .init(title: "Show", color: .black, bgColor: .systemYellow),
-    visibility: "Public",
-    date: "25 Mar",
-    location: "Arena Show - São Paulo, SP",
-    participants:[
-        .init(name: "John"),
-        .init(name: "Julia"),
-        .init(name: "James"),
-        .init(name: "Paul")
-    ],
-    owner: .init(name: "Joao"),
-)
-//  .setTitleLabel("Show dos Casca de Bala")
-//  .setLocationLabel("Kukukaya - Uberlândia, MG")
-//  .setDateLabel("30 Ago")
-//  .setTagViewTextColor(text: "Show",textColor: .black,backgroundColor: .systemYellow)
-//  .setAvatars(["",""])
-// .setDetailButtonTitle("Participar")
-//  .setImage("imageCard2")
+import UIKit
 
-// .setTitleLabel("Vôlei de Praia")
-//  .setLocationLabel("Praia do Futuro - Fortaleza, CE")
-//  .setDateLabel("30 Abr")
-//  .setTagViewTextColor(text: "Jogos",textColor: .black,backgroundColor: .green)
-//  .setAvatars(["","",""],2)
-//  .setDetailButtonTitle("Participar")
-//  .setImage("imageCard3")
-
-
-var mockEvents: [Event] = [
-    eventMock1,
-    eventMock1,
-    eventMock1,
-]
+struct MockData {
+    
+    static let eventMock1: Event = .init(
+        title: "Festival de Verão 2025",
+        image: "imageCard1",
+        category: .init(title: "Show", color: .black, bgColor: .systemYellow),
+        visibility: "Public",
+        date: "25 Mar",
+        location: "Arena Show - São Paulo, SP",
+        participants: [
+            .init(name: "John"),
+            .init(name: "Julia"),
+            .init(name: "James"),
+            .init(name: "Paul")
+        ],
+        owner: .init(name: "Joao")
+    )
+    
+    static let eventMock2: Event = .init(
+        title: "Show dos Casca de Bala",
+        image: "imageCard2",
+        category: .init(title: "Show", color: .black, bgColor: .systemYellow),
+        visibility: "Public",
+        date: "30 Ago",
+        location: "Kukukaya - Uberlândia, MG",
+        participants: [
+            .init(name: "Carlos"),
+            .init(name: "Lúcia")
+        ],
+        owner: .init(name: "Pedro")
+    )
+    
+    static let eventMock3: Event = .init(
+        title: "Vôlei de Praia",
+        image: "imageCard3",
+        category: .init(title: "Jogos", color: .black, bgColor: .green),
+        visibility: "Public",
+        date: "30 Abr",
+        location: "Praia do Futuro - Fortaleza, CE",
+        participants: [
+            .init(name: "Ana"),
+            .init(name: "Bruno"),
+            .init(name: "Carla"),
+            .init(name: "Sophia"),
+            .init(name: "Diego"),
+            .init(name: "Lara"),
+            .init(name: "Mateus"),
+            .init(name: "Isabela"),
+            .init(name: "Thiago"),
+            .init(name: "Camila"),
+            .init(name: "Rafael")
+        ],
+        owner: .init(name: "Fernanda")
+    )
+    
+    static let events: [Event] = [
+        eventMock1,
+        eventMock2,
+        eventMock3
+    ]
+}

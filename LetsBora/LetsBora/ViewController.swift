@@ -16,7 +16,7 @@ class ViewController: UIViewController {
         return tableView
     }()
     
-    var events: [Event] = mockEvents
+    var events: [Event] = MockData.events
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
