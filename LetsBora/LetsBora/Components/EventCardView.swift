@@ -91,44 +91,38 @@ class EventCardView: UIView {
     }
     
     // MARK: - Public Configuration
-    public func setTitleLabel(_ title: String) -> EventCardView {
+    public func setTitleLabel(_ title: String) {
         self.titleLabel.text = title
-        return self
     }
-    public func setLocationLabel(_ location: String) -> EventCardView {
+    public func setLocationLabel(_ location: String) {
         self.locationLabel.text = location
-        return self
     }
-    public func setDateLabel(_ date: String) -> EventCardView {
+    public func setDateLabel(_ date: String) {
         self.dateLabel.text = date
-        return self
     }
-    public func setDetailButtonTitle(_ title: String) -> EventCardView {
+    public func setDetailButtonTitle(_ title: String)  {
         self.detailButton.configuration?.title = title
-        return self
     }
     public func setTagViewTextColor(text: String,
                                     textColor: UIColor = .white,
                                     backgroundColor: UIColor = .black
-    ) -> EventCardView {
+    ){
         self.tagView.setText(text)
         self.tagView.setTextColor(textColor)
         self.tagView.setBackgroundColor(backgroundColor)
-        return self
     }
-    public func setAvatars(_ avatars: [String], _ extraCount: Int = 0) -> EventCardView {
+    public func setAvatars(_ avatars: [String], _ extraCount: Int = 0) {
         self.avatarGroupView.setAvatars(avatars)
         self.avatarGroupView.setExtraCount(extraCount)
-        return self
     }
-    public func setImage(_ name: String) -> EventCardView {
+    public func setImage(_ name: String){
         self.cardImageView.image = UIImage(named: name)
         self.cardImageView.height(constant: imageHeight)
         
         if !cardStackView.arrangedSubviews.contains(cardImageView) {
             cardStackView.insertArrangedSubview(cardImageView, at: 0)
         }
-        return self
+        
     }
     
 }
@@ -187,27 +181,27 @@ extension EventCardView: ViewCode {
 @available(iOS 17.0, *)
 #Preview("Event Card View", traits: .sizeThatFitsLayout, body: {
     let cell1 = EventCardView()
-        .setTitleLabel("Aniversário do João")
-        .setTagViewTextColor(text: "Partiular")
-        .setDateLabel("May 15, 2025")
-        .setLocationLabel("Casa do  João")
-        .setAvatars(["Junior","Marcos","Ana"],2)
+    cell1.setTitleLabel("Aniversário do João")
+    cell1.setTagViewTextColor(text: "Partiular")
+    cell1.setDateLabel("May 15, 2025")
+    cell1.setLocationLabel("Casa do  João")
+    cell1.setAvatars(["Junior","Marcos","Ana"],2)
     
     let cell2 = EventCardView()
-        .setTitleLabel("Evento Teste 2")
-        .setDateLabel("May 15, 2025")
-        .setLocationLabel("Local de Teste")
-        .setAvatars(["Junior","Marcos","Ana"],5)
-        .setImage("imageCard2")
+    cell2.setTitleLabel("Evento Teste 2")
+    cell2.setDateLabel("May 15, 2025")
+    cell2.setLocationLabel("Local de Teste")
+    cell2.setAvatars(["Junior","Marcos","Ana"],5)
+    cell2.setImage("imageCard2")
     
     let cell3 = EventCardView()
-        .setTitleLabel("Festival de Verão 2025")
-        .setDateLabel("25 Marc")
-        .setLocationLabel("Arena Show - São Paulo,SP")
-        .setTagViewTextColor(text: "Show", textColor: .white, backgroundColor: .systemPurple)
-        .setDetailButtonTitle("Participar")
-        .setAvatars(["John","Julia","Jim"],25)
-        .setImage("imageCard1")
+    cell3.setTitleLabel("Festival de Verão 2025")
+    cell3.setDateLabel("25 Marc")
+    cell3.setLocationLabel("Arena Show - São Paulo,SP")
+    cell3.setTagViewTextColor(text: "Show", textColor: .white, backgroundColor: .systemPurple)
+    cell3.setDetailButtonTitle("Participar")
+    cell3.setAvatars(["John","Julia","Jim"],25)
+    cell3.setImage("imageCard1")
     
     
     let cells = [

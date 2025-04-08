@@ -6,7 +6,6 @@
 //
 
 struct User {
-    var id: String
     var name: String
     var photo: String? // will be url after
 }

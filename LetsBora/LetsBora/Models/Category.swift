@@ -7,8 +7,7 @@
 
 import UIKit
 
-struct Category: Identifiable {
-    var id: Int
+struct Category {
     var title: String
     var color: UIColor
     var bgColor: UIColor
