@@ -35,7 +35,6 @@ class CreateEventView: UIView {
     private lazy var descriptionEventTextView: UITextView = {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.text = ""
         textView.textColor = .black
         textView.font = UIFont.systemFont(ofSize: 16)
         textView.layer.borderColor = UIColor.systemGray4.cgColor
@@ -58,12 +57,7 @@ class CreateEventView: UIView {
     
     //Data e Hora <--
     private lazy var dateTextField: UITextField = {
-        let textField = UITextField()
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.borderStyle = .roundedRect
-        textField.textColor = .black
-        textField.font = UIFont.systemFont(ofSize: 16)
-        textField.heightAnchor.constraint(equalToConstant: 42).isActive = true
+        let textField = makeBaseTextField()
 
         //Icon+Label
         textField.leftView = makeIconLabelView(iconName: "calendar", labelText: "Data e Hora")
@@ -92,7 +86,7 @@ class CreateEventView: UIView {
            return view
        }()
 
-        let calendar: FSCalendar = {
+    lazy var calendar: FSCalendar = {
             let calendar = FSCalendar()
             calendar.translatesAutoresizingMaskIntoConstraints = false
             calendar.appearance.headerTitleColor = .systemBlue
@@ -219,33 +213,16 @@ class CreateEventView: UIView {
         containerView.layer.shadowOpacity = 0.2
         containerView.layer.shadowOffset = CGSize(width: 0, height: 2)
 
-        // Ícone
-        let iconImageView = UIImageView(image: UIImage(systemName: "person"))
-        iconImageView.translatesAutoresizingMaskIntoConstraints = false
-        iconImageView.contentMode = .scaleAspectFit
-        iconImageView.tintColor = .black
-        iconImageView.widthAnchor.constraint(equalToConstant: 20).isActive = true
-        iconImageView.heightAnchor.constraint(equalToConstant: 20).isActive = true
-
-        // Label "Participantes"
-        let titleLabel = UILabel()
-        titleLabel.text = "Participantes"
-        titleLabel.textColor = .black
-        titleLabel.font = UIFont.systemFont(ofSize: 16)
+        // Label + Ícone (reutilizado)
+        let iconLabelView = makeIconLabelView(iconName: "person", labelText: "Participantes")
 
         // Botão "Convidar"
         let inviteButton = UIButton(type: .system)
         inviteButton.setTitle("Convidar", for: .normal)
         inviteButton.setTitleColor(.systemBlue, for: .normal)
 
-        // Stack para ícone e label
-        let titleStackView = UIStackView(arrangedSubviews: [iconImageView, titleLabel])
-        titleStackView.axis = .horizontal
-        titleStackView.spacing = 6
-        titleStackView.alignment = .center
-
         // Stack horizontal com título + botão
-        let topStackView = UIStackView(arrangedSubviews: [titleStackView, inviteButton])
+        let topStackView = UIStackView(arrangedSubviews: [iconLabelView, inviteButton])
         topStackView.axis = .horizontal
         topStackView.alignment = .center
         topStackView.distribution = .equalSpacing
@@ -269,14 +246,13 @@ class CreateEventView: UIView {
             imageView.widthAnchor.constraint(equalToConstant: 28).isActive = true
             imageView.heightAnchor.constraint(equalToConstant: 28).isActive = true
 
-            // Garante que o imageView não tente expandir
             imageView.setContentHuggingPriority(.required, for: .horizontal)
             imageView.setContentCompressionResistancePriority(.required, for: .horizontal)
 
             participantsStackView.addArrangedSubview(imageView)
         }
-        
-        //Espaço para corrigir o alinhamento das fotos a esquerda
+
+        // Espaço extra à direita
         let spacer = UIView()
         spacer.translatesAutoresizingMaskIntoConstraints = false
         spacer.setContentHuggingPriority(.defaultLow, for: .horizontal)
@@ -295,6 +271,7 @@ class CreateEventView: UIView {
             contentStack.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -12),
             contentStack.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -12)
         ])
+
         return containerView
     }()
 
@@ -381,6 +358,17 @@ class CreateEventView: UIView {
         stackView.spacing = spacing
         stackView.alignment = .fill
         return stackView
+    }
+    
+    //Função TextField
+    func makeBaseTextField() -> UITextField {
+        let textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.borderStyle = .roundedRect
+        textField.textColor = .black
+        textField.font = UIFont.systemFont(ofSize: 16)
+        textField.heightAnchor.constraint(equalToConstant: 42).isActive = true
+        return textField
     }
     
     //Função Icon+ Label
@@ -519,7 +507,6 @@ extension CreateEventView: UITextFieldDelegate, UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
             descriptionPlaceholderLabel.isHidden = !textView.text.isEmpty
     }
-
 }
 
 //MARK: - Preview Profile
