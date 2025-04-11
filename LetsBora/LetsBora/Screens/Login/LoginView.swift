@@ -10,6 +10,7 @@ import UIKit
 class LoginView: UIView {
     private let gradientLayer = CAGradientLayer()
     
+//MARK: Subviews
     lazy private var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -24,7 +25,7 @@ class LoginView: UIView {
         return imageView
     }()
     
-    lazy private var tittleLabel: UILabel = {
+    lazy private var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Pronto para seu\npróximo rolê?"
         label.numberOfLines = 2
@@ -164,7 +165,8 @@ class LoginView: UIView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
-    
+
+//MARK: Init
     init() {
         super.init(frame: .zero)
         configView()
@@ -182,7 +184,7 @@ extension LoginView {
         super.layoutSubviews()
         gradientLayer.frame = bounds
     }
-    
+//MARK: Setup
     func configView() {
         gradientLayer.colors = [
             UIColor(hex: "#7B61FF").cgColor,
@@ -199,7 +201,7 @@ extension LoginView {
         addSubview(scrollView)
         
         scrollView.addSubview(logoImageView)
-        scrollView.addSubview(tittleLabel)
+        scrollView.addSubview(titleLabel)
         scrollView.addSubview(emailLabel)
         scrollView.addSubview(passwordLabel)
         scrollView.addSubview(passwordTextField)
@@ -221,10 +223,10 @@ extension LoginView {
             logoImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             logoImageView.heightAnchor.constraint(equalToConstant: 120),
             
-            tittleLabel.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 36),
-            tittleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            titleLabel.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 36),
+            titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             
-            emailLabel.topAnchor.constraint(equalTo: tittleLabel.bottomAnchor, constant: 32),
+            emailLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 32),
             emailLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             
             emailTextField.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 8),
