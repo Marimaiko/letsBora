@@ -86,14 +86,12 @@ class CreateEventView: UIView {
            return view
        }()
 
-    lazy var calendar: FSCalendar = {
-            let calendar = FSCalendar()
-            calendar.translatesAutoresizingMaskIntoConstraints = false
-            calendar.appearance.headerTitleColor = .systemBlue
-            calendar.appearance.weekdayTextColor = .darkGray
-            calendar.appearance.selectionColor = .systemRed
-            calendar.locale = Locale(identifier: "pt_BR")
-        return calendar
+    lazy var calendar: UIDatePicker = {
+        let picker = UIDatePicker()
+        picker.translatesAutoresizingMaskIntoConstraints = false
+        picker.datePickerMode = .date
+        picker.preferredDatePickerStyle = .inline
+        return picker
     }()
 
        private let timePicker: UIDatePicker = {
@@ -341,6 +339,7 @@ class CreateEventView: UIView {
 //MARK: - Factory
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setHierarchy()
         setupConstrain()
         setupCalendarConstrain()
         dateTextField.delegate = self
@@ -433,24 +432,22 @@ class CreateEventView: UIView {
         self.endEditing(true)
         calendarContainerView.isHidden = true
     }
-    // Método chamado quando uma data é selecionada
-    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM/yyyy"
-        dateTextField.text = dateFormatter.string(from: date)
-    }
-    
-    //Setup delegates
-    func configureCalendarDelegates(delegate: FSCalendarDelegate, dataSource: FSCalendarDataSource) {
-        calendar.delegate = delegate
-        calendar.dataSource = dataSource
-    }
 }
 
 //MARK: - Constrains
 extension CreateEventView {
-    func setupConstrain() {
+    func setHierarchy(){
         addSubview(stackView)
+        addSubview(calendarContainerView)
+        descriptionEventTextView.addSubview(descriptionPlaceholderLabel)
+        calendarContainerView.addSubview(calendar)
+        calendarContainerView.addSubview(timePicker)
+        calendarContainerView.addSubview(confirmButton)
+    }
+    
+    
+    func setupConstrain() {
+        
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
@@ -459,7 +456,7 @@ extension CreateEventView {
         ])
         
         //Placeholder da descrição
-        descriptionEventTextView.addSubview(descriptionPlaceholderLabel)
+        
         NSLayoutConstraint.activate([
             descriptionPlaceholderLabel.topAnchor.constraint(equalTo: descriptionEventTextView.topAnchor, constant: 8),
             descriptionPlaceholderLabel.leadingAnchor.constraint(equalTo: descriptionEventTextView.leadingAnchor, constant: 10)
@@ -467,10 +464,8 @@ extension CreateEventView {
     }
     
     func setupCalendarConstrain() {
-        addSubview(calendarContainerView)
-        calendarContainerView.addSubview(calendar)
-        calendarContainerView.addSubview(timePicker)
-        calendarContainerView.addSubview(confirmButton)
+        
+       
 
         NSLayoutConstraint.activate([
             calendarContainerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
