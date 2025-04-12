@@ -27,6 +27,7 @@ class HomeViewController: UIViewController {
     }
 
 }
+// MARK: - Table View Delegate
 extension HomeViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
            return events.count
