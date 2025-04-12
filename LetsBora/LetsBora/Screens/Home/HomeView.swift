@@ -29,6 +29,7 @@ class HomeView: UIView {
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.allowsSelection = false
         tableView.backgroundColor =  .clear
         tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
@@ -62,7 +63,7 @@ extension  HomeView: ViewCode {
     func setConstraints() {
         // title constraints
         titleLabel
-            .top(anchor: self.safeAreaLayoutGuide.topAnchor)
+            .top(anchor: self.topAnchor,constant: 48)
             .leading(anchor: self.leadingAnchor,constant: 18)
         
         // next event label  constraints

@@ -17,7 +17,7 @@ class TabBarController: UITabBarController {
     /// Sets up the tabs for the bar
     private func setupTabs() {
         // TODO: trocar as UIViewController pelas Controllers das telas
-        let highlights = UINavigationController(rootViewController: UIViewController())
+        let highlights = UINavigationController(rootViewController: HomeViewController())
         let search = UINavigationController(rootViewController: SearchViewController())
         let createEvent = UINavigationController(rootViewController: UIViewController())
         let myEvents = UINavigationController(rootViewController: UIViewController())
@@ -30,6 +30,7 @@ class TabBarController: UITabBarController {
         profile.tabBarItem = UITabBarItem(title: "Perfil", image: UIImage(systemName: "person"), tag: 4)
         
         self.viewControllers = [highlights, search, createEvent, myEvents, profile]
+        self.tabBar.backgroundColor = .white
     }
     
     
