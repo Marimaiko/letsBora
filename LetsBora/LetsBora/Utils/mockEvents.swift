@@ -1,0 +1,70 @@
+//
+//  EventMocks.swift
+//  LetsBora
+//
+//  Created by Davi Paiva on 07/04/25.
+//
+import Foundation
+import UIKit
+
+struct MockData {
+    
+    static let eventMock1: Event = .init(
+        title: "Festival de Verão 2025",
+        image: "imageCard1",
+        category: .init(title: "Show", color: .black, bgColor: .systemYellow),
+        visibility: "Public",
+        date: "25 Mar",
+        location: "Arena Show - São Paulo, SP",
+        participants: [
+            .init(name: "John"),
+            .init(name: "Julia"),
+            .init(name: "James"),
+            .init(name: "Paul")
+        ],
+        owner: .init(name: "Joao")
+    )
+    
+    static let eventMock2: Event = .init(
+        title: "Show dos Casca de Bala",
+        image: "imageCard2",
+        category: .init(title: "Show", color: .black, bgColor: .systemYellow),
+        visibility: "Public",
+        date: "30 Ago",
+        location: "Kukukaya - Uberlândia, MG",
+        participants: [
+            .init(name: "Carlos"),
+            .init(name: "Lúcia")
+        ],
+        owner: .init(name: "Pedro")
+    )
+    
+    static let eventMock3: Event = .init(
+        title: "Vôlei de Praia",
+        image: "imageCard3",
+        category: .init(title: "Jogos", color: .black, bgColor: .green),
+        visibility: "Public",
+        date: "30 Abr",
+        location: "Praia do Futuro - Fortaleza, CE",
+        participants: [
+            .init(name: "Ana"),
+            .init(name: "Bruno"),
+            .init(name: "Carla"),
+            .init(name: "Sophia"),
+            .init(name: "Diego"),
+            .init(name: "Lara"),
+            .init(name: "Mateus"),
+            .init(name: "Isabela"),
+            .init(name: "Thiago"),
+            .init(name: "Camila"),
+            .init(name: "Rafael")
+        ],
+        owner: .init(name: "Fernanda")
+    )
+    
+    static let events: [Event] = [
+        eventMock1,
+        eventMock2,
+        eventMock3
+    ]
+}
