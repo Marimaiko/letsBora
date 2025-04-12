@@ -13,6 +13,8 @@
 		098AA0792D986F2600B0A176 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098AA0702D986F2600B0A176 /* LoginViewController.swift */; };
 		098AA07A2D986F2600B0A176 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098AA06B2D986F2600B0A176 /* TabBarController.swift */; };
 		098AA07B2D986F2600B0A176 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098AA06F2D986F2600B0A176 /* LoginView.swift */; };
+		09F557562DA9D55C00D1D1A7 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557552DA9D55C00D1D1A7 /* SearchViewController.swift */; };
+		09F557582DA9D84A00D1D1A7 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557572DA9D84400D1D1A7 /* SearchView.swift */; };
 		539D7B822D8D9C050061BB67 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539D7B812D8D9C050061BB67 /* AppDelegate.swift */; };
 		539D7B842D8D9C050061BB67 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539D7B832D8D9C050061BB67 /* SceneDelegate.swift */; };
 		539D7B862D8D9C050061BB67 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539D7B852D8D9C050061BB67 /* ViewController.swift */; };
@@ -28,6 +30,8 @@
 		098AA0702D986F2600B0A176 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		098AA0722D986F2600B0A176 /* ProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditView.swift; sourceTree = "<group>"; };
 		098AA0732D986F2600B0A176 /* ProfileEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditViewController.swift; sourceTree = "<group>"; };
+		09F557552DA9D55C00D1D1A7 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		09F557572DA9D84400D1D1A7 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		539D7B7E2D8D9C050061BB67 /* LetsBora.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LetsBora.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		539D7B812D8D9C050061BB67 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		539D7B832D8D9C050061BB67 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -87,10 +91,20 @@
 		098AA0752D986F2600B0A176 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				09F557542DA9D53600D1D1A7 /* Search */,
 				098AA0712D986F2600B0A176 /* Login */,
 				098AA0742D986F2600B0A176 /* ProfileEdit */,
 			);
 			path = Screens;
+			sourceTree = "<group>";
+		};
+		09F557542DA9D53600D1D1A7 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				09F557572DA9D84400D1D1A7 /* SearchView.swift */,
+				09F557552DA9D55C00D1D1A7 /* SearchViewController.swift */,
+			);
+			path = Search;
 			sourceTree = "<group>";
 		};
 		539D7B752D8D9C040061BB67 = {
@@ -196,10 +210,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09F557562DA9D55C00D1D1A7 /* SearchViewController.swift in Sources */,
 				539D7B862D8D9C050061BB67 /* ViewController.swift in Sources */,
-				0988AB9F2D9711D3006D5D43 /* ProfileEditView.swift in Sources */,
 				539D7B822D8D9C050061BB67 /* AppDelegate.swift in Sources */,
-				098AA0612D986BB700B0A176 /* DividerView.swift in Sources */,
 				539D7B842D8D9C050061BB67 /* SceneDelegate.swift in Sources */,
 				098AA0762D986F2600B0A176 /* DividerView.swift in Sources */,
 				098AA0772D986F2600B0A176 /* ProfileEditViewController.swift in Sources */,
@@ -207,6 +220,7 @@
 				098AA0792D986F2600B0A176 /* LoginViewController.swift in Sources */,
 				098AA07A2D986F2600B0A176 /* TabBarController.swift in Sources */,
 				098AA07B2D986F2600B0A176 /* LoginView.swift in Sources */,
+				09F557582DA9D84A00D1D1A7 /* SearchView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
