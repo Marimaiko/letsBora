@@ -8,13 +8,8 @@
 import UIKit
 
 class SearchView: UIView {
-    
-    lazy var labelTitle = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Search View"
-        return label
-    }()
+    // MARK: - UI Components
+    private lazy var titleLabel = ReusableLabel(text: "Buscar", labelType: .title)
     
     // MARK: - LifeCycle
     init(){
@@ -26,24 +21,18 @@ class SearchView: UIView {
     }
     
 }
-extension SearchView {
-    func setupView(){
-        setHierarchy()
-        setConstraints()
-    }
-    
+
+// MARK: - View code setup
+extension SearchView: ViewCode {
     func setHierarchy() {
-        self.addSubview(labelTitle)
-        
+        self.addSubview(titleLabel)
     }
     
     func setConstraints() {
-        NSLayoutConstraint.activate([
-            labelTitle.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor,
-                                            constant: 8),
-            labelTitle.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: 16),
-            labelTitle.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8)
-        ])
+        titleLabel
+            .top(anchor: self.topAnchor, constant: 48)
+            .leading(anchor: self.leadingAnchor, constant: 16)
+            .trailing(anchor: self.trailingAnchor, constant: -16)
     }
 }
 
