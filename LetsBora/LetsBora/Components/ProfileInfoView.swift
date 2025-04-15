@@ -47,11 +47,10 @@ class ProfileInfoView: UIView {
         return stack
     }()
     
-    // MARK: - Init
-    
+// MARK: - Init
     init(imageSize: CGFloat = 80) {
         super.init(frame: .zero)
-        setupView()
+        buildView()
         setupConstraints(imageSize: imageSize)
     }
     
@@ -59,9 +58,8 @@ class ProfileInfoView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - Setup
-    
-    private func setupView() {
+// MARK: - Setup
+    private func buildView() {
         addSubview(mainStackView)
     }
     
@@ -79,9 +77,8 @@ class ProfileInfoView: UIView {
         profileImageView.layer.cornerRadius = imageSize / 2
     }
     
-    // MARK: - Public Config
-    
-    func configure(name: String, email: String, image: UIImage?) {
+// MARK: - Public Config
+    public func config(name: String, email: String, image: UIImage?) {
         nameLabel.text = name
         emailLabel.text = email
         profileImageView.image = image
