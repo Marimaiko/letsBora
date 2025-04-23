@@ -10,11 +10,41 @@ import UIKit
 
 class EventDetailsView: UIView {
     // MARK: - UI Components
+    
+    private lazy var navigationBar: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        let backButton = UIButton()
+        backButton.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+        backButton.tintColor = .black
+        backButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        let titleLabel = UILabel()
+        titleLabel.text = "Detalhes Aniversário do Pedro"
+        titleLabel.font = .systemFont(ofSize: 17, weight: .semibold)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(backButton)
+        view.addSubview(titleLabel)
+        
+        NSLayoutConstraint.activate([
+            backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            backButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            
+            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            titleLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+        
+        return view
+    }()
+    
     private lazy var eventImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(named: "event-sample-image")
         return imageView
     }()
     
@@ -22,16 +52,34 @@ class EventDetailsView: UIView {
         return createTabStackView()
     }()
     
-    private lazy var dateContainer: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
+    private lazy var dateTimeLabel: UILabel = {
+        let label = UILabel()
+        label.text = "29 de março | 19:00 - 21:00"
+        label.font = .systemFont(ofSize: 14)
+        label.textColor = .darkGray
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
-    private lazy var locationContainer: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
+    private lazy var locationStack: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.spacing = 4
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        
+        let titleLabel = UILabel()
+        titleLabel.text = "Casa do Jorge"
+        titleLabel.font = .systemFont(ofSize: 16, weight: .medium)
+        
+        let addressLabel = UILabel()
+        addressLabel.text = "Rua das Flores, 123"
+        addressLabel.font = .systemFont(ofSize: 14)
+        addressLabel.textColor = .gray
+        
+        stack.addArrangedSubview(titleLabel)
+        stack.addArrangedSubview(addressLabel)
+        
+        return stack
     }()
     
     private lazy var participantsLabel: UILabel = {
@@ -40,6 +88,29 @@ class EventDetailsView: UIView {
         label.font = .systemFont(ofSize: 16, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }()
+    
+    private lazy var participantsBadge: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemGray5
+        view.layer.cornerRadius = 12
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        let label = UILabel()
+        label.text = "+22"
+        label.font = .systemFont(ofSize: 14, weight: .medium)
+        label.textColor = .darkGray
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(label)
+        NSLayoutConstraint.activate([
+            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
+            label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
+            label.topAnchor.constraint(equalTo: view.topAnchor, constant: 4),
+            label.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -4)
+        ])
+        
+        return view
     }()
     
     private lazy var descriptionLabel: UILabel = {
@@ -113,11 +184,13 @@ class EventDetailsView: UIView {
     }
     
     private func setHierarchy() {
+        addSubview(navigationBar)
         addSubview(eventImageView)
         addSubview(tabStackView)
-        addSubview(dateContainer)
-        addSubview(locationContainer)
+        addSubview(dateTimeLabel)
+        addSubview(locationStack)
         addSubview(participantsLabel)
+        addSubview(participantsBadge)
         addSubview(descriptionLabel)
         addSubview(descriptionText)
         addSubview(costLabel)
@@ -128,50 +201,53 @@ class EventDetailsView: UIView {
     
     private func setConstraints() {
         NSLayoutConstraint.activate([
-            eventImageView.topAnchor.constraint(equalTo: topAnchor),
+            navigationBar.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            navigationBar.leadingAnchor.constraint(equalTo: leadingAnchor),
+            navigationBar.trailingAnchor.constraint(equalTo: trailingAnchor),
+            navigationBar.heightAnchor.constraint(equalToConstant: 44),
+            
+            eventImageView.topAnchor.constraint(equalTo: navigationBar.bottomAnchor),
             eventImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             eventImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            eventImageView.heightAnchor.constraint(equalToConstant: 245),
+            eventImageView.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 0.6),
             
             tabStackView.topAnchor.constraint(equalTo: eventImageView.bottomAnchor),
-            tabStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            tabStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            tabStackView.heightAnchor.constraint(equalToConstant: 60),
+            tabStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            tabStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            tabStackView.heightAnchor.constraint(equalToConstant: 40),
             
-            dateContainer.topAnchor.constraint(equalTo: tabStackView.bottomAnchor, constant: 10),
-            dateContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
-            dateContainer.trailingAnchor.constraint(equalTo: trailingAnchor),
-            dateContainer.heightAnchor.constraint(equalToConstant: 50),
+            dateTimeLabel.topAnchor.constraint(equalTo: tabStackView.bottomAnchor, constant: 16),
+            dateTimeLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            dateTimeLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
-            locationContainer.topAnchor.constraint(equalTo: dateContainer.bottomAnchor, constant: 10),
-            locationContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
-            locationContainer.trailingAnchor.constraint(equalTo: trailingAnchor),
-            locationContainer.heightAnchor.constraint(equalToConstant: 50),
+            locationStack.topAnchor.constraint(equalTo: dateTimeLabel.bottomAnchor, constant: 16),
+            locationStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            locationStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
-            participantsLabel.topAnchor.constraint(equalTo: locationContainer.bottomAnchor, constant: 10),
-            participantsLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            participantsLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            participantsLabel.heightAnchor.constraint(equalToConstant: 70),
+            participantsLabel.topAnchor.constraint(equalTo: locationStack.bottomAnchor, constant: 16),
+            participantsLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             
-            descriptionLabel.topAnchor.constraint(equalTo: participantsLabel.bottomAnchor, constant: 10),
-            descriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            descriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            participantsBadge.centerYAnchor.constraint(equalTo: participantsLabel.centerYAnchor),
+            participantsBadge.leadingAnchor.constraint(equalTo: participantsLabel.trailingAnchor, constant: 8),
             
-            descriptionText.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor),
-            descriptionText.leadingAnchor.constraint(equalTo: leadingAnchor),
-            descriptionText.trailingAnchor.constraint(equalTo: trailingAnchor),
+            descriptionLabel.topAnchor.constraint(equalTo: participantsLabel.bottomAnchor, constant: 16),
+            descriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            descriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
-            costLabel.topAnchor.constraint(equalTo: descriptionText.bottomAnchor, constant: 10),
-            costLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            costLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            descriptionText.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 8),
+            descriptionText.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            descriptionText.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
-            perPersonLabel.topAnchor.constraint(equalTo: costLabel.bottomAnchor, constant: 10),
-            perPersonLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+            costLabel.topAnchor.constraint(equalTo: descriptionText.bottomAnchor, constant: 24),
+            costLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            costLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
-            priceLabel.topAnchor.constraint(equalTo: costLabel.bottomAnchor, constant: 10),
-            priceLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            perPersonLabel.topAnchor.constraint(equalTo: costLabel.bottomAnchor, constant: 8),
+            perPersonLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             
-            confirmButton.topAnchor.constraint(equalTo: priceLabel.bottomAnchor, constant: 10),
+            priceLabel.centerYAnchor.constraint(equalTo: perPersonLabel.centerYAnchor),
+            priceLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            
             confirmButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16),
             confirmButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             confirmButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
@@ -182,10 +258,11 @@ class EventDetailsView: UIView {
     private func createTabStackView() -> UIStackView {
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.distribution = .equalSpacing
+        stackView.distribution = .fillEqually
+        stackView.spacing = 8
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
-        let tabs = ["Chat", "Custos", "Mapa", "Notificações"]
+        let tabs = ["Chat", "Custos", "Mapa", "Alertas"]
         tabs.forEach { tabName in
             let button = UIButton()
             button.setTitle(tabName, for: .normal)

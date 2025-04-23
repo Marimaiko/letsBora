@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -37,6 +37,10 @@
 		539D7B8D2D8D9C070061BB67 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		539D7B8F2D8D9C070061BB67 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		3CB9E4FD2DA9409B00813C2F /* EventDetails */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = EventDetails; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		539D7B7B2D8D9C050061BB67 /* Frameworks */ = {
@@ -87,6 +91,7 @@
 		098AA0752D986F2600B0A176 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				3CB9E4FD2DA9409B00813C2F /* EventDetails */,
 				098AA0712D986F2600B0A176 /* Login */,
 				098AA0742D986F2600B0A176 /* ProfileEdit */,
 			);
@@ -139,6 +144,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				3CB9E4FD2DA9409B00813C2F /* EventDetails */,
 			);
 			name = LetsBora;
 			productName = LetsBora;
@@ -197,9 +205,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				539D7B862D8D9C050061BB67 /* ViewController.swift in Sources */,
-				0988AB9F2D9711D3006D5D43 /* ProfileEditView.swift in Sources */,
 				539D7B822D8D9C050061BB67 /* AppDelegate.swift in Sources */,
-				098AA0612D986BB700B0A176 /* DividerView.swift in Sources */,
 				539D7B842D8D9C050061BB67 /* SceneDelegate.swift in Sources */,
 				098AA0762D986F2600B0A176 /* DividerView.swift in Sources */,
 				098AA0772D986F2600B0A176 /* ProfileEditViewController.swift in Sources */,
