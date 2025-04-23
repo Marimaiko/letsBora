@@ -19,6 +19,7 @@ class SearchView: UIView {
         button.configuration?.title = "Todos"
         return button
     }()
+    
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
