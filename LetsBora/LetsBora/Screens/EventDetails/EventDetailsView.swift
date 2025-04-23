@@ -15,15 +15,21 @@ class EventDetailsView: UIView {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         
-        let backButton = UIButton()
-        backButton.setImage(UIImage(systemName: "chevron.left"), for: .normal)
-        backButton.tintColor = .black
-        backButton.translatesAutoresizingMaskIntoConstraints = false
+        let backButton: UIButton = {
+            let btn = UIButton()
+            btn.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+            btn.tintColor = .systemBlue
+            btn.translatesAutoresizingMaskIntoConstraints = false
+            return btn
+        }()
         
-        let titleLabel = UILabel()
-        titleLabel.text = "Detalhes Aniversário do Pedro"
-        titleLabel.font = .systemFont(ofSize: 17, weight: .semibold)
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        let titleLabel: UILabel = {
+            let lbl = UILabel()
+            lbl.text = "Detalhes Aniversário do Pedro"
+            lbl.font = .systemFont(ofSize: 17, weight: .semibold)
+            lbl.translatesAutoresizingMaskIntoConstraints = false
+            return lbl
+        }()
         
         view.addSubview(backButton)
         view.addSubview(titleLabel)
@@ -31,6 +37,7 @@ class EventDetailsView: UIView {
         NSLayoutConstraint.activate([
             backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             backButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            backButton.widthAnchor.constraint(equalToConstant: 24),
             
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             titleLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
@@ -49,7 +56,20 @@ class EventDetailsView: UIView {
     }()
     
     private lazy var tabStackView: UIStackView = {
-        return createTabStackView()
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.distribution = .fillEqually
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        
+        let tabs = ["Chat", "Custos", "Mapa", "Alertas"]
+        tabs.forEach { tab in
+            let button = UIButton()
+            button.setTitle(tab, for: .normal)
+            button.setTitleColor(.systemBlue, for: .normal)
+            stack.addArrangedSubview(button)
+        }
+        
+        return stack
     }()
     
     private lazy var dateTimeLabel: UILabel = {
@@ -82,35 +102,46 @@ class EventDetailsView: UIView {
         return stack
     }()
     
-    private lazy var participantsLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Participantes (25)"
-        label.font = .systemFont(ofSize: 16, weight: .medium)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private lazy var participantsBadge: UIView = {
-        let view = UIView()
-        view.backgroundColor = .systemGray5
-        view.layer.cornerRadius = 12
-        view.translatesAutoresizingMaskIntoConstraints = false
+    private lazy var participantsStack: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.spacing = 8
+        stack.alignment = .center
+        stack.translatesAutoresizingMaskIntoConstraints = false
         
-        let label = UILabel()
-        label.text = "+22"
-        label.font = .systemFont(ofSize: 14, weight: .medium)
-        label.textColor = .darkGray
-        label.translatesAutoresizingMaskIntoConstraints = false
+        let label: UILabel = {
+            let lbl = UILabel()
+            lbl.text = "Participantes (25)"
+            lbl.font = .systemFont(ofSize: 16, weight: .medium)
+            return lbl
+        }()
         
-        view.addSubview(label)
-        NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
-            label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
-            label.topAnchor.constraint(equalTo: view.topAnchor, constant: 4),
-            label.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -4)
-        ])
+        let badge: UIView = {
+            let view = UIView()
+            view.backgroundColor = .systemGray5
+            view.layer.cornerRadius = 12
+            
+            let label = UILabel()
+            label.text = "+22"
+            label.font = .systemFont(ofSize: 14, weight: .medium)
+            label.textColor = .darkGray
+            label.translatesAutoresizingMaskIntoConstraints = false
+            
+            view.addSubview(label)
+            NSLayoutConstraint.activate([
+                label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
+                label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
+                label.topAnchor.constraint(equalTo: view.topAnchor, constant: 4),
+                label.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -4)
+            ])
+            
+            return view
+        }()
         
-        return view
+        stack.addArrangedSubview(label)
+        stack.addArrangedSubview(badge)
+        
+        return stack
     }()
     
     private lazy var descriptionLabel: UILabel = {
@@ -131,39 +162,43 @@ class EventDetailsView: UIView {
         return label
     }()
     
-    private lazy var costLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Custos do Evento"
-        label.font = .systemFont(ofSize: 16, weight: .medium)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private lazy var perPersonLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Por pessoa"
-        label.font = .systemFont(ofSize: 14)
-        label.textColor = .gray
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private lazy var priceLabel: UILabel = {
-        let label = UILabel()
-        label.text = "R$20,00"
-        label.font = .systemFont(ofSize: 14)
-        label.textColor = .gray
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+    private lazy var costStack: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.distribution = .fill
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        
+        let leftLabel: UILabel = {
+            let lbl = UILabel()
+            lbl.text = "Por pessoa"
+            lbl.font = .systemFont(ofSize: 14)
+            lbl.textColor = .gray
+            return lbl
+        }()
+        
+        let rightLabel: UILabel = {
+            let lbl = UILabel()
+            lbl.text = "R$20,00"
+            lbl.font = .systemFont(ofSize: 14)
+            lbl.textColor = .gray
+            lbl.textAlignment = .right
+            return lbl
+        }()
+        
+        stack.addArrangedSubview(leftLabel)
+        stack.addArrangedSubview(rightLabel)
+        
+        return stack
     }()
     
     private lazy var confirmButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Confirmar Presença", for: .normal)
-        button.backgroundColor = .systemBlue
-        button.layer.cornerRadius = 8
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
+        let btn = UIButton()
+        btn.setTitle("Confirmar Presença", for: .normal)
+        btn.backgroundColor = .systemBlue
+        btn.layer.cornerRadius = 8
+        btn.titleLabel?.font = .systemFont(ofSize: 16, weight: .semibold)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        return btn
     }()
     
     // MARK: - Init
@@ -189,13 +224,10 @@ class EventDetailsView: UIView {
         addSubview(tabStackView)
         addSubview(dateTimeLabel)
         addSubview(locationStack)
-        addSubview(participantsLabel)
-        addSubview(participantsBadge)
+        addSubview(participantsStack)
         addSubview(descriptionLabel)
         addSubview(descriptionText)
-        addSubview(costLabel)
-        addSubview(perPersonLabel)
-        addSubview(priceLabel)
+        addSubview(costStack)
         addSubview(confirmButton)
     }
     
@@ -211,7 +243,7 @@ class EventDetailsView: UIView {
             eventImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
             eventImageView.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 0.6),
             
-            tabStackView.topAnchor.constraint(equalTo: eventImageView.bottomAnchor),
+            tabStackView.topAnchor.constraint(equalTo: eventImageView.bottomAnchor, constant: 12),
             tabStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             tabStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             tabStackView.heightAnchor.constraint(equalToConstant: 40),
@@ -224,13 +256,10 @@ class EventDetailsView: UIView {
             locationStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             locationStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
-            participantsLabel.topAnchor.constraint(equalTo: locationStack.bottomAnchor, constant: 16),
-            participantsLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            participantsStack.topAnchor.constraint(equalTo: locationStack.bottomAnchor, constant: 16),
+            participantsStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             
-            participantsBadge.centerYAnchor.constraint(equalTo: participantsLabel.centerYAnchor),
-            participantsBadge.leadingAnchor.constraint(equalTo: participantsLabel.trailingAnchor, constant: 8),
-            
-            descriptionLabel.topAnchor.constraint(equalTo: participantsLabel.bottomAnchor, constant: 16),
+            descriptionLabel.topAnchor.constraint(equalTo: participantsStack.bottomAnchor, constant: 16),
             descriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             descriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
@@ -238,38 +267,14 @@ class EventDetailsView: UIView {
             descriptionText.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             descriptionText.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
-            costLabel.topAnchor.constraint(equalTo: descriptionText.bottomAnchor, constant: 24),
-            costLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            costLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            costStack.topAnchor.constraint(equalTo: descriptionText.bottomAnchor, constant: 16),
+            costStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            costStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
-            perPersonLabel.topAnchor.constraint(equalTo: costLabel.bottomAnchor, constant: 8),
-            perPersonLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            
-            priceLabel.centerYAnchor.constraint(equalTo: perPersonLabel.centerYAnchor),
-            priceLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            
-            confirmButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16),
-            confirmButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            confirmButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            confirmButton.heightAnchor.constraint(equalToConstant: 50)
+            confirmButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -24),
+            confirmButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
+            confirmButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            confirmButton.heightAnchor.constraint(equalToConstant: 48)
         ])
-    }
-    
-    private func createTabStackView() -> UIStackView {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.distribution = .fillEqually
-        stackView.spacing = 8
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        let tabs = ["Chat", "Custos", "Mapa", "Alertas"]
-        tabs.forEach { tabName in
-            let button = UIButton()
-            button.setTitle(tabName, for: .normal)
-            button.setTitleColor(.systemBlue, for: .normal)
-            stackView.addArrangedSubview(button)
-        }
-        
-        return stackView
     }
 }
