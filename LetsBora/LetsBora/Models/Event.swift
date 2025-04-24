@@ -10,7 +10,7 @@ import Foundation
 struct Event {
     var title: String
     var image: String?
-    var category: Category?
+    var tag: Tag?
     var visibility: String?
     var date: String
     var location: String

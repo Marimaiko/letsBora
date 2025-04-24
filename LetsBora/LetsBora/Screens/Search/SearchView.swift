@@ -8,17 +8,43 @@
 import UIKit
 
 class SearchView: UIView {
+    // MARK: - Properties
+    let heightCollectionView: CGFloat = 40
+    
     // MARK: - UI Components
     private lazy var titleLabel = ReusableLabel(text: "Buscar", labelType: .title)
     private lazy var searchEventTextField = createTextField(placeholder: "Digite o nome  do evento" )
     
-    private let AllButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.configuration = UIButton.Configuration.filled()
-        button.configuration?.title = "Todos"
-        return button
-    }()
+    lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewCompositionalLayout { sectionIndex, env -> NSCollectionLayoutSection? in
+               let itemSize = NSCollectionLayoutSize(
+                   widthDimension: .estimated(100), // largura dinâmica
+                   heightDimension: .fractionalHeight(1.0)
+               )
+               let item = NSCollectionLayoutItem(layoutSize: itemSize)
+               item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4)
+
+               let groupSize = NSCollectionLayoutSize(
+                   widthDimension: .estimated(100),
+                   heightDimension: .absolute(self.heightCollectionView)
+               )
+               let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+
+               let section = NSCollectionLayoutSection(group: group)
+               section.orthogonalScrollingBehavior = .continuous // habilita scroll horizontal
+               section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4)
+               section.interGroupSpacing = 4
+
+               return section
+           }
+
+            let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+            collectionView.translatesAutoresizingMaskIntoConstraints = false
+            collectionView.backgroundColor = .clear
+            collectionView.showsHorizontalScrollIndicator = false
+            
+            return collectionView
+        }()
     
     lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -59,7 +85,7 @@ extension SearchView: ViewCode {
     func setHierarchy() {
         self.addSubview(titleLabel)
         self.addSubview(searchEventTextField)
-        self.addSubview(AllButton)
+        self.addSubview(collectionView)
         self.addSubview(tableView)
     }
     
@@ -74,13 +100,14 @@ extension SearchView: ViewCode {
             .leading(anchor: self.leadingAnchor, constant: 16)
             .trailing(anchor: self.trailingAnchor, constant: -16)
         
-        AllButton
+        collectionView
             .top(anchor: searchEventTextField.bottomAnchor, constant: 8)
-            .leading(anchor: self.leadingAnchor, constant: 16)
-            .trailing(anchor: self.trailingAnchor, constant: -16)
+            .leading(anchor: self.safeAreaLayoutGuide.leadingAnchor)
+            .trailing(anchor: self.safeAreaLayoutGuide.trailingAnchor)
+            .height(constant: heightCollectionView)
         
         tableView
-            .top(anchor: AllButton.bottomAnchor,constant: 8)
+            .top(anchor: collectionView.bottomAnchor,constant: 8)
             .leading(anchor: self.leadingAnchor, constant: 16)
             .trailing(anchor: self.trailingAnchor, constant: -16)
             .bottom(anchor: self.bottomAnchor,constant: -16)

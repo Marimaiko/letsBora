@@ -40,7 +40,7 @@ class EventCardTableViewCell: UITableViewCell {
                eventCard.setImage(image)
            }
            
-           if let category = event.category {
+           if let category = event.tag {
                eventCard.setTagViewTextColor(text: category.title,
                                              textColor: category.color,
                                              backgroundColor: category.bgColor)

@@ -10,7 +10,7 @@ import UIKit
 class TagView: UIView {
     // MARK: - UI Properties
     private let tagHeight: CGFloat = 24
-    private let tagWidthRelativeToLabel: CGFloat = 16
+    private let tagWidthRelativeToLabel: CGFloat = 24
     
     // MARK: - UI Components
     private lazy var label: UILabel = {

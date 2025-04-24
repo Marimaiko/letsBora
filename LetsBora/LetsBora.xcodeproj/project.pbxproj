@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		09B90F0E2DBAD2B2001E8DEA /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B90F0D2DBAD2B2001E8DEA /* TagCollectionViewCell.swift */; };
 		09F557842DA9F86000D1D1A7 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557642DA9F86000D1D1A7 /* UIView+Extension.swift */; };
 		09F557852DA9F86000D1D1A7 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557652DA9F86000D1D1A7 /* UIViewController+Extension.swift */; };
 		09F557862DA9F86000D1D1A7 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557692DA9F86000D1D1A7 /* Event.swift */; };
@@ -15,7 +16,7 @@
 		09F557892DA9F86000D1D1A7 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557592DA9F86000D1D1A7 /* TabBarController.swift */; };
 		09F5578A2DA9F86000D1D1A7 /* EventCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F5575F2DA9F86000D1D1A7 /* EventCardView.swift */; };
 		09F5578B2DA9F86000D1D1A7 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557782DA9F86000D1D1A7 /* LoginView.swift */; };
-		09F5578C2DA9F86000D1D1A7 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557682DA9F86000D1D1A7 /* Category.swift */; };
+		09F5578C2DA9F86000D1D1A7 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557682DA9F86000D1D1A7 /* Tag.swift */; };
 		09F5578D2DA9F86000D1D1A7 /* ReusableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557602DA9F86000D1D1A7 /* ReusableLabel.swift */; };
 		09F5578E2DA9F86000D1D1A7 /* AvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F5575C2DA9F86000D1D1A7 /* AvatarImageView.swift */; };
 		09F5578F2DA9F86000D1D1A7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F5576A2DA9F86000D1D1A7 /* User.swift */; };
@@ -40,6 +41,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		09B90F0D2DBAD2B2001E8DEA /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionViewCell.swift; sourceTree = "<group>"; };
 		09F557592DA9F86000D1D1A7 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		09F5575B2DA9F86000D1D1A7 /* AvatarGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarGroupView.swift; sourceTree = "<group>"; };
 		09F5575C2DA9F86000D1D1A7 /* AvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarImageView.swift; sourceTree = "<group>"; };
@@ -52,7 +54,7 @@
 		09F557642DA9F86000D1D1A7 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		09F557652DA9F86000D1D1A7 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		09F557662DA9F86000D1D1A7 /* ViewCode+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewCode+Extension.swift"; sourceTree = "<group>"; };
-		09F557682DA9F86000D1D1A7 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		09F557682DA9F86000D1D1A7 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		09F557692DA9F86000D1D1A7 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		09F5576A2DA9F86000D1D1A7 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		09F5576C2DA9F86000D1D1A7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 				09F5575F2DA9F86000D1D1A7 /* EventCardView.swift */,
 				09F557602DA9F86000D1D1A7 /* ReusableLabel.swift */,
 				09F557612DA9F86000D1D1A7 /* TagView.swift */,
+				09B90F0D2DBAD2B2001E8DEA /* TagCollectionViewCell.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -122,7 +125,7 @@
 		09F5576B2DA9F86000D1D1A7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				09F557682DA9F86000D1D1A7 /* Category.swift */,
+				09F557682DA9F86000D1D1A7 /* Tag.swift */,
 				09F557692DA9F86000D1D1A7 /* Event.swift */,
 				09F5576A2DA9F86000D1D1A7 /* User.swift */,
 			);
@@ -255,7 +258,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1420;
+				LastUpgradeCheck = 1630;
 				TargetAttributes = {
 					539D7B7D2D8D9C050061BB67 = {
 						CreatedOnToolsVersion = 14.2;
@@ -306,7 +309,7 @@
 				09F557892DA9F86000D1D1A7 /* TabBarController.swift in Sources */,
 				09F5578A2DA9F86000D1D1A7 /* EventCardView.swift in Sources */,
 				09F5578B2DA9F86000D1D1A7 /* LoginView.swift in Sources */,
-				09F5578C2DA9F86000D1D1A7 /* Category.swift in Sources */,
+				09F5578C2DA9F86000D1D1A7 /* Tag.swift in Sources */,
 				09F5578D2DA9F86000D1D1A7 /* ReusableLabel.swift in Sources */,
 				09F5578E2DA9F86000D1D1A7 /* AvatarImageView.swift in Sources */,
 				09F5578F2DA9F86000D1D1A7 /* User.swift in Sources */,
@@ -315,6 +318,7 @@
 				09F557922DA9F86000D1D1A7 /* EventCardTableViewCell.swift in Sources */,
 				09F557932DA9F86000D1D1A7 /* mockEvents.swift in Sources */,
 				09F557942DA9F86000D1D1A7 /* AppDelegate.swift in Sources */,
+				09B90F0E2DBAD2B2001E8DEA /* TagCollectionViewCell.swift in Sources */,
 				09F557952DA9F86000D1D1A7 /* HomeViewController.swift in Sources */,
 				09F557962DA9F86000D1D1A7 /* SearchView.swift in Sources */,
 				09F557972DA9F86000D1D1A7 /* SceneDelegate.swift in Sources */,
@@ -354,6 +358,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -386,6 +391,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -414,6 +420,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -446,6 +453,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
