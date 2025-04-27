@@ -61,11 +61,23 @@ class EventDetailsView: UIView {
         stack.distribution = .fillEqually
         stack.translatesAutoresizingMaskIntoConstraints = false
         
-        let tabs = ["Chat", "Custos", "Mapa", "Alertas"]
+        let tabs: [(title: String, systemImageName: String)] = [
+            ("Chat", "bubble.left"),
+            ("Custos", "dollarsign.circle"),
+            ("Mapa", "map"),
+            ("Alertas", "bell")
+        ]
+        
         tabs.forEach { tab in
-            let button = UIButton()
-            button.setTitle(tab, for: .normal)
-            button.setTitleColor(.systemBlue, for: .normal)
+            var config = UIButton.Configuration.plain()
+            config.title = tab.title
+            config.image = UIImage(systemName: tab.systemImageName)
+            config.imagePlacement = .top
+            config.imagePadding = 4
+            
+            let button = UIButton(configuration: config)
+            button.tintColor = .systemBlue
+            
             stack.addArrangedSubview(button)
         }
         
