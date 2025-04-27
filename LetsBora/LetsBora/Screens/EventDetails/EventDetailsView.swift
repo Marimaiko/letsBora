@@ -10,7 +10,6 @@ import UIKit
 
 class EventDetailsView: UIView {
     // MARK: - UI Components
-    
     private lazy var navigationBar: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -60,6 +59,7 @@ class EventDetailsView: UIView {
         stack.axis = .horizontal
         stack.distribution = .fillEqually
         stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.backgroundColor = .white
         
         let tabs: [(title: String, systemImageName: String)] = [
             ("Chat", "bubble.left"),
@@ -84,76 +84,143 @@ class EventDetailsView: UIView {
         return stack
     }()
     
-    private lazy var dateTimeLabel: UILabel = {
+    private lazy var dateTimeLabel: UIStackView = {
+        let horizontalStack = UIStackView()
+        horizontalStack.axis = .horizontal
+        horizontalStack.spacing = 8
+        horizontalStack.alignment = .top
+        horizontalStack.translatesAutoresizingMaskIntoConstraints = false
+        
+        let iconImageView = UIImageView(image: UIImage(systemName: "calendar.circle"))
+        iconImageView.tintColor = .black
+        iconImageView.translatesAutoresizingMaskIntoConstraints = false
+        iconImageView.contentMode = .scaleAspectFit
+        iconImageView.widthAnchor.constraint(equalToConstant: 32).isActive = true
+        iconImageView.heightAnchor.constraint(equalToConstant: 32).isActive = true
+        
         let label = UILabel()
-        label.text = "29 de março | 19:00 - 21:00"
-        label.font = .systemFont(ofSize: 14)
-        label.textColor = .darkGray
         label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+        
+        let fullText = "29 de março | 19:00 - 21:00"
+        let attributedText = NSMutableAttributedString(
+            string: fullText,
+            attributes: [
+                .font: UIFont.systemFont(ofSize: 15)
+            ]
+        )
+        
+        if let range = fullText.range(of: "29 de março") {
+            let nsRange = NSRange(range, in: fullText)
+            attributedText.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: 15), range: nsRange)
+        }
+        
+        label.attributedText = attributedText
+        
+        horizontalStack.addArrangedSubview(iconImageView)
+        horizontalStack.addArrangedSubview(label)
+        horizontalStack.alignment = .center
+        
+        return horizontalStack
     }()
     
     private lazy var locationStack: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.spacing = 4
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        
+        let horizontalStack = UIStackView()
+        horizontalStack.axis = .horizontal
+        horizontalStack.spacing = 8
+        horizontalStack.alignment = .top
+        horizontalStack.translatesAutoresizingMaskIntoConstraints = false
+
+        let iconImageView = UIImageView(image: UIImage(systemName: "map.circle"))
+        iconImageView.tintColor = .black
+        iconImageView.translatesAutoresizingMaskIntoConstraints = false
+        iconImageView.contentMode = .scaleAspectFit
+        iconImageView.widthAnchor.constraint(equalToConstant: 32).isActive = true
+        iconImageView.heightAnchor.constraint(equalToConstant: 32).isActive = true
+
+        let verticalStack = UIStackView()
+        verticalStack.axis = .vertical
+        verticalStack.spacing = 4
+        verticalStack.translatesAutoresizingMaskIntoConstraints = false
+
         let titleLabel = UILabel()
         titleLabel.text = "Casa do Jorge"
         titleLabel.font = .systemFont(ofSize: 16, weight: .medium)
-        
+
         let addressLabel = UILabel()
         addressLabel.text = "Rua das Flores, 123"
         addressLabel.font = .systemFont(ofSize: 14)
         addressLabel.textColor = .gray
-        
-        stack.addArrangedSubview(titleLabel)
-        stack.addArrangedSubview(addressLabel)
-        
-        return stack
+
+        verticalStack.addArrangedSubview(titleLabel)
+        verticalStack.addArrangedSubview(addressLabel)
+
+        horizontalStack.addArrangedSubview(iconImageView)
+        horizontalStack.addArrangedSubview(verticalStack)
+        horizontalStack.alignment = .center
+
+        return horizontalStack
     }()
+
     
     private lazy var participantsStack: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .horizontal
-        stack.spacing = 8
-        stack.alignment = .center
-        stack.translatesAutoresizingMaskIntoConstraints = false
+        let verticalStack = UIStackView()
+        verticalStack.axis = .vertical
+        verticalStack.spacing = 8
+        verticalStack.translatesAutoresizingMaskIntoConstraints = false
         
-        let label: UILabel = {
-            let lbl = UILabel()
-            lbl.text = "Participantes (25)"
-            lbl.font = .systemFont(ofSize: 16, weight: .medium)
-            return lbl
-        }()
+        // Título
+        let titleLabel = UILabel()
+        titleLabel.text = "Participantes (25)"
+        titleLabel.font = .systemFont(ofSize: 16, weight: .medium)
         
-        let badge: UIView = {
-            let view = UIView()
-            view.backgroundColor = .systemGray5
-            view.layer.cornerRadius = 12
-            
+        // Stack só para os ícones de pessoas (com sobreposição)
+        let iconsStack = UIStackView()
+        iconsStack.axis = .horizontal
+        iconsStack.spacing = -12
+        iconsStack.alignment = .center
+        iconsStack.translatesAutoresizingMaskIntoConstraints = false
+        
+        for _ in 0..<3 {
+            let imageView = UIImageView()
+            imageView.image = UIImage(systemName: "person.circle.fill")
+            imageView.tintColor = .systemGray
+            imageView.layer.borderColor = UIColor.white.cgColor
+            imageView.layer.borderWidth = 2
+            imageView.layer.cornerRadius = 20
+            imageView.clipsToBounds = true
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                imageView.widthAnchor.constraint(equalToConstant: 40),
+                imageView.heightAnchor.constraint(equalToConstant: 40)
+            ])
+            iconsStack.addArrangedSubview(imageView)
+        }
+        
+        // Stack horizontal principal para ícones + label "+22"
+        let horizontalStack = UIStackView()
+        horizontalStack.axis = .horizontal
+        horizontalStack.spacing = 8
+        horizontalStack.alignment = .center
+        horizontalStack.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Label "+22"
+        let moreLabel: UILabel = {
             let label = UILabel()
             label.text = "+22"
             label.font = .systemFont(ofSize: 14, weight: .medium)
             label.textColor = .darkGray
             label.translatesAutoresizingMaskIntoConstraints = false
-            
-            view.addSubview(label)
-            NSLayoutConstraint.activate([
-                label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
-                label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
-                label.topAnchor.constraint(equalTo: view.topAnchor, constant: 4),
-                label.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -4)
-            ])
-            
-            return view
+            return label
         }()
-        
-        stack.addArrangedSubview(label)
-        stack.addArrangedSubview(badge)
-        
-        return stack
+
+        horizontalStack.addArrangedSubview(iconsStack)
+        horizontalStack.addArrangedSubview(moreLabel)
+
+        // Montagem do vertical stack
+        verticalStack.addArrangedSubview(titleLabel)
+        verticalStack.addArrangedSubview(horizontalStack)
+
+        return verticalStack
     }()
     
     private lazy var descriptionLabel: UILabel = {
@@ -225,7 +292,7 @@ class EventDetailsView: UIView {
     
     // MARK: - Setup
     private func setupView() {
-        backgroundColor = .white
+        backgroundColor = .systemGroupedBackground
         setHierarchy()
         setConstraints()
     }
@@ -260,18 +327,18 @@ class EventDetailsView: UIView {
             tabStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             tabStackView.heightAnchor.constraint(equalToConstant: 40),
             
-            dateTimeLabel.topAnchor.constraint(equalTo: tabStackView.bottomAnchor, constant: 16),
+            dateTimeLabel.topAnchor.constraint(equalTo: tabStackView.bottomAnchor, constant: 25),
             dateTimeLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             dateTimeLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
-            locationStack.topAnchor.constraint(equalTo: dateTimeLabel.bottomAnchor, constant: 16),
+            locationStack.topAnchor.constraint(equalTo: dateTimeLabel.bottomAnchor, constant: 25),
             locationStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             locationStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
-            participantsStack.topAnchor.constraint(equalTo: locationStack.bottomAnchor, constant: 16),
+            participantsStack.topAnchor.constraint(equalTo: locationStack.bottomAnchor, constant: 25),
             participantsStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             
-            descriptionLabel.topAnchor.constraint(equalTo: participantsStack.bottomAnchor, constant: 16),
+            descriptionLabel.topAnchor.constraint(equalTo: participantsStack.bottomAnchor, constant: 25),
             descriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             descriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
@@ -279,11 +346,11 @@ class EventDetailsView: UIView {
             descriptionText.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             descriptionText.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
-            costStack.topAnchor.constraint(equalTo: descriptionText.bottomAnchor, constant: 16),
+            costStack.topAnchor.constraint(equalTo: descriptionText.bottomAnchor, constant: 25),
             costStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             costStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
-            confirmButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -24),
+            confirmButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
             confirmButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             confirmButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
             confirmButton.heightAnchor.constraint(equalToConstant: 48)
