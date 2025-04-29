@@ -10,6 +10,8 @@
 		09B2009E2DC04EA800A26EA2 /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B2009D2DC04EA800A26EA2 /* CreateEventViewController.swift */; };
 		09B2009F2DC04EA800A26EA2 /* CreateEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B2009C2DC04EA800A26EA2 /* CreateEventView.swift */; };
 		09B90F0E2DBAD2B2001E8DEA /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B90F0D2DBAD2B2001E8DEA /* TagCollectionViewCell.swift */; };
+		09CE52892DC19B35008D8022 /* EventDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CE52872DC19B35008D8022 /* EventDetailsViewController.swift */; };
+		09CE528A2DC19B35008D8022 /* EventDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CE52862DC19B35008D8022 /* EventDetailsView.swift */; };
 		09F557842DA9F86000D1D1A7 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557642DA9F86000D1D1A7 /* UIView+Extension.swift */; };
 		09F557852DA9F86000D1D1A7 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557652DA9F86000D1D1A7 /* UIViewController+Extension.swift */; };
 		09F557862DA9F86000D1D1A7 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557692DA9F86000D1D1A7 /* Event.swift */; };
@@ -46,6 +48,8 @@
 		09B2009C2DC04EA800A26EA2 /* CreateEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventView.swift; sourceTree = "<group>"; };
 		09B2009D2DC04EA800A26EA2 /* CreateEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventViewController.swift; sourceTree = "<group>"; };
 		09B90F0D2DBAD2B2001E8DEA /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionViewCell.swift; sourceTree = "<group>"; };
+		09CE52862DC19B35008D8022 /* EventDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsView.swift; sourceTree = "<group>"; };
+		09CE52872DC19B35008D8022 /* EventDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsViewController.swift; sourceTree = "<group>"; };
 		09F557592DA9F86000D1D1A7 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		09F5575B2DA9F86000D1D1A7 /* AvatarGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarGroupView.swift; sourceTree = "<group>"; };
 		09F5575C2DA9F86000D1D1A7 /* AvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarImageView.swift; sourceTree = "<group>"; };
@@ -98,6 +102,15 @@
 				09B2009D2DC04EA800A26EA2 /* CreateEventViewController.swift */,
 			);
 			path = CreateEvent;
+			sourceTree = "<group>";
+		};
+		09CE52882DC19B35008D8022 /* EventDetails */ = {
+			isa = PBXGroup;
+			children = (
+				09CE52862DC19B35008D8022 /* EventDetailsView.swift */,
+				09CE52872DC19B35008D8022 /* EventDetailsViewController.swift */,
+			);
+			path = EventDetails;
 			sourceTree = "<group>";
 		};
 		09F5575A2DA9F86000D1D1A7 /* TabBar */ = {
@@ -197,6 +210,7 @@
 		09F557812DA9F86000D1D1A7 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				09CE52882DC19B35008D8022 /* EventDetails */,
 				09B2009B2DC04E3500A26EA2 /* CreateEvent */,
 				09F557772DA9F86000D1D1A7 /* Home */,
 				09F5577A2DA9F86000D1D1A7 /* Login */,
@@ -334,6 +348,8 @@
 				09F557922DA9F86000D1D1A7 /* EventCardTableViewCell.swift in Sources */,
 				09F557932DA9F86000D1D1A7 /* mockEvents.swift in Sources */,
 				09F557942DA9F86000D1D1A7 /* AppDelegate.swift in Sources */,
+				09CE52892DC19B35008D8022 /* EventDetailsViewController.swift in Sources */,
+				09CE528A2DC19B35008D8022 /* EventDetailsView.swift in Sources */,
 				09B90F0E2DBAD2B2001E8DEA /* TagCollectionViewCell.swift in Sources */,
 				09F557952DA9F86000D1D1A7 /* HomeViewController.swift in Sources */,
 				09F557962DA9F86000D1D1A7 /* SearchView.swift in Sources */,
