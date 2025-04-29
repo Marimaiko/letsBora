@@ -10,6 +10,12 @@ import UIKit
 
 class EventDetailsView: UIView {
     // MARK: - UI Components
+    private lazy var headerSpacerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
     private lazy var navigationBar: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -59,7 +65,6 @@ class EventDetailsView: UIView {
         stack.axis = .horizontal
         stack.distribution = .fillEqually
         stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.backgroundColor = .white
         
         let tabs: [(title: String, systemImageName: String)] = [
             ("Chat", "bubble.left"),
@@ -83,6 +88,43 @@ class EventDetailsView: UIView {
         
         return stack
     }()
+    
+    private lazy var containerHeaderStackView: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [
+            headerSpacerView,
+            navigationBar,
+            eventImageView,
+            tabStackView
+        ])
+        stack.axis = .vertical
+        stack.spacing = 12
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.backgroundColor = .white
+        stack.layer.cornerRadius = 16
+        stack.layer.masksToBounds = true
+        return stack
+    }()
+
+    
+    private lazy var headerContainerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 16
+        view.translatesAutoresizingMaskIntoConstraints = false
+
+        view.addSubview(containerHeaderStackView)
+
+        NSLayoutConstraint.activate([
+            
+            containerHeaderStackView.topAnchor.constraint(equalTo: view.topAnchor),
+            containerHeaderStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            containerHeaderStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            containerHeaderStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+
+        return view
+    }()
+
     
     private lazy var dateTimeLabel: UIStackView = {
         let horizontalStack = UIStackView()
@@ -298,9 +340,8 @@ class EventDetailsView: UIView {
     }
     
     private func setHierarchy() {
-        addSubview(navigationBar)
-        addSubview(eventImageView)
-        addSubview(tabStackView)
+        addSubview(headerContainerView)
+
         addSubview(dateTimeLabel)
         addSubview(locationStack)
         addSubview(participantsStack)
@@ -312,26 +353,29 @@ class EventDetailsView: UIView {
     
     private func setConstraints() {
         NSLayoutConstraint.activate([
-            navigationBar.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            navigationBar.leadingAnchor.constraint(equalTo: leadingAnchor),
-            navigationBar.trailingAnchor.constraint(equalTo: trailingAnchor),
-            navigationBar.heightAnchor.constraint(equalToConstant: 44),
+            headerSpacerView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             
-            eventImageView.topAnchor.constraint(equalTo: navigationBar.bottomAnchor),
-            eventImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            eventImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            eventImageView.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 0.6),
+            headerContainerView.topAnchor.constraint(equalTo: topAnchor),
+            headerContainerView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            headerContainerView.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            tabStackView.topAnchor.constraint(equalTo: eventImageView.bottomAnchor, constant: 12),
-            tabStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            tabStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            tabStackView.heightAnchor.constraint(equalToConstant: 40),
+            navigationBar.heightAnchor.constraint(equalToConstant: 20),
+//
+            eventImageView.topAnchor.constraint(equalTo: navigationBar.bottomAnchor, constant: 30),
+//            eventImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+//            eventImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
+//            eventImageView.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 0.6),
+//            
+//            tabStackView.topAnchor.constraint(equalTo: eventImageView.bottomAnchor, constant: 12),
+//            tabStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
+//            tabStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
+//            tabStackView.heightAnchor.constraint(equalToConstant: 40),
             
-            dateTimeLabel.topAnchor.constraint(equalTo: tabStackView.bottomAnchor, constant: 25),
+            dateTimeLabel.topAnchor.constraint(equalTo: tabStackView.bottomAnchor, constant: 15),
             dateTimeLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             dateTimeLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
-            locationStack.topAnchor.constraint(equalTo: dateTimeLabel.bottomAnchor, constant: 25),
+            locationStack.topAnchor.constraint(equalTo: dateTimeLabel.bottomAnchor, constant: 15),
             locationStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             locationStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
@@ -346,7 +390,7 @@ class EventDetailsView: UIView {
             descriptionText.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             descriptionText.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
-            costStack.topAnchor.constraint(equalTo: descriptionText.bottomAnchor, constant: 25),
+            costStack.topAnchor.constraint(equalTo: descriptionText.bottomAnchor, constant: 15),
             costStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             costStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
