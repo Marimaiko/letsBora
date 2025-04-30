@@ -21,23 +21,33 @@ class ChatNotificationTableViewCell: UITableViewCell {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .systemGray4
+        
+        view.clipsToBounds = true
+        view.layer.cornerRadius = cellLayout.height / 4
         return view
     }()
     lazy var messageLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        
         return label
     }()
     // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()
+        setupUI()
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
   // MARK: - Setup e Configs
+    func setupUI(){
+        contentView.backgroundColor = .clear
+    }
    func setupCell(with chat: Chat){
+       print("setupCell \(chat)")
        messageLabel.text = chat.text
     }
 }
@@ -48,7 +58,18 @@ extension ChatNotificationTableViewCell: ViewCode {
     }
     
     func setConstraints() {
+        messageLabel
+            .centerX(baloonView.centerXAnchor)
+            .centerY(baloonView.centerYAnchor)
+        
         baloonView
+            .centerX(contentView.centerXAnchor)
+            .centerY(contentView.centerYAnchor)
+            .height(constant: cellLayout.height)
+            .width(
+                anchor: messageLabel.widthAnchor,
+                constant: cellLayout.marginHorizontal
+            )
             .top(
                 anchor: contentView.topAnchor,
                 constant: cellLayout.marginVertical
@@ -57,36 +78,15 @@ extension ChatNotificationTableViewCell: ViewCode {
                 anchor: contentView.bottomAnchor,
                 constant: -cellLayout.marginVertical
             )
-            .leading(
-                anchor: contentView.leadingAnchor,
-                constant: cellLayout.marginHorizontal
-            )
-            .trailing(
-                anchor: contentView.trailingAnchor,
-                constant: -cellLayout.marginHorizontal
-            )
-        
-        messageLabel
-            .top(
-                anchor: baloonView.topAnchor,
-                constant: cellLayout.marginVertical
-            )
-            .bottom(
-                anchor: baloonView.bottomAnchor,
-                constant: -cellLayout.marginVertical
-            )
-            .leading(
-                anchor: baloonView.leadingAnchor,
-                constant: cellLayout.marginHorizontal
-            )
-            .trailing(
-                anchor: baloonView.trailingAnchor,
-                constant: -cellLayout.marginHorizontal
-            )
             
     }
     
     
 }
 
+// MARK: - Preview Profile
+@available(iOS 17.0,*)
+#Preview(traits: .portrait, body: {
+    ChatViewController()
+})
 

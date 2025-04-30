@@ -8,7 +8,7 @@
 import UIKit
 
 class ChatTabBarView: UIView {
-    private struct InternalLayout {
+    struct InternalLayout {
         static let iconSize: CGFloat = 48
         static let marginHorizontal: CGFloat = 8
         static let marginVertical: CGFloat = 16

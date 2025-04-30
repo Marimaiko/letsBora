@@ -8,6 +8,12 @@ import Foundation
 import UIKit
 
 struct MockData {
+    static let chats: [Chat]
+    = [
+        chat1,
+        chat2,
+        chat3
+    ]
     static let users: [User]
     = [
         user1,

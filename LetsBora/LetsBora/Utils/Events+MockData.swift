@@ -9,7 +9,10 @@ extension MockData {
     static let eventMock1: Event = .init(
         title: "Festival de Verão 2025",
         image: "imageCard1",
-        tag: .init(title: "Show", color: .black, bgColor: .systemYellow),
+        tag: .init(title: "Show",
+                   color: .black,
+                   bgColor: .systemYellow
+                  ),
         visibility: "Public",
         date: "25 Mar",
         location: "Arena Show - São Paulo, SP",

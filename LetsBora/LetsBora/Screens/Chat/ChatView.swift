@@ -16,12 +16,11 @@ class ChatView: UIView {
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        
-        tableView.register(
-            ChatNotificationTableViewCell.self,
-            forCellReuseIdentifier: ChatNotificationTableViewCell.identifier
-        )
-        
+        tableView.allowsSelection = false
+        tableView.backgroundColor =  .clear
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.separatorStyle = .none
+        tableView.showsVerticalScrollIndicator = false
         return tableView
     }()
     // MARK: - LifeCycle
@@ -38,8 +37,8 @@ class ChatView: UIView {
 }
 extension ChatView:ViewCode{
     func setHierarchy() {
-        self.addSubview(chatTabBarView)
         self.addSubview(tableView)
+        self.addSubview(chatTabBarView)
     }
     
     func setConstraints() {
@@ -53,9 +52,8 @@ extension ChatView:ViewCode{
             .bottom(anchor: self.bottomAnchor)
             .leading(anchor: self.leadingAnchor)
             .trailing(anchor: self.trailingAnchor)
-        
+            .height(constant: ChatTabBarView.InternalLayout.containerHeight)
         
     }
-    
-    
+
 }
