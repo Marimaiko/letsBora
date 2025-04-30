@@ -14,6 +14,11 @@ class SearchViewController: ViewController {
     private var tags: [Tag] = MockData.tags
     
     // MARK: - LifeCycle
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
     override func loadView() {
         self.view  = mainView
     }

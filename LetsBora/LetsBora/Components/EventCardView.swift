@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol EventCardViewDelegate: AnyObject {
+    func didTapDetailButton(in view: EventCardView)
+}
+
 class EventCardView: UIView {
+    weak var delegate: EventCardViewDelegate?
+    
     // MARK: - UI Properties
     private let noImageCardHeight: CGFloat = 135
     private let imageHeight: CGFloat = 140
@@ -78,6 +84,7 @@ class EventCardView: UIView {
         super.init(frame: frame)
         self.translatesAutoresizingMaskIntoConstraints = false
         setupView()
+        detailButton.addTarget(self, action: #selector(detailButtonTapped), for: .touchUpInside)
     }
     
     required init?(coder:NSCoder) {
@@ -103,9 +110,10 @@ class EventCardView: UIView {
     public func setDetailButtonTitle(_ title: String)  {
         self.detailButton.configuration?.title = title
     }
-    public func setTagViewTextColor(text: String,
-                                    textColor: UIColor = .white,
-                                    backgroundColor: UIColor = .black
+    public func setTagViewTextColor(
+        text: String,
+        textColor: UIColor = .white,
+        backgroundColor: UIColor = .black
     ){
         self.tagView.setText(text)
         self.tagView.setTextColor(textColor)
@@ -124,7 +132,9 @@ class EventCardView: UIView {
         }
         
     }
-    
+    @objc private func detailButtonTapped() {
+        delegate?.didTapDetailButton(in: self)
+    }
 }
 
 // MARK: - ViewCode Extension

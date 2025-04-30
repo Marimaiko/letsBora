@@ -20,14 +20,9 @@ class LoginViewController: UIViewController {
 }
 extension LoginViewController: LoginViewDelegate {
     func didTapLoginButton() {
-        let tabBarController = TabBarController()
-        let navigationController = UINavigationController(rootViewController: tabBarController)
-        
-        // Ensure we access the correct scene delegate
-        if let sceneDelegate = UIApplication.shared.connectedScenes
-            .first?.delegate as? SceneDelegate,
+        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate,
            let window = sceneDelegate.window {
-            window.rootViewController = navigationController
+            window.rootViewController = TabBarController()
             window.makeKeyAndVisible()
         }
     }
