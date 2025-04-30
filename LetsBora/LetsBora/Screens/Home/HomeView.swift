@@ -6,8 +6,11 @@
 //
 
 import UIKit
-
+protocol HomeViewDelegate {
+    func seeDetailsTapped()
+}
 class HomeView: UIView {
+    var delegate: HomeViewDelegate?
     
     // MARK: - UI Components
     private lazy var titleLabel = ReusableLabel(text: "Let's Bora", labelType: .title)
@@ -42,6 +45,7 @@ class HomeView: UIView {
         super.init(frame: .zero)
         setupView()
         self.backgroundColor = .systemGray6
+        eventCardView1.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -90,7 +94,13 @@ extension  HomeView: ViewCode {
             .bottom(anchor: self.bottomAnchor,constant: -16)
     }
 }
-
+extension HomeView: EventCardViewDelegate {
+    func didTapDetailButton(in view: EventCardView) {
+        print("did Tap Detail Button \(String(describing: view.self))")
+        self.delegate?.seeDetailsTapped()
+    }
+    
+}
 // MARK: - Preview
 
 @available(iOS 17.0, *)

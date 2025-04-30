@@ -19,6 +19,7 @@ class HomeViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.mainView.delegate = self
         configureTableView()
     }
     func configureTableView() {
@@ -27,6 +28,17 @@ class HomeViewController: UIViewController {
     }
 
 }
+extension HomeViewController: HomeViewDelegate{
+    func seeDetailsTapped() {
+        print("Item Tapped")
+        let detailVC = EventDetailsViewController()
+        detailVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
+    
+    
+}
+
 // MARK: - Table View Delegate
 extension HomeViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -39,6 +51,7 @@ extension HomeViewController : UITableViewDataSource {
            return cell ?? UITableViewCell()
        }
 }
+
 
 // MARK: - Preview
 @available(iOS 17.0, *)
