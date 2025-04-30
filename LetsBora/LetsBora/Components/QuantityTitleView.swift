@@ -33,10 +33,11 @@ class QuantityTitleView: UIView {
     }()
     
 //MARK: - Init
-    init() {
+    init(number: String, title: String) {
         super.init(frame: .zero)
         buildView()
         setupConstraints()
+        config(number: number, title: title)
     }
     
     required init?(coder: NSCoder) {

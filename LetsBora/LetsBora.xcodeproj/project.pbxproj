@@ -18,6 +18,7 @@
 		361033BD2DA6EC9B004E527B /* ProfileInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361033BC2DA6EC91004E527B /* ProfileInfoView.swift */; };
 		362123732DAD7ED200042B6D /* QuantityTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362123722DAD7EBD00042B6D /* QuantityTitleView.swift */; };
 		362123752DADA81800042B6D /* ConquestIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362123742DADA80100042B6D /* ConquestIconView.swift */; };
+		36FFDC6B2DC00B6E00F46368 /* SettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FFDC6A2DC00B4900F46368 /* SettingButton.swift */; };
 		539D7B822D8D9C050061BB67 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539D7B812D8D9C050061BB67 /* AppDelegate.swift */; };
 		539D7B842D8D9C050061BB67 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539D7B832D8D9C050061BB67 /* SceneDelegate.swift */; };
 		539D7B862D8D9C050061BB67 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539D7B852D8D9C050061BB67 /* ViewController.swift */; };
@@ -38,6 +39,7 @@
 		361033BC2DA6EC91004E527B /* ProfileInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoView.swift; sourceTree = "<group>"; };
 		362123722DAD7EBD00042B6D /* QuantityTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuantityTitleView.swift; sourceTree = "<group>"; };
 		362123742DADA80100042B6D /* ConquestIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConquestIconView.swift; sourceTree = "<group>"; };
+		36FFDC6A2DC00B4900F46368 /* SettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingButton.swift; sourceTree = "<group>"; };
 		539D7B7E2D8D9C050061BB67 /* LetsBora.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LetsBora.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		539D7B812D8D9C050061BB67 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		539D7B832D8D9C050061BB67 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -72,6 +74,7 @@
 			children = (
 				098AA06C2D986F2600B0A176 /* TabBar */,
 				098AA06D2D986F2600B0A176 /* DividerView.swift */,
+				36FFDC6A2DC00B4900F46368 /* SettingButton.swift */,
 				361033BC2DA6EC91004E527B /* ProfileInfoView.swift */,
 				362123722DAD7EBD00042B6D /* QuantityTitleView.swift */,
 				362123742DADA80100042B6D /* ConquestIconView.swift */,
@@ -221,6 +224,7 @@
 			files = (
 				361033BD2DA6EC9B004E527B /* ProfileInfoView.swift in Sources */,
 				539D7B862D8D9C050061BB67 /* ViewController.swift in Sources */,
+				36FFDC6B2DC00B6E00F46368 /* SettingButton.swift in Sources */,
 				539D7B822D8D9C050061BB67 /* AppDelegate.swift in Sources */,
 				362123732DAD7ED200042B6D /* QuantityTitleView.swift in Sources */,
 				361033B92DA6BAD5004E527B /* ProfileView.swift in Sources */,
