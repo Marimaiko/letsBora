@@ -20,7 +20,7 @@ class TabBarController: UITabBarController {
         let highlights = UINavigationController(rootViewController: HomeViewController())
         let search = UINavigationController(rootViewController: SearchViewController())
         let createEvent = UINavigationController(rootViewController: CreateEventViewController())
-        let myEvents = UINavigationController(rootViewController: UIViewController())
+        let myEvents = UINavigationController(rootViewController: MyEventsViewController())
         let profile = UINavigationController(rootViewController: ProfileEditViewController())
         
         highlights.tabBarItem = UITabBarItem(title: "Início", image: UIImage(systemName: "house"), tag: 0)

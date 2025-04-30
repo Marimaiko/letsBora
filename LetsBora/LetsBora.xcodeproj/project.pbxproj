@@ -236,8 +236,8 @@
 		3C4DE3BE2DC2BE5D005AD32A /* MyEvents */ = {
 			isa = PBXGroup;
 			children = (
-				3C4DE3BF2DC2BF56005AD32A /* MyEventsViewController.swift */,
 				3C4DE3C12DC2BF72005AD32A /* MyEventsView.swift */,
+				3C4DE3BF2DC2BF56005AD32A /* MyEventsViewController.swift */,
 			);
 			path = MyEvents;
 			sourceTree = "<group>";
