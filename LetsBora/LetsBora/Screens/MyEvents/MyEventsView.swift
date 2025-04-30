@@ -106,7 +106,5 @@ extension MyEventsView: EventCardViewDelegate {
 
 @available(iOS 17.0, *)
 #Preview("Home View ", traits: .portrait, body: {
-    
     MyEventsViewController()
-    
 })

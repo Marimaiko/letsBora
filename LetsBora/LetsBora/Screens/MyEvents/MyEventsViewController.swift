@@ -10,7 +10,7 @@ import UIKit
 class MyEventsViewController: UIViewController {
     //MARK: Properties
     private let mainView = MyEventsView()
-    private var events: [Event] = MockData.events
+    private var events: [Event] = MockData.pastEvents
     
     // MARK: - LifeCycle
     override func viewWillAppear(_ animated: Bool) {
@@ -52,7 +52,7 @@ extension MyEventsViewController : UITableViewDataSource {
 
        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
            let cell = tableView.dequeueReusableCell(withIdentifier: EventCardTableViewCell.identifier, for: indexPath) as? EventCardTableViewCell
-           cell?.setupCell(with: events[indexPath.row])
+           cell?.setupCell(with: events[indexPath.row], isPast: true)
            return cell ?? UITableViewCell()
        }
 }

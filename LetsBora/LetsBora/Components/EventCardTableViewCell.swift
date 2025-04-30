@@ -28,12 +28,12 @@ class EventCardTableViewCell: UITableViewCell {
        }
 
        // MARK: - Public Method
-       public func setupCell(with event: Event) {
+       public func setupCell(with event: Event, isPast: Bool = false) {
            // set mandatory arguments
            eventCard.setTitleLabel(event.title)
            eventCard.setLocationLabel(event.location)
            eventCard.setDateLabel(event.date)
-           eventCard.setDetailButtonTitle("Participar")
+           eventCard.setDetailButtonTitle(!isPast ? "Participar" : "Ver Detalhes")
            
            // set optionals
            if let image = event.image {
