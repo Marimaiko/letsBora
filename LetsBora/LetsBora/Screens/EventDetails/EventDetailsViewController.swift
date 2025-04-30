@@ -16,6 +16,10 @@ class EventDetailsViewController: UIViewController {
     }()
     
     // MARK: - LifeCycle
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
     override func loadView() {
         self.view = eventDetailsView
     }
@@ -24,10 +28,17 @@ class EventDetailsViewController: UIViewController {
         super.viewDidLoad()
         setupNavigation()
     }
-    
+
     // MARK: - Setup
     private func setupNavigation() {
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .white
+        navigationController?.navigationBar.standardAppearance = appearance
+        
         title = "Detalhes Aniversário do Pedro"
+        
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: UIImage(systemName: "chevron.left"),
             style: .plain,

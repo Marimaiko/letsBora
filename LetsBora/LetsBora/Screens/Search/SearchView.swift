@@ -22,8 +22,7 @@ class SearchView: UIView {
                    heightDimension: .fractionalHeight(1.0)
                )
                let item = NSCollectionLayoutItem(layoutSize: itemSize)
-               item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4)
-
+                
                let groupSize = NSCollectionLayoutSize(
                    widthDimension: .estimated(100),
                    heightDimension: .absolute(self.heightCollectionView)
@@ -32,8 +31,6 @@ class SearchView: UIView {
 
                let section = NSCollectionLayoutSection(group: group)
                section.orthogonalScrollingBehavior = .continuous // habilita scroll horizontal
-               section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4)
-               section.interGroupSpacing = 4
 
                return section
            }
@@ -91,7 +88,7 @@ extension SearchView: ViewCode {
     
     func setConstraints() {
         titleLabel
-            .top(anchor: self.topAnchor, constant: 48)
+            .top(anchor: self.safeAreaLayoutGuide.topAnchor)
             .leading(anchor: self.leadingAnchor, constant: 16)
             .trailing(anchor: self.trailingAnchor, constant: -16)
         

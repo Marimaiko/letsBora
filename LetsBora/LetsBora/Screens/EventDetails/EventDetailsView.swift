@@ -15,7 +15,6 @@ class EventDetailsView: UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-
     
     private lazy var eventImageView: UIImageView = {
         let imageView = UIImageView()
@@ -78,15 +77,6 @@ class EventDetailsView: UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
 
         view.addSubview(containerHeaderStackView)
-
-        NSLayoutConstraint.activate([
-            
-            containerHeaderStackView.topAnchor.constraint(equalTo: view.topAnchor),
-            containerHeaderStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            containerHeaderStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            containerHeaderStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
-
         return view
     }()
 
@@ -318,16 +308,18 @@ class EventDetailsView: UIView {
     
     private func setConstraints() {
         NSLayoutConstraint.activate([
-            headerContainerView.topAnchor.constraint(equalTo: topAnchor),
-            headerContainerView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            headerContainerView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            containerHeaderStackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            containerHeaderStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            containerHeaderStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            headerContainerView.heightAnchor.constraint(equalToConstant: 20),
-//
+            
+            headerContainerView.heightAnchor.constraint(equalToConstant: 120),
+
             eventImageView.topAnchor.constraint(equalTo: headerContainerView.bottomAnchor, constant: 30),
-//            eventImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
-//            eventImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-//            eventImageView.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 0.6),
+            eventImageView.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 0.6),
+            eventImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            eventImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
+
 //            
 //            tabStackView.topAnchor.constraint(equalTo: eventImageView.bottomAnchor, constant: 12),
 //            tabStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),

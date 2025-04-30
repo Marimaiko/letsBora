@@ -67,7 +67,7 @@ extension  HomeView: ViewCode {
     func setConstraints() {
         // title constraints
         titleLabel
-            .top(anchor: self.topAnchor,constant: 48)
+            .top(anchor: self.safeAreaLayoutGuide.topAnchor)
             .leading(anchor: self.leadingAnchor,constant: 18)
         
         // next event label  constraints

@@ -13,7 +13,10 @@ class HomeViewController: UIViewController {
     private var events: [Event] = MockData.events
     
     // MARK: - LifeCycle
-    /// before didLoad used to ref view
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
     override func loadView() {
         self.view = mainView
     }
@@ -23,7 +26,10 @@ class HomeViewController: UIViewController {
         configureTableView()
     }
     func configureTableView() {
-        mainView.tableView.register(EventCardTableViewCell.self, forCellReuseIdentifier: EventCardTableViewCell.identifier)
+        mainView.tableView.register(
+            EventCardTableViewCell.self,
+            forCellReuseIdentifier: EventCardTableViewCell.identifier
+        )
         mainView.tableView.dataSource = self
     }
 
