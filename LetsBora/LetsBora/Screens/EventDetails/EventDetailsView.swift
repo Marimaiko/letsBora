@@ -8,9 +8,15 @@
 import Foundation
 import UIKit
 
+protocol EventDetailsViewDelegate: AnyObject {
+    func barButtonTapped(_ sender: UIButton)
+}
+
 class EventDetailsView: UIView {
-    // MARK: - UI Components
     
+    weak var delegate: EventDetailsViewDelegate?
+    
+    // MARK: - UI Components
     private lazy var eventImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -19,6 +25,12 @@ class EventDetailsView: UIView {
         imageView.image = UIImage(named: "event-sample-image")
         return imageView
     }()
+    enum TabTag: Int {
+        case chat
+        case costs
+        case maps
+        case alerts
+    }
     
     private lazy var tabStackView: UIStackView = {
         let stack = UIStackView()
@@ -26,11 +38,15 @@ class EventDetailsView: UIView {
         stack.distribution = .fillEqually
         stack.translatesAutoresizingMaskIntoConstraints = false
         
-        let tabs: [(title: String, systemImageName: String)] = [
-            ("Chat", "bubble.left"),
-            ("Custos", "dollarsign.circle"),
-            ("Mapa", "map"),
-            ("Alertas", "bell")
+        let tabs: [(
+            title: String,
+            systemImageName: String,
+            tag: TabTag
+        )] = [
+            ("Chat", "bubble.left", .chat),
+            ("Custos", "dollarsign.circle", .costs),
+            ("Mapa", "map", .maps),
+            ("Alertas", "bell", .alerts)
         ]
         
         tabs.forEach { tab in
@@ -42,9 +58,16 @@ class EventDetailsView: UIView {
             
             let button = UIButton(configuration: config)
             button.tintColor = .systemBlue
+            button.tag = tab.tag.rawValue
+            button.addTarget(
+                        self,
+                        action: #selector(barButtonTapped(_:)),
+                        for: .touchUpInside
+                     )
             
             stack.addArrangedSubview(button)
         }
+        
         
         return stack
     }()
@@ -282,6 +305,10 @@ class EventDetailsView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    @objc private func barButtonTapped(_ sender: UIButton) {
+        self.delegate?.barButtonTapped(sender)
+    }
+    
     // MARK: - Setup
     private func setupView() {
         backgroundColor = .systemGroupedBackground
@@ -303,9 +330,14 @@ class EventDetailsView: UIView {
     
     private func setConstraints() {
         NSLayoutConstraint.activate([
-            containerHeaderStackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            containerHeaderStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            containerHeaderStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            headerContainerView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+              headerContainerView.leadingAnchor.constraint(equalTo: leadingAnchor),
+              headerContainerView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            
+            containerHeaderStackView.topAnchor.constraint(equalTo: headerContainerView.topAnchor),
+               containerHeaderStackView.leadingAnchor.constraint(equalTo: headerContainerView.leadingAnchor),
+               containerHeaderStackView.trailingAnchor.constraint(equalTo: headerContainerView.trailingAnchor),
+            containerHeaderStackView.bottomAnchor.constraint(equalTo: headerContainerView.bottomAnchor),
 
             eventImageView.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 0.6),
             
