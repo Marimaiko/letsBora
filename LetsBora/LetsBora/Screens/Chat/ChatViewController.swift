@@ -8,6 +8,8 @@
 import UIKit
 
 class ChatViewController: UIViewController {
+    let chats: Chat = 
+    
     let chatView = ChatView()
     
     // MARK: - LyfeCycle
@@ -22,9 +24,21 @@ class ChatViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        chatView.tableView.delegate = self
     }
     
     private func setupNavigation() {
         title = "Detalhes Aniversário do Pedro"
     }
+}
+extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        <#code#>
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        <#code#>
+    }
+    
+    
 }

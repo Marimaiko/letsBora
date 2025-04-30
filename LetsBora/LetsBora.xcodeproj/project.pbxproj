@@ -9,6 +9,13 @@
 /* Begin PBXBuildFile section */
 		092728DE2DC26D9C000D744C /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092728DD2DC26D9C000D744C /* ChatViewController.swift */; };
 		092728E02DC26DB1000D744C /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092728DF2DC26DB1000D744C /* ChatView.swift */; };
+		092728E32DC28365000D744C /* ChatTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092728E22DC28364000D744C /* ChatTabBarView.swift */; };
+		092728E62DC29B19000D744C /* ChatNotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092728E52DC29B19000D744C /* ChatNotificationTableViewCell.swift */; };
+		092728E82DC2AD70000D744C /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092728E72DC2AD6E000D744C /* Chat.swift */; };
+		092728EA2DC2BA61000D744C /* Events+MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092728E92DC2BA58000D744C /* Events+MockData.swift */; };
+		092728EE2DC2BB06000D744C /* Tag+MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092728ED2DC2BB01000D744C /* Tag+MockData.swift */; };
+		092728F02DC2BB95000D744C /* Users+MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092728EF2DC2BB8F000D744C /* Users+MockData.swift */; };
+		092728F62DC2BCFD000D744C /* Chat+MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092728F52DC2BCFD000D744C /* Chat+MockData.swift */; };
 		09B2009E2DC04EA800A26EA2 /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B2009D2DC04EA800A26EA2 /* CreateEventViewController.swift */; };
 		09B2009F2DC04EA800A26EA2 /* CreateEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B2009C2DC04EA800A26EA2 /* CreateEventView.swift */; };
 		09B90F0E2DBAD2B2001E8DEA /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B90F0D2DBAD2B2001E8DEA /* TagCollectionViewCell.swift */; };
@@ -29,7 +36,7 @@
 		09F557902DA9F86000D1D1A7 /* AvatarGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F5575B2DA9F86000D1D1A7 /* AvatarGroupView.swift */; };
 		09F557912DA9F86000D1D1A7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557792DA9F86000D1D1A7 /* LoginViewController.swift */; };
 		09F557922DA9F86000D1D1A7 /* EventCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F5575E2DA9F86000D1D1A7 /* EventCardTableViewCell.swift */; };
-		09F557932DA9F86000D1D1A7 /* mockEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557822DA9F86000D1D1A7 /* mockEvents.swift */; };
+		09F557932DA9F86000D1D1A7 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557822DA9F86000D1D1A7 /* MockData.swift */; };
 		09F557942DA9F86000D1D1A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F5576C2DA9F86000D1D1A7 /* AppDelegate.swift */; };
 		09F557952DA9F86000D1D1A7 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557762DA9F86000D1D1A7 /* HomeViewController.swift */; };
 		09F557962DA9F86000D1D1A7 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F5577E2DA9F86000D1D1A7 /* SearchView.swift */; };
@@ -49,6 +56,13 @@
 /* Begin PBXFileReference section */
 		092728DD2DC26D9C000D744C /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		092728DF2DC26DB1000D744C /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		092728E22DC28364000D744C /* ChatTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTabBarView.swift; sourceTree = "<group>"; };
+		092728E52DC29B19000D744C /* ChatNotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatNotificationTableViewCell.swift; sourceTree = "<group>"; };
+		092728E72DC2AD6E000D744C /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
+		092728E92DC2BA58000D744C /* Events+MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Events+MockData.swift"; sourceTree = "<group>"; };
+		092728ED2DC2BB01000D744C /* Tag+MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tag+MockData.swift"; sourceTree = "<group>"; };
+		092728EF2DC2BB8F000D744C /* Users+MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Users+MockData.swift"; sourceTree = "<group>"; };
+		092728F52DC2BCFD000D744C /* Chat+MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Chat+MockData.swift"; sourceTree = "<group>"; };
 		09B2009C2DC04EA800A26EA2 /* CreateEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventView.swift; sourceTree = "<group>"; };
 		09B2009D2DC04EA800A26EA2 /* CreateEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventViewController.swift; sourceTree = "<group>"; };
 		09B90F0D2DBAD2B2001E8DEA /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -83,7 +97,7 @@
 		09F5577C2DA9F86000D1D1A7 /* ProfileEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditViewController.swift; sourceTree = "<group>"; };
 		09F5577E2DA9F86000D1D1A7 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		09F5577F2DA9F86000D1D1A7 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
-		09F557822DA9F86000D1D1A7 /* mockEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mockEvents.swift; sourceTree = "<group>"; };
+		09F557822DA9F86000D1D1A7 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
 		539D7B7E2D8D9C050061BB67 /* LetsBora.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LetsBora.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		539D7B8F2D8D9C070061BB67 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -135,6 +149,23 @@
 			path = Chat;
 			sourceTree = "<group>";
 		};
+		092728E12DC2833A000D744C /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				092728E42DC29AD9000D744C /* Cell */,
+				092728E22DC28364000D744C /* ChatTabBarView.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		092728E42DC29AD9000D744C /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				092728E52DC29B19000D744C /* ChatNotificationTableViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		09B2009B2DC04E3500A26EA2 /* CreateEvent */ = {
 			isa = PBXGroup;
 			children = (
@@ -164,6 +195,7 @@
 		09F557622DA9F86000D1D1A7 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				092728E12DC2833A000D744C /* Chat */,
 				092728DB2DC26C7E000D744C /* Avatar */,
 				092728DA2DC26C6F000D744C /* Tag */,
 				092728D92DC26C5B000D744C /* EventCard */,
@@ -188,6 +220,7 @@
 		09F5576B2DA9F86000D1D1A7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				092728E72DC2AD6E000D744C /* Chat.swift */,
 				09F557682DA9F86000D1D1A7 /* Tag.swift */,
 				09F557692DA9F86000D1D1A7 /* Event.swift */,
 				09F5576A2DA9F86000D1D1A7 /* User.swift */,
@@ -261,7 +294,11 @@
 		09F557832DA9F86000D1D1A7 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				09F557822DA9F86000D1D1A7 /* mockEvents.swift */,
+				092728F52DC2BCFD000D744C /* Chat+MockData.swift */,
+				092728EF2DC2BB8F000D744C /* Users+MockData.swift */,
+				092728ED2DC2BB01000D744C /* Tag+MockData.swift */,
+				092728E92DC2BA58000D744C /* Events+MockData.swift */,
+				09F557822DA9F86000D1D1A7 /* MockData.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -367,30 +404,37 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				092728F02DC2BB95000D744C /* Users+MockData.swift in Sources */,
 				09F557842DA9F86000D1D1A7 /* UIView+Extension.swift in Sources */,
 				09F557852DA9F86000D1D1A7 /* UIViewController+Extension.swift in Sources */,
 				09B2009E2DC04EA800A26EA2 /* CreateEventViewController.swift in Sources */,
+				092728EE2DC2BB06000D744C /* Tag+MockData.swift in Sources */,
 				09B2009F2DC04EA800A26EA2 /* CreateEventView.swift in Sources */,
 				09F557862DA9F86000D1D1A7 /* Event.swift in Sources */,
 				09F557872DA9F86000D1D1A7 /* ProfileEditView.swift in Sources */,
 				09F557882DA9F86000D1D1A7 /* SearchViewController.swift in Sources */,
+				092728F62DC2BCFD000D744C /* Chat+MockData.swift in Sources */,
 				09F557892DA9F86000D1D1A7 /* TabBarController.swift in Sources */,
 				09F5578A2DA9F86000D1D1A7 /* EventCardView.swift in Sources */,
 				09F5578B2DA9F86000D1D1A7 /* LoginView.swift in Sources */,
 				09F5578C2DA9F86000D1D1A7 /* Tag.swift in Sources */,
 				09F5578D2DA9F86000D1D1A7 /* ReusableLabel.swift in Sources */,
+				092728EA2DC2BA61000D744C /* Events+MockData.swift in Sources */,
 				092728E02DC26DB1000D744C /* ChatView.swift in Sources */,
 				09F5578E2DA9F86000D1D1A7 /* AvatarImageView.swift in Sources */,
 				092728DE2DC26D9C000D744C /* ChatViewController.swift in Sources */,
 				09F5578F2DA9F86000D1D1A7 /* User.swift in Sources */,
+				092728E82DC2AD70000D744C /* Chat.swift in Sources */,
+				092728E62DC29B19000D744C /* ChatNotificationTableViewCell.swift in Sources */,
 				09F557902DA9F86000D1D1A7 /* AvatarGroupView.swift in Sources */,
 				09F557912DA9F86000D1D1A7 /* LoginViewController.swift in Sources */,
 				09F557922DA9F86000D1D1A7 /* EventCardTableViewCell.swift in Sources */,
-				09F557932DA9F86000D1D1A7 /* mockEvents.swift in Sources */,
+				09F557932DA9F86000D1D1A7 /* MockData.swift in Sources */,
 				09F557942DA9F86000D1D1A7 /* AppDelegate.swift in Sources */,
 				09CE52892DC19B35008D8022 /* EventDetailsViewController.swift in Sources */,
 				09CE528A2DC19B35008D8022 /* EventDetailsView.swift in Sources */,
 				09B90F0E2DBAD2B2001E8DEA /* TagCollectionViewCell.swift in Sources */,
+				092728E32DC28365000D744C /* ChatTabBarView.swift in Sources */,
 				09F557952DA9F86000D1D1A7 /* HomeViewController.swift in Sources */,
 				09F557962DA9F86000D1D1A7 /* SearchView.swift in Sources */,
 				09F557972DA9F86000D1D1A7 /* SceneDelegate.swift in Sources */,

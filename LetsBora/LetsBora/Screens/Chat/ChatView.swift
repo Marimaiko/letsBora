@@ -8,15 +8,54 @@
 import UIKit
 
 class ChatView: UIView {
+    
+    private lazy var chatTabBarView: ChatTabBarView = {
+       let chatBar = ChatTabBarView()
+            return chatBar
+    }()
+    lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        tableView.register(
+            ChatNotificationTableViewCell.self,
+            forCellReuseIdentifier: ChatNotificationTableViewCell.identifier
+        )
+        
+        return tableView
+    }()
     // MARK: - LifeCycle
     init() {
         super.init(frame: .zero)
         self.backgroundColor = .systemGray6
+        setupView()
         
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-
+}
+extension ChatView:ViewCode{
+    func setHierarchy() {
+        self.addSubview(chatTabBarView)
+        self.addSubview(tableView)
+    }
+    
+    func setConstraints() {
+        tableView
+            .top(anchor: self.safeAreaLayoutGuide.topAnchor)
+            .leading(anchor: self.leadingAnchor)
+            .trailing(anchor: self.trailingAnchor)
+            .bottom(anchor: chatTabBarView.topAnchor)
+        
+        chatTabBarView
+            .bottom(anchor: self.bottomAnchor)
+            .leading(anchor: self.leadingAnchor)
+            .trailing(anchor: self.trailingAnchor)
+        
+        
+    }
+    
+    
 }

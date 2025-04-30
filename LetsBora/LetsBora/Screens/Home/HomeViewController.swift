@@ -24,6 +24,7 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         self.mainView.delegate = self
         configureTableView()
+        setupNavigationBar()
     }
     func configureTableView() {
         mainView.tableView.register(
@@ -32,7 +33,18 @@ class HomeViewController: UIViewController {
         )
         mainView.tableView.dataSource = self
     }
+    func setupNavigationBar() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .white
 
+        // Apply to both standard and scroll edge appearances
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        
+        // Optionally also compact appearance
+        navigationController?.navigationBar.compactAppearance = appearance
+    }
 }
 extension HomeViewController: HomeViewDelegate{
     func seeDetailsTapped() {

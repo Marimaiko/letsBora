@@ -12,7 +12,6 @@ class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTabs()
-        setupNavigationBar()
     }
     
     /// Sets up the tabs for the bar
@@ -34,19 +33,6 @@ class TabBarController: UITabBarController {
         self.tabBar.backgroundColor = .white
        
     }
-    private func setupNavigationBar() {
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .white
-
-        // Apply to both standard and scroll edge appearances
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        
-        // Optionally also compact appearance
-        navigationController?.navigationBar.compactAppearance = appearance
-    }
-    
 }
 
 // MARK: - Preview Profile
