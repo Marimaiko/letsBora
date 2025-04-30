@@ -133,7 +133,6 @@ class EventCardView: UIView {
         
     }
     @objc private func detailButtonTapped() {
-        print("Detail Button tapped")
         delegate?.didTapDetailButton(in: self)
     }
 }

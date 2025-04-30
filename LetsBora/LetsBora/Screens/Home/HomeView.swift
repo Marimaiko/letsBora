@@ -96,7 +96,6 @@ extension  HomeView: ViewCode {
 }
 extension HomeView: EventCardViewDelegate {
     func didTapDetailButton(in view: EventCardView) {
-        print("did Tap Detail Button \(String(describing: view.self))")
         self.delegate?.seeDetailsTapped()
     }
     

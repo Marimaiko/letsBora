@@ -4,6 +4,10 @@ class CreateEventViewController: UIViewController {
 
     var screen: CreateEventView?
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
     override func loadView() {
         screen = CreateEventView()
         view = screen

@@ -36,7 +36,6 @@ class HomeViewController: UIViewController {
 }
 extension HomeViewController: HomeViewDelegate{
     func seeDetailsTapped() {
-        print("Item Tapped")
         let detailVC = EventDetailsViewController()
         detailVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(detailVC, animated: true)

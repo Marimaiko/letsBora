@@ -10,11 +10,6 @@ import UIKit
 
 class EventDetailsView: UIView {
     // MARK: - UI Components
-    private lazy var headerSpacerView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
     
     private lazy var eventImageView: UIImageView = {
         let imageView = UIImageView()
@@ -56,7 +51,6 @@ class EventDetailsView: UIView {
     
     private lazy var containerHeaderStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [
-            headerSpacerView,
             eventImageView,
             tabStackView
         ])
@@ -65,6 +59,7 @@ class EventDetailsView: UIView {
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.backgroundColor = .white
         stack.layer.cornerRadius = 16
+        stack.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         stack.layer.masksToBounds = true
         return stack
     }()
@@ -311,20 +306,8 @@ class EventDetailsView: UIView {
             containerHeaderStackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             containerHeaderStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             containerHeaderStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            
-            
-            headerContainerView.heightAnchor.constraint(equalToConstant: 120),
 
-            eventImageView.topAnchor.constraint(equalTo: headerContainerView.bottomAnchor, constant: 30),
             eventImageView.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 0.6),
-            eventImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            eventImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-
-//            
-//            tabStackView.topAnchor.constraint(equalTo: eventImageView.bottomAnchor, constant: 12),
-//            tabStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
-//            tabStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
-//            tabStackView.heightAnchor.constraint(equalToConstant: 40),
             
             dateTimeLabel.topAnchor.constraint(equalTo: tabStackView.bottomAnchor, constant: 15),
             dateTimeLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),

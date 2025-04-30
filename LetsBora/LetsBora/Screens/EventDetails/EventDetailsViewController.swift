@@ -31,20 +31,27 @@ class EventDetailsViewController: UIViewController {
 
     // MARK: - Setup
     private func setupNavigation() {
-        
+       
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = .white
+
+        // Apply to both standard and scroll edge appearances
         navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
         
+        // Optionally also compact appearance
+        navigationController?.navigationBar.compactAppearance = appearance
+
+        // Set the title and button
         title = "Detalhes Aniversário do Pedro"
-        
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: UIImage(systemName: "chevron.left"),
             style: .plain,
             target: self,
             action: #selector(backButtonTapped)
         )
+
     }
     
     // MARK: - Actions
