@@ -16,40 +16,6 @@ class EventDetailsView: UIView {
         return view
     }()
 
-    private lazy var navigationBar: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
-        let backButton: UIButton = {
-            let btn = UIButton()
-            btn.setImage(UIImage(systemName: "chevron.left"), for: .normal)
-            btn.tintColor = .systemBlue
-            btn.translatesAutoresizingMaskIntoConstraints = false
-            return btn
-        }()
-        
-        let titleLabel: UILabel = {
-            let lbl = UILabel()
-            lbl.text = "Detalhes Aniversário do Pedro"
-            lbl.font = .systemFont(ofSize: 17, weight: .semibold)
-            lbl.translatesAutoresizingMaskIntoConstraints = false
-            return lbl
-        }()
-        
-        view.addSubview(backButton)
-        view.addSubview(titleLabel)
-        
-        NSLayoutConstraint.activate([
-            backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            backButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            backButton.widthAnchor.constraint(equalToConstant: 24),
-            
-            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            titleLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
-        
-        return view
-    }()
     
     private lazy var eventImageView: UIImageView = {
         let imageView = UIImageView()
@@ -92,7 +58,6 @@ class EventDetailsView: UIView {
     private lazy var containerHeaderStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [
             headerSpacerView,
-            navigationBar,
             eventImageView,
             tabStackView
         ])
@@ -353,15 +318,13 @@ class EventDetailsView: UIView {
     
     private func setConstraints() {
         NSLayoutConstraint.activate([
-            headerSpacerView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            
             headerContainerView.topAnchor.constraint(equalTo: topAnchor),
             headerContainerView.leadingAnchor.constraint(equalTo: leadingAnchor),
             headerContainerView.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            navigationBar.heightAnchor.constraint(equalToConstant: 20),
+            headerContainerView.heightAnchor.constraint(equalToConstant: 20),
 //
-            eventImageView.topAnchor.constraint(equalTo: navigationBar.bottomAnchor, constant: 30),
+            eventImageView.topAnchor.constraint(equalTo: headerContainerView.bottomAnchor, constant: 30),
 //            eventImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
 //            eventImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
 //            eventImageView.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 0.6),
