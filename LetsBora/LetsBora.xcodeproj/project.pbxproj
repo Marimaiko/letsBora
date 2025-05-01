@@ -3,48 +3,40 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		09B2009E2DC04EA800A26EA2 /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B2009D2DC04EA800A26EA2 /* CreateEventViewController.swift */; };
-		09B2009F2DC04EA800A26EA2 /* CreateEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B2009C2DC04EA800A26EA2 /* CreateEventView.swift */; };
 		09B90F0E2DBAD2B2001E8DEA /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B90F0D2DBAD2B2001E8DEA /* TagCollectionViewCell.swift */; };
 		09F557842DA9F86000D1D1A7 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557642DA9F86000D1D1A7 /* UIView+Extension.swift */; };
 		09F557852DA9F86000D1D1A7 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557652DA9F86000D1D1A7 /* UIViewController+Extension.swift */; };
 		09F557862DA9F86000D1D1A7 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557692DA9F86000D1D1A7 /* Event.swift */; };
-		09F557872DA9F86000D1D1A7 /* ProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F5577B2DA9F86000D1D1A7 /* ProfileEditView.swift */; };
-		09F557882DA9F86000D1D1A7 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F5577F2DA9F86000D1D1A7 /* SearchViewController.swift */; };
 		09F557892DA9F86000D1D1A7 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557592DA9F86000D1D1A7 /* TabBarController.swift */; };
 		09F5578A2DA9F86000D1D1A7 /* EventCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F5575F2DA9F86000D1D1A7 /* EventCardView.swift */; };
-		09F5578B2DA9F86000D1D1A7 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557782DA9F86000D1D1A7 /* LoginView.swift */; };
 		09F5578C2DA9F86000D1D1A7 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557682DA9F86000D1D1A7 /* Tag.swift */; };
 		09F5578D2DA9F86000D1D1A7 /* ReusableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557602DA9F86000D1D1A7 /* ReusableLabel.swift */; };
 		09F5578E2DA9F86000D1D1A7 /* AvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F5575C2DA9F86000D1D1A7 /* AvatarImageView.swift */; };
 		09F5578F2DA9F86000D1D1A7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F5576A2DA9F86000D1D1A7 /* User.swift */; };
 		09F557902DA9F86000D1D1A7 /* AvatarGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F5575B2DA9F86000D1D1A7 /* AvatarGroupView.swift */; };
-		09F557912DA9F86000D1D1A7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557792DA9F86000D1D1A7 /* LoginViewController.swift */; };
 		09F557922DA9F86000D1D1A7 /* EventCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F5575E2DA9F86000D1D1A7 /* EventCardTableViewCell.swift */; };
 		09F557932DA9F86000D1D1A7 /* mockEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557822DA9F86000D1D1A7 /* mockEvents.swift */; };
 		09F557942DA9F86000D1D1A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F5576C2DA9F86000D1D1A7 /* AppDelegate.swift */; };
-		09F557952DA9F86000D1D1A7 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557762DA9F86000D1D1A7 /* HomeViewController.swift */; };
-		09F557962DA9F86000D1D1A7 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F5577E2DA9F86000D1D1A7 /* SearchView.swift */; };
 		09F557972DA9F86000D1D1A7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557722DA9F86000D1D1A7 /* SceneDelegate.swift */; };
 		09F557982DA9F86000D1D1A7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557732DA9F86000D1D1A7 /* ViewController.swift */; };
 		09F557992DA9F86000D1D1A7 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557612DA9F86000D1D1A7 /* TagView.swift */; };
-		09F5579A2DA9F86000D1D1A7 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557752DA9F86000D1D1A7 /* HomeView.swift */; };
 		09F5579B2DA9F86000D1D1A7 /* ViewCode+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557662DA9F86000D1D1A7 /* ViewCode+Extension.swift */; };
 		09F5579C2DA9F86000D1D1A7 /* DividerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F5575D2DA9F86000D1D1A7 /* DividerView.swift */; };
-		09F5579D2DA9F86000D1D1A7 /* ProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F5577C2DA9F86000D1D1A7 /* ProfileEditViewController.swift */; };
 		09F5579E2DA9F86000D1D1A7 /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557632DA9F86000D1D1A7 /* UIView+Constraints.swift */; };
 		09F5579F2DA9F86000D1D1A7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09F5576F2DA9F86000D1D1A7 /* LaunchScreen.storyboard */; };
 		09F557A02DA9F86000D1D1A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09F557712DA9F86000D1D1A7 /* Main.storyboard */; };
 		09F557A12DA9F86000D1D1A7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09F5576D2DA9F86000D1D1A7 /* Assets.xcassets */; };
+		925AB5FC2DC1C0EF0031E9ED /* CustomContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925AB5FB2DC1C0C20031E9ED /* CustomContainer.swift */; };
+		925AB5FE2DC305F30031E9ED /* CostContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925AB5FD2DC305DD0031E9ED /* CostContainer.swift */; };
+		925AB6022DC32CC10031E9ED /* ExpensesCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925AB6012DC32C980031E9ED /* ExpensesCard.swift */; };
+		925AB6042DC338270031E9ED /* ParticipantesCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925AB6032DC3381F0031E9ED /* ParticipantesCard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		09B2009C2DC04EA800A26EA2 /* CreateEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventView.swift; sourceTree = "<group>"; };
-		09B2009D2DC04EA800A26EA2 /* CreateEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventViewController.swift; sourceTree = "<group>"; };
 		09B90F0D2DBAD2B2001E8DEA /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionViewCell.swift; sourceTree = "<group>"; };
 		09F557592DA9F86000D1D1A7 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		09F5575B2DA9F86000D1D1A7 /* AvatarGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarGroupView.swift; sourceTree = "<group>"; };
@@ -67,18 +59,18 @@
 		09F557702DA9F86000D1D1A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		09F557722DA9F86000D1D1A7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		09F557732DA9F86000D1D1A7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		09F557752DA9F86000D1D1A7 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		09F557762DA9F86000D1D1A7 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		09F557782DA9F86000D1D1A7 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
-		09F557792DA9F86000D1D1A7 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		09F5577B2DA9F86000D1D1A7 /* ProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditView.swift; sourceTree = "<group>"; };
-		09F5577C2DA9F86000D1D1A7 /* ProfileEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditViewController.swift; sourceTree = "<group>"; };
-		09F5577E2DA9F86000D1D1A7 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
-		09F5577F2DA9F86000D1D1A7 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		09F557822DA9F86000D1D1A7 /* mockEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mockEvents.swift; sourceTree = "<group>"; };
 		539D7B7E2D8D9C050061BB67 /* LetsBora.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LetsBora.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		539D7B8F2D8D9C070061BB67 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		925AB5FB2DC1C0C20031E9ED /* CustomContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomContainer.swift; sourceTree = "<group>"; };
+		925AB5FD2DC305DD0031E9ED /* CostContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CostContainer.swift; sourceTree = "<group>"; };
+		925AB6012DC32C980031E9ED /* ExpensesCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesCard.swift; sourceTree = "<group>"; };
+		925AB6032DC3381F0031E9ED /* ParticipantesCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantesCard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		925AB5EA2DC0904F0031E9ED /* Screens */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Screens; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		539D7B7B2D8D9C050061BB67 /* Frameworks */ = {
@@ -91,15 +83,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		09B2009B2DC04E3500A26EA2 /* CreateEvent */ = {
-			isa = PBXGroup;
-			children = (
-				09B2009C2DC04EA800A26EA2 /* CreateEventView.swift */,
-				09B2009D2DC04EA800A26EA2 /* CreateEventViewController.swift */,
-			);
-			path = CreateEvent;
-			sourceTree = "<group>";
-		};
 		09F5575A2DA9F86000D1D1A7 /* TabBar */ = {
 			isa = PBXGroup;
 			children = (
@@ -111,6 +94,10 @@
 		09F557622DA9F86000D1D1A7 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				925AB6032DC3381F0031E9ED /* ParticipantesCard.swift */,
+				925AB6012DC32C980031E9ED /* ExpensesCard.swift */,
+				925AB5FD2DC305DD0031E9ED /* CostContainer.swift */,
+				925AB5FB2DC1C0C20031E9ED /* CustomContainer.swift */,
 				09F5575A2DA9F86000D1D1A7 /* TabBar */,
 				09F5575B2DA9F86000D1D1A7 /* AvatarGroupView.swift */,
 				09F5575C2DA9F86000D1D1A7 /* AvatarImageView.swift */,
@@ -120,6 +107,7 @@
 				09F557602DA9F86000D1D1A7 /* ReusableLabel.swift */,
 				09F557612DA9F86000D1D1A7 /* TagView.swift */,
 				09B90F0D2DBAD2B2001E8DEA /* TagCollectionViewCell.swift */,
+				925AB5EA2DC0904F0031E9ED /* Screens */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -158,54 +146,6 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		09F557772DA9F86000D1D1A7 /* Home */ = {
-			isa = PBXGroup;
-			children = (
-				09F557752DA9F86000D1D1A7 /* HomeView.swift */,
-				09F557762DA9F86000D1D1A7 /* HomeViewController.swift */,
-			);
-			path = Home;
-			sourceTree = "<group>";
-		};
-		09F5577A2DA9F86000D1D1A7 /* Login */ = {
-			isa = PBXGroup;
-			children = (
-				09F557782DA9F86000D1D1A7 /* LoginView.swift */,
-				09F557792DA9F86000D1D1A7 /* LoginViewController.swift */,
-			);
-			path = Login;
-			sourceTree = "<group>";
-		};
-		09F5577D2DA9F86000D1D1A7 /* ProfileEdit */ = {
-			isa = PBXGroup;
-			children = (
-				09F5577B2DA9F86000D1D1A7 /* ProfileEditView.swift */,
-				09F5577C2DA9F86000D1D1A7 /* ProfileEditViewController.swift */,
-			);
-			path = ProfileEdit;
-			sourceTree = "<group>";
-		};
-		09F557802DA9F86000D1D1A7 /* Search */ = {
-			isa = PBXGroup;
-			children = (
-				09F5577E2DA9F86000D1D1A7 /* SearchView.swift */,
-				09F5577F2DA9F86000D1D1A7 /* SearchViewController.swift */,
-			);
-			path = Search;
-			sourceTree = "<group>";
-		};
-		09F557812DA9F86000D1D1A7 /* Screens */ = {
-			isa = PBXGroup;
-			children = (
-				09B2009B2DC04E3500A26EA2 /* CreateEvent */,
-				09F557772DA9F86000D1D1A7 /* Home */,
-				09F5577A2DA9F86000D1D1A7 /* Login */,
-				09F5577D2DA9F86000D1D1A7 /* ProfileEdit */,
-				09F557802DA9F86000D1D1A7 /* Search */,
-			);
-			path = Screens;
-			sourceTree = "<group>";
-		};
 		09F557832DA9F86000D1D1A7 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -238,7 +178,6 @@
 				09F557832DA9F86000D1D1A7 /* Utils */,
 				09F5576B2DA9F86000D1D1A7 /* Models */,
 				09F557622DA9F86000D1D1A7 /* Components */,
-				09F557812DA9F86000D1D1A7 /* Screens */,
 				539D7B8F2D8D9C070061BB67 /* Info.plist */,
 			);
 			path = LetsBora;
@@ -258,6 +197,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				925AB5EA2DC0904F0031E9ED /* Screens */,
 			);
 			name = LetsBora;
 			productName = LetsBora;
@@ -315,35 +257,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				925AB5FC2DC1C0EF0031E9ED /* CustomContainer.swift in Sources */,
+				925AB6042DC338270031E9ED /* ParticipantesCard.swift in Sources */,
+				925AB6022DC32CC10031E9ED /* ExpensesCard.swift in Sources */,
 				09F557842DA9F86000D1D1A7 /* UIView+Extension.swift in Sources */,
 				09F557852DA9F86000D1D1A7 /* UIViewController+Extension.swift in Sources */,
-				09B2009E2DC04EA800A26EA2 /* CreateEventViewController.swift in Sources */,
-				09B2009F2DC04EA800A26EA2 /* CreateEventView.swift in Sources */,
 				09F557862DA9F86000D1D1A7 /* Event.swift in Sources */,
-				09F557872DA9F86000D1D1A7 /* ProfileEditView.swift in Sources */,
-				09F557882DA9F86000D1D1A7 /* SearchViewController.swift in Sources */,
 				09F557892DA9F86000D1D1A7 /* TabBarController.swift in Sources */,
 				09F5578A2DA9F86000D1D1A7 /* EventCardView.swift in Sources */,
-				09F5578B2DA9F86000D1D1A7 /* LoginView.swift in Sources */,
 				09F5578C2DA9F86000D1D1A7 /* Tag.swift in Sources */,
 				09F5578D2DA9F86000D1D1A7 /* ReusableLabel.swift in Sources */,
 				09F5578E2DA9F86000D1D1A7 /* AvatarImageView.swift in Sources */,
 				09F5578F2DA9F86000D1D1A7 /* User.swift in Sources */,
 				09F557902DA9F86000D1D1A7 /* AvatarGroupView.swift in Sources */,
-				09F557912DA9F86000D1D1A7 /* LoginViewController.swift in Sources */,
+				925AB5FE2DC305F30031E9ED /* CostContainer.swift in Sources */,
 				09F557922DA9F86000D1D1A7 /* EventCardTableViewCell.swift in Sources */,
 				09F557932DA9F86000D1D1A7 /* mockEvents.swift in Sources */,
 				09F557942DA9F86000D1D1A7 /* AppDelegate.swift in Sources */,
 				09B90F0E2DBAD2B2001E8DEA /* TagCollectionViewCell.swift in Sources */,
-				09F557952DA9F86000D1D1A7 /* HomeViewController.swift in Sources */,
-				09F557962DA9F86000D1D1A7 /* SearchView.swift in Sources */,
 				09F557972DA9F86000D1D1A7 /* SceneDelegate.swift in Sources */,
 				09F557982DA9F86000D1D1A7 /* ViewController.swift in Sources */,
 				09F557992DA9F86000D1D1A7 /* TagView.swift in Sources */,
-				09F5579A2DA9F86000D1D1A7 /* HomeView.swift in Sources */,
 				09F5579B2DA9F86000D1D1A7 /* ViewCode+Extension.swift in Sources */,
 				09F5579C2DA9F86000D1D1A7 /* DividerView.swift in Sources */,
-				09F5579D2DA9F86000D1D1A7 /* ProfileEditViewController.swift in Sources */,
 				09F5579E2DA9F86000D1D1A7 /* UIView+Constraints.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -15,4 +15,11 @@ class CreateEventViewController: UIViewController {
     }
 }
 
+//MARK: - Preview Profile
+@available(iOS 17.0,*)
+#Preview(traits: .portrait, body: {
+    CreateEventViewController()
+})
+
+
 
