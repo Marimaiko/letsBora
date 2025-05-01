@@ -12,24 +12,25 @@ class ChatNotificationTableViewCell: UITableViewCell {
     static let identifier: String = String(describing: ChatNotificationTableViewCell.self )
     
     struct cellLayout{
-        static let height: CGFloat = 44
         static let marginVertical: CGFloat = 8
         static let marginHorizontal: CGFloat = 16
+        static let fontSize: CGFloat = 16
     }
     
-    lazy var baloonView: UIView = {
+    lazy var ballonView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .systemGray4
         
         view.clipsToBounds = true
-        view.layer.cornerRadius = cellLayout.height / 4
+        view.layer.cornerRadius = 12
         return view
     }()
     lazy var messageLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
+        label.font = .systemFont(ofSize: cellLayout.fontSize, weight: .regular)
         
         return label
     }()
@@ -44,28 +45,30 @@ class ChatNotificationTableViewCell: UITableViewCell {
     }
   // MARK: - Setup e Configs
     func setupUI(){
-        contentView.backgroundColor = .clear
+        contentView.backgroundColor = .systemGray6
     }
    func setupCell(with chat: Chat){
-       print("setupCell \(chat)")
        messageLabel.text = chat.text
     }
 }
 extension ChatNotificationTableViewCell: ViewCode {
     func setHierarchy() {
-        contentView.addSubview(baloonView)
-        baloonView.addSubview(messageLabel)
+        contentView.addSubview(ballonView)
+        ballonView.addSubview(messageLabel)
     }
     
     func setConstraints() {
         messageLabel
-            .centerX(baloonView.centerXAnchor)
-            .centerY(baloonView.centerYAnchor)
+            .centerX(ballonView.centerXAnchor)
+            .centerY(ballonView.centerYAnchor)
         
-        baloonView
+        ballonView
             .centerX(contentView.centerXAnchor)
             .centerY(contentView.centerYAnchor)
-            .height(constant: cellLayout.height)
+            .height(
+                anchor: messageLabel.heightAnchor,
+                constant: cellLayout.marginVertical
+            )
             .width(
                 anchor: messageLabel.widthAnchor,
                 constant: cellLayout.marginHorizontal
@@ -78,10 +81,7 @@ extension ChatNotificationTableViewCell: ViewCode {
                 anchor: contentView.bottomAnchor,
                 constant: -cellLayout.marginVertical
             )
-            
     }
-    
-    
 }
 
 // MARK: - Preview Profile

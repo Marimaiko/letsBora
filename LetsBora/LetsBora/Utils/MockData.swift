@@ -12,7 +12,10 @@ struct MockData {
     = [
         chat1,
         chat2,
-        chat3
+        chat3,
+        chat4,
+        chat5,
+        chat6
     ]
     static let users: [User]
     = [

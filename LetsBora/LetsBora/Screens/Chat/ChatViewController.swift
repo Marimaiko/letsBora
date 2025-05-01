@@ -38,10 +38,14 @@ class ChatViewController: UIViewController {
             ChatNotificationTableViewCell.self,
             forCellReuseIdentifier: ChatNotificationTableViewCell.identifier
         )
+        chatView.tableView.register(
+            ChatMessageTableViewCell.self,
+            forCellReuseIdentifier: ChatMessageTableViewCell.identifier)
     }
     private func setupNavigation() {
         title = "Detalhes Aniversário do Pedro"
     }
+    
 }
 extension ChatViewController: UITableViewDataSource {
     func tableView(
@@ -56,15 +60,37 @@ extension ChatViewController: UITableViewDataSource {
         cellForRowAt indexPath: IndexPath
     ) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(
-            withIdentifier: ChatNotificationTableViewCell.identifier,
-            for: indexPath
-        ) as? ChatNotificationTableViewCell
+        let chat = chats[indexPath.row]
         
-        cell?.setupCell(with: chats[indexPath.row])
+        switch chat.type {
+            
+        case .notification:
+            
+            let cell = tableView.dequeueReusableCell(
+                    withIdentifier: ChatNotificationTableViewCell.identifier,
+                    for: indexPath
+                ) as? ChatNotificationTableViewCell
+            cell?.setupCell(with: chat)
+            
+            return cell ?? UITableViewCell()
         
-        return cell ?? UITableViewCell()
+        case .message:
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: ChatMessageTableViewCell.identifier,
+                for: indexPath
+            ) as? ChatMessageTableViewCell
+            cell?.setupCell(with: chat)
+            
+            return cell ?? UITableViewCell()
+            
+        default:
+            return UITableViewCell()
+        }
     }
-    
-    
 }
+// MARK: - Preview Profile
+@available(iOS 17.0,*)
+#Preview(traits: .sizeThatFitsLayout, body: {
+    ChatViewController()
+})
+

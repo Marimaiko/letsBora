@@ -17,7 +17,7 @@ class ChatView: UIView {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.allowsSelection = false
-        tableView.backgroundColor =  .clear
+        tableView.backgroundColor =  .systemGray6
         tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
@@ -57,3 +57,9 @@ extension ChatView:ViewCode{
     }
 
 }
+// MARK: - Preview Profile
+@available(iOS 17.0,*)
+#Preview(traits: .sizeThatFitsLayout, body: {
+    ChatViewController()
+})
+

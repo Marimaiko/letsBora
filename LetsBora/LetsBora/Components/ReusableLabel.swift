@@ -31,7 +31,9 @@ class ReusableLabel: UILabel {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    func setText(_ text: String?) {
+        self.text = text ?? ""
+    }
     private func configureFont(for type: LabelType) {
         switch type {
         case .h1:
@@ -49,7 +51,7 @@ class ReusableLabel: UILabel {
         case .body:
             self.font = .systemFont(ofSize: 17)
         case .caption:
-            self.font = .systemFont(ofSize: 14, weight: .light)
+            self.font = .systemFont(ofSize: 14, weight: .semibold)
         case .title:
             self.font = .systemFont(ofSize: 48, weight: .regular)
         }
