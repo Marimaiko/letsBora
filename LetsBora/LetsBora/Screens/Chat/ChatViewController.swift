@@ -40,7 +40,12 @@ class ChatViewController: UIViewController {
         )
         chatView.tableView.register(
             ChatMessageTableViewCell.self,
-            forCellReuseIdentifier: ChatMessageTableViewCell.identifier)
+            forCellReuseIdentifier: ChatMessageTableViewCell.identifier
+        )
+        chatView.tableView.register(
+            ChatSurveyTableViewCell.self,
+            forCellReuseIdentifier: ChatSurveyTableViewCell.identifier
+        )
     }
     private func setupNavigation() {
         title = "Detalhes Aniversário do Pedro"
@@ -67,13 +72,13 @@ extension ChatViewController: UITableViewDataSource {
         case .notification:
             
             let cell = tableView.dequeueReusableCell(
-                    withIdentifier: ChatNotificationTableViewCell.identifier,
-                    for: indexPath
-                ) as? ChatNotificationTableViewCell
+                withIdentifier: ChatNotificationTableViewCell.identifier,
+                for: indexPath
+            ) as? ChatNotificationTableViewCell
             cell?.setupCell(with: chat)
             
             return cell ?? UITableViewCell()
-        
+            
         case .message:
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: ChatMessageTableViewCell.identifier,
@@ -83,8 +88,15 @@ extension ChatViewController: UITableViewDataSource {
             
             return cell ?? UITableViewCell()
             
-        default:
-            return UITableViewCell()
+        case .survey:
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: ChatSurveyTableViewCell.identifier,
+                for: indexPath
+            ) as? ChatSurveyTableViewCell
+            cell?.setupCell(with: chat)
+            
+            return cell ?? UITableViewCell()
+            
         }
     }
 }

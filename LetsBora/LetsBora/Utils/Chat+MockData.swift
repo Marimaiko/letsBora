@@ -46,6 +46,12 @@ extension MockData{
     )
     static let chat7: Chat = .init(
         type: .survey,
-        text: "Qual o melhor Cardápio para o evento?"
+        text: "Qual o melhor Cardápio para o evento?",
+        desciption: "Vote na sua opção favorita de comida! ",
+        date:"10:40",
+        survey: [
+            .init(title: "Churrasco de Frango", votes: "8 votos"),
+            .init(title: "Caldo de Galinha", votes: "7 votos"),
+        ]
     )
 }

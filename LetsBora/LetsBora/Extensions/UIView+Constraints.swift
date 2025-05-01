@@ -32,6 +32,13 @@ extension UIView {
         return self
     }
     @discardableResult
+    func trailing(id: String? = nil, anchor: NSLayoutAnchor<NSLayoutXAxisAnchor>,constant: CGFloat = 0) -> UIView {
+        let constraint = trailingAnchor.constraint(equalTo: anchor, constant: constant)
+        constraint.isActive = true
+        constraint.identifier = id
+        return self
+    }
+    @discardableResult
     func centerY(_ centerY: NSLayoutAnchor<NSLayoutYAxisAnchor>,constant: CGFloat = 0) -> UIView {
         let constraint = centerYAnchor.constraint(equalTo: centerY, constant: constant)
         constraint.isActive = true
@@ -83,6 +90,13 @@ extension UIView {
         let constraint = widthAnchor.constraint(equalTo: anchor,constant: constant)
         constraint.isActive = true
         constraint.identifier = id
+        return self
+    }
+    @discardableResult
+    func width(id: String? = nil, to anchor: NSLayoutDimension, multiplier: CGFloat = 1.0) -> Self {
+        let constraint = widthAnchor.constraint(equalTo: anchor, multiplier: multiplier)
+        constraint.identifier = id
+        constraint.isActive = true
         return self
     }
     

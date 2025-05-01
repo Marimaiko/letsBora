@@ -14,8 +14,10 @@ enum MessageType {
 struct Chat {
     var type: MessageType
     var text: String
+    var desciption:  String?
     var user: User?
     var activeOwner: Bool?
     var date: String?
     var seen: Bool?
+    var survey: [Survey]?
 }

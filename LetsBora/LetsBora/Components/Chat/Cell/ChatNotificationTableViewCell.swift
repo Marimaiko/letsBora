@@ -89,4 +89,3 @@ extension ChatNotificationTableViewCell: ViewCode {
 #Preview(traits: .portrait, body: {
     ChatViewController()
 })
-
