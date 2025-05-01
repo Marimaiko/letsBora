@@ -17,11 +17,6 @@ extension MockData{
     )
     
     static let chat3: Chat = .init(
-        type: .notification,
-        text: "Judas criou uma enquete"
-    )
-    
-    static let chat4: Chat = .init(
         type: .message,
         text: "Pessoal, vamos fazer uma votação para o cardápio?",
         user: user1,
@@ -29,7 +24,7 @@ extension MockData{
         date: "10:30",
         seen: true
     )
-    static let chat5: Chat = .init(
+    static let chat4: Chat = .init(
         type: .message,
         text: "👀",
         user: user2,
@@ -37,13 +32,20 @@ extension MockData{
         date: "10:31",
         seen: true
     )
-    static let chat6: Chat = .init(
+    static let chat5: Chat = .init(
         type: .message,
-        text: "Boa idéia, vou criar a enquete! \nNão esquece de responder.",
+        text: "Boa idéia, vou criar a enquete! \nNão esqueçam de responder.",
         user: user3,
         activeOwner: true,
         date: "10:37",
         seen: false
     )
-    
+    static let chat6: Chat = .init(
+        type: .notification,
+        text: "Judas criou uma enquete"
+    )
+    static let chat7: Chat = .init(
+        type: .survey,
+        text: "Qual o melhor Cardápio para o evento?"
+    )
 }

@@ -16,7 +16,7 @@ class ChatMessageTableViewCell: UITableViewCell {
     struct cellLayout {
         static let height: CGFloat = 100
         static let heightBallon: CGFloat = 40
-        static let marginVertical: CGFloat = 8
+        static let marginVertical: CGFloat = 12
         static let marginHorizontal: CGFloat = 16
         static let avatarSize: CGFloat = 40
     }
@@ -35,6 +35,10 @@ class ChatMessageTableViewCell: UITableViewCell {
         labelType: .caption,
         colorStyle: .tertiary
     )
+    lazy var dateLabel = ReusableLabel(
+        labelType: .caption,
+        colorStyle: .tertiary
+    )
     lazy var ballonView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -46,6 +50,8 @@ class ChatMessageTableViewCell: UITableViewCell {
     lazy var messageLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .systemFont(ofSize: 18, weight: .regular)
+        
         label.textAlignment = .natural
         label.numberOfLines = 0 // Allow unlimited lines
         label.lineBreakMode = .byWordWrapping // Wrap text by word
@@ -74,12 +80,14 @@ class ChatMessageTableViewCell: UITableViewCell {
         guard let activeOwner = chat.activeOwner else { return }
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
-        let _ = chat.date ?? formatter.string(from: Date())
+        let date = chat.date ?? formatter.string(from: Date())
         let _ = chat.seen ?? false
         
         
         avatarImageView.setImage(named: user.photo ?? "")
         nameLabel.setText(user.name)
+        
+        dateLabel.text = date
         
         if activeOwner {
             ballonView.backgroundColor = .systemBlue
@@ -99,6 +107,10 @@ class ChatMessageTableViewCell: UITableViewCell {
                 .layerMinXMinYCorner
             ]
             
+            dateLabel
+                .trailing(anchor: ballonView.trailingAnchor)
+            
+            
         } else {
             ballonView.backgroundColor = .white
             messageLabel.textColor = .black
@@ -117,6 +129,10 @@ class ChatMessageTableViewCell: UITableViewCell {
                 .layerMaxXMaxYCorner
                 
             ]
+            
+            dateLabel
+                .leading(anchor: ballonView.leadingAnchor)
+            
         }
         messageLabel.text = chat.text
         
@@ -131,6 +147,7 @@ extension ChatMessageTableViewCell: ViewCode {
         containerView.addSubview(avatarImageView)
         containerView.addSubview(ballonView)
         containerView.addSubview(nameLabel)
+        containerView.addSubview(dateLabel)
 
         ballonView.addSubview(messageLabel)
     }
@@ -184,6 +201,13 @@ extension ChatMessageTableViewCell: ViewCode {
             .widthAnchor.constraint(
                 lessThanOrEqualTo: containerView.widthAnchor,
                 multiplier: 0.85).isActive = true
+        
+        dateLabel
+            .top(
+                anchor: ballonView.bottomAnchor,
+                constant: cellLayout.marginVertical / 2
+            )
+        
         
     }
 }
