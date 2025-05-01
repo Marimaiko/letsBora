@@ -7,10 +7,14 @@
 
 import UIKit
 
+protocol RegisterViewDelegate: AnyObject {
+    func didTapRegister()
+}
+
 class RegisterView: UIView {
     private let gradientLayer = CAGradientLayer()
     
-    weak var delegate: LoginViewDelegate?
+    weak var delegate: RegisterViewDelegate?
     
     lazy private var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -76,7 +80,7 @@ class RegisterView: UIView {
         return textField
     }()
     
-    lazy private var loginButton: UIButton = {
+    lazy private var registerButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Cadastrar", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .bold)
@@ -84,6 +88,7 @@ class RegisterView: UIView {
         button.setTitleColor(.black, for: .normal)
         button.layer.cornerRadius = 8
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(didTapRegister), for: .touchUpInside)
         return button
     }()
     
@@ -98,6 +103,10 @@ class RegisterView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    @objc private func didTapRegister() {
+        delegate?.didTapRegister()
+        print("clicou em registrar")
+    }
 }
 
 extension RegisterView {
@@ -128,7 +137,7 @@ extension RegisterView {
         scrollView.addSubview(emailTextField)
         scrollView.addSubview(passwordLabel)
         scrollView.addSubview(passwordTextField)
-        scrollView.addSubview(loginButton)
+        scrollView.addSubview(registerButton)
     }
     
     func setupConstraints() {
@@ -142,7 +151,7 @@ extension RegisterView {
             logoImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             logoImageView.heightAnchor.constraint(equalToConstant: 120),
             
-            nameLabel.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 32),
+            nameLabel.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 42),
             nameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             
             nameTextField.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
@@ -163,10 +172,10 @@ extension RegisterView {
             passwordTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             passwordTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
             
-            loginButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 48),
-            loginButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            loginButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
-            loginButton.heightAnchor.constraint(equalToConstant: 40),
+            registerButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 48),
+            registerButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
+            registerButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            registerButton.heightAnchor.constraint(equalToConstant: 40),
         ])
     }
 }

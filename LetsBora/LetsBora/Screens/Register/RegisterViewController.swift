@@ -7,13 +7,20 @@
 
 import UIKit
 
-class RegisterViewController: UIViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+class RegisterViewController: UIViewController, RegisterViewDelegate {
     
     override func loadView() {
-        let view = RegisterView()
-        self.view = view
+        let registerView = RegisterView()
+        registerView.delegate = self
+        self.view = registerView
+    }
+
+    func didTapRegister() {
+        dismiss(animated: true)
     }
 }
+
+@available(iOS 17.0,*)
+#Preview(traits: .portrait, body: {
+    RegisterViewController()
+})

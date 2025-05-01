@@ -26,6 +26,12 @@ extension LoginViewController: LoginViewDelegate {
             window.makeKeyAndVisible()
         }
     }
+    
+    func didTapCreateAccount() {
+        let registerVC = RegisterViewController()
+        registerVC.modalPresentationStyle = .fullScreen
+        present(registerVC, animated: true)
+    }
 }
 // MARK: - Preview Profile
 @available(iOS 17.0,*)

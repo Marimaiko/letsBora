@@ -8,6 +8,7 @@
 import UIKit
 protocol LoginViewDelegate: AnyObject {
     func didTapLoginButton()
+    func didTapCreateAccount()
 }
 class LoginView: UIView {
     private let gradientLayer = CAGradientLayer()
@@ -126,19 +127,20 @@ class LoginView: UIView {
         return label
     }()
     
-    lazy private var newAccountLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Não tem conta?\nCrie aqui!"
-        label.numberOfLines = 2
-        label.textAlignment = .center
-        label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        label.textAlignment = .right
-        return label
+    lazy private var newAccountButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Não tem conta?\nCrie aqui!", for: .normal)
+        button.titleLabel?.numberOfLines = 2
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        button.titleLabel?.textAlignment = .right
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(didTapNewAccount), for: .touchUpInside)
+        return button
     }()
     
     lazy private var linksStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [forgetPasswordLabel, newAccountLabel])
+        let stackView = UIStackView(arrangedSubviews: [forgetPasswordLabel, newAccountButton])
         stackView.axis = .horizontal
         stackView.distribution = .fillProportionally
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -268,6 +270,11 @@ extension LoginView {
     // temporary function for testing only
     @objc func loginButtonTapped() {
         delegate?.didTapLoginButton()
+    }
+    
+    @objc private func didTapNewAccount() {
+        delegate?.didTapCreateAccount()
+        print("clicou no botão!!!")
     }
 }
 
