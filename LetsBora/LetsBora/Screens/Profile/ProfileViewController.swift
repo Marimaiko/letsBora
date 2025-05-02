@@ -23,6 +23,14 @@ class ProfileViewController: UIViewController {
     }
 }
 extension ProfileViewController: ProfileViewDelegate {
+    func exitProfileDidTapButton() {
+        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate,
+           let window = sceneDelegate.window {
+            window.rootViewController = LoginViewController()
+            window.makeKeyAndVisible()
+        }
+    }
+    
     func profileViewDidTapEditButton() {
         let profileEditViewController = ProfileEditViewController()
         profileEditViewController.hidesBottomBarWhenPushed = true

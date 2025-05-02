@@ -8,6 +8,7 @@ import UIKit
 
 protocol ProfileViewDelegate: AnyObject {
     func profileViewDidTapEditButton()
+    func exitProfileDidTapButton()
 }
 
 class ProfileView: UIView {
@@ -95,6 +96,7 @@ class ProfileView: UIView {
         button.backgroundColor = .red
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 8
+        button.addTarget(self, action: #selector(exitProfileTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -123,7 +125,9 @@ class ProfileView: UIView {
     @objc func editProfileTapped(){
         self.delegate?.profileViewDidTapEditButton()
     }
-    
+    @objc func exitProfileTapped(){
+        self.delegate?.exitProfileDidTapButton()
+    }
 }
 
 extension ProfileView {
