@@ -16,11 +16,11 @@ class TabBarController: UITabBarController {
     
     /// Sets up the tabs for the bar
     private func setupTabs() {
-        // TODO: trocar as UIViewController pelas Controllers das telas
+        
         let highlights = UINavigationController(rootViewController: HomeViewController())
         let search = UINavigationController(rootViewController: SearchViewController())
         let createEvent = UINavigationController(rootViewController: CreateEventViewController())
-        let myEvents = UINavigationController(rootViewController: UIViewController())
+        let myEvents = UINavigationController(rootViewController: MyEventsViewController())
         let profile = UINavigationController(rootViewController: ProfileViewController())
         
         highlights.tabBarItem = UITabBarItem(title: "Início", image: UIImage(systemName: "house"), tag: 0)
