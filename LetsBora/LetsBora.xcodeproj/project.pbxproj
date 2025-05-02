@@ -23,6 +23,8 @@
 		092728F62DC2BCFD000D744C /* Chat+MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092728F52DC2BCFD000D744C /* Chat+MockData.swift */; };
 		092728F82DC2D263000D744C /* ChatMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092728F72DC2D263000D744C /* ChatMessageTableViewCell.swift */; };
 		099A927D2DC5034A00415196 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A927C2DC5034A00415196 /* MockData.swift */; };
+		099A92812DC50A7500415196 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A927F2DC50A7500415196 /* RegisterViewController.swift */; };
+		099A92822DC50A7500415196 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A927E2DC50A7500415196 /* RegisterView.swift */; };
 		09B2009E2DC04EA800A26EA2 /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B2009D2DC04EA800A26EA2 /* CreateEventViewController.swift */; };
 		09B2009F2DC04EA800A26EA2 /* CreateEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B2009C2DC04EA800A26EA2 /* CreateEventView.swift */; };
 		09B90F0E2DBAD2B2001E8DEA /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B90F0D2DBAD2B2001E8DEA /* TagCollectionViewCell.swift */; };
@@ -82,6 +84,8 @@
 		092728F52DC2BCFD000D744C /* Chat+MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Chat+MockData.swift"; sourceTree = "<group>"; };
 		092728F72DC2D263000D744C /* ChatMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageTableViewCell.swift; sourceTree = "<group>"; };
 		099A927C2DC5034A00415196 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
+		099A927E2DC50A7500415196 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
+		099A927F2DC50A7500415196 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		09B2009C2DC04EA800A26EA2 /* CreateEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventView.swift; sourceTree = "<group>"; };
 		09B2009D2DC04EA800A26EA2 /* CreateEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventViewController.swift; sourceTree = "<group>"; };
 		09B90F0D2DBAD2B2001E8DEA /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -191,6 +195,15 @@
 				091E48F02DC3EE9400F4C44D /* ChatSurveyTableViewCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		099A92802DC50A7500415196 /* Register */ = {
+			isa = PBXGroup;
+			children = (
+				099A927E2DC50A7500415196 /* RegisterView.swift */,
+				099A927F2DC50A7500415196 /* RegisterViewController.swift */,
+			);
+			path = Register;
 			sourceTree = "<group>";
 		};
 		09B2009B2DC04E3500A26EA2 /* CreateEvent */ = {
@@ -314,6 +327,7 @@
 		09F557812DA9F86000D1D1A7 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				099A92802DC50A7500415196 /* Register */,
 				368D35B22DC3E5610050FF68 /* Profile */,
 				092728DC2DC26D8A000D744C /* Chat */,
 				09CE52882DC19B35008D8022 /* EventDetails */,
@@ -492,6 +506,8 @@
 				09F557992DA9F86000D1D1A7 /* TagView.swift in Sources */,
 				368D35BA2DC3E5D10050FF68 /* QuantityAndTitleView.swift in Sources */,
 				09F5579A2DA9F86000D1D1A7 /* HomeView.swift in Sources */,
+				099A92812DC50A7500415196 /* RegisterViewController.swift in Sources */,
+				099A92822DC50A7500415196 /* RegisterView.swift in Sources */,
 				368D35B82DC3E5AC0050FF68 /* ConquerView.swift in Sources */,
 				09F5579B2DA9F86000D1D1A7 /* ViewCode+Extension.swift in Sources */,
 				09F5579C2DA9F86000D1D1A7 /* DividerView.swift in Sources */,

@@ -8,6 +8,11 @@
 import UIKit
 
 class LoginViewController: UIViewController {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -25,6 +30,11 @@ extension LoginViewController: LoginViewDelegate {
             window.rootViewController = TabBarController()
             window.makeKeyAndVisible()
         }
+    }
+    
+    func didTapCreateAccount() {
+        let registerVC = RegisterViewController()
+        navigationController?.pushViewController(registerVC, animated: true)
     }
 }
 // MARK: - Preview Profile
