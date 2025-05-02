@@ -10,15 +10,7 @@ import UIKit
 class CreateEventView: UIView {
 
 //MARK: - UIComponents
-    private lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Criar Evento"
-        label.textAlignment = .left
-        label.font = UIFont.systemFont(ofSize: 32, weight: .bold)
-        label.textColor = .black
-        return label
-    }()
+    private lazy var titleLabel = ReusableLabel(text: "Criar Evento", labelType: .title)
 
     private lazy var nameEventTextField: UITextField = {
         let textField = UITextField()
@@ -26,7 +18,9 @@ class CreateEventView: UIView {
         textField.placeholder = "Nome do evento"
         textField.borderStyle = .roundedRect
         textField.textColor = .black
-        textField.font = UIFont.systemFont(ofSize: 16)
+        textField.layer.shadowColor = UIColor.black.cgColor
+        textField.layer.shadowOpacity = 0.1
+        textField.layer.shadowOffset = CGSize(width: 0, height: 2)
         textField.heightAnchor.constraint(equalToConstant: 48).isActive = true
         return textField
     }()
@@ -35,10 +29,12 @@ class CreateEventView: UIView {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.textColor = .black
-        textView.font = UIFont.systemFont(ofSize: 16)
         textView.layer.borderColor = UIColor.systemGray4.cgColor
         textView.layer.borderWidth = 0.5
         textView.layer.cornerRadius = 5
+        textView.layer.shadowColor = UIColor.black.cgColor
+        textView.layer.shadowOpacity = 0.1
+        textView.layer.shadowOffset = CGSize(width: 0, height: 2)
         textView.isScrollEnabled = true
         textView.textContainerInset = UIEdgeInsets(top: 8, left: 5, bottom: 8, right: 5)
         textView.heightAnchor.constraint(equalToConstant: 108).isActive = true
@@ -55,24 +51,11 @@ class CreateEventView: UIView {
     }()
     
     //Data e Hora <--
-    private lazy var dateTextField: UITextField = {
-        let textField = makeBaseTextField()
-
-        //Icon+Label
-        textField.leftView = makeIconLabelView(iconName: "calendar", labelText: "Data e Hora")
-        textField.leftViewMode = .always
-
-        // Ícone seta à direita
-        textField.rightView = makeArrowIconView()
-        textField.rightViewMode = .always
-
-        //Ação ao tocar
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(showCalendar))
-        textField.addGestureRecognizer(tapGesture)
-
-        return textField
+    private lazy var dateCustomContainer: CustomContainer = {
+        let container = CustomContainer(iconName: "calendar", labelName: "Data e Hora", arrowName: "chevron.right", type: .date)
+        return container
     }()
-
+    
     lazy var calendarContainerView: UIView = {
            let view = UIView()
            view.translatesAutoresizingMaskIntoConstraints = false
@@ -115,90 +98,48 @@ class CreateEventView: UIView {
        }()
     
     //Localização <--
-    private lazy var locationTextField: UITextField = {
-        let textField = UITextField()
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.borderStyle = .roundedRect
-        textField.textColor = .black
-        textField.font = UIFont.systemFont(ofSize: 16)
-        textField.heightAnchor.constraint(equalToConstant: 42).isActive = true
-
-        // Agora usando a função para criar o ícone + label
-        textField.leftView = makeIconLabelView(iconName: "pin", labelText: "Localização")
-        textField.leftViewMode = .always
-
-        // Ícone seta à direita
-        textField.rightView = makeArrowIconView()
-        textField.rightViewMode = .always
-
-        return textField
+    private lazy var locationCustomContainer: CustomContainer = {
+        let container = CustomContainer(iconName: "pin", labelName: "Localização", arrowName: "chevron.right", type: .location)
+        return container
     }()
-
     
     //Categoria <--
-    private lazy var categoryTextField: UITextField = {
-        let textField = UITextField()
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.borderStyle = .roundedRect
-        textField.textColor = .black
-        textField.font = UIFont.systemFont(ofSize: 16)
-        textField.heightAnchor.constraint(equalToConstant: 42).isActive = true
-        
-        // Container do ícone e label à esquerda
-        textField.leftView = makeIconLabelView(iconName: "face.smiling", labelText: "Categoria")
-        textField.leftViewMode = .always
-
-        // Ícone seta à direita
-        textField.rightView = makeArrowIconView()
-        textField.rightViewMode = .always
-
-        return textField
-    }()
-
-    private let categoryContainerView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 10
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOpacity = 0.2
-        view.layer.shadowOffset = CGSize(width: 0, height: 2)
-        view.isHidden = true // Inicialmente escondido
-        return view
+    private lazy var categoryCustomContainer: CustomContainer = {
+        let container = CustomContainer(iconName: "smiley", labelName: "Categoria", arrowName: "chevron.right", type: .category)
+        return container
     }()
     
-    //Público ou Privado <--
-    private lazy var publicOrPrivateTextField: UITextField = {
-        let textField = UITextField()
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.borderStyle = .roundedRect
-        textField.textColor = .black
-        textField.font = UIFont.systemFont(ofSize: 16)
-        textField.heightAnchor.constraint(equalToConstant: 42).isActive = true
+    // Público ou Privado <--
+    private lazy var publicOrPrivateTextField: UIView = {
+        let containerView = UIView()
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.backgroundColor = .white
+        containerView.layer.cornerRadius = 8
+        containerView.layer.shadowColor = UIColor.black.cgColor
+        containerView.layer.shadowOpacity = 0.1
+        containerView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        containerView.heightAnchor.constraint(equalToConstant: 42).isActive = true
 
-        // LEFT: Ícone + Label
-        textField.leftView = makeIconLabelView(iconName: "lock", labelText: "Evento Privado")
-        textField.leftViewMode = .always
+        let leftView = makeIconLabelView(iconName: "lock", labelText: "Evento Privado")
+        leftView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.addSubview(leftView)
 
-        // RIGHT: Switch criado manualmente
         let switchView = UISwitch()
         switchView.isOn = false
         switchView.onTintColor = .systemBlue
         switchView.translatesAutoresizingMaskIntoConstraints = false
-
-        let switchContainer = UIView(frame: CGRect(x: 0, y: 0, width: 70, height: 42))
-        switchContainer.addSubview(switchView)
+        containerView.addSubview(switchView)
 
         NSLayoutConstraint.activate([
-            switchView.centerYAnchor.constraint(equalTo: switchContainer.centerYAnchor),
-            switchView.trailingAnchor.constraint(equalTo: switchContainer.trailingAnchor, constant: -8)
+            leftView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 8),
+            leftView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+            switchView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            switchView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
         ])
 
-        textField.rightView = switchContainer
-        textField.rightViewMode = .always
-
-        return textField
+        return containerView
     }()
+
     
     //Convidar participantes <-
     private lazy var participantsView: UIView = {
@@ -207,66 +148,51 @@ class CreateEventView: UIView {
         containerView.backgroundColor = .white
         containerView.layer.cornerRadius = 10
         containerView.layer.shadowColor = UIColor.black.cgColor
-        containerView.layer.shadowOpacity = 0.2
+        containerView.layer.shadowOpacity = 0.1
         containerView.layer.shadowOffset = CGSize(width: 0, height: 2)
 
-        // Label + Ícone (reutilizado)
+        // Label + Ícone (top left)
         let iconLabelView = makeIconLabelView(iconName: "person", labelText: "Participantes")
+        containerView.addSubview(iconLabelView)
 
-        // Botão "Convidar"
+        // Botão "Convidar" (bottom right)
         let inviteButton = UIButton(type: .system)
         inviteButton.setTitle("Convidar", for: .normal)
         inviteButton.setTitleColor(.systemBlue, for: .normal)
+        inviteButton.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+        inviteButton.translatesAutoresizingMaskIntoConstraints = false
+        containerView.addSubview(inviteButton)
 
-        // Stack horizontal com título + botão
-        let topStackView = UIStackView(arrangedSubviews: [iconLabelView, inviteButton])
-        topStackView.axis = .horizontal
-        topStackView.alignment = .center
-        topStackView.distribution = .equalSpacing
-        topStackView.translatesAutoresizingMaskIntoConstraints = false
-
-        // Stack de imagens dos participantes
+        // Stack de imagens dos participantes (bottom left)
         let participantsStackView = UIStackView()
         participantsStackView.axis = .horizontal
-        participantsStackView.spacing = 8
-        participantsStackView.distribution = .fill
-        participantsStackView.alignment = .leading
+        participantsStackView.spacing = 6
+        participantsStackView.alignment = .center
         participantsStackView.translatesAutoresizingMaskIntoConstraints = false
 
         for _ in 0..<4 {
             let imageView = UIImageView()
             imageView.translatesAutoresizingMaskIntoConstraints = false
-            imageView.layer.cornerRadius = 14
+            imageView.layer.cornerRadius = 12
             imageView.clipsToBounds = true
             imageView.backgroundColor = .lightGray
-
-            imageView.widthAnchor.constraint(equalToConstant: 28).isActive = true
-            imageView.heightAnchor.constraint(equalToConstant: 28).isActive = true
-
-            imageView.setContentHuggingPriority(.required, for: .horizontal)
-            imageView.setContentCompressionResistancePriority(.required, for: .horizontal)
-
+            imageView.widthAnchor.constraint(equalToConstant: 24).isActive = true
+            imageView.heightAnchor.constraint(equalToConstant: 24).isActive = true
             participantsStackView.addArrangedSubview(imageView)
         }
 
-        // Espaço extra à direita
-        let spacer = UIView()
-        spacer.translatesAutoresizingMaskIntoConstraints = false
-        spacer.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        participantsStackView.addArrangedSubview(spacer)
+        containerView.addSubview(participantsStackView)
 
-        // Stack vertical geral
-        let contentStack = UIStackView(arrangedSubviews: [topStackView, participantsStackView])
-        contentStack.axis = .vertical
-        contentStack.spacing = 12
-        contentStack.translatesAutoresizingMaskIntoConstraints = false
-
-        containerView.addSubview(contentStack)
+        // Constraints internas
         NSLayoutConstraint.activate([
-            contentStack.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 12),
-            contentStack.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 12),
-            contentStack.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -12),
-            contentStack.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -12)
+            iconLabelView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 10),
+            iconLabelView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 12),
+
+            participantsStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 12),
+            participantsStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -10),
+
+            inviteButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -12),
+            inviteButton.centerYAnchor.constraint(equalTo: participantsStackView.centerYAnchor)
         ])
 
         return containerView
@@ -286,7 +212,7 @@ class CreateEventView: UIView {
         confirmButton.layer.cornerRadius = 4
         confirmButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
         confirmButton.layer.shadowColor = UIColor.black.cgColor
-        confirmButton.layer.shadowOpacity = 0.2
+        confirmButton.layer.shadowOpacity = 0.1
         confirmButton.layer.shadowOffset = CGSize(width: 0, height: 2)
         confirmButton.layer.shadowRadius = 4
 
@@ -298,7 +224,7 @@ class CreateEventView: UIView {
         draftButton.layer.cornerRadius = 4
         draftButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         draftButton.layer.shadowColor = UIColor.black.cgColor
-        draftButton.layer.shadowOpacity = 0.2
+        draftButton.layer.shadowOpacity = 0.1
         draftButton.layer.shadowOffset = CGSize(width: 0, height: 2)
         draftButton.layer.shadowRadius = 4
 
@@ -308,56 +234,49 @@ class CreateEventView: UIView {
         buttonStackView.spacing = 16
         buttonStackView.distribution = .fillEqually
         buttonStackView.translatesAutoresizingMaskIntoConstraints = false
-
+        
         containerView.addSubview(buttonStackView)
+        
         NSLayoutConstraint.activate([
-            buttonStackView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 16),
-            buttonStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
-            buttonStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
-            buttonStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -16),
-            buttonStackView.heightAnchor.constraint(equalToConstant: 44)
-        ])
+               buttonStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+               buttonStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+               buttonStackView.topAnchor.constraint(equalTo: containerView.topAnchor),
+               buttonStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+           ])
+
         return containerView
     }()
-
-    private lazy var stackView: UIStackView = createStackView(
-        subViews: [
-            titleLabel,
-            nameEventTextField,
-            descriptionEventTextView,
-            dateTextField,
-            locationTextField,
-            categoryTextField,
-            publicOrPrivateTextField,
-            participantsView,
-            actionButtonsView,
-        ],
-        spacing: 16
-    )
     
-//MARK: - Factory
+//MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setHierarchy()
-        setupConstrain()
+        setupHierarchy()
+        setupConstrains()
         setupCalendarConstrain()
-        dateTextField.delegate = self
-        descriptionEventTextView.delegate = self
+        dateCustomContainer.delegate = self
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //Função para gerar a stack
-    private func createStackView(subViews: [UIView], spacing: CGFloat = 8) -> UIStackView {
-        let stackView = UIStackView(arrangedSubviews: subViews)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .vertical
-        stackView.spacing = spacing
-        stackView.alignment = .fill
-        return stackView
+    private func setupHierarchy() {
+        addSubview(titleLabel)
+        addSubview(nameEventTextField)
+        addSubview(descriptionEventTextView)
+        addSubview(descriptionPlaceholderLabel)
+        addSubview(dateCustomContainer)
+        addSubview(locationCustomContainer)
+        addSubview(categoryCustomContainer)
+        addSubview(publicOrPrivateTextField)
+        addSubview(participantsView)
+        addSubview(actionButtonsView)
+        addSubview(calendarContainerView)
+        calendarContainerView.addSubview(calendar)
+        calendarContainerView.addSubview(timePicker)
+        calendarContainerView.addSubview(confirmButton)
     }
     
+    //MARK: -Factory
     //Função TextField
     func makeBaseTextField() -> UITextField {
         let textField = UITextField()
@@ -372,51 +291,49 @@ class CreateEventView: UIView {
     //Função Icon+ Label
     func makeIconLabelView(iconName: String, labelText: String) -> UIView {
         let icon = UIImageView(image: UIImage(systemName: iconName))
-            icon.translatesAutoresizingMaskIntoConstraints = false
-            icon.contentMode = .scaleAspectFit
-            icon.tintColor = .black
-            icon.widthAnchor.constraint(equalToConstant: 20).isActive = true
-            icon.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        icon.translatesAutoresizingMaskIntoConstraints = false
+        icon.contentMode = .scaleAspectFit
+        icon.tintColor = .black
+        icon.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        icon.heightAnchor.constraint(equalToConstant: 20).isActive = true
 
-            let label = UILabel()
-            label.text = labelText
-            label.textColor = .black
-            label.font = UIFont.systemFont(ofSize: 16)
+        let label = UILabel()
+        label.text = labelText
+        label.textColor = .black
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.translatesAutoresizingMaskIntoConstraints = false
 
-            let stackView = UIStackView(arrangedSubviews: [icon, label])
-            stackView.axis = .horizontal
-            stackView.spacing = 6
-            stackView.alignment = .center
-            stackView.translatesAutoresizingMaskIntoConstraints = false
-
-            let container = UIView(frame: CGRect(x: 0, y: 0, width: 140, height: 42))
-            container.addSubview(stackView)
-
-            NSLayoutConstraint.activate([
-                stackView.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 8),
-                stackView.centerYAnchor.constraint(equalTo: container.centerYAnchor)
-            ])
-
-            return container
+        let stackView = UIStackView(arrangedSubviews: [icon, label])
+        stackView.axis = .horizontal
+        stackView.spacing = 6
+        stackView.alignment = .leading
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return stackView
     }
     
     //Função Ícone de seta
     func makeArrowIconView() -> UIView {
-        let arrowContainerView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 42))
-        
+        let arrowContainerView = UIView()
+        arrowContainerView.translatesAutoresizingMaskIntoConstraints = false
+
         let arrowIcon = UIImageView(image: UIImage(systemName: "chevron.right"))
         arrowIcon.translatesAutoresizingMaskIntoConstraints = false
         arrowIcon.contentMode = .scaleAspectFit
         arrowIcon.tintColor = .gray
-        
+
         arrowContainerView.addSubview(arrowIcon)
+
         NSLayoutConstraint.activate([
-            arrowIcon.trailingAnchor.constraint(equalTo: arrowContainerView.trailingAnchor, constant: -16),
+            arrowContainerView.widthAnchor.constraint(equalToConstant: 30),
+            arrowContainerView.heightAnchor.constraint(equalToConstant: 42),
+
+            arrowIcon.centerXAnchor.constraint(equalTo: arrowContainerView.centerXAnchor),
             arrowIcon.centerYAnchor.constraint(equalTo: arrowContainerView.centerYAnchor),
-            arrowIcon.widthAnchor.constraint(equalToConstant: 18),
-            arrowIcon.heightAnchor.constraint(equalToConstant: 18)
+            arrowIcon.widthAnchor.constraint(equalToConstant: 16),
+            arrowIcon.heightAnchor.constraint(equalToConstant: 16)
         ])
-        
+
         return arrowContainerView
     }
     
@@ -433,39 +350,82 @@ class CreateEventView: UIView {
     }
 }
 
+extension CreateEventView: CustomContainerDelegate {
+    func containerTapped(type: ContainerType) {
+        if type == .date{
+            calendarContainerView.isHidden = false
+            self.bringSubviewToFront(calendarContainerView)
+        }else if type == .location{
+            
+        }else if type == .category{
+        }
+    }
+}
+
 //MARK: - Constrains
 extension CreateEventView {
-    func setHierarchy(){
-        addSubview(stackView)
-        addSubview(calendarContainerView)
-        descriptionEventTextView.addSubview(descriptionPlaceholderLabel)
-        calendarContainerView.addSubview(calendar)
-        calendarContainerView.addSubview(timePicker)
-        calendarContainerView.addSubview(confirmButton)
-    }
-    
-    
-    func setupConstrain() {
-        
+    func setupConstrains() {
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: topAnchor,constant: 56),
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            stackView.bottomAnchor.constraint(lessThanOrEqualTo: safeAreaLayoutGuide.bottomAnchor, constant: -16)
-        ])
-        
-        //Placeholder da descrição
-        
-        NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 80),
+            titleLabel.heightAnchor.constraint(equalToConstant: 40),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+                
+            nameEventTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
+            nameEventTextField.heightAnchor.constraint(equalToConstant: 48),
+            nameEventTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            nameEventTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+                
+            descriptionEventTextView.topAnchor.constraint(equalTo: nameEventTextField.bottomAnchor, constant: 16),
+            descriptionEventTextView.heightAnchor.constraint(equalToConstant: 80),
+            descriptionEventTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            descriptionEventTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+                
+            descriptionPlaceholderLabel.topAnchor.constraint(equalTo: descriptionEventTextView.topAnchor, constant: 8),
+            descriptionPlaceholderLabel.leadingAnchor.constraint(equalTo: descriptionEventTextView.leadingAnchor, constant: 10),
+            
+            confirmButton.topAnchor.constraint(equalTo: timePicker.bottomAnchor, constant: 16),
+            confirmButton.centerXAnchor.constraint(equalTo: calendarContainerView.centerXAnchor),
+            confirmButton.bottomAnchor.constraint(equalTo: calendarContainerView.bottomAnchor, constant: -16),
+            confirmButton.widthAnchor.constraint(equalToConstant: 200),
+            confirmButton.heightAnchor.constraint(equalToConstant: 44),
+            
+            dateCustomContainer.topAnchor.constraint(equalTo: descriptionEventTextView.bottomAnchor, constant: 16),
+            dateCustomContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            dateCustomContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            dateCustomContainer.heightAnchor.constraint(equalToConstant: 48),
+                
+            locationCustomContainer.topAnchor.constraint(equalTo: dateCustomContainer.bottomAnchor, constant: 16),
+            locationCustomContainer.heightAnchor.constraint(equalToConstant: 48),
+            locationCustomContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            locationCustomContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+                
+            categoryCustomContainer.topAnchor.constraint(equalTo: locationCustomContainer.bottomAnchor, constant: 16),
+            categoryCustomContainer.heightAnchor.constraint(equalToConstant: 48),
+            categoryCustomContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            categoryCustomContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+                
+            publicOrPrivateTextField.topAnchor.constraint(equalTo: categoryCustomContainer.bottomAnchor, constant: 16),
+            publicOrPrivateTextField.heightAnchor.constraint(equalToConstant: 48),
+            publicOrPrivateTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            publicOrPrivateTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+                
+            participantsView.topAnchor.constraint(equalTo: publicOrPrivateTextField.bottomAnchor, constant: 24),
+            participantsView.heightAnchor.constraint(equalToConstant: 80),
+            participantsView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            participantsView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+                
+            actionButtonsView.leadingAnchor.constraint(equalTo: leadingAnchor),
+               actionButtonsView.trailingAnchor.constraint(equalTo: trailingAnchor),
+               actionButtonsView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -60),
+               actionButtonsView.heightAnchor.constraint(equalToConstant: 50),
+            
             descriptionPlaceholderLabel.topAnchor.constraint(equalTo: descriptionEventTextView.topAnchor, constant: 8),
             descriptionPlaceholderLabel.leadingAnchor.constraint(equalTo: descriptionEventTextView.leadingAnchor, constant: 10)
         ])
     }
     
     func setupCalendarConstrain() {
-        
-       
-
         NSLayoutConstraint.activate([
             calendarContainerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             calendarContainerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
@@ -479,32 +439,7 @@ extension CreateEventView {
             timePicker.topAnchor.constraint(equalTo: calendar.bottomAnchor, constant: 16),
             timePicker.leadingAnchor.constraint(equalTo: calendarContainerView.leadingAnchor, constant: 16),
             timePicker.trailingAnchor.constraint(equalTo: calendarContainerView.trailingAnchor, constant: -16),
-
-            confirmButton.topAnchor.constraint(equalTo: timePicker.bottomAnchor, constant: 16),
-            confirmButton.centerXAnchor.constraint(equalTo: calendarContainerView.centerXAnchor),
-            confirmButton.bottomAnchor.constraint(equalTo: calendarContainerView.bottomAnchor, constant: -16),
-            confirmButton.widthAnchor.constraint(equalToConstant: 200),
-            confirmButton.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
 }
 
-extension CreateEventView: UITextFieldDelegate, UITextViewDelegate {
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        if textField == dateTextField {
-            showCalendar()
-            return false
-        }
-        return true
-    }
-    
-    func textViewDidChange(_ textView: UITextView) {
-            descriptionPlaceholderLabel.isHidden = !textView.text.isEmpty
-    }
-}
-
-//MARK: - Preview Profile
-@available(iOS 17.0,*)
-#Preview(traits: .portrait, body: {
-    CreateEventViewController()
-})

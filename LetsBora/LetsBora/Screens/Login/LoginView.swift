@@ -163,7 +163,12 @@ class LoginView: UIView {
     lazy private var facebookButton = createSocialButton(title: "Entre com Facebook", imageName: "f.circle")
     
     lazy private var socialButtonsStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [appleButton, googleButton, facebookButton])
+        let stackView = UIStackView(
+            arrangedSubviews: [
+                //appleButton,
+                googleButton,
+                facebookButton
+            ])
         stackView.axis = .vertical
         stackView.spacing = 8
         stackView.distribution = .fillEqually
@@ -264,7 +269,7 @@ extension LoginView {
             socialButtonsStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             socialButtonsStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
             socialButtonsStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -16),
-            socialButtonsStackView.heightAnchor.constraint(equalToConstant: 150)
+            socialButtonsStackView.heightAnchor.constraint(equalToConstant: 100)
         ])
     }
     // temporary function for testing only

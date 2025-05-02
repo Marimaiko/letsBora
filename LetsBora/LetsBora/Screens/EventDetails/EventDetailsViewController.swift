@@ -43,6 +43,12 @@ extension EventDetailsViewController: EventDetailsViewDelegate {
                 animated: true
             )
         }
+        if(sender.tag == EventDetailsView.TabTag.costs.rawValue){
+            navigationController?.pushViewController(
+                CostControlViewController(),
+                animated: true
+            )
+        }
     }
 }
 

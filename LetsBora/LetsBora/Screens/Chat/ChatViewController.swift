@@ -32,7 +32,6 @@ class ChatViewController: UIViewController {
         
     }
     func setupUI() {
-        setupNavigation()
         chatView.tableView.dataSource = self
         chatView.tableView.register(
             ChatNotificationTableViewCell.self,
@@ -46,9 +45,6 @@ class ChatViewController: UIViewController {
             ChatSurveyTableViewCell.self,
             forCellReuseIdentifier: ChatSurveyTableViewCell.identifier
         )
-    }
-    private func setupNavigation() {
-        title = "Detalhes Aniversário do Pedro"
     }
     
 }
