@@ -32,7 +32,11 @@ class SearchViewController: ViewController {
         configureCollectionView()
     }
     func configureTableView() {
-        mainView.tableView.register(EventCardTableViewCell.self, forCellReuseIdentifier: EventCardTableViewCell.identifier)
+        mainView.tableView.register(
+            EventCardTableViewCell.self,
+            forCellReuseIdentifier: EventCardTableViewCell.identifier
+        
+        )
         mainView.tableView.dataSource = self
     }
     func configureCollectionView() {

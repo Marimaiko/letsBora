@@ -31,9 +31,8 @@ class TabBarController: UITabBarController {
         
         self.viewControllers = [highlights, search, createEvent, myEvents, profile]
         self.tabBar.backgroundColor = .white
+       
     }
-    
-    
 }
 
 // MARK: - Preview Profile

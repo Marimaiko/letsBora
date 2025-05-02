@@ -1,25 +1,18 @@
 //
-//  EventMocks.swift
+//  Events+Mock.swift
 //  LetsBora
 //
-//  Created by Davi Paiva on 07/04/25.
+//  Created by Davi Paiva on 30/04/25.
 //
-import Foundation
-import UIKit
 
-struct MockData {
-    static let tag1: Tag = .init(title: "Show", color: .black, bgColor: .systemYellow)
-    static let tag2: Tag = .init(title: "Jogos", color: .black, bgColor: .green)
-    static let tag3: Tag = .init(title: "Concerto", color: .black, bgColor: .systemBlue)
-    static let tag4: Tag = .init(title: "Filmes", color: .black, bgColor: .systemRed)
-    static let tag5: Tag = .init(title: "Workshops", color: .black, bgColor: .systemGray)
-    static let tag6: Tag = .init(title: "Esportes", color: .black, bgColor: .systemOrange)
-    
-    
+extension MockData {
     static let eventMock1: Event = .init(
         title: "Festival de Verão 2025",
         image: "imageCard1",
-        tag: .init(title: "Show", color: .black, bgColor: .systemYellow),
+        tag: .init(title: "Show",
+                   color: .black,
+                   bgColor: .systemYellow
+                  ),
         visibility: "Public",
         date: "25 Mar",
         location: "Arena Show - São Paulo, SP",
@@ -68,20 +61,4 @@ struct MockData {
         ],
         owner: .init(name: "Fernanda")
     )
-    
-    static let events: [Event] = [
-        eventMock1,
-        eventMock2,
-        eventMock3
-    ]
-    static let tags: [Tag]  =  [
-        tag1,
-        tag2,
-        tag3,
-        tag4,
-        tag5,
-        tag6
-        
-        
-    ]
 }

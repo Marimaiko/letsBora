@@ -10,10 +10,7 @@ import UIKit
 
 class EventDetailsViewController: UIViewController {
     // MARK: - UI Components
-    private lazy var eventDetailsView: EventDetailsView = {
-        let view = EventDetailsView()
-        return view
-    }()
+    let eventDetailsView = EventDetailsView()
     
     // MARK: - LifeCycle
     override func viewWillAppear(_ animated: Bool) {
@@ -27,36 +24,25 @@ class EventDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigation()
+        eventDetailsView.delegate = self
     }
 
     // MARK: - Setup
     private func setupNavigation() {
-       
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .white
-
-        // Apply to both standard and scroll edge appearances
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        
-        // Optionally also compact appearance
-        navigationController?.navigationBar.compactAppearance = appearance
-
         // Set the title and button
         title = "Detalhes Aniversário do Pedro"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: UIImage(systemName: "chevron.left"),
-            style: .plain,
-            target: self,
-            action: #selector(backButtonTapped)
-        )
-
     }
-    
-    // MARK: - Actions
-    @objc private func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
+}
+extension EventDetailsViewController: EventDetailsViewDelegate {
+    func barButtonTapped
+    (_ sender: UIButton
+    ) {
+        if(sender.tag == EventDetailsView.TabTag.chat.rawValue){
+            navigationController?.pushViewController(
+                ChatViewController(),
+                animated: true
+            )
+        }
     }
 }
 
