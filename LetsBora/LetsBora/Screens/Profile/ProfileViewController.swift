@@ -8,21 +8,27 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
-    
+    let profileView = ProfileView()
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        profileView.delegate = self
     }
     
     override func loadView() {
-        let profileView = ProfileView()
         self.view = profileView
     }
 }
-
+extension ProfileViewController: ProfileViewDelegate {
+    func profileViewDidTapEditButton() {
+        let profileEditViewController = ProfileEditViewController()
+        profileEditViewController.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(profileEditViewController, animated: true)
+    }
+}
 // MARK: - Preview Profile
 @available(iOS 17.0,*)
 #Preview(traits: .portrait, body: {

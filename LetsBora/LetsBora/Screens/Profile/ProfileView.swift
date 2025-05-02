@@ -6,7 +6,13 @@
 //
 import UIKit
 
+protocol ProfileViewDelegate: AnyObject {
+    func profileViewDidTapEditButton()
+}
+
 class ProfileView: UIView {
+    
+    weak var delegate: ProfileViewDelegate?
     
     lazy private var scrollview: UIScrollView = {
         let scrollview = UIScrollView()
@@ -93,6 +99,15 @@ class ProfileView: UIView {
         return button
     }()
     
+    lazy private var editButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Editar", for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
+        button.addTarget(self, action: #selector(editProfileTapped), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
 //MARK: Init
     init() {
         super.init(frame: .zero)
@@ -104,6 +119,11 @@ class ProfileView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    @objc func editProfileTapped(){
+        self.delegate?.profileViewDidTapEditButton()
+    }
+    
 }
 
 extension ProfileView {
@@ -122,6 +142,7 @@ extension ProfileView {
         scrollview.addSubview(configTitle)
         scrollview.addSubview(settingButtonStack)
         scrollview.addSubview(exitButton)
+        scrollview.addSubview(editButton)
     }
     
     func setupConstraint() {
@@ -159,7 +180,13 @@ extension ProfileView {
             exitButton.centerXAnchor.constraint(equalTo: centerXAnchor),
             exitButton.widthAnchor.constraint(equalToConstant: 100),
             exitButton.heightAnchor.constraint(equalToConstant: 50),
-            exitButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -88)
+            exitButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -24),
+            
+            editButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+            editButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 12),
+            editButton.heightAnchor.constraint(equalToConstant: 44),
+            editButton.widthAnchor.constraint(equalToConstant: 88),
+            
         ])
     }
 }

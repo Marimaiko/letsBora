@@ -8,13 +8,18 @@
 import UIKit
 
 class ProfileEditViewController: UIViewController {
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
     override func loadView() {
         self.view = ProfileEditView()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = "Editar Perfil"
     }
 }
 
