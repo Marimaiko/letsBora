@@ -8,6 +8,11 @@
 import UIKit
 
 class LoginViewController: UIViewController {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -29,8 +34,7 @@ extension LoginViewController: LoginViewDelegate {
     
     func didTapCreateAccount() {
         let registerVC = RegisterViewController()
-        registerVC.modalPresentationStyle = .fullScreen
-        present(registerVC, animated: true)
+        navigationController?.pushViewController(registerVC, animated: true)
     }
 }
 // MARK: - Preview Profile
