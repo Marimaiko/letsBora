@@ -11,7 +11,7 @@ class ChatTabBarView: UIView {
     struct InternalLayout {
         static let iconSize: CGFloat = 48
         static let marginHorizontal: CGFloat = 8
-        static let marginVertical: CGFloat = 16
+        static let marginVertical: CGFloat = 12
         static let containerHeight: CGFloat = iconSize + 3 * marginVertical
     }
     private lazy var container: UIView = {

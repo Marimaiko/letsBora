@@ -113,7 +113,7 @@ extension ChatSurveyTableViewCell: ViewCode  {
             )
             .height(anchor: titleLabel.heightAnchor,
                     constant: (
-                        8 * cellLayout.marginVertical) + 10 * ChatProgressSurveyView.viewLayout.height
+                        8 * cellLayout.marginVertical) + 12 * ChatProgressSurveyView.viewLayout.height
             )
         
         titleLabel
