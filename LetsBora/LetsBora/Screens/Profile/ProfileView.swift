@@ -21,6 +21,12 @@ class ProfileView: UIView {
         return scrollview
     }()
     
+    lazy private var contentView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     lazy private var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Perfil"
@@ -137,16 +143,17 @@ extension ProfileView {
     
     func buildViews() {
         addSubview(scrollview)
+        scrollview.addSubview(contentView)
         
-        scrollview.addSubview(titleLabel)
-        scrollview.addSubview(profileInfo)
-        scrollview.addSubview(numberTitleLabel)
-        scrollview.addSubview(conquerTitleLabel)
-        scrollview.addSubview(conquestStack)
-        scrollview.addSubview(configTitle)
-        scrollview.addSubview(settingButtonStack)
-        scrollview.addSubview(exitButton)
-        scrollview.addSubview(editButton)
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(profileInfo)
+        contentView.addSubview(numberTitleLabel)
+        contentView.addSubview(conquerTitleLabel)
+        contentView.addSubview(conquestStack)
+        contentView.addSubview(configTitle)
+        contentView.addSubview(settingButtonStack)
+        contentView.addSubview(exitButton)
+        contentView.addSubview(editButton)
     }
     
     func setupConstraint() {
@@ -156,9 +163,16 @@ extension ProfileView {
             scrollview.trailingAnchor.constraint(equalTo: trailingAnchor),
             scrollview.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
             
-            titleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 12),
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 80),
+            contentView.topAnchor.constraint(equalTo: scrollview.topAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollview.bottomAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollview.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollview.trailingAnchor),
+            
+            contentView.widthAnchor.constraint(equalTo: scrollview.widthAnchor),
+            
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
+            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 80),
             
             profileInfo.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 32),
             profileInfo.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
@@ -184,13 +198,13 @@ extension ProfileView {
             exitButton.centerXAnchor.constraint(equalTo: centerXAnchor),
             exitButton.widthAnchor.constraint(equalToConstant: 100),
             exitButton.heightAnchor.constraint(equalToConstant: 50),
-            exitButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -24),
+            exitButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -56),
+            exitButton.topAnchor.constraint(greaterThanOrEqualTo: settingButtonStack.bottomAnchor, constant: 60),
             
-            editButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-            editButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 12),
+            editButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
+            editButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
             editButton.heightAnchor.constraint(equalToConstant: 44),
             editButton.widthAnchor.constraint(equalToConstant: 88),
-            
         ])
     }
 }
