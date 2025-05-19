@@ -46,8 +46,6 @@ We follow the **Git Flow** branching model for feature development. For more det
 
 ---
 
-🔧 Feel free to explore the source code and contribute to the development!
-
 ## 📱 App Screenshots
 <p align="center">
   <img src="https://github.com/user-attachments/assets/2981559b-cadb-443a-ac7f-d5e947237e11" width="250" />
