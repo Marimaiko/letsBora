@@ -11,6 +11,18 @@ class CreateEventView: UIView {
 
 //MARK: - UIComponents
     private lazy var titleLabel = ReusableLabel(text: "Criar Evento", labelType: .title)
+    
+    lazy private var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        return scrollView
+    }()
+    
+    lazy private var contentView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
 
     private lazy var nameEventTextField: UITextField = {
         let textField = UITextField()
@@ -260,16 +272,20 @@ class CreateEventView: UIView {
     }
     
     private func setupHierarchy() {
-        addSubview(titleLabel)
-        addSubview(nameEventTextField)
-        addSubview(descriptionEventTextView)
-        addSubview(descriptionPlaceholderLabel)
-        addSubview(dateCustomContainer)
-        addSubview(locationCustomContainer)
-        addSubview(categoryCustomContainer)
-        addSubview(publicOrPrivateTextField)
-        addSubview(participantsView)
-        addSubview(actionButtonsView)
+        addSubview(scrollView)
+        scrollView.addSubview(contentView)
+
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(nameEventTextField)
+        contentView.addSubview(descriptionEventTextView)
+        contentView.addSubview(descriptionPlaceholderLabel)
+        contentView.addSubview(dateCustomContainer)
+        contentView.addSubview(locationCustomContainer)
+        contentView.addSubview(categoryCustomContainer)
+        contentView.addSubview(publicOrPrivateTextField)
+        contentView.addSubview(participantsView)
+        contentView.addSubview(actionButtonsView)
+        
         addSubview(calendarContainerView)
         calendarContainerView.addSubview(calendar)
         calendarContainerView.addSubview(timePicker)
@@ -366,79 +382,90 @@ extension CreateEventView: CustomContainerDelegate {
 extension CreateEventView {
     func setupConstrains() {
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 80),
+            scrollView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 80),
             titleLabel.heightAnchor.constraint(equalToConstant: 40),
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-                
+            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            
             nameEventTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
             nameEventTextField.heightAnchor.constraint(equalToConstant: 48),
-            nameEventTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            nameEventTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-                
+            nameEventTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            nameEventTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            
             descriptionEventTextView.topAnchor.constraint(equalTo: nameEventTextField.bottomAnchor, constant: 16),
             descriptionEventTextView.heightAnchor.constraint(equalToConstant: 80),
-            descriptionEventTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            descriptionEventTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-                
+            descriptionEventTextView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            descriptionEventTextView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            
             descriptionPlaceholderLabel.topAnchor.constraint(equalTo: descriptionEventTextView.topAnchor, constant: 8),
             descriptionPlaceholderLabel.leadingAnchor.constraint(equalTo: descriptionEventTextView.leadingAnchor, constant: 10),
             
-            confirmButton.topAnchor.constraint(equalTo: timePicker.bottomAnchor, constant: 16),
-            confirmButton.centerXAnchor.constraint(equalTo: calendarContainerView.centerXAnchor),
-            confirmButton.bottomAnchor.constraint(equalTo: calendarContainerView.bottomAnchor, constant: -16),
-            confirmButton.widthAnchor.constraint(equalToConstant: 200),
-            confirmButton.heightAnchor.constraint(equalToConstant: 44),
-            
             dateCustomContainer.topAnchor.constraint(equalTo: descriptionEventTextView.bottomAnchor, constant: 16),
-            dateCustomContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            dateCustomContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            dateCustomContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            dateCustomContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             dateCustomContainer.heightAnchor.constraint(equalToConstant: 48),
-                
+            
             locationCustomContainer.topAnchor.constraint(equalTo: dateCustomContainer.bottomAnchor, constant: 16),
             locationCustomContainer.heightAnchor.constraint(equalToConstant: 48),
-            locationCustomContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            locationCustomContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-                
+            locationCustomContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            locationCustomContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            
             categoryCustomContainer.topAnchor.constraint(equalTo: locationCustomContainer.bottomAnchor, constant: 16),
             categoryCustomContainer.heightAnchor.constraint(equalToConstant: 48),
-            categoryCustomContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            categoryCustomContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-                
+            categoryCustomContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            categoryCustomContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            
             publicOrPrivateTextField.topAnchor.constraint(equalTo: categoryCustomContainer.bottomAnchor, constant: 16),
             publicOrPrivateTextField.heightAnchor.constraint(equalToConstant: 48),
-            publicOrPrivateTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            publicOrPrivateTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-                
+            publicOrPrivateTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            publicOrPrivateTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            
             participantsView.topAnchor.constraint(equalTo: publicOrPrivateTextField.bottomAnchor, constant: 24),
             participantsView.heightAnchor.constraint(equalToConstant: 80),
-            participantsView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            participantsView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-                
-            actionButtonsView.leadingAnchor.constraint(equalTo: leadingAnchor),
-               actionButtonsView.trailingAnchor.constraint(equalTo: trailingAnchor),
-               actionButtonsView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -60),
-               actionButtonsView.heightAnchor.constraint(equalToConstant: 50),
+            participantsView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            participantsView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             
-            descriptionPlaceholderLabel.topAnchor.constraint(equalTo: descriptionEventTextView.topAnchor, constant: 8),
-            descriptionPlaceholderLabel.leadingAnchor.constraint(equalTo: descriptionEventTextView.leadingAnchor, constant: 10)
+            actionButtonsView.topAnchor.constraint(equalTo: participantsView.bottomAnchor, constant: 32),
+            actionButtonsView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            actionButtonsView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            actionButtonsView.heightAnchor.constraint(equalToConstant: 50),
+            
+            actionButtonsView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -32)
         ])
     }
     
     func setupCalendarConstrain() {
         NSLayoutConstraint.activate([
-            calendarContainerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            calendarContainerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            calendarContainerView.centerXAnchor.constraint(equalTo: centerXAnchor),
             calendarContainerView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            calendarContainerView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.9),
+            calendarContainerView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.7),
 
-            calendar.topAnchor.constraint(equalTo: calendarContainerView.topAnchor, constant: 16),
+            calendar.topAnchor.constraint(equalTo: calendarContainerView.topAnchor, constant: 8),
             calendar.leadingAnchor.constraint(equalTo: calendarContainerView.leadingAnchor, constant: 16),
             calendar.trailingAnchor.constraint(equalTo: calendarContainerView.trailingAnchor, constant: -16),
             calendar.heightAnchor.constraint(equalToConstant: 300),
 
-            timePicker.topAnchor.constraint(equalTo: calendar.bottomAnchor, constant: 16),
+            timePicker.topAnchor.constraint(equalTo: calendar.bottomAnchor, constant: 8),
             timePicker.leadingAnchor.constraint(equalTo: calendarContainerView.leadingAnchor, constant: 16),
             timePicker.trailingAnchor.constraint(equalTo: calendarContainerView.trailingAnchor, constant: -16),
+
+            confirmButton.topAnchor.constraint(equalTo: timePicker.bottomAnchor, constant: 8),
+            confirmButton.centerXAnchor.constraint(equalTo: calendarContainerView.centerXAnchor),
+            confirmButton.bottomAnchor.constraint(equalTo: calendarContainerView.bottomAnchor, constant: -16),
+            confirmButton.widthAnchor.constraint(equalToConstant: 160),
+            confirmButton.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
 }
