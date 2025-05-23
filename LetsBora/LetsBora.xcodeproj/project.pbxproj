@@ -50,6 +50,9 @@
 		09B2009F2DC04EA800A26EA2 /* CreateEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B2009C2DC04EA800A26EA2 /* CreateEventView.swift */; };
 		09CE52892DC19B35008D8022 /* EventDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CE52872DC19B35008D8022 /* EventDetailsViewController.swift */; };
 		09CE528A2DC19B35008D8022 /* EventDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CE52862DC19B35008D8022 /* EventDetailsView.swift */; };
+		09EAF1542DDFFCC300D4EE42 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EAF1532DDFFCB800D4EE42 /* UserRepository.swift */; };
+		09EAF1562DDFFD7800D4EE42 /* InMemoryUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EAF1552DDFFD6400D4EE42 /* InMemoryUserRepository.swift */; };
+		09EAF1582DE0037E00D4EE42 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EAF1572DE0037700D4EE42 /* RegisterViewModel.swift */; };
 		09F557842DA9F86000D1D1A7 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557642DA9F86000D1D1A7 /* UIView+Extension.swift */; };
 		09F557852DA9F86000D1D1A7 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557652DA9F86000D1D1A7 /* UIViewController+Extension.swift */; };
 		09F557862DA9F86000D1D1A7 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557692DA9F86000D1D1A7 /* Event.swift */; };
@@ -119,6 +122,9 @@
 		09B2009D2DC04EA800A26EA2 /* CreateEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventViewController.swift; sourceTree = "<group>"; };
 		09CE52862DC19B35008D8022 /* EventDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsView.swift; sourceTree = "<group>"; };
 		09CE52872DC19B35008D8022 /* EventDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsViewController.swift; sourceTree = "<group>"; };
+		09EAF1532DDFFCB800D4EE42 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
+		09EAF1552DDFFD6400D4EE42 /* InMemoryUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryUserRepository.swift; sourceTree = "<group>"; };
+		09EAF1572DE0037700D4EE42 /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		09F557632DA9F86000D1D1A7 /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
 		09F557642DA9F86000D1D1A7 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		09F557652DA9F86000D1D1A7 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
@@ -265,6 +271,7 @@
 		099A92802DC50A7500415196 /* Register */ = {
 			isa = PBXGroup;
 			children = (
+				09EAF1572DE0037700D4EE42 /* RegisterViewModel.swift */,
 				099A927E2DC50A7500415196 /* RegisterView.swift */,
 				099A927F2DC50A7500415196 /* RegisterViewController.swift */,
 			);
@@ -287,6 +294,23 @@
 				09CE52872DC19B35008D8022 /* EventDetailsViewController.swift */,
 			);
 			path = EventDetails;
+			sourceTree = "<group>";
+		};
+		09EAF1512DDFFC5D00D4EE42 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				09EAF1522DDFFC8B00D4EE42 /* User */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		09EAF1522DDFFC8B00D4EE42 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				09EAF1552DDFFD6400D4EE42 /* InMemoryUserRepository.swift */,
+				09EAF1532DDFFCB800D4EE42 /* UserRepository.swift */,
+			);
+			path = User;
 			sourceTree = "<group>";
 		};
 		09F557672DA9F86000D1D1A7 /* Extensions */ = {
@@ -424,6 +448,7 @@
 				09F557672DA9F86000D1D1A7 /* Extensions */,
 				09F557832DA9F86000D1D1A7 /* Utils */,
 				09F5576B2DA9F86000D1D1A7 /* Models */,
+				09EAF1512DDFFC5D00D4EE42 /* Repository */,
 				0935A9EF2DC53C5B004B24A2 /* Components */,
 				09F557812DA9F86000D1D1A7 /* Screens */,
 				539D7B8F2D8D9C070061BB67 /* Info.plist */,
@@ -516,6 +541,7 @@
 				092728F62DC2BCFD000D744C /* Chat+MockData.swift in Sources */,
 				09F5578B2DA9F86000D1D1A7 /* LoginView.swift in Sources */,
 				091E48FB2DC4302100F4C44D /* Survey.swift in Sources */,
+				09EAF1542DDFFCC300D4EE42 /* UserRepository.swift in Sources */,
 				09F5578C2DA9F86000D1D1A7 /* Tag.swift in Sources */,
 				092728EA2DC2BA61000D744C /* Events+MockData.swift in Sources */,
 				092728E02DC26DB1000D744C /* ChatView.swift in Sources */,
@@ -538,6 +564,7 @@
 				09F5579B2DA9F86000D1D1A7 /* ViewCode+Extension.swift in Sources */,
 				0935A9F02DC53C5B004B24A2 /* ReusableLabel.swift in Sources */,
 				0935A9F12DC53C5B004B24A2 /* CustomContainer.swift in Sources */,
+				09EAF1582DE0037E00D4EE42 /* RegisterViewModel.swift in Sources */,
 				0935A9F22DC53C5B004B24A2 /* TagView.swift in Sources */,
 				0935A9F32DC53C5B004B24A2 /* ExpensesCard.swift in Sources */,
 				0935A9F42DC53C5B004B24A2 /* EventCardView.swift in Sources */,
@@ -556,6 +583,7 @@
 				0935A9FF2DC53C5B004B24A2 /* ParticipantesCard.swift in Sources */,
 				0935AA002DC53C5B004B24A2 /* CostContainer.swift in Sources */,
 				0935AA012DC53C5B004B24A2 /* AvatarGroupView.swift in Sources */,
+				09EAF1562DDFFD7800D4EE42 /* InMemoryUserRepository.swift in Sources */,
 				0935AA022DC53C5B004B24A2 /* EventCardTableViewCell.swift in Sources */,
 				0935AA032DC53C5B004B24A2 /* QuantityAndTitleView.swift in Sources */,
 				0935AA042DC53C5B004B24A2 /* ChatTabBarView.swift in Sources */,
