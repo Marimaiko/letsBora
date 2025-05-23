@@ -7,9 +7,9 @@
 import Foundation
 struct User: Identifiable {
     var id: String = UUID().uuidString
-    var password: String?
-    var email: String?
     var name: String
+    var email: String?
+    var password: String? // only use in mock examples
     var photo: String? // will be url after
 }
 

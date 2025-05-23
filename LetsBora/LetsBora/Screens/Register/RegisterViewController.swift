@@ -9,6 +9,9 @@ import UIKit
 
 class RegisterViewController: UIViewController, RegisterViewDelegate {
     
+    var registerView: RegisterView?
+    var viewModel: RegisterViewModel?
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(
@@ -16,13 +19,13 @@ class RegisterViewController: UIViewController, RegisterViewDelegate {
     }
     
     override func loadView() {
-        let registerView = RegisterView()
-        registerView.delegate = self
+        viewModel = RegisterViewModel()
+        registerView = RegisterView()
+        registerView?.delegate = self
         self.view = registerView
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         let appearance = UINavigationBarAppearance()
         
         // Apply to both standard and scroll edge appearances
@@ -46,6 +49,25 @@ class RegisterViewController: UIViewController, RegisterViewDelegate {
      navigationController?.popViewController(animated: true)
     }
     func didTapRegister() {
+        
+        guard let nameTextField = registerView?.nameTextField.text,
+              let emailTextField = registerView?.nameTextField.text,
+              let passwordTextField = registerView?.nameTextField.text else {
+            return
+        }
+        
+        if nameTextField.isEmpty || emailTextField.isEmpty || passwordTextField.isEmpty {
+            print("Empty Fields")
+            return
+        }
+        
+        let user = User(name: nameTextField, email: emailTextField, password: passwordTextField)
+        Task {
+            await viewModel?.saveUser(user: user)
+            await viewModel?.fetchUsers()
+            print("Users: \(viewModel?.users ?? [])")
+        }
+        
         navigationController?.popViewController(animated: true)
     }
 }
