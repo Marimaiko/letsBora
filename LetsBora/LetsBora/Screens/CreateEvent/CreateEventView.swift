@@ -6,9 +6,18 @@
 //
 
 import UIKit
-
+protocol CreateEventViewProtocol:AnyObject {
+    func didTapCreateEventButton()
+    func didTapDraftButton()
+    func didTapInviteButton()
+}
 class CreateEventView: UIView {
-
+    private weak var delegate: CreateEventViewProtocol?
+    
+    func delegate(delegate: CreateEventViewProtocol?){
+        self.delegate = delegate
+    }
+    
 //MARK: - UIComponents
     private lazy var titleLabel = ReusableLabel(text: "Criar Evento", labelType: .title)
     
@@ -24,7 +33,7 @@ class CreateEventView: UIView {
         return view
     }()
 
-    private lazy var nameEventTextField: UITextField = {
+    lazy var nameEventTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Nome do evento"
@@ -37,7 +46,7 @@ class CreateEventView: UIView {
         return textField
     }()
 
-    private lazy var descriptionEventTextView: UITextView = {
+    lazy var descriptionEventTextView: UITextView = {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.textColor = .black
@@ -88,7 +97,7 @@ class CreateEventView: UIView {
         return picker
     }()
 
-       private let timePicker: UIDatePicker = {
+       let timePicker: UIDatePicker = {
            let picker = UIDatePicker()
            picker.translatesAutoresizingMaskIntoConstraints = false
            picker.datePickerMode = .time
@@ -120,9 +129,10 @@ class CreateEventView: UIView {
         let container = CustomContainer(iconName: "smiley", labelName: "Categoria", arrowName: "chevron.right", type: .category)
         return container
     }()
+    let switchView = UISwitch()
     
     // Público ou Privado <--
-    private lazy var publicOrPrivateTextField: UIView = {
+    lazy var publicOrPrivateTextField: UIView = {
         let containerView = UIView()
         containerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.backgroundColor = .white
@@ -135,11 +145,11 @@ class CreateEventView: UIView {
         let leftView = makeIconLabelView(iconName: "lock", labelText: "Evento Privado")
         leftView.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(leftView)
-
-        let switchView = UISwitch()
+        
         switchView.isOn = false
         switchView.onTintColor = .systemBlue
         switchView.translatesAutoresizingMaskIntoConstraints = false
+        
         containerView.addSubview(switchView)
 
         NSLayoutConstraint.activate([
@@ -173,6 +183,7 @@ class CreateEventView: UIView {
         inviteButton.setTitleColor(.systemBlue, for: .normal)
         inviteButton.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
         inviteButton.translatesAutoresizingMaskIntoConstraints = false
+        inviteButton.addTarget(self, action: #selector(handleInviteButtonTap), for: .touchUpInside)
         containerView.addSubview(inviteButton)
 
         // Stack de imagens dos participantes (bottom left)
@@ -227,7 +238,8 @@ class CreateEventView: UIView {
         confirmButton.layer.shadowOpacity = 0.1
         confirmButton.layer.shadowOffset = CGSize(width: 0, height: 2)
         confirmButton.layer.shadowRadius = 4
-
+        confirmButton.addTarget(self, action: #selector(handleConfirmButtonTap), for: .touchUpInside)
+        
         // Botão Rascunho
         let draftButton = UIButton(type: .system)
         draftButton.setTitle("Salvar Rascunho", for: .normal)
@@ -239,7 +251,8 @@ class CreateEventView: UIView {
         draftButton.layer.shadowOpacity = 0.1
         draftButton.layer.shadowOffset = CGSize(width: 0, height: 2)
         draftButton.layer.shadowRadius = 4
-
+        draftButton.addTarget(self, action: #selector(handleDraftButtonTap), for: .touchUpInside)
+        
         // Stack dos botões
         let buttonStackView = UIStackView(arrangedSubviews: [draftButton, confirmButton])
         buttonStackView.axis = .horizontal
@@ -258,6 +271,17 @@ class CreateEventView: UIView {
 
         return containerView
     }()
+    
+    @objc func handleConfirmButtonTap() {
+        self.delegate?.didTapCreateEventButton()
+    }
+    
+    @objc func handleDraftButtonTap() {
+        self.delegate?.didTapDraftButton()
+    }
+    @objc func handleInviteButtonTap(){
+        self.delegate?.didTapInviteButton()
+    }
     
 //MARK: - Init
     override init(frame: CGRect) {

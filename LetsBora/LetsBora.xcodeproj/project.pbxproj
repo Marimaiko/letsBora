@@ -46,6 +46,9 @@
 		099A927D2DC5034A00415196 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A927C2DC5034A00415196 /* MockData.swift */; };
 		099A92812DC50A7500415196 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A927F2DC50A7500415196 /* RegisterViewController.swift */; };
 		099A92822DC50A7500415196 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A927E2DC50A7500415196 /* RegisterView.swift */; };
+		09B02A052DE12D67004654F0 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B02A042DE12D61004654F0 /* HomeViewModel.swift */; };
+		09B02A072DE139AE004654F0 /* CreateEventtViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B02A062DE139A6004654F0 /* CreateEventtViewModel.swift */; };
+		09B02A0A2DE13AA1004654F0 /* EventRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B02A092DE13A9B004654F0 /* EventRepository.swift */; };
 		09B2009E2DC04EA800A26EA2 /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B2009D2DC04EA800A26EA2 /* CreateEventViewController.swift */; };
 		09B2009F2DC04EA800A26EA2 /* CreateEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B2009C2DC04EA800A26EA2 /* CreateEventView.swift */; };
 		09CE52892DC19B35008D8022 /* EventDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CE52872DC19B35008D8022 /* EventDetailsViewController.swift */; };
@@ -118,6 +121,9 @@
 		099A927C2DC5034A00415196 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
 		099A927E2DC50A7500415196 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		099A927F2DC50A7500415196 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		09B02A042DE12D61004654F0 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		09B02A062DE139A6004654F0 /* CreateEventtViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventtViewModel.swift; sourceTree = "<group>"; };
+		09B02A092DE13A9B004654F0 /* EventRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventRepository.swift; sourceTree = "<group>"; };
 		09B2009C2DC04EA800A26EA2 /* CreateEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventView.swift; sourceTree = "<group>"; };
 		09B2009D2DC04EA800A26EA2 /* CreateEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventViewController.swift; sourceTree = "<group>"; };
 		09CE52862DC19B35008D8022 /* EventDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsView.swift; sourceTree = "<group>"; };
@@ -278,9 +284,18 @@
 			path = Register;
 			sourceTree = "<group>";
 		};
+		09B02A082DE13A81004654F0 /* Event */ = {
+			isa = PBXGroup;
+			children = (
+				09B02A092DE13A9B004654F0 /* EventRepository.swift */,
+			);
+			path = Event;
+			sourceTree = "<group>";
+		};
 		09B2009B2DC04E3500A26EA2 /* CreateEvent */ = {
 			isa = PBXGroup;
 			children = (
+				09B02A062DE139A6004654F0 /* CreateEventtViewModel.swift */,
 				09B2009C2DC04EA800A26EA2 /* CreateEventView.swift */,
 				09B2009D2DC04EA800A26EA2 /* CreateEventViewController.swift */,
 			);
@@ -299,6 +314,7 @@
 		09EAF1512DDFFC5D00D4EE42 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				09B02A082DE13A81004654F0 /* Event */,
 				09EAF1522DDFFC8B00D4EE42 /* User */,
 			);
 			path = Repository;
@@ -353,8 +369,9 @@
 		09F557772DA9F86000D1D1A7 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				09F557752DA9F86000D1D1A7 /* HomeView.swift */,
 				09F557762DA9F86000D1D1A7 /* HomeViewController.swift */,
+				09B02A042DE12D61004654F0 /* HomeViewModel.swift */,
+				09F557752DA9F86000D1D1A7 /* HomeView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -531,6 +548,7 @@
 				0935AA0B2DC53D98004B24A2 /* CostControlView.swift in Sources */,
 				092728F02DC2BB95000D744C /* Users+MockData.swift in Sources */,
 				09F557842DA9F86000D1D1A7 /* UIView+Extension.swift in Sources */,
+				09B02A0A2DE13AA1004654F0 /* EventRepository.swift in Sources */,
 				09F557852DA9F86000D1D1A7 /* UIViewController+Extension.swift in Sources */,
 				09B2009E2DC04EA800A26EA2 /* CreateEventViewController.swift in Sources */,
 				092728EE2DC2BB06000D744C /* Tag+MockData.swift in Sources */,
@@ -544,6 +562,7 @@
 				09EAF1542DDFFCC300D4EE42 /* UserRepository.swift in Sources */,
 				09F5578C2DA9F86000D1D1A7 /* Tag.swift in Sources */,
 				092728EA2DC2BA61000D744C /* Events+MockData.swift in Sources */,
+				09B02A052DE12D67004654F0 /* HomeViewModel.swift in Sources */,
 				092728E02DC26DB1000D744C /* ChatView.swift in Sources */,
 				092728DE2DC26D9C000D744C /* ChatViewController.swift in Sources */,
 				09F5578F2DA9F86000D1D1A7 /* User.swift in Sources */,
@@ -562,6 +581,7 @@
 				099A92812DC50A7500415196 /* RegisterViewController.swift in Sources */,
 				099A92822DC50A7500415196 /* RegisterView.swift in Sources */,
 				09F5579B2DA9F86000D1D1A7 /* ViewCode+Extension.swift in Sources */,
+				09B02A072DE139AE004654F0 /* CreateEventtViewModel.swift in Sources */,
 				0935A9F02DC53C5B004B24A2 /* ReusableLabel.swift in Sources */,
 				0935A9F12DC53C5B004B24A2 /* CustomContainer.swift in Sources */,
 				09EAF1582DE0037E00D4EE42 /* RegisterViewModel.swift in Sources */,

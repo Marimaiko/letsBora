@@ -52,8 +52,6 @@ extension HomeViewController: HomeViewDelegate{
         detailVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(detailVC, animated: true)
     }
-    
-    
 }
 
 // MARK: - Table View Delegate
