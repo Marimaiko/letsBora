@@ -14,7 +14,9 @@ O Padrão Repository atua como um intermediário entre a lógica de negócios e 
 
 **Exemplo no Projeto LetsBora:**
 
-O protocolo <mcfile name="UserRepository.swift" path="/Users/davipaiva/Documents/iosDev/Bootcamp-iOS/letsBora/LetsBora/LetsBora/Repository/User/UserRepository.swift"></mcfile> define a interface para operações relacionadas a usuários, como criar, recuperar, atualizar e excluir. A implementação <mcfile name="InMemoryUserRepository.swift" path="/Users/davipaiva/Documents/iosDev/Bootcamp-iOS/letsBora/LetsBora/LetsBora/Repository/User/InMemoryUserRepository.swift"></mcfile> fornece uma versão em memória deste repositório.
+O protocolo <mcfile name="UserRepository.swift" path="../LetsBora/LetsBora/Repository/User/UserRepository.swift"></mcfile> define a interface para operações relacionadas a usuários, como criar, recuperar, atualizar e excluir. A implementação <mcfile name="InMemoryUserRepository.swift" path="../LetsBora/LetsBora/Repository/User/InMemoryUserRepository.swift"></mcfile> fornece uma versão em memória deste repositório.
+
+Note que `InMemoryUserRepository` é declarado como um `actor`. Isso é feito para garantir segurança contra acesso concorrente ao estado mutável (`users`), o que é crucial em ambientes assíncronos onde múltiplas tarefas podem tentar acessar ou modificar a lista de usuários simultaneamente.
 
 ```swift:/Users/davipaiva/Documents/iosDev/Bootcamp-iOS/letsBora/LetsBora/LetsBora/Repository/User/UserRepository.swift
 enum UserRepositoryError: Error {
@@ -87,7 +89,7 @@ Injeção de Dependências (DI) é um padrão de design onde um objeto recebe su
 
 **Exemplo no Projeto LetsBora:**
 
-No <mcfile name="RegisterViewModel.swift" path="/Users/davipaiva/Documents/iosDev/Bootcamp-iOS/letsBora/LetsBora/LetsBora/Screens/Register/RegisterViewModel.swift"></mcfile>, o `UserRepository` é injetado através do construtor. Isso significa que o `RegisterViewModel` não cria uma instância específica de `UserRepository`, mas a recebe de fora. Por padrão, ele usa `InMemoryUserRepository`, mas poderia facilmente usar outra implementação (como uma que interage com uma API ou banco de dados) sem alterar a lógica interna do ViewModel.
+No <mcfile name="RegisterViewModel.swift" path="../LetsBora/LetsBora/Screens/Register/RegisterViewModel.swift"></mcfile>, o `UserRepository` é injetado através do construtor. Isso significa que o `RegisterViewModel` não cria uma instância específica de `UserRepository`, mas a recebe de fora. Por padrão, ele usa `InMemoryUserRepository`, mas poderia facilmente usar outra implementação (como uma que interage com uma API ou banco de dados) sem alterar a lógica interna do ViewModel.
 
 ```swift:/Users/davipaiva/Documents/iosDev/Bootcamp-iOS/letsBora/LetsBora/LetsBora/Screens/Register/RegisterViewModel.swift
 class RegisterViewModel {
@@ -123,7 +125,7 @@ MVVM é um padrão de arquitetura que separa a interface do usuário (View) da l
 
 **Componentes:**
 
-*   **Model:** Representa os dados e a lógica de negócios (por exemplo, a struct <mcfile name="User.swift" path="/Users/davipaiva/Documents/iosDev/Bootcamp-iOS/letsBora/LetsBora/LetsBora/Models/User.swift"></mcfile> e a lógica no Repository).
+*   **Model:** Representa os dados e a lógica de negócios (por exemplo, a struct <mcfile name="User.swift" path="../LetsBora/LetsBora/Models/User.swift"></mcfile> e a lógica no Repository).
 *   **View:** A interface do usuário (no iOS, seria uma `UIViewController` ou `SwiftUI View`). Ela observa o ViewModel e exibe os dados.
 *   **ViewModel:** Atua como um mediador entre a View e o Model. Ele contém a lógica de apresentação, formata os dados do Model para a View e lida com as ações do usuário (através de comandos ou funções).
 
@@ -135,7 +137,7 @@ MVVM é um padrão de arquitetura que separa a interface do usuário (View) da l
 
 **Exemplo no Projeto LetsBora:**
 
-A struct <mcfile name="User.swift" path="/Users/davipaiva/Documents/iosDev/Bootcamp-iOS/letsBora/LetsBora/LetsBora/Models/User.swift"></mcfile> é parte do **Model**. O <mcfile name="RegisterViewModel.swift" path="/Users/davipaiva/Documents/iosDev/Bootcamp-iOS/letsBora/LetsBora/LetsBora/Screens/Register/RegisterViewModel.swift"></mcfile> é o **ViewModel**, que contém a lógica para salvar e buscar usuários usando o `UserRepository` (que interage com o Model). Uma View (não mostrada nos exemplos fornecidos, mas seria a tela de registro) observaria o `RegisterViewModel` para exibir dados (como a lista de usuários) e chamar funções (como `saveUser`).
+A struct <mcfile name="User.swift" path="../LetsBora/LetsBora/Models/User.swift"></mcfile> é parte do **Model**. O <mcfile name="RegisterViewModel.swift" path="../LetsBora/LetsBora/Screens/Register/RegisterViewModel.swift"></mcfile> é o **ViewModel**, que contém a lógica para salvar e buscar usuários usando o `UserRepository` (que interage com o Model). Uma View (não mostrada nos exemplos fornecidos, mas seria a tela de registro) observaria o `RegisterViewModel` para exibir dados (como a lista de usuários) e chamar funções (como `saveUser`).
 
 ```swift:/Users/davipaiva/Documents/iosDev/Bootcamp-iOS/letsBora/LetsBora/LetsBora/Models/User.swift
 import Foundation
