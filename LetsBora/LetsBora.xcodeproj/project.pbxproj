@@ -79,6 +79,9 @@
 		09F557A12DA9F86000D1D1A7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09F5576D2DA9F86000D1D1A7 /* Assets.xcassets */; };
 		368D35B42DC3E56E0050FF68 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368D35B32DC3E5660050FF68 /* ProfileView.swift */; };
 		368D35B62DC3E5760050FF68 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368D35B52DC3E5710050FF68 /* ProfileViewController.swift */; };
+		53126CF92DE292100020E9C2 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53126CF72DE292100020E9C2 /* UserRepository.swift */; };
+		53126CFA2DE292100020E9C2 /* InMemoryUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53126CF82DE292100020E9C2 /* InMemoryUserRepository.swift */; };
+		53126CFC2DE292220020E9C2 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53126CFB2DE292220020E9C2 /* RegisterViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -153,6 +156,9 @@
 		09F5577F2DA9F86000D1D1A7 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		368D35B32DC3E5660050FF68 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		368D35B52DC3E5710050FF68 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		53126CF72DE292100020E9C2 /* UserRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
+		53126CF82DE292100020E9C2 /* InMemoryUserRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InMemoryUserRepository.swift; sourceTree = "<group>"; };
+		53126CFB2DE292220020E9C2 /* RegisterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		539D7B7E2D8D9C050061BB67 /* LetsBora.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LetsBora.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		539D7B8F2D8D9C070061BB67 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -277,7 +283,7 @@
 		099A92802DC50A7500415196 /* Register */ = {
 			isa = PBXGroup;
 			children = (
-				09EAF1572DE0037700D4EE42 /* RegisterViewModel.swift */,
+				53126CFB2DE292220020E9C2 /* RegisterViewModel.swift */,
 				099A927E2DC50A7500415196 /* RegisterView.swift */,
 				099A927F2DC50A7500415196 /* RegisterViewController.swift */,
 			);
@@ -324,8 +330,8 @@
 		09EAF1522DDFFC8B00D4EE42 /* User */ = {
 			isa = PBXGroup;
 			children = (
-				09EAF1552DDFFD6400D4EE42 /* InMemoryUserRepository.swift */,
-				09EAF1532DDFFCB800D4EE42 /* UserRepository.swift */,
+				53126CF82DE292100020E9C2 /* InMemoryUserRepository.swift */,
+				53126CF72DE292100020E9C2 /* UserRepository.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -556,6 +562,7 @@
 				092728F02DC2BB95000D744C /* Users+MockData.swift in Sources */,
 				09F557842DA9F86000D1D1A7 /* UIView+Extension.swift in Sources */,
 				09B02A0A2DE13AA1004654F0 /* EventRepository.swift in Sources */,
+				53126CF92DE292100020E9C2 /* UserRepository.swift in Sources */,
 				09F557852DA9F86000D1D1A7 /* UIViewController+Extension.swift in Sources */,
 				09B2009E2DC04EA800A26EA2 /* CreateEventViewController.swift in Sources */,
 				092728EE2DC2BB06000D744C /* Tag+MockData.swift in Sources */,
@@ -566,7 +573,6 @@
 				092728F62DC2BCFD000D744C /* Chat+MockData.swift in Sources */,
 				09F5578B2DA9F86000D1D1A7 /* LoginView.swift in Sources */,
 				091E48FB2DC4302100F4C44D /* Survey.swift in Sources */,
-				09EAF1542DDFFCC300D4EE42 /* UserRepository.swift in Sources */,
 				09F5578C2DA9F86000D1D1A7 /* Tag.swift in Sources */,
 				092728EA2DC2BA61000D744C /* Events+MockData.swift in Sources */,
 				09B02A052DE12D67004654F0 /* HomeViewModel.swift in Sources */,
@@ -591,7 +597,6 @@
 				09B02A072DE139AE004654F0 /* CreateEventViewModel.swift in Sources */,
 				0935A9F02DC53C5B004B24A2 /* ReusableLabel.swift in Sources */,
 				0935A9F12DC53C5B004B24A2 /* CustomContainer.swift in Sources */,
-				09EAF1582DE0037E00D4EE42 /* RegisterViewModel.swift in Sources */,
 				0935A9F22DC53C5B004B24A2 /* TagView.swift in Sources */,
 				0935A9F32DC53C5B004B24A2 /* ExpensesCard.swift in Sources */,
 				0935A9F42DC53C5B004B24A2 /* EventCardView.swift in Sources */,
@@ -602,15 +607,16 @@
 				0935AA102DC54758004B24A2 /* MyEventsViewController.swift in Sources */,
 				0935A9F82DC53C5B004B24A2 /* ChatProgressSurveyView.swift in Sources */,
 				0935A9F92DC53C5B004B24A2 /* TabBarController.swift in Sources */,
+				53126CFC2DE292220020E9C2 /* RegisterViewModel.swift in Sources */,
 				0935A9FA2DC53C5B004B24A2 /* ProfileInfoView.swift in Sources */,
 				0935A9FB2DC53C5B004B24A2 /* DividerView.swift in Sources */,
+				53126CFA2DE292100020E9C2 /* InMemoryUserRepository.swift in Sources */,
 				0935A9FC2DC53C5B004B24A2 /* SettingButtonView.swift in Sources */,
 				0935A9FD2DC53C5B004B24A2 /* TagCollectionViewCell.swift in Sources */,
 				0935A9FE2DC53C5B004B24A2 /* AvatarImageView.swift in Sources */,
 				0935A9FF2DC53C5B004B24A2 /* ParticipantesCard.swift in Sources */,
 				0935AA002DC53C5B004B24A2 /* CostContainer.swift in Sources */,
 				0935AA012DC53C5B004B24A2 /* AvatarGroupView.swift in Sources */,
-				09EAF1562DDFFD7800D4EE42 /* InMemoryUserRepository.swift in Sources */,
 				0935AA022DC53C5B004B24A2 /* EventCardTableViewCell.swift in Sources */,
 				0935AA032DC53C5B004B24A2 /* QuantityAndTitleView.swift in Sources */,
 				0935AA042DC53C5B004B24A2 /* ChatTabBarView.swift in Sources */,
