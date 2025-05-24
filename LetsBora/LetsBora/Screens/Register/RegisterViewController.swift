@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class RegisterViewController: UIViewController, RegisterViewDelegate {
     
@@ -45,6 +46,10 @@ class RegisterViewController: UIViewController, RegisterViewDelegate {
         )
         
     }
+    
+    func signUp() async throws {
+        _ = try await Auth.auth().createUser(withEmail: "davi@davi.com.br", password: "password")
+    }
  @objc func backButtonTapped() {
      navigationController?.popViewController(animated: true)
     }
@@ -68,7 +73,15 @@ class RegisterViewController: UIViewController, RegisterViewDelegate {
             print("Users: \(viewModel?.users ?? [])")
         }
         
-        navigationController?.popViewController(animated: true)
+        Task {
+            do {
+                try await self.signUp()
+            } catch {
+               print(error)
+            }
+        }
+            
+            
     }
 }
 
