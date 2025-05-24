@@ -26,7 +26,7 @@ class ParticipantCard: UIView{
     }()
     
     private lazy var imageParticipant: UIImageView = {
-        let image = UIImageView(image: .julia)
+        let image = UIImageView(image: UIImage(named: "julia"))
         image.translatesAutoresizingMaskIntoConstraints = false
         image.contentMode = .scaleAspectFit
         image.widthAnchor.constraint(equalToConstant: imageSize).isActive = true
@@ -114,8 +114,10 @@ extension ParticipantCard: ViewCode{
 }
 
 //MARK: -Preview
+#if swift(>=5.9)
 @available(iOS 17.0, *)
 #Preview("ParticipantCard", traits: .sizeThatFitsLayout) {
     let participantCard = ParticipantCard()
     participantCard
 }
+#endif

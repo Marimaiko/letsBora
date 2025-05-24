@@ -72,7 +72,9 @@ class RegisterViewController: UIViewController, RegisterViewDelegate {
     }
 }
 
-@available(iOS 17.0,*)
+#if swift(>=5.9)
+@available(iOS 17.0, *)
 #Preview(traits: .portrait, body: {
     RegisterViewController()
 })
+#endif

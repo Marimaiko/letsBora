@@ -116,8 +116,10 @@ extension CustomContainer: ViewCode {
 }
 
 //MARK: -Preview
+#if swift(>=5.9)
 @available(iOS 17.0, *)
 #Preview("CustomContainerView", traits: .sizeThatFitsLayout) {
     let dateContainer = CustomContainer(iconName: "calendar", labelName: "Teste", arrowName: "chevron.right", type: .date)
     dateContainer
 }
+#endif

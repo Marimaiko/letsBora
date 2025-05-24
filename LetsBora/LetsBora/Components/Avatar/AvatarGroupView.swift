@@ -101,6 +101,8 @@ class AvatarGroupView: UIView {
     }
 }
 
+
+#if swift(>=5.9)
 @available(iOS 17.0, *)
 #Preview("AvatarGroup", traits: .sizeThatFitsLayout){
     let avatars: [String] = ["Jim", "Julia", "John"]
@@ -132,3 +134,4 @@ class AvatarGroupView: UIView {
     
 }
 
+#endif

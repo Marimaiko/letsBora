@@ -59,7 +59,9 @@ extension MyEventsViewController : UITableViewDataSource {
 
 
 // MARK: - Preview
+#if swift(>=5.9)
 @available(iOS 17.0, *)
 #Preview("Home View Controller", traits: .portrait, body: {
     MyEventsViewController()
 })
+#endif

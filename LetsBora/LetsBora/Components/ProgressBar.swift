@@ -78,7 +78,7 @@ extension ProgressBar: ViewCode {
         
     }
 }
-
+#if swift(>=5.9)
 @available(iOS 17.0, *)
 #Preview("ProgressBar", traits: .fixedLayout(width: 300, height: 20)) {
     let pb = ProgressBar()
@@ -86,3 +86,4 @@ extension ProgressBar: ViewCode {
     return pb
 }
 
+#endif

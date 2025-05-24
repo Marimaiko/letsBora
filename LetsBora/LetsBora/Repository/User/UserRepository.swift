@@ -11,9 +11,9 @@ enum UserRepositoryError: Error {
 }
 
 protocol UserRepository {
-    func create(_ user: User) async throws(UserRepositoryError) -> Void
-    func retrieve(for id: String) async throws(UserRepositoryError) -> User
-    func retrieveAll() async throws(UserRepositoryError) -> [User]
-    func update(_ user: User) async throws(UserRepositoryError) -> Void
-    func delete(for id: String) async throws(UserRepositoryError) -> Void
+    func create(_ user: User) async throws -> Void
+    func retrieve(for id: String) async throws -> User
+    func retrieveAll() async throws -> [User]
+    func update(_ user: User) async throws -> Void
+    func delete(for id: String) async throws -> Void
 }

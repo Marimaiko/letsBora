@@ -80,8 +80,9 @@ extension EventDetailsViewController: EventDetailsViewDelegate {
         }
     }
 }
-
-@available(iOS 17.0,*)
+#if swift(>=5.9)
+@available(iOS 17.0, *)
 #Preview(traits: .portrait, body: {
     EventDetailsViewController()
 })
+#endif

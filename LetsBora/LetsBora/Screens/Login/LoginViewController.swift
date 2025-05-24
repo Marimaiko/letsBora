@@ -38,7 +38,9 @@ extension LoginViewController: LoginViewDelegate {
     }
 }
 // MARK: - Preview Profile
-@available(iOS 17.0,*)
+#if swift(>=5.9)
+@available(iOS 17.0, *)
 #Preview(traits: .portrait, body: {
     LoginViewController()
 })
+#endif

@@ -58,8 +58,9 @@ extension ChatView:ViewCode{
 
 }
 // MARK: - Preview Profile
+#if swift(>=5.9)
 @available(iOS 17.0,*)
 #Preview(traits: .sizeThatFitsLayout, body: {
     ChatViewController()
 })
-
+#endif

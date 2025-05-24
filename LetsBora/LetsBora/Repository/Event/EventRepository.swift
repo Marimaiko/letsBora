@@ -10,9 +10,9 @@ enum EventRepositoryError: Error {
     case emptyData
 }
 protocol EventRepository {
-    func create(_ event: Event) async throws(EventRepositoryError) -> Void
-    func retrieve(for id: String) async throws(EventRepositoryError) -> Event
-    func retrieveAll() async throws(EventRepositoryError) -> [Event]
-    func update(_ event: Event) async throws(EventRepositoryError) -> Void
-    func delete(for id: String) async throws(EventRepositoryError) -> Void
+    func create(_ event: Event) async throws -> Void
+    func retrieve(for id: String) async throws -> Event
+    func retrieveAll() async throws -> [Event]
+    func update(_ event: Event) async throws -> Void
+    func delete(for id: String) async throws -> Void
 }

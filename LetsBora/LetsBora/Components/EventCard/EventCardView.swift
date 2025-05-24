@@ -185,6 +185,7 @@ extension EventCardView: ViewCode {
     
 }
 // MARK: - Preview
+#if swift(>=5.9)
 @available(iOS 17.0, *)
 #Preview("Event Card View", traits: .sizeThatFitsLayout, body: {
     let cell1 = EventCardView()
@@ -226,3 +227,4 @@ extension EventCardView: ViewCode {
     
     return stackView
 })
+#endif

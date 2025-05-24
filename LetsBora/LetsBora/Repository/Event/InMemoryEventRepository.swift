@@ -8,26 +8,26 @@
 import Foundation
 
 actor InMemoryEventRepository:EventRepository {
-    func create(_ event: Event) async throws(EventRepositoryError) {
+    func create(_ event: Event) async throws {
         MockData.events.append(event)
     }
     
-    func retrieve(for id: String) async throws(EventRepositoryError) -> Event {
+    func retrieve(for id: String) async throws -> Event {
         let event = MockData.events.first(where: { $0.id == id })
         guard let event else {
-            throw .eventNotFound
+            throw EventRepositoryError.eventNotFound
         }
         return event
     }
     
-    func retrieveAll() async throws(EventRepositoryError) -> [Event] {
+    func retrieveAll() async throws -> [Event] {
         guard !MockData.events.isEmpty else {
-            throw .emptyData
+            throw EventRepositoryError.emptyData
         }
         return MockData.events
     }
     
-    func update(_ event: Event) async throws(EventRepositoryError) {
+    func update(_ event: Event) async throws {
         let id = event.id
         
         guard let index = MockData
@@ -36,12 +36,12 @@ actor InMemoryEventRepository:EventRepository {
                 where: {
                     $0.id == id
                 }) else {
-            throw .eventNotFound
+            throw EventRepositoryError.eventNotFound
         }
         MockData.events[index] = event
     }
     
-    func delete(for id: String) async throws(EventRepositoryError) {
+    func delete(for id: String) async throws {
         
     }
     

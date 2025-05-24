@@ -84,8 +84,10 @@ extension CostContainer: ViewCode {
 }
 
 //MARK: -Preview
+#if swift(>=5.9)
 @available(iOS 17.0, *)
 #Preview("CostContainerView", traits: .sizeThatFitsLayout) {
     let costContainer = CostContainer()
     costContainer
 }
+#endif
