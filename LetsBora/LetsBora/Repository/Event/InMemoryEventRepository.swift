@@ -42,7 +42,10 @@ actor InMemoryEventRepository:EventRepository {
     }
     
     func delete(for id: String) async throws {
-        
+        guard let index = MockData.events.firstIndex(where: {$0.id == id}) else {
+            throw EventRepositoryError.eventNotFound
+        }
+        MockData.events.remove(at: index)
     }
     
     

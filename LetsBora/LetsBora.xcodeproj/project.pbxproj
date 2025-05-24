@@ -47,7 +47,7 @@
 		099A92812DC50A7500415196 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A927F2DC50A7500415196 /* RegisterViewController.swift */; };
 		099A92822DC50A7500415196 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A927E2DC50A7500415196 /* RegisterView.swift */; };
 		09B02A052DE12D67004654F0 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B02A042DE12D61004654F0 /* HomeViewModel.swift */; };
-		09B02A072DE139AE004654F0 /* CreateEventtViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B02A062DE139A6004654F0 /* CreateEventtViewModel.swift */; };
+		09B02A072DE139AE004654F0 /* CreateEventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B02A062DE139A6004654F0 /* CreateEventViewModel.swift */; };
 		09B02A0A2DE13AA1004654F0 /* EventRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B02A092DE13A9B004654F0 /* EventRepository.swift */; };
 		09B02A0C2DE13FDF004654F0 /* InMemoryEventRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B02A0B2DE13FD4004654F0 /* InMemoryEventRepository.swift */; };
 		09B2009E2DC04EA800A26EA2 /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B2009D2DC04EA800A26EA2 /* CreateEventViewController.swift */; };
@@ -123,7 +123,7 @@
 		099A927E2DC50A7500415196 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		099A927F2DC50A7500415196 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		09B02A042DE12D61004654F0 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
-		09B02A062DE139A6004654F0 /* CreateEventtViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventtViewModel.swift; sourceTree = "<group>"; };
+		09B02A062DE139A6004654F0 /* CreateEventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventViewModel.swift; sourceTree = "<group>"; };
 		09B02A092DE13A9B004654F0 /* EventRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventRepository.swift; sourceTree = "<group>"; };
 		09B02A0B2DE13FD4004654F0 /* InMemoryEventRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryEventRepository.swift; sourceTree = "<group>"; };
 		09B2009C2DC04EA800A26EA2 /* CreateEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventView.swift; sourceTree = "<group>"; };
@@ -298,7 +298,7 @@
 		09B2009B2DC04E3500A26EA2 /* CreateEvent */ = {
 			isa = PBXGroup;
 			children = (
-				09B02A062DE139A6004654F0 /* CreateEventtViewModel.swift */,
+				09B02A062DE139A6004654F0 /* CreateEventViewModel.swift */,
 				09B2009C2DC04EA800A26EA2 /* CreateEventView.swift */,
 				09B2009D2DC04EA800A26EA2 /* CreateEventViewController.swift */,
 			);
@@ -585,7 +585,7 @@
 				099A92812DC50A7500415196 /* RegisterViewController.swift in Sources */,
 				099A92822DC50A7500415196 /* RegisterView.swift in Sources */,
 				09F5579B2DA9F86000D1D1A7 /* ViewCode+Extension.swift in Sources */,
-				09B02A072DE139AE004654F0 /* CreateEventtViewModel.swift in Sources */,
+				09B02A072DE139AE004654F0 /* CreateEventViewModel.swift in Sources */,
 				0935A9F02DC53C5B004B24A2 /* ReusableLabel.swift in Sources */,
 				0935A9F12DC53C5B004B24A2 /* CustomContainer.swift in Sources */,
 				09EAF1582DE0037E00D4EE42 /* RegisterViewModel.swift in Sources */,

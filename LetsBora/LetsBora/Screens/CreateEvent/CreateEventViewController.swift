@@ -3,6 +3,7 @@ import UIKit
 class CreateEventViewController: UIViewController {
     
     var screen: CreateEventView?
+    var viewModel: CreateEventViewModel?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -16,11 +17,14 @@ class CreateEventViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         screen?.delegate(delegate: self)
+        viewModel = CreateEventViewModel()
         view.backgroundColor = UIColor(red: 248/255, green: 248/255, blue: 248/255, alpha: 1.0)
     }
 }
 extension CreateEventViewController: CreateEventViewProtocol{
     func didTapCreateEventButton() {
+        print("create button tapped")
+        
         guard let name = screen?.nameEventTextField.text
         else { return }
         
@@ -47,12 +51,34 @@ extension CreateEventViewController: CreateEventViewProtocol{
         print("category: \(category)")
         print("isPrivate: \(isPrivate)")
         
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MM-yyyy"
+        let dateString = formatter.string(from: date)
         
-        print("create button tapped")
+        
+        
+        var event = Event(
+            title: name,
+            date: dateString,
+            location: location,
+            owner: User(name: "defaultUser")
+        )
+        
+        Task{
+            await viewModel?.saveEvent(event:event)
+        }
         
     }
     func didTapInviteButton() {
         print("invite button tapped")
+        Task {
+            await viewModel?.fetchUsers()
+            guard let usersToInvite = viewModel?.users else {
+                return
+            }
+            print(usersToInvite)
+        }
+        
     }
     
     func didTapDraftButton() {
