@@ -36,6 +36,11 @@ extension LoginViewController: LoginViewDelegate {
         let registerVC = RegisterViewController()
         navigationController?.pushViewController(registerVC, animated: true)
     }
+    
+    func didTapForgetPassword() {
+        let forgetPasswordVC = ForgetPasswordViewController()
+        navigationController?.pushViewController(forgetPasswordVC, animated: true)
+    }
 }
 // MARK: - Preview Profile
 @available(iOS 17.0,*)

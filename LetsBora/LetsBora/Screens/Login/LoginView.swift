@@ -9,6 +9,7 @@ import UIKit
 protocol LoginViewDelegate: AnyObject {
     func didTapLoginButton()
     func didTapCreateAccount()
+    func didTapForgetPassword()
 }
 class LoginView: UIView {
     private let gradientLayer = CAGradientLayer()
@@ -32,6 +33,7 @@ class LoginView: UIView {
     lazy private var tittleLabel: UILabel = {
         let label = UILabel()
         label.text = "Pronto para seu\npróximo rolê?"
+        label.textColor = .white
         label.numberOfLines = 2
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
@@ -116,15 +118,16 @@ class LoginView: UIView {
         return stackView
     }()
     
-    lazy private var forgetPasswordLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Esqueceu \na senha?"
-        label.numberOfLines = 2
-        label.textAlignment = .center
-        label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        label.textAlignment = .left
-        return label
+    lazy private var forgetPasswordButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Esqueceu \na senha?", for: .normal)
+        button.titleLabel?.numberOfLines = 2
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        button.titleLabel?.textAlignment = .left
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(didTapForgetPassword), for: .touchUpInside)
+        return button
     }()
     
     lazy private var newAccountButton: UIButton = {
@@ -140,7 +143,7 @@ class LoginView: UIView {
     }()
     
     lazy private var linksStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [forgetPasswordLabel, newAccountButton])
+        let stackView = UIStackView(arrangedSubviews: [forgetPasswordButton, newAccountButton])
         stackView.axis = .horizontal
         stackView.distribution = .fillProportionally
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -279,7 +282,12 @@ extension LoginView {
     
     @objc private func didTapNewAccount() {
         delegate?.didTapCreateAccount()
-        print("clicou no botão!!!")
+        print("clicou em Criar conta")
+    }
+    
+    @objc private func didTapForgetPassword() {
+        delegate?.didTapForgetPassword()
+        print("clicou em Esqueceu senha")
     }
 }
 
