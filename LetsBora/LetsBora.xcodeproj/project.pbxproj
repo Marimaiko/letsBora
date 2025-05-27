@@ -50,6 +50,8 @@
 		09B2009F2DC04EA800A26EA2 /* CreateEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B2009C2DC04EA800A26EA2 /* CreateEventView.swift */; };
 		09CE52892DC19B35008D8022 /* EventDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CE52872DC19B35008D8022 /* EventDetailsViewController.swift */; };
 		09CE528A2DC19B35008D8022 /* EventDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CE52862DC19B35008D8022 /* EventDetailsView.swift */; };
+		09EAF14D2DDFDF7E00D4EE42 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 09EAF14C2DDFDF7E00D4EE42 /* GoogleService-Info.plist */; };
+		09EAF1502DDFE0C300D4EE42 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 09EAF14F2DDFE0C300D4EE42 /* FirebaseAuth */; };
 		09F557842DA9F86000D1D1A7 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557642DA9F86000D1D1A7 /* UIView+Extension.swift */; };
 		09F557852DA9F86000D1D1A7 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557652DA9F86000D1D1A7 /* UIViewController+Extension.swift */; };
 		09F557862DA9F86000D1D1A7 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557692DA9F86000D1D1A7 /* Event.swift */; };
@@ -119,6 +121,7 @@
 		09B2009D2DC04EA800A26EA2 /* CreateEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventViewController.swift; sourceTree = "<group>"; };
 		09CE52862DC19B35008D8022 /* EventDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsView.swift; sourceTree = "<group>"; };
 		09CE52872DC19B35008D8022 /* EventDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsViewController.swift; sourceTree = "<group>"; };
+		09EAF14C2DDFDF7E00D4EE42 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		09F557632DA9F86000D1D1A7 /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
 		09F557642DA9F86000D1D1A7 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		09F557652DA9F86000D1D1A7 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
@@ -151,6 +154,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09EAF1502DDFE0C300D4EE42 /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,6 +431,7 @@
 				0935A9EF2DC53C5B004B24A2 /* Components */,
 				09F557812DA9F86000D1D1A7 /* Screens */,
 				539D7B8F2D8D9C070061BB67 /* Info.plist */,
+				09EAF14C2DDFDF7E00D4EE42 /* GoogleService-Info.plist */,
 			);
 			path = LetsBora;
 			sourceTree = "<group>";
@@ -475,6 +480,9 @@
 				Base,
 			);
 			mainGroup = 539D7B752D8D9C040061BB67;
+			packageReferences = (
+				09EAF14E2DDFE0C300D4EE42 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 539D7B7F2D8D9C050061BB67 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -490,6 +498,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				09F5579F2DA9F86000D1D1A7 /* LaunchScreen.storyboard in Resources */,
+				09EAF14D2DDFDF7E00D4EE42 /* GoogleService-Info.plist in Resources */,
 				09F557A02DA9F86000D1D1A7 /* Main.storyboard in Resources */,
 				09F557A12DA9F86000D1D1A7 /* Assets.xcassets in Resources */,
 			);
@@ -717,6 +726,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LetsBora/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Let's Bora";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -744,6 +754,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LetsBora/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Let's Bora";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -784,6 +795,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		09EAF14E2DDFE0C300D4EE42 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.13.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		09EAF14F2DDFE0C300D4EE42 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 09EAF14E2DDFE0C300D4EE42 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 539D7B762D8D9C040061BB67 /* Project object */;
 }
