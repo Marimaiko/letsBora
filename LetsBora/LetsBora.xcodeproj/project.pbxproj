@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -148,6 +148,10 @@
 		539D7B7E2D8D9C050061BB67 /* LetsBora.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LetsBora.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		539D7B8F2D8D9C070061BB67 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		920580572DE54F9800B17E06 /* EditEvent */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = EditEvent; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		539D7B7B2D8D9C050061BB67 /* Frameworks */ = {
@@ -369,6 +373,7 @@
 		09F557812DA9F86000D1D1A7 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				920580572DE54F9800B17E06 /* EditEvent */,
 				0935AA0E2DC54758004B24A2 /* MyEvents */,
 				0935AA092DC53D98004B24A2 /* CostControl */,
 				099A92802DC50A7500415196 /* Register */,
@@ -450,6 +455,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				920580572DE54F9800B17E06 /* EditEvent */,
 			);
 			name = LetsBora;
 			productName = LetsBora;
