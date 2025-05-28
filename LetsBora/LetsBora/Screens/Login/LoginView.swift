@@ -6,6 +6,7 @@
 //
 
 import UIKit
+
 protocol LoginViewDelegate: AnyObject {
     func didTapLoginButton()
     func didTapCreateAccount()
@@ -29,13 +30,14 @@ class LoginView: UIView {
         return imageView
     }()
     
-    lazy private var tittleLabel: UILabel = {
+    lazy private var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Pronto para seu\npróximo rolê?"
         label.numberOfLines = 2
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .white
         return label
     }()
     
@@ -48,11 +50,22 @@ class LoginView: UIView {
         return label
     }()
     
-    lazy private var emailTextField: UITextField = {
+    lazy var emailTextField: UITextField = {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.keyboardType = .emailAddress
+        textField.autocapitalizationType = .none
         return textField
+    }()
+    
+    lazy var emailErrorLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .yellow
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.isHidden = true
+        return label
     }()
     
     private let passwordLabel: UILabel = {
@@ -64,7 +77,7 @@ class LoginView: UIView {
         return label
     }()
     
-    lazy private var passwordTextField: UITextField = {
+    lazy var passwordTextField: UITextField = {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.isSecureTextEntry = true
@@ -72,12 +85,21 @@ class LoginView: UIView {
         return textField
     }()
     
+    lazy var passwordErrorLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .yellow
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.isHidden = true
+        return label
+    }()
+    
     lazy private var loginButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Entrar", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         button.backgroundColor = .white
-        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(UIColor(hex: "#7B61FF"), for: .normal)
         button.layer.cornerRadius = 8
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
@@ -155,10 +177,11 @@ class LoginView: UIView {
         button.setTitleColor(.black, for: .normal)
         button.layer.cornerRadius = 8
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.heightAnchor.constraint(equalToConstant: 44).isActive = true
         return button
     }
     
-    lazy private var appleButton = createSocialButton(title: "Entre com Apple", imageName: "applelogo")
+    lazy private var appleButton = createSocialButton(title: "Entre com Apple", imageName: "apple.logo")
     lazy private var googleButton = createSocialButton(title: "Entre com Google", imageName: "g.circle")
     lazy private var facebookButton = createSocialButton(title: "Entre com Facebook", imageName: "f.circle")
     
@@ -170,7 +193,7 @@ class LoginView: UIView {
                 facebookButton
             ])
         stackView.axis = .vertical
-        stackView.spacing = 8
+        stackView.spacing = 12
         stackView.distribution = .fillEqually
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
@@ -178,7 +201,6 @@ class LoginView: UIView {
     
     init() {
         super.init(frame: .zero)
-        configView()
         buildView()
         setupConstraints()
     }
@@ -186,11 +208,34 @@ class LoginView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // Métodos para exibir/ocultar erros
+    func displayEmailError(_ message: String?) {
+        emailErrorLabel.text = message
+        emailErrorLabel.isHidden = (message == nil)
+        emailTextField.layer.borderColor = (message == nil) ? UIColor.clear.cgColor : UIColor.yellow.cgColor
+        emailTextField.layer.borderWidth = (message == nil) ? 0 : 1
+    }
+
+    func displayPasswordError(_ message: String?) {
+        passwordErrorLabel.text = message
+        passwordErrorLabel.isHidden = (message == nil)
+        passwordTextField.layer.borderColor = (message == nil) ? UIColor.clear.cgColor : UIColor.yellow.cgColor
+        passwordTextField.layer.borderWidth = (message == nil) ? 0 : 1
+    }
+
+    func resetErrorMessages() {
+        displayEmailError(nil)
+        displayPasswordError(nil)
+    }
 }
 
 extension LoginView {
     override func layoutSubviews() {
         super.layoutSubviews()
+        if gradientLayer.superlayer == nil { // Adiciona o gradiente apenas uma vez
+            configView()
+        }
         gradientLayer.frame = bounds
     }
     
@@ -202,7 +247,6 @@ extension LoginView {
         gradientLayer.locations = [0.0, 0.98]
         gradientLayer.startPoint = CGPoint(x: 0.8, y: 0)
         gradientLayer.endPoint = CGPoint(x: 1, y: 1)
-        gradientLayer.frame = bounds
         layer.insertSublayer(gradientLayer, at: 0)
     }
     
@@ -210,11 +254,16 @@ extension LoginView {
         addSubview(scrollView)
         
         scrollView.addSubview(logoImageView)
-        scrollView.addSubview(tittleLabel)
+        scrollView.addSubview(titleLabel)
+       
         scrollView.addSubview(emailLabel)
+        scrollView.addSubview(emailTextField)
+        scrollView.addSubview(emailErrorLabel)
+        
         scrollView.addSubview(passwordLabel)
         scrollView.addSubview(passwordTextField)
-        scrollView.addSubview(emailTextField)
+        scrollView.addSubview(passwordErrorLabel)
+        
         scrollView.addSubview(loginButton)
         scrollView.addSubview(dividerStackView)
         scrollView.addSubview(linksStackView)
@@ -230,31 +279,43 @@ extension LoginView {
             
             logoImageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 28),
             logoImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            logoImageView.widthAnchor.constraint(equalToConstant: 120),
             logoImageView.heightAnchor.constraint(equalToConstant: 120),
             
-            tittleLabel.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 36),
-            tittleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            titleLabel.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 24),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
+            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
             
-            emailLabel.topAnchor.constraint(equalTo: tittleLabel.bottomAnchor, constant: 32),
+            emailLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 28),
             emailLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             
             emailTextField.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 8),
             emailTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             emailTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            emailTextField.heightAnchor.constraint(equalToConstant: 36),
             
-            passwordLabel.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 30),
+            emailErrorLabel.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 4),
+            emailErrorLabel.leadingAnchor.constraint(equalTo: emailTextField.leadingAnchor),
+            emailErrorLabel.trailingAnchor.constraint(equalTo: emailTextField.trailingAnchor),
+            
+            passwordLabel.topAnchor.constraint(equalTo: emailErrorLabel.bottomAnchor, constant: 18),
             passwordLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             
             passwordTextField.topAnchor.constraint(equalTo: passwordLabel.bottomAnchor, constant: 8),
             passwordTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             passwordTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            passwordTextField.heightAnchor.constraint(equalToConstant: 36),
             
-            loginButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 36),
+            passwordErrorLabel.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 4),
+            passwordErrorLabel.leadingAnchor.constraint(equalTo: passwordTextField.leadingAnchor),
+            passwordErrorLabel.trailingAnchor.constraint(equalTo: passwordTextField.trailingAnchor),
+
+            loginButton.topAnchor.constraint(equalTo: passwordErrorLabel.bottomAnchor, constant: 28),
             loginButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             loginButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
-            loginButton.heightAnchor.constraint(equalToConstant: 40),
+            loginButton.heightAnchor.constraint(equalToConstant: 48),
             
-            linksStackView.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 8),
+            linksStackView.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 16),
             linksStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             linksStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
             
@@ -268,8 +329,7 @@ extension LoginView {
             socialButtonsStackView.topAnchor.constraint(equalTo: dividerStackView.bottomAnchor, constant: 20),
             socialButtonsStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             socialButtonsStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
-            socialButtonsStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -16),
-            socialButtonsStackView.heightAnchor.constraint(equalToConstant: 100)
+            socialButtonsStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -24),    
         ])
     }
     // temporary function for testing only
