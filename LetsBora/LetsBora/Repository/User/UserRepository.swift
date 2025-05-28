@@ -8,6 +8,11 @@
 enum UserRepositoryError: Error {
     case userNotFound
     case emptyData
+    case createUserFailed
+    case updateUserFailed
+    case retrieveAllFailed
+    case deleteUserFailed
+    
 }
 
 protocol UserRepository {

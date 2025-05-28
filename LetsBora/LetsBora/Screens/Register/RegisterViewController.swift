@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseFirestore
 
 class RegisterViewController: UIViewController, RegisterViewDelegate {
     
@@ -48,7 +49,31 @@ class RegisterViewController: UIViewController, RegisterViewDelegate {
     }
     
     func signUp() async throws {
-        _ = try await Auth.auth().createUser(withEmail: "davi@davi.com.br", password: "password")
+        let authResult = try await Auth.auth().createUser(withEmail: "davi@davi.com.br", password: "password")
+        print("authResult = \(authResult.user)")
+        
+        let user: User = .init(
+            id: authResult.user.uid,
+            name: "Davi",
+            email: "davi@davi.com.br",
+            
+        )
+        
+        do {
+            try await Firestore
+                .firestore()
+                .collection("users")
+                .document(authResult.user.uid)
+                .setData([
+                    "name": "David",
+                    "email": "davi@davi.com.br",
+                    "createdAt": Date()
+                ])
+            print("Document successfully written!")
+        }   catch {
+            print("Error writing document: \(error)")
+          }
+        
     }
  @objc func backButtonTapped() {
      navigationController?.popViewController(animated: true)
