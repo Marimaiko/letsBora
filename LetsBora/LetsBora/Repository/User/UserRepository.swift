@@ -12,7 +12,7 @@ enum UserRepositoryError: Error {
     case updateUserFailed
     case retrieveAllFailed
     case deleteUserFailed
-    
+    case retrieveFailed
 }
 
 protocol UserRepository {

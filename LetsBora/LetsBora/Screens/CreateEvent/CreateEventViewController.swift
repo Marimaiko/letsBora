@@ -57,7 +57,7 @@ extension CreateEventViewController: CreateEventViewProtocol{
         
         
         
-        var event = Event(
+        let event = Event(
             title: name,
             date: dateString,
             location: location,

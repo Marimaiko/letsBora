@@ -7,29 +7,21 @@
 import FirebaseFirestore
 
 actor FirestoreUserRepository : UserRepository {
-    let collection = Firestore.firestore().collection("users")
+    let collection : CollectionReference
+    
+    init(
+        firestore: Firestore = FirebaseFactory.makeFirestore()
+    ){
+        self.collection = firestore.collection(UserKeys.collectionName)
+    }
     
     func create(
         _ user: User
     ) async throws -> Void {
-        // TODO: Refactor this user create dir
-        let id = user.id
-        
-        var dataDict = [
-            "userId" : id,
-            "name": user.name,
-            "createdAt": Date()
-        ] as [String : Any]
-        
-        if let email = user.email {
-            dataDict["email"] = email
-        }
-        if let photo = user.photo {
-            dataDict["photo"] = photo
-        }
-        
         do {
-            try await collection.document(id).setData(dataDict)
+            try await collection
+                .document(user.id)
+                .setData(user.toDict)
         } catch {
             throw UserRepositoryError.createUserFailed
         }
@@ -46,12 +38,10 @@ actor FirestoreUserRepository : UserRepository {
         guard let data = snapshot.data() else {
             throw UserRepositoryError.userNotFound
         }
-        // TODO: Refactor this get dict
-        let userID = data["userId"] as! String
-        let name = data["name"] as! String
-        let email = data["email"] as? String ?? ""
-        let photo = data["photo"] as? String ?? ""
-        return User(id: userID, name: name, email: email, photo: photo)
+        guard let user = User(from: data) else {
+            throw UserRepositoryError.retrieveFailed
+        }
+        return user
     }
     
     func retrieveAll(
@@ -59,46 +49,26 @@ actor FirestoreUserRepository : UserRepository {
         var users: [User] = []
         do {
             let querySnapshot = try await collection.getDocuments()
-            for data in querySnapshot.documents {
-                let userID = data["userId"] as! String
-                let name = data["name"] as! String
-                let email = data["email"] as? String ?? ""
-                let photo = data["photo"] as? String ?? ""
-                users.append(
-                    User(
-                        id: userID,
-                        name: name,
-                        email: email,
-                        photo: photo
-                    )
-                )
+            for doc in querySnapshot.documents {
+                guard let user = User(from: doc.data()) else {
+                    print("Failed to parse user from document: \(doc.documentID)")
+                    continue
+                }
+                users.append(user)
             }
         } catch {
             throw UserRepositoryError.retrieveAllFailed
         }
-        
         return users
     }
     
     func update(
         _ user: User
     ) async throws -> Void {
-        var dataDict = [
-            "userId" : user.id,
-            "name": user.name,
-        ] as [String : Any]
         
-        if let email = user.email {
-            dataDict["email"] = email
-        }
-        if let photo = user.photo {
-            dataDict["photo"] = photo
-        }
-        
-        let userRef  = collection.document(user.id)
         do {
-            try await  userRef
-                .updateData(dataDict)
+            try await collection.document(user.id)
+                .updateData(user.toDict)
         } catch {
             throw UserRepositoryError.updateUserFailed
         }

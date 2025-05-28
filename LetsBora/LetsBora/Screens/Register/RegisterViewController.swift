@@ -48,38 +48,12 @@ class RegisterViewController: UIViewController, RegisterViewDelegate {
         
     }
     
-    func signUp() async throws {
-        let authResult = try await Auth.auth().createUser(withEmail: "davi@davi.com.br", password: "password")
-        print("authResult = \(authResult.user)")
-        
-        let user: User = .init(
-            id: authResult.user.uid,
-            name: "Davi",
-            email: "davi@davi.com.br",
-            
-        )
-        
-        do {
-            try await Firestore
-                .firestore()
-                .collection("users")
-                .document(authResult.user.uid)
-                .setData([
-                    "name": "David",
-                    "email": "davi@davi.com.br",
-                    "createdAt": Date()
-                ])
-            print("Document successfully written!")
-        }   catch {
-            print("Error writing document: \(error)")
-          }
-        
-    }
+    
  @objc func backButtonTapped() {
      navigationController?.popViewController(animated: true)
     }
     func didTapRegister() {
-        
+        /*
         guard let nameTextField = registerView?.nameTextField.text,
               let emailTextField = registerView?.nameTextField.text,
               let passwordTextField = registerView?.nameTextField.text else {
@@ -92,21 +66,10 @@ class RegisterViewController: UIViewController, RegisterViewDelegate {
         }
         
         let user = User(name: nameTextField, email: emailTextField, password: passwordTextField)
+         */
         Task {
-            await viewModel?.saveUser(user: user)
-            await viewModel?.fetchUsers()
-            print("Users: \(viewModel?.users ?? [])")
+            await viewModel?.signUp(user: .init(name: "Davi", email: "davi@gmail.com", password: "123456"))
         }
-        
-        Task {
-            do {
-                try await self.signUp()
-            } catch {
-               print(error)
-            }
-        }
-            
-            
     }
 }
 
