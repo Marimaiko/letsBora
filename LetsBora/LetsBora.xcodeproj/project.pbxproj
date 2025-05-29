@@ -63,6 +63,7 @@
 		09C2FCF52DE8A7CB00FD6BD2 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C2FCF42DE8A7C600FD6BD2 /* LoginViewModel.swift */; };
 		09C2FCFA2DE8B9FC00FD6BD2 /* FirebaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C2FCF92DE8B9F800FD6BD2 /* FirebaseError.swift */; };
 		09C2FCFC2DE8BA8500FD6BD2 /* FirebaseErrorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C2FCFB2DE8BA7A00FD6BD2 /* FirebaseErrorType.swift */; };
+		09C2FCFF2DE8BD0800FD6BD2 /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C2FCFE2DE8BD0300FD6BD2 /* AlertController.swift */; };
 		09CE52892DC19B35008D8022 /* EventDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CE52872DC19B35008D8022 /* EventDetailsViewController.swift */; };
 		09CE528A2DC19B35008D8022 /* EventDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CE52862DC19B35008D8022 /* EventDetailsView.swift */; };
 		09EAF1502DDFE0C300D4EE42 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 09EAF14F2DDFE0C300D4EE42 /* FirebaseAuth */; };
@@ -151,6 +152,7 @@
 		09C2FCF42DE8A7C600FD6BD2 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		09C2FCF92DE8B9F800FD6BD2 /* FirebaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseError.swift; sourceTree = "<group>"; };
 		09C2FCFB2DE8BA7A00FD6BD2 /* FirebaseErrorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseErrorType.swift; sourceTree = "<group>"; };
+		09C2FCFE2DE8BD0300FD6BD2 /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
 		09CE52862DC19B35008D8022 /* EventDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsView.swift; sourceTree = "<group>"; };
 		09CE52872DC19B35008D8022 /* EventDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsViewController.swift; sourceTree = "<group>"; };
 		09F557632DA9F86000D1D1A7 /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
@@ -367,6 +369,18 @@
 			path = FirebaseError;
 			sourceTree = "<group>";
 		};
+		09C2FCFD2DE8BCF500FD6BD2 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				099A927C2DC5034A00415196 /* MockData.swift */,
+				092728F52DC2BCFD000D744C /* Chat+MockData.swift */,
+				092728EF2DC2BB8F000D744C /* Users+MockData.swift */,
+				092728ED2DC2BB01000D744C /* Tag+MockData.swift */,
+				092728E92DC2BA58000D744C /* Events+MockData.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
 		09CE52882DC19B35008D8022 /* EventDetails */ = {
 			isa = PBXGroup;
 			children = (
@@ -494,11 +508,8 @@
 		09F557832DA9F86000D1D1A7 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				099A927C2DC5034A00415196 /* MockData.swift */,
-				092728F52DC2BCFD000D744C /* Chat+MockData.swift */,
-				092728EF2DC2BB8F000D744C /* Users+MockData.swift */,
-				092728ED2DC2BB01000D744C /* Tag+MockData.swift */,
-				092728E92DC2BA58000D744C /* Events+MockData.swift */,
+				09C2FCFE2DE8BD0300FD6BD2 /* AlertController.swift */,
+				09C2FCFD2DE8BCF500FD6BD2 /* Mocks */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -676,6 +687,7 @@
 				09F5579A2DA9F86000D1D1A7 /* HomeView.swift in Sources */,
 				099A92812DC50A7500415196 /* RegisterViewController.swift in Sources */,
 				099A92822DC50A7500415196 /* RegisterView.swift in Sources */,
+				09C2FCFF2DE8BD0800FD6BD2 /* AlertController.swift in Sources */,
 				09F5579B2DA9F86000D1D1A7 /* ViewCode+Extension.swift in Sources */,
 				09B02A072DE139AE004654F0 /* CreateEventViewModel.swift in Sources */,
 				0935A9F02DC53C5B004B24A2 /* ReusableLabel.swift in Sources */,

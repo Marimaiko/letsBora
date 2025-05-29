@@ -14,14 +14,9 @@ class LoginViewModel {
         self.authRepository = authRepository
     }
     
-    func login(email: String, password: String) async -> Bool {
+    func login(email: String, password: String) async throws {
         let auth = AuthUser(email: email, password: password)
-        do  {
-            try await authRepository.signIn(auth)
-            return true
-        } catch{
-            return false
-        }
+        try await authRepository.signIn(auth)
     }
     
     

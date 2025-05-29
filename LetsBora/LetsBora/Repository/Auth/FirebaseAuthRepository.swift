@@ -18,7 +18,6 @@ actor FirebaseAuthRepository: AuthRepository {
     }
     
     func signIn(_ auth: AuthUser) async throws -> Void {
-        print("Performing SignIn")
         do {
             let response = try await authInstance
                 .signIn(
@@ -31,7 +30,9 @@ actor FirebaseAuthRepository: AuthRepository {
             
             switch authError.code {
             case FirebaseAuthErrorCode.userNotFound:
-                throw AuthRepositoryError.userNotFound
+                throw AuthRepositoryError.signInUserNotFound
+            case FirebaseAuthErrorCode.invalidPassword:
+                throw AuthRepositoryError.signInWrongPassword
             default:
                 throw AuthRepositoryError.signInFailed
             }

@@ -14,6 +14,11 @@ class LoginViewController: UIViewController {
     }
     private var viewModel: LoginViewModel?
     
+    private lazy var alert: AlertController = {
+        let alert = AlertController(controller: self)
+        return alert
+    }()
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
@@ -77,28 +82,31 @@ extension LoginViewController: LoginViewDelegate {
             window.makeKeyAndVisible()
         }
     }
+    
     func didTapLoginButton() {
         
         guard let authToLogin = performValidation() else {
-            print("Validação de login falhou.")
+            alert.showAlert(
+                title: "Erro de Login",
+                message: "Por favor, corrija os campos destacados."
+            )
             return
-            // Opcional: Mostrar um alerta geral se houver muitos erros ou se preferir
-            // let alert = UIAlertController(title: "Erro de Login", message: "Por favor, corrija os campos destacados.", preferredStyle: .alert)
-            // alert.addAction(UIAlertAction(title: "OK", style: .default))
-            // present(alert, animated: true)
         }
         
         Task {
-            let success = await viewModel?.login(
-                email: authToLogin.email,
-                password: authToLogin.password
-            ) ?? false
-            
-            if success {
+            do {
+                try await viewModel?.login(
+                    email: authToLogin.email,
+                    password: authToLogin.password
+                )
                 navigateToHome()
-            } else {
-                print("Login Failed")
-                return
+            } catch {
+                let message = error as? LocalizedError
+                alert.showAlert(
+                    title: "Erro",
+                    message: message?.errorDescription ?? "Erro ao fazer login. Por favor, tente novamente mais tarde."
+                )
+                print("Login Failed: \(error)")
             }
         }
         
