@@ -7,8 +7,12 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseFirestore
 
 class RegisterViewController: UIViewController, RegisterViewDelegate {
+    
+    var registerView: RegisterView?
+    var viewModel: RegisterViewModel?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -17,13 +21,13 @@ class RegisterViewController: UIViewController, RegisterViewDelegate {
     }
     
     override func loadView() {
-        let registerView = RegisterView()
-        registerView.delegate = self
+        viewModel = RegisterViewModel()
+        registerView = RegisterView()
+        registerView?.delegate = self
         self.view = registerView
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         let appearance = UINavigationBarAppearance()
         
         // Apply to both standard and scroll edge appearances
@@ -44,26 +48,34 @@ class RegisterViewController: UIViewController, RegisterViewDelegate {
         
     }
     
-    func signUp() async throws {
-        _ = try await Auth.auth().createUser(withEmail: "davi@davi.com.br", password: "password")
-    }
+    
  @objc func backButtonTapped() {
      navigationController?.popViewController(animated: true)
     }
     func didTapRegister() {
-        Task {
-            do {
-                try await self.signUp()
-            } catch {
-               print(error)
-            }
+        /*
+        guard let nameTextField = registerView?.nameTextField.text,
+              let emailTextField = registerView?.nameTextField.text,
+              let passwordTextField = registerView?.nameTextField.text else {
+            return
         }
-            
-            
+        
+        if nameTextField.isEmpty || emailTextField.isEmpty || passwordTextField.isEmpty {
+            print("Empty Fields")
+            return
+        }
+        
+        let user = User(name: nameTextField, email: emailTextField, password: passwordTextField)
+         */
+        Task {
+            await viewModel?.signUp(user: .init(name: "Davi", email: "davi@gmail.com", password: "123456"))
+        }
     }
 }
 
-@available(iOS 17.0,*)
+#if swift(>=5.9)
+@available(iOS 17.0, *)
 #Preview(traits: .portrait, body: {
     RegisterViewController()
 })
+#endif

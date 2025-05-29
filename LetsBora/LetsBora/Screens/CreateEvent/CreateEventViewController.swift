@@ -1,7 +1,7 @@
 import UIKit
 
 class CreateEventViewController: UIViewController {
-
+    
     var screen: CreateEventView?
     
     // Propriedades para armazenar os dados do evento
@@ -28,6 +28,8 @@ class CreateEventViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        screen?.delegate(delegate: self)
+        viewModel = CreateEventViewModel()
         view.backgroundColor = UIColor(red: 248/255, green: 248/255, blue: 248/255, alpha: 1.0)
         
         // Configurar delegate para o TextView de descrição
@@ -367,10 +369,10 @@ struct EventDraft: Codable {
 
 
 //MARK: - Preview Profile
+#if swift(>=5.9)
 @available(iOS 17.0,*)
 #Preview(traits: .portrait, body: {
     CreateEventViewController()
 })
 
-
-
+#endif

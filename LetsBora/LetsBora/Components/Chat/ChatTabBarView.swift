@@ -168,6 +168,7 @@ extension ChatTabBarView: ViewCode {
     
 }
 // MARK: - Preview
+#if swift(>=5.9)
 @available(iOS 17.0, *)
 #Preview("ChatTabBarView", traits: .sizeThatFitsLayout) {
     let container = UIView()
@@ -191,3 +192,4 @@ extension ChatTabBarView: ViewCode {
     
     
 }
+#endif

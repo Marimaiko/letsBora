@@ -23,9 +23,11 @@ class CostControlViewController: UIViewController{
 }
 
 //MARK: - Preview Profile
+#if swift(>=5.9)
 @available(iOS 17.0,*)
 #Preview(traits: .portrait, body: {
     CostControlViewController()
 })
+#endif
 
 

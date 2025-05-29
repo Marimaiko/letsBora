@@ -185,6 +185,7 @@ class CreateEventView: UIView {
         let container = CustomContainer(iconName: "smiley", labelName: "Categoria", arrowName: "chevron.right", type: .category)
         return container
     }()
+    let switchView = UISwitch()
     
     lazy var categoryErrorLabel: UILabel = {
         let label = UILabel()
@@ -253,6 +254,7 @@ class CreateEventView: UIView {
         inviteButton.setTitleColor(.systemBlue, for: .normal)
         inviteButton.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
         inviteButton.translatesAutoresizingMaskIntoConstraints = false
+        inviteButton.addTarget(self, action: #selector(handleInviteButtonTap), for: .touchUpInside)
         containerView.addSubview(inviteButton)
         
         // Stack de imagens dos participantes (bottom left)

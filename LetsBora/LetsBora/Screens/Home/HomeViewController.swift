@@ -52,8 +52,6 @@ extension HomeViewController: HomeViewDelegate{
         detailVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(detailVC, animated: true)
     }
-    
-    
 }
 
 // MARK: - Table View Delegate
@@ -71,9 +69,11 @@ extension HomeViewController : UITableViewDataSource {
 
 
 // MARK: - Preview
+#if swift(>=5.9)
 @available(iOS 17.0, *)
 #Preview("Home View Controller", traits: .portrait, body: {
     HomeViewController()
 })
+#endif
 
 

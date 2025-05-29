@@ -39,7 +39,7 @@ class RegisterView: UIView {
         return label
     }()
     
-    lazy private var nameTextField: UITextField = {
+    lazy var nameTextField: UITextField = {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.translatesAutoresizingMaskIntoConstraints = false

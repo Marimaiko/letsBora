@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct Event {
+struct Event:Identifiable {
+    var id: String = UUID().uuidString
     var title: String
     var image: String?
     var tag: Tag?

@@ -124,7 +124,7 @@ extension ChatProgressSurveyView : ViewCode{
        
     }
 }
-
+#if swift(>=5.9)
 @available(iOS 17.0, *)
 #Preview("ChatSurveyCell2", traits: .sizeThatFitsLayout) {
     let cell = ChatSurveyTableViewCell()
@@ -132,3 +132,4 @@ extension ChatProgressSurveyView : ViewCode{
     return cell
         
 }
+#endif

@@ -112,7 +112,9 @@ extension SearchView: ViewCode {
 }
 
 // MARK: - Preview Profile
+#if swift(>=5.9)
 @available(iOS 17.0,*)
 #Preview(traits: .sizeThatFitsLayout, body: {
     SearchView()
 })
+#endif

@@ -109,7 +109,9 @@ class ProfileEditView: UIView {
     }
     
 }
+#if swift(>=5.9)
 @available(iOS 17.0,*)
 #Preview(traits: .portrait, body: {
     ProfileEditView()
 })
+#endif

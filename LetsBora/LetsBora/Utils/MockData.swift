@@ -8,7 +8,7 @@ import Foundation
 import UIKit
 
 struct MockData {
-    static let chats: [Chat]
+    static var chats: [Chat]
     = [
         chat1,
         chat2,
@@ -18,7 +18,7 @@ struct MockData {
         chat6,
         chat7
     ]
-    static let users: [User]
+    static var users: [User]
     = [
         user1,
         user2,
@@ -28,13 +28,13 @@ struct MockData {
         user6
     ]
     
-    static let events: [Event]
+    static var events: [Event]
     = [
         eventMock1,
         eventMock2,
         eventMock3
     ]
-    static let tags: [Tag]
+    static var tags: [Tag]
     =  [
         tag1,
         tag2,

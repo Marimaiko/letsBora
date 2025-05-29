@@ -110,8 +110,10 @@ extension ExpenseCard: ViewCode{
 }
 
 //MARK: -Preview
+#if swift(>=5.9)
 @available(iOS 17.0, *)
 #Preview("ExpenseCard", traits: .sizeThatFitsLayout) {
     let expenseCard = ExpenseCard()
     expenseCard
 }
+#endif
