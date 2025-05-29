@@ -59,6 +59,7 @@
 		09B02A0C2DE13FDF004654F0 /* InMemoryEventRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B02A0B2DE13FD4004654F0 /* InMemoryEventRepository.swift */; };
 		09B2009E2DC04EA800A26EA2 /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B2009D2DC04EA800A26EA2 /* CreateEventViewController.swift */; };
 		09B2009F2DC04EA800A26EA2 /* CreateEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B2009C2DC04EA800A26EA2 /* CreateEventView.swift */; };
+		09C2FCF32DE8A2A300FD6BD2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 09C2FCF22DE8A2A300FD6BD2 /* GoogleService-Info.plist */; };
 		09CE52892DC19B35008D8022 /* EventDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CE52872DC19B35008D8022 /* EventDetailsViewController.swift */; };
 		09CE528A2DC19B35008D8022 /* EventDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CE52862DC19B35008D8022 /* EventDetailsView.swift */; };
 		09EAF1502DDFE0C300D4EE42 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 09EAF14F2DDFE0C300D4EE42 /* FirebaseAuth */; };
@@ -143,6 +144,7 @@
 		09B02A0B2DE13FD4004654F0 /* InMemoryEventRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryEventRepository.swift; sourceTree = "<group>"; };
 		09B2009C2DC04EA800A26EA2 /* CreateEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventView.swift; sourceTree = "<group>"; };
 		09B2009D2DC04EA800A26EA2 /* CreateEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventViewController.swift; sourceTree = "<group>"; };
+		09C2FCF22DE8A2A300FD6BD2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		09CE52862DC19B35008D8022 /* EventDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsView.swift; sourceTree = "<group>"; };
 		09CE52872DC19B35008D8022 /* EventDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsViewController.swift; sourceTree = "<group>"; };
 		09F557632DA9F86000D1D1A7 /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
@@ -531,7 +533,7 @@
 				0935A9EF2DC53C5B004B24A2 /* Components */,
 				09F557812DA9F86000D1D1A7 /* Screens */,
 				539D7B8F2D8D9C070061BB67 /* Info.plist */,
-				3C81F7E92DE7997900F0D27E /* GoogleService-Info.plist */,
+				09C2FCF22DE8A2A300FD6BD2 /* GoogleService-Info.plist */,
 			);
 			path = LetsBora;
 			sourceTree = "<group>";
@@ -598,7 +600,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				09F5579F2DA9F86000D1D1A7 /* LaunchScreen.storyboard in Resources */,
-				3C81F7EA2DE7997900F0D27E /* GoogleService-Info.plist in Resources */,
+				09C2FCF32DE8A2A300FD6BD2 /* GoogleService-Info.plist in Resources */,
 				09F557A02DA9F86000D1D1A7 /* Main.storyboard in Resources */,
 				09F557A12DA9F86000D1D1A7 /* Assets.xcassets in Resources */,
 			);

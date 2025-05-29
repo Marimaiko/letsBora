@@ -16,8 +16,12 @@ protocol CreateEventViewDelegate: AnyObject {
 }
 
 class CreateEventView: UIView {
+    // Delegate para o ViewController
+    private weak var delegate: CreateEventViewDelegate?
     
-    weak var delegate: CreateEventViewDelegate? // Delegate para o ViewController
+    func delegate(inject: CreateEventViewDelegate){
+        self.delegate =  inject
+    }
     
     //MARK: - UIComponents
     private lazy var titleLabel = ReusableLabel(text: "Criar Evento", labelType: .title)
@@ -254,7 +258,6 @@ class CreateEventView: UIView {
         inviteButton.setTitleColor(.systemBlue, for: .normal)
         inviteButton.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
         inviteButton.translatesAutoresizingMaskIntoConstraints = false
-        inviteButton.addTarget(self, action: #selector(handleInviteButtonTap), for: .touchUpInside)
         containerView.addSubview(inviteButton)
         
         // Stack de imagens dos participantes (bottom left)

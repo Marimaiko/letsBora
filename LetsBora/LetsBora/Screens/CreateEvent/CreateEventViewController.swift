@@ -3,6 +3,7 @@ import UIKit
 class CreateEventViewController: UIViewController {
     
     var screen: CreateEventView?
+    var viewModel: CreateEventViewModel?
     
     // Propriedades para armazenar os dados do evento
     private var eventName: String?
@@ -21,14 +22,13 @@ class CreateEventViewController: UIViewController {
     }
     override func loadView() {
         screen = CreateEventView()
-        screen?.delegate = self
         view = screen
         screen?.categories = availableCategories
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        screen?.delegate(delegate: self)
+        screen?.delegate(inject: self)
         viewModel = CreateEventViewModel()
         view.backgroundColor = UIColor(red: 248/255, green: 248/255, blue: 248/255, alpha: 1.0)
         
