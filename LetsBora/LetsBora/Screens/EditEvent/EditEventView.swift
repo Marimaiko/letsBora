@@ -7,6 +7,9 @@
 
 import UIKit
 
-class EditEvent: UIView{
+class EditEventView: UIView {
     
 }
+
+
+

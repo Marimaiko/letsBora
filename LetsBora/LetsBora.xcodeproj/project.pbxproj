@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -75,6 +75,9 @@
 		09F557A12DA9F86000D1D1A7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09F5576D2DA9F86000D1D1A7 /* Assets.xcassets */; };
 		368D35B42DC3E56E0050FF68 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368D35B32DC3E5660050FF68 /* ProfileView.swift */; };
 		368D35B62DC3E5760050FF68 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368D35B52DC3E5710050FF68 /* ProfileViewController.swift */; };
+		920580A52DE7ED2E00B17E06 /* EditEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920580A22DE7ED2E00B17E06 /* EditEventView.swift */; };
+		920580A62DE7ED2E00B17E06 /* EditEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920580A32DE7ED2E00B17E06 /* EditEventViewController.swift */; };
+		920580AA2DE8117F00B17E06 /* EventViewMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920580A92DE8117900B17E06 /* EventViewMode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -147,11 +150,10 @@
 		368D35B52DC3E5710050FF68 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		539D7B7E2D8D9C050061BB67 /* LetsBora.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LetsBora.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		539D7B8F2D8D9C070061BB67 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		920580A22DE7ED2E00B17E06 /* EditEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditEventView.swift; sourceTree = "<group>"; };
+		920580A32DE7ED2E00B17E06 /* EditEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditEventViewController.swift; sourceTree = "<group>"; };
+		920580A92DE8117900B17E06 /* EventViewMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewMode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		920580572DE54F9800B17E06 /* EditEvent */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = EditEvent; sourceTree = "<group>"; };
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		539D7B7B2D8D9C050061BB67 /* Frameworks */ = {
@@ -312,6 +314,7 @@
 		09F5576B2DA9F86000D1D1A7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				920580A92DE8117900B17E06 /* EventViewMode.swift */,
 				091E48FA2DC4301C00F4C44D /* Survey.swift */,
 				092728E72DC2AD6E000D744C /* Chat.swift */,
 				09F557682DA9F86000D1D1A7 /* Tag.swift */,
@@ -373,7 +376,7 @@
 		09F557812DA9F86000D1D1A7 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				920580572DE54F9800B17E06 /* EditEvent */,
+				920580A42DE7ED2E00B17E06 /* EditEvent */,
 				0935AA0E2DC54758004B24A2 /* MyEvents */,
 				0935AA092DC53D98004B24A2 /* CostControl */,
 				099A92802DC50A7500415196 /* Register */,
@@ -441,6 +444,15 @@
 			path = LetsBora;
 			sourceTree = "<group>";
 		};
+		920580A42DE7ED2E00B17E06 /* EditEvent */ = {
+			isa = PBXGroup;
+			children = (
+				920580A22DE7ED2E00B17E06 /* EditEventView.swift */,
+				920580A32DE7ED2E00B17E06 /* EditEventViewController.swift */,
+			);
+			path = EditEvent;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -455,9 +467,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				920580572DE54F9800B17E06 /* EditEvent */,
 			);
 			name = LetsBora;
 			productName = LetsBora;
@@ -537,6 +546,7 @@
 				092728EA2DC2BA61000D744C /* Events+MockData.swift in Sources */,
 				092728E02DC26DB1000D744C /* ChatView.swift in Sources */,
 				092728DE2DC26D9C000D744C /* ChatViewController.swift in Sources */,
+				920580AA2DE8117F00B17E06 /* EventViewMode.swift in Sources */,
 				09F5578F2DA9F86000D1D1A7 /* User.swift in Sources */,
 				092728E82DC2AD70000D744C /* Chat.swift in Sources */,
 				09F557912DA9F86000D1D1A7 /* LoginViewController.swift in Sources */,
@@ -568,6 +578,8 @@
 				0935A9FA2DC53C5B004B24A2 /* ProfileInfoView.swift in Sources */,
 				0935A9FB2DC53C5B004B24A2 /* DividerView.swift in Sources */,
 				0935A9FC2DC53C5B004B24A2 /* SettingButtonView.swift in Sources */,
+				920580A52DE7ED2E00B17E06 /* EditEventView.swift in Sources */,
+				920580A62DE7ED2E00B17E06 /* EditEventViewController.swift in Sources */,
 				0935A9FD2DC53C5B004B24A2 /* TagCollectionViewCell.swift in Sources */,
 				0935A9FE2DC53C5B004B24A2 /* AvatarImageView.swift in Sources */,
 				0935A9FF2DC53C5B004B24A2 /* ParticipantesCard.swift in Sources */,

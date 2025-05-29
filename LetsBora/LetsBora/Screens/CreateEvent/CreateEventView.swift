@@ -12,13 +12,13 @@ class CreateEventView: UIView {
 //MARK: - UIComponents
     private lazy var titleLabel = ReusableLabel(text: "Criar Evento", labelType: .title)
     
-    lazy private var scrollView: UIScrollView = {
+    private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         return scrollView
     }()
     
-    lazy private var contentView: UIView = {
+    private lazy var contentView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -210,63 +210,72 @@ class CreateEventView: UIView {
         return containerView
     }()
 
-    //Botões <--
+    //Botões
+    private lazy var saveButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Publicar Evento", for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
+        button.backgroundColor = .clear
+        button.layer.cornerRadius = 4
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.1
+        button.layer.shadowOffset = CGSize(width: 0, height: 2)
+        button.layer.shadowRadius = 4
+        return button
+    }()
+
+    private lazy var draftButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Salvar Rascunho", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.backgroundColor = UIColor(red: 236/255, green: 236/255, blue: 239/255, alpha: 1.0)
+        button.layer.cornerRadius = 4
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.1
+        button.layer.shadowOffset = CGSize(width: 0, height: 2)
+        button.layer.shadowRadius = 4
+        return button
+    }()
+
     private lazy var actionButtonsView: UIView = {
         let containerView = UIView()
         containerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.backgroundColor = .clear
 
-        // Botão Confirmar
-        let confirmButton = UIButton(type: .system)
-        confirmButton.setTitle("Publicar Evento", for: .normal)
-        confirmButton.setTitleColor(.systemBlue, for: .normal)
-        confirmButton.backgroundColor = .clear
-        confirmButton.layer.cornerRadius = 4
-        confirmButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-        confirmButton.layer.shadowColor = UIColor.black.cgColor
-        confirmButton.layer.shadowOpacity = 0.1
-        confirmButton.layer.shadowOffset = CGSize(width: 0, height: 2)
-        confirmButton.layer.shadowRadius = 4
-
-        // Botão Rascunho
-        let draftButton = UIButton(type: .system)
-        draftButton.setTitle("Salvar Rascunho", for: .normal)
-        draftButton.setTitleColor(.black, for: .normal)
-        draftButton.backgroundColor = UIColor(red: 236/255, green: 236/255, blue: 239/255, alpha: 1.0)
-        draftButton.layer.cornerRadius = 4
-        draftButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        draftButton.layer.shadowColor = UIColor.black.cgColor
-        draftButton.layer.shadowOpacity = 0.1
-        draftButton.layer.shadowOffset = CGSize(width: 0, height: 2)
-        draftButton.layer.shadowRadius = 4
-
-        // Stack dos botões
-        let buttonStackView = UIStackView(arrangedSubviews: [draftButton, confirmButton])
+        let buttonStackView = UIStackView(arrangedSubviews: [draftButton, saveButton])
         buttonStackView.axis = .horizontal
         buttonStackView.spacing = 16
         buttonStackView.distribution = .fillEqually
         buttonStackView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         containerView.addSubview(buttonStackView)
-        
+
         NSLayoutConstraint.activate([
-               buttonStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
-               buttonStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
-               buttonStackView.topAnchor.constraint(equalTo: containerView.topAnchor),
-               buttonStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
-           ])
+            buttonStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            buttonStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            buttonStackView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            buttonStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+        ])
 
         return containerView
     }()
+
+    
+    private let mode: EventViewMode
     
 //MARK: - Init
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(mode: EventViewMode = .create) {
+        self.mode = mode
+        super.init(frame: .zero)
         setupHierarchy()
         setupConstrains()
         setupCalendarConstrain()
         dateCustomContainer.delegate = self
+        configureUIForMode()
     }
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -364,6 +373,21 @@ class CreateEventView: UIView {
         self.endEditing(true)
         calendarContainerView.isHidden = true
     }
+    
+    private func configureUIForMode() {
+        switch mode {
+        case .create:
+            titleLabel.text = "Criar Evento"
+            saveButton.setTitle("Publicar Evento", for: .normal)
+            draftButton.isHidden = false // ou true, se quiser ocultar
+
+        case .edit:
+            titleLabel.text = "Editar Evento"
+            saveButton.setTitle("Salvar", for: .normal)
+            draftButton.isHidden = true // oculta botão de rascunho, se não for necessário
+        }
+    }
+
 }
 
 extension CreateEventView: CustomContainerDelegate {
@@ -377,6 +401,7 @@ extension CreateEventView: CustomContainerDelegate {
         }
     }
 }
+
 
 //MARK: - Constrains
 extension CreateEventView {
