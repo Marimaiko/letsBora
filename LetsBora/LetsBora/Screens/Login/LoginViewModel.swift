@@ -7,16 +7,36 @@
 
 class LoginViewModel {
     private let authRepository: AuthRepository
+    private let userRepository: UserRepository
     
     init(
-        authRepository: AuthRepository = FirebaseAuthRepository()
+        authRepository: AuthRepository = FirebaseAuthRepository(),
+        userRepository: UserRepository = FirestoreUserRepository()
     ){
         self.authRepository = authRepository
+        self.userRepository = userRepository
     }
     
-    func login(email: String, password: String) async throws {
+    
+    private func getUser(id: String) async throws -> User {
+        return try await userRepository.retrieve(for: id)
+    }
+    
+    func login(email: String, password: String) async throws -> Void {
         let auth = AuthUser(email: email, password: password)
-        try await authRepository.signIn(auth)
+        do {
+            // sign in
+            let userId = try await authRepository.signIn(auth)
+            
+            // retrieve user infos in firestore
+            let userLoggedIn = try await getUser(id: userId)
+            
+            // save as useDefault
+            Utils.saveLoggedInUser(userLoggedIn)
+        }
+        catch {
+            throw error
+        }
     }
     
     

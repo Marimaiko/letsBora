@@ -17,14 +17,15 @@ actor FirebaseAuthRepository: AuthRepository {
         self.authInstance = auth
     }
     
-    func signIn(_ auth: AuthUser) async throws -> Void {
+    func signIn(_ auth: AuthUser) async throws -> String {
         do {
             let response = try await authInstance
                 .signIn(
                     withEmail: auth.email,
                     password: auth.password
                 )
-            print(response)
+            
+            return response.user.uid
         } catch {
             let authError = FirebaseError<FirebaseAuthErrorCode>(from: error)
             

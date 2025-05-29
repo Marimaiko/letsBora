@@ -24,8 +24,15 @@ class ProfileViewController: UIViewController {
 }
 extension ProfileViewController: ProfileViewDelegate {
     func exitProfileDidTapButton() {
-        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate,
+        if let sceneDelegate = UIApplication
+            .shared
+            .connectedScenes
+            .first?
+            .delegate as? SceneDelegate,
            let window = sceneDelegate.window {
+            
+            Utils.removeLoggedInUser()
+            
             let rootViewController = LoginViewController()
             let navController = UINavigationController(rootViewController: rootViewController)
             window.rootViewController = navController

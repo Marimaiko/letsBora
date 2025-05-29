@@ -67,6 +67,8 @@
 		09CE52892DC19B35008D8022 /* EventDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CE52872DC19B35008D8022 /* EventDetailsViewController.swift */; };
 		09CE528A2DC19B35008D8022 /* EventDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CE52862DC19B35008D8022 /* EventDetailsView.swift */; };
 		09EAF1502DDFE0C300D4EE42 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 09EAF14F2DDFE0C300D4EE42 /* FirebaseAuth */; };
+		09EEC3D82DE8FDE400DA8DB3 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EEC3D72DE8FDC600DA8DB3 /* Utils.swift */; };
+		09EEC3DA2DE8FF6900DA8DB3 /* Utils+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EEC3D92DE8FF5A00DA8DB3 /* Utils+User.swift */; };
 		09F557842DA9F86000D1D1A7 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557642DA9F86000D1D1A7 /* UIView+Extension.swift */; };
 		09F557852DA9F86000D1D1A7 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557652DA9F86000D1D1A7 /* UIViewController+Extension.swift */; };
 		09F557862DA9F86000D1D1A7 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F557692DA9F86000D1D1A7 /* Event.swift */; };
@@ -155,6 +157,8 @@
 		09C2FCFE2DE8BD0300FD6BD2 /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
 		09CE52862DC19B35008D8022 /* EventDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsView.swift; sourceTree = "<group>"; };
 		09CE52872DC19B35008D8022 /* EventDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsViewController.swift; sourceTree = "<group>"; };
+		09EEC3D72DE8FDC600DA8DB3 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		09EEC3D92DE8FF5A00DA8DB3 /* Utils+User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Utils+User.swift"; sourceTree = "<group>"; };
 		09F557632DA9F86000D1D1A7 /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
 		09F557642DA9F86000D1D1A7 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		09F557652DA9F86000D1D1A7 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
@@ -413,6 +417,7 @@
 		09F557672DA9F86000D1D1A7 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				09EEC3D92DE8FF5A00DA8DB3 /* Utils+User.swift */,
 				091E48F82DC4208300F4C44D /* Extension+Constraints.swift */,
 				09F557632DA9F86000D1D1A7 /* UIView+Constraints.swift */,
 				09F557642DA9F86000D1D1A7 /* UIView+Extension.swift */,
@@ -508,8 +513,9 @@
 		09F557832DA9F86000D1D1A7 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				09C2FCFE2DE8BD0300FD6BD2 /* AlertController.swift */,
 				09C2FCFD2DE8BCF500FD6BD2 /* Mocks */,
+				09C2FCFE2DE8BD0300FD6BD2 /* AlertController.swift */,
+				09EEC3D72DE8FDC600DA8DB3 /* Utils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -656,6 +662,8 @@
 				092728EE2DC2BB06000D744C /* Tag+MockData.swift in Sources */,
 				365490AF2DDFA12600328E2A /* ForgetPasswordViewController.swift in Sources */,
 				09B2009F2DC04EA800A26EA2 /* CreateEventView.swift in Sources */,
+				09EEC3DA2DE8FF6900DA8DB3 /* Utils+User.swift in Sources */,
+				09EEC3D82DE8FDE400DA8DB3 /* Utils.swift in Sources */,
 				365490AD2DDF878500328E2A /* ForgetPasswordView.swift in Sources */,
 				09F557862DA9F86000D1D1A7 /* Event.swift in Sources */,
 				09F557872DA9F86000D1D1A7 /* ProfileEditView.swift in Sources */,

@@ -28,5 +28,5 @@ enum AuthRepositoryError: Error, LocalizedError {
 
 protocol AuthRepository {
     func signUp(_ auth: AuthUser) async throws -> AuthUserResponse
-    func signIn(_ auth: AuthUser) async throws -> Void
+    func signIn(_ auth: AuthUser) async throws -> String
 }
