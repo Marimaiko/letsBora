@@ -15,7 +15,11 @@ protocol LoginViewDelegate: AnyObject {
 class LoginView: UIView {
     private let gradientLayer = CAGradientLayer()
     
-    weak var delegate: LoginViewDelegate?
+    private weak var delegate: LoginViewDelegate?
+    
+    func delegate(_ delegate :LoginViewDelegate){
+        self.delegate = delegate
+    }
     
     lazy private var scrollView: UIScrollView = {
         let scrollView = UIScrollView()

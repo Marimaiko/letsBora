@@ -12,6 +12,7 @@ class LoginViewController: UIViewController {
     private var loginScreen: LoginView? {
         return view as? LoginView
     }
+    private var viewModel: LoginViewModel?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -24,7 +25,8 @@ class LoginViewController: UIViewController {
     
     override func loadView() {
         let loginView = LoginView()
-        loginView.delegate = self
+        loginView.delegate(self)
+        viewModel = LoginViewModel()
         self.view = loginView
     }
     
@@ -33,9 +35,9 @@ class LoginViewController: UIViewController {
         let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
         return emailPred.evaluate(with: email)
     }
-        
-    private func performValidation() -> Bool {
-        guard let screen = loginScreen else { return false }
+    
+    private func performValidation() ->AuthUser? {
+        guard let screen = loginScreen else { return nil }
         
         screen.resetErrorMessages() // Limpa erros anteriores
         var isValid = true
@@ -60,29 +62,46 @@ class LoginViewController: UIViewController {
             isValid = false
         }
         
-        return isValid
+        if (isValid){
+            return AuthUser(email: email, password: password)
+        }
+        
+        return nil
     }
 }
 extension LoginViewController: LoginViewDelegate {
+    private func navigateToHome() {
+        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate,
+           let window = sceneDelegate.window {
+            window.rootViewController = TabBarController()
+            window.makeKeyAndVisible()
+        }
+    }
     func didTapLoginButton() {
-        if performValidation() {
-            print("Validação de login bem-sucedida!")
-            // Lógica de login real (ex: chamada de API) iria aqui.
-            // Se a chamada de API for bem-sucedida, então navegue.
-            
-            // Por enquanto, navegação direta após validação:
-            if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate,
-               let window = sceneDelegate.window {
-                window.rootViewController = TabBarController()
-                window.makeKeyAndVisible()
-            }
-        } else {
+        
+        guard let authToLogin = performValidation() else {
             print("Validação de login falhou.")
+            return
             // Opcional: Mostrar um alerta geral se houver muitos erros ou se preferir
             // let alert = UIAlertController(title: "Erro de Login", message: "Por favor, corrija os campos destacados.", preferredStyle: .alert)
             // alert.addAction(UIAlertAction(title: "OK", style: .default))
             // present(alert, animated: true)
         }
+        
+        Task {
+            let success = await viewModel?.login(
+                email: authToLogin.email,
+                password: authToLogin.password
+            ) ?? false
+            
+            if success {
+                navigateToHome()
+            } else {
+                print("Login Failed")
+                return
+            }
+        }
+        
     }
     
     func didTapCreateAccount() {
