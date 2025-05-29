@@ -27,10 +27,10 @@ actor FirebaseAuthRepository: AuthRepository {
                 )
             print(response)
         } catch {
-            let authError = FirebaseAuthError(from: error)
+            let authError = FirebaseError<FirebaseAuthErrorCode>(from: error)
             
             switch authError.code {
-            case .userNotFound:
+            case FirebaseAuthErrorCode.userNotFound:
                 throw AuthRepositoryError.userNotFound
             default:
                 throw AuthRepositoryError.signInFailed

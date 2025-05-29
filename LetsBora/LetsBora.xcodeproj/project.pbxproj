@@ -61,7 +61,8 @@
 		09B2009F2DC04EA800A26EA2 /* CreateEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B2009C2DC04EA800A26EA2 /* CreateEventView.swift */; };
 		09C2FCF32DE8A2A300FD6BD2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 09C2FCF22DE8A2A300FD6BD2 /* GoogleService-Info.plist */; };
 		09C2FCF52DE8A7CB00FD6BD2 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C2FCF42DE8A7C600FD6BD2 /* LoginViewModel.swift */; };
-		09C2FCF72DE8B4BB00FD6BD2 /* FirebaseAuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C2FCF62DE8B4B400FD6BD2 /* FirebaseAuthError.swift */; };
+		09C2FCFA2DE8B9FC00FD6BD2 /* FirebaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C2FCF92DE8B9F800FD6BD2 /* FirebaseError.swift */; };
+		09C2FCFC2DE8BA8500FD6BD2 /* FirebaseErrorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C2FCFB2DE8BA7A00FD6BD2 /* FirebaseErrorType.swift */; };
 		09CE52892DC19B35008D8022 /* EventDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CE52872DC19B35008D8022 /* EventDetailsViewController.swift */; };
 		09CE528A2DC19B35008D8022 /* EventDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CE52862DC19B35008D8022 /* EventDetailsView.swift */; };
 		09EAF1502DDFE0C300D4EE42 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 09EAF14F2DDFE0C300D4EE42 /* FirebaseAuth */; };
@@ -148,7 +149,8 @@
 		09B2009D2DC04EA800A26EA2 /* CreateEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventViewController.swift; sourceTree = "<group>"; };
 		09C2FCF22DE8A2A300FD6BD2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		09C2FCF42DE8A7C600FD6BD2 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
-		09C2FCF62DE8B4B400FD6BD2 /* FirebaseAuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthError.swift; sourceTree = "<group>"; };
+		09C2FCF92DE8B9F800FD6BD2 /* FirebaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseError.swift; sourceTree = "<group>"; };
+		09C2FCFB2DE8BA7A00FD6BD2 /* FirebaseErrorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseErrorType.swift; sourceTree = "<group>"; };
 		09CE52862DC19B35008D8022 /* EventDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsView.swift; sourceTree = "<group>"; };
 		09CE52872DC19B35008D8022 /* EventDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsViewController.swift; sourceTree = "<group>"; };
 		09F557632DA9F86000D1D1A7 /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 		092AABA62DE755BD00CAC738 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				09C2FCF82DE8B9C300FD6BD2 /* FirebaseError */,
 				092AABB02DE76D6700CAC738 /* FirebaseFactory.swift */,
 			);
 			path = Network;
@@ -217,7 +220,6 @@
 		092AABA92DE7623500CAC738 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				09C2FCF62DE8B4B400FD6BD2 /* FirebaseAuthError.swift */,
 				092AABAC2DE763E900CAC738 /* FirebaseAuthRepository.swift */,
 				092AABA72DE7620400CAC738 /* AuthRepository.swift */,
 			);
@@ -354,6 +356,15 @@
 				09B2009D2DC04EA800A26EA2 /* CreateEventViewController.swift */,
 			);
 			path = CreateEvent;
+			sourceTree = "<group>";
+		};
+		09C2FCF82DE8B9C300FD6BD2 /* FirebaseError */ = {
+			isa = PBXGroup;
+			children = (
+				09C2FCFB2DE8BA7A00FD6BD2 /* FirebaseErrorType.swift */,
+				09C2FCF92DE8B9F800FD6BD2 /* FirebaseError.swift */,
+			);
+			path = FirebaseError;
 			sourceTree = "<group>";
 		};
 		09CE52882DC19B35008D8022 /* EventDetails */ = {
@@ -628,6 +639,7 @@
 				09B02A0A2DE13AA1004654F0 /* EventRepository.swift in Sources */,
 				53126CF92DE292100020E9C2 /* UserRepository.swift in Sources */,
 				09C2FCF52DE8A7CB00FD6BD2 /* LoginViewModel.swift in Sources */,
+				09C2FCFA2DE8B9FC00FD6BD2 /* FirebaseError.swift in Sources */,
 				09F557852DA9F86000D1D1A7 /* UIViewController+Extension.swift in Sources */,
 				09B2009E2DC04EA800A26EA2 /* CreateEventViewController.swift in Sources */,
 				092728EE2DC2BB06000D744C /* Tag+MockData.swift in Sources */,
@@ -636,6 +648,7 @@
 				365490AD2DDF878500328E2A /* ForgetPasswordView.swift in Sources */,
 				09F557862DA9F86000D1D1A7 /* Event.swift in Sources */,
 				09F557872DA9F86000D1D1A7 /* ProfileEditView.swift in Sources */,
+				09C2FCFC2DE8BA8500FD6BD2 /* FirebaseErrorType.swift in Sources */,
 				09F557882DA9F86000D1D1A7 /* SearchViewController.swift in Sources */,
 				092728F62DC2BCFD000D744C /* Chat+MockData.swift in Sources */,
 				092AABAB2DE7626600CAC738 /* AuthUser.swift in Sources */,
@@ -676,7 +689,6 @@
 				0935AA0F2DC54758004B24A2 /* MyEventsView.swift in Sources */,
 				0935AA102DC54758004B24A2 /* MyEventsViewController.swift in Sources */,
 				0935A9F82DC53C5B004B24A2 /* ChatProgressSurveyView.swift in Sources */,
-				09C2FCF72DE8B4BB00FD6BD2 /* FirebaseAuthError.swift in Sources */,
 				092AABA52DE7550D00CAC738 /* FirestoreUserRepository.swift in Sources */,
 				0935A9F92DC53C5B004B24A2 /* TabBarController.swift in Sources */,
 				53126CFC2DE292220020E9C2 /* RegisterViewModel.swift in Sources */,
