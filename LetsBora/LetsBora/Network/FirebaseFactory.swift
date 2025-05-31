@@ -9,6 +9,8 @@ import FirebaseCore
 import FirebaseFirestore
 import FirebaseAuth
 
+import GoogleSignIn
+
 struct FirebaseFactory {
 #if EMULATE_FIREBASE
     static let defaultUseEmulatorFlag: Bool = true
@@ -40,6 +42,22 @@ struct FirebaseFactory {
         return firestore
     }
     
+    private static func getConfigGoogle()
+    -> GIDConfiguration? {
+        
+        configureIfNeeded()
+        
+        guard let clientID = FirebaseApp.app()?.options.clientID else { return nil}
+        
+        return GIDConfiguration(clientID: clientID)
+    }
+    
+    static func makeGoogleSignIn() -> GIDSignIn? {
+        guard let config = getConfigGoogle() else { return nil }
+        GIDSignIn.sharedInstance.configuration = config
+        
+        return GIDSignIn.sharedInstance
+    }
     /// Returns a configured Auth instance
     static func makeAuth(useEmulator: Bool = defaultUseEmulatorFlag) -> Auth {
         configureIfNeeded()

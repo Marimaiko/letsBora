@@ -9,6 +9,7 @@ import UIKit
 
 protocol LoginViewDelegate: AnyObject {
     func didTapLoginButton()
+    func didTapGoogleLoginButton()
     func didTapCreateAccount()
     func didTapForgetPassword()
 }
@@ -176,8 +177,13 @@ class LoginView: UIView {
         return stackView
     }()
     
-    private func createSocialButton(title: String, imageName: String) -> UIButton {
+    private func createSocialButton(
+        title: String,
+        imageName: String,
+        tagValue: Int
+    ) -> UIButton {
         let button = UIButton(type: .system)
+        button.tag = tagValue
         button.setTitle(" \(title)", for: .normal)
         button.setImage(UIImage(systemName: imageName), for: .normal)
         button.backgroundColor = .white
@@ -185,12 +191,21 @@ class LoginView: UIView {
         button.layer.cornerRadius = 8
         button.translatesAutoresizingMaskIntoConstraints = false
         button.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        button.addTarget(self, action: #selector(socialButtonTapped), for: .touchUpInside)
         return button
     }
+    @objc private func socialButtonTapped(_ sender: UIButton) {
+        print(sender.tag)
+        if sender.tag == 1
+        {
+            self.delegate?.didTapGoogleLoginButton()
+        }
+        
+    }
     
-    lazy private var appleButton = createSocialButton(title: "Entre com Apple", imageName: "apple.logo")
-    lazy private var googleButton = createSocialButton(title: "Entre com Google", imageName: "g.circle")
-    lazy private var facebookButton = createSocialButton(title: "Entre com Facebook", imageName: "f.circle")
+    lazy private var appleButton = createSocialButton(title: "Entre com Apple", imageName: "apple.logo", tagValue: 0)
+    lazy private var googleButton = createSocialButton(title: "Entre com Google", imageName: "g.circle", tagValue: 1)
+    lazy private var facebookButton = createSocialButton(title: "Entre com Facebook", imageName: "f.circle", tagValue: 2)
     
     lazy private var socialButtonsStackView: UIStackView = {
         let stackView = UIStackView(

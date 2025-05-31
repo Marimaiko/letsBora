@@ -7,9 +7,6 @@
 import Foundation
 import FirebaseAuth
 
-private let errorKey = "FIRAuthErrorUserInfoNameKey"
-
-
 actor FirebaseAuthRepository: AuthRepository {
     let authInstance: Auth
     
@@ -18,11 +15,17 @@ actor FirebaseAuthRepository: AuthRepository {
     }
     
     func signIn(_ auth: AuthUser) async throws -> String {
+        guard let email = auth.email,
+              let password = auth.password
+        else {
+            throw AuthRepositoryError.signInFailed
+        }
+        
         do {
             let response = try await authInstance
                 .signIn(
-                    withEmail: auth.email,
-                    password: auth.password
+                    withEmail: email,
+                    password: password
                 )
             
             return response.user.uid
@@ -41,12 +44,18 @@ actor FirebaseAuthRepository: AuthRepository {
     }
     
     func signUp(_ auth: AuthUser) async throws -> AuthUserResponse {
+        guard let email = auth.email,
+              let password = auth.password
+        else {
+            throw AuthRepositoryError.signUpFailed
+        }
+        
         var resut: AuthUserResponse
         do {
             let response = try await authInstance
                 .createUser(
-                    withEmail: auth.email,
-                    password: auth.password
+                    withEmail: email,
+                    password: password
                 )
             resut = AuthUserResponse(
                 uid: response.user.uid
@@ -56,6 +65,15 @@ actor FirebaseAuthRepository: AuthRepository {
             throw AuthRepositoryError.signUpFailed
         }
         return resut
+    }
+    func logout() async throws {
+        do {
+             try authInstance.signOut()
+        } catch {
+            print("error in logout \(error)")
+            throw AuthRepositoryError.logoutFailed
+        }
+            
     }
     
     

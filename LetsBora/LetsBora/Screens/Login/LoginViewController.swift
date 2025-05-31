@@ -24,19 +24,21 @@ class LoginViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
+    override func loadView() {
+        let loginView = LoginView()
+        self.view = loginView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if let _ = Utils.getLoggedInUser() {
             navigateToHome()
         }
+        loginScreen?.delegate(self)
+        viewModel = LoginViewModel(loginViewController:self)
     }
     
-    override func loadView() {
-        let loginView = LoginView()
-        loginView.delegate(self)
-        viewModel = LoginViewModel()
-        self.view = loginView
-    }
+    
     
     private func isValidEmail(_ email: String) -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
@@ -78,6 +80,12 @@ class LoginViewController: UIViewController {
     }
 }
 extension LoginViewController: LoginViewDelegate {
+    func didTapGoogleLoginButton() {
+        Task { @MainActor in
+            try await viewModel?.signInGoogle()
+        }
+    }
+    
     private func navigateToHome() {
         if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate,
            let window = sceneDelegate.window {
@@ -87,7 +95,6 @@ extension LoginViewController: LoginViewDelegate {
     }
     
     func didTapLoginButton() {
-        
         guard let authToLogin = performValidation() else {
             alert.showAlert(
                 title: "Erro de Login",
@@ -95,12 +102,17 @@ extension LoginViewController: LoginViewDelegate {
             )
             return
         }
+        guard let email = authToLogin.email,
+              let password = authToLogin.password
+        else {
+            return
+        }
         
         Task {
             do {
                 try await viewModel?.login(
-                    email: authToLogin.email,
-                    password: authToLogin.password
+                    email: email,
+                    password: password
                 )
                 navigateToHome()
             } catch {
