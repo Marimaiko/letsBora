@@ -70,8 +70,8 @@ class RegisterViewController: UIViewController, RegisterViewDelegate {
         Task {
             await viewModel?.signUp(
                 user: .init(
-                    name: "Davi Paiva",
-                    email: "daviap87@gmail.com",
+                    name: "david",
+                    email: "david@gmail.com",
                     password: "123456")
             )
         }

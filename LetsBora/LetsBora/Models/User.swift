@@ -6,6 +6,12 @@
 //
 import Foundation
 
+enum UserDomain: String, Codable {
+    case google = "google"
+    case email = "email"
+    case facebook = "facebook"
+}
+
 enum UserKeys {
     static let collectionName = "users"
     static let id = "userId"
@@ -23,6 +29,7 @@ struct User: Identifiable {
     var email: String?
     var password: String? // only use in mock examples
     var photo: String? // will be url after
+    var domain: String?
 
     
     init (
@@ -31,12 +38,14 @@ struct User: Identifiable {
         email: String? = nil,
         password: String? = nil,
         photo: String? = nil,
+        domain: String? = nil
     ) {
         self.id = id
         self.name = name
         self.email = email
         self.password = password
         self.photo = photo
+        self.domain = domain
     }
     
     init?(from data: [String: Any]) {
@@ -58,6 +67,11 @@ struct User: Identifiable {
             self.photo = photo
         }
         
+        if let domain = data[UserKeys.domain] as? String {
+            self.domain = domain
+        } else {
+            print("Failed to parse user domain")
+        }
      
     }
     
@@ -72,6 +86,9 @@ struct User: Identifiable {
         }
         if let photo = photo {
             dict[UserKeys.photo] = photo
+        }
+        if let domain = domain {
+            dict[UserKeys.domain] = domain
         }
         
         return dict

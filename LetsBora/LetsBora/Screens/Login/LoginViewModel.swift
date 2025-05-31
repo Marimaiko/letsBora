@@ -105,6 +105,7 @@ class LoginViewModel {
                 id: userId,
                 name: name,
                 email: email,
+                domain: UserDomain.google.rawValue
             )
             
             do {

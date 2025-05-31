@@ -46,6 +46,7 @@ class RegisterViewModel {
                 name: user.name,
                 email: email,
                 photo: user.photo ?? nil,
+                domain: UserDomain.email.rawValue
             )
             
             await saveUser(user: newUser)
