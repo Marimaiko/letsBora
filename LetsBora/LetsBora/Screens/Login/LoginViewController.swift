@@ -82,7 +82,12 @@ class LoginViewController: UIViewController {
 extension LoginViewController: LoginViewDelegate {
     func didTapGoogleLoginButton() {
         Task { @MainActor in
-            try await viewModel?.signInGoogle()
+            do {
+                try await viewModel?.signInGoogle()
+                navigateToHome()
+            } catch {
+                print("Erro ao fazer login: \(error)")
+            }
         }
     }
     

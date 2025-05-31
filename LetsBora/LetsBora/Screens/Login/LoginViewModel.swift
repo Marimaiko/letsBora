@@ -45,18 +45,46 @@ class LoginViewModel {
             throw error
         }
     }
+    
+    private func registerToFirestore (
+        user: User
+    ) async throws -> Void {
+        do {
+            try await userRepository.create(user)
+        } catch {
+            throw error
+        }
+    }
+    
+    
+    @MainActor
     func signInGoogle() async throws -> Void
     {
-
         // Create Google Sign In configuration object.
-        guard let gidSignIn = FirebaseFactory.makeGoogleSignIn() else { return }
-
+        guard let gidSignIn = FirebaseFactory.makeGoogleSignIn() else {
+            print("error creating Google Sign In configuration object")
+            return }
+        
         
         let result = try await gidSignIn.signIn(
             withPresenting: self.viewController
         )
         
-        guard let idToken = result.user.idToken?.tokenString else { return }
+        print("result of Google Sign In: \(result)")
+        
+        guard let idToken = result.user.idToken?.tokenString else {
+            print("Google ID Token is nil")
+            return }
+        
+        guard let profile = result.user.profile else {
+            print("Failed to load profile")
+            return
+        }
+        
+        print("Load profile with success \(profile)")
+        let name = profile.name
+        let email = profile.email
+        
         
         let accessToken = result.user.accessToken.tokenString
         
@@ -70,18 +98,28 @@ class LoginViewModel {
         do {
             let userId = try await authRepository.signIn(signInUser)
             
-            // retrieve user infos in firestore
-            let userLoggedIn = try await getUser(id: userId)
+            // create user in db
+            let userToCreate = User(
+                id: userId,
+                name: name,
+                email: email,
+                domain: .google
+            )
             
-            // save as useDefault
-            Utils.saveLoggedInUser(userLoggedIn)
+            do {
+                let userLoggedIn = try await getUser(id: userId)
+                print("user already exists, just login")
+                Utils.saveLoggedInUser(userLoggedIn)
+            } catch  {
+                print("user not found, create new user")
+                try await registerToFirestore(user: userToCreate)
+                Utils.saveLoggedInUser(userToCreate)
+            }
             
         } catch {
+        print("Fail to Sign In with Google")
             throw error
         }
-        
-        
-        
         
     }
     

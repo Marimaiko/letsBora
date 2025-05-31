@@ -27,15 +27,21 @@ actor GoogleAuthRepository: AuthRepository {
         let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: accessToken)
         
         do {
-            let response = try await authInstance.signIn(with: credential)
+            let response = try await authInstance
+                .signIn(with: credential)
             return response.user.uid
         } catch {
             let _ = FirebaseError<FirebaseAuthErrorCode>(from: error)
             throw AuthRepositoryError.signInFailed
-            
         }
     }
     func logout() async throws {
+        do {
+            try authInstance.signOut()
+        } catch {
+            print("Erro ao realizar logout \(error)")
+            throw AuthRepositoryError.logoutFailed
+        }
         
     }
 }
