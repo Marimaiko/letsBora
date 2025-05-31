@@ -212,7 +212,7 @@ class LoginView: UIView {
             arrangedSubviews: [
                 //appleButton,
                 googleButton,
-                facebookButton
+                //facebookButton
             ])
         stackView.axis = .vertical
         stackView.spacing = 12
