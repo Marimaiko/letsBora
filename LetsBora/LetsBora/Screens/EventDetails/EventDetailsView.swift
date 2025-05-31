@@ -374,7 +374,7 @@ class EventDetailsView: UIView {
         UIView.animate(withDuration: 0.4, animations: {
             toastLabel.alpha = 1.0
         }) { _ in
-            UIView.animate(withDuration: 0.4, delay: 5.0, options: .curveEaseOut, animations: {
+            UIView.animate(withDuration: 0.4, delay: 2.0, options: .curveEaseOut, animations: {
                 toastLabel.alpha = 0.0
             }) { _ in
                 toastLabel.removeFromSuperview()
