@@ -89,7 +89,7 @@ class EventDetailsView: UIView {
         // translatesAutoresizingMaskIntoConstraints é tratado pela stack pai
         return stack
     }()
-
+    
     
     // Stack para o conteúdo abaixo do header, com padding lateral
     private lazy var contentInnerStackView: UIStackView = {
@@ -101,7 +101,7 @@ class EventDetailsView: UIView {
         stackView.layoutMargins = UIEdgeInsets(top: 15, left: 16, bottom: 24, right: 16)
         return stackView
     }()
-
+    
     
     private lazy var dateTimeLabel: UIStackView = {
         let horizontalStack = UIStackView()
@@ -145,38 +145,38 @@ class EventDetailsView: UIView {
         horizontalStack.axis = .horizontal
         horizontalStack.spacing = 8
         horizontalStack.alignment = .center
-
+        
         let iconImageView = UIImageView(image: UIImage(systemName: "map.circle"))
         iconImageView.tintColor = .black
         iconImageView.translatesAutoresizingMaskIntoConstraints = false
         iconImageView.contentMode = .scaleAspectFit
         NSLayoutConstraint.activate([
-             iconImageView.widthAnchor.constraint(equalToConstant: 32),
-             iconImageView.heightAnchor.constraint(equalToConstant: 32)
-         ])
-
+            iconImageView.widthAnchor.constraint(equalToConstant: 32),
+            iconImageView.heightAnchor.constraint(equalToConstant: 32)
+        ])
+        
         let verticalStack = UIStackView()
         verticalStack.axis = .vertical
         verticalStack.spacing = 4
-
+        
         let titleLabel = UILabel()
         titleLabel.text = "Casa do Jorge"
         titleLabel.font = .systemFont(ofSize: 16, weight: .medium)
-
+        
         let addressLabel = UILabel()
         addressLabel.text = "Rua das Flores, 123"
         addressLabel.font = .systemFont(ofSize: 14)
         addressLabel.textColor = .gray
-
+        
         verticalStack.addArrangedSubview(titleLabel)
         verticalStack.addArrangedSubview(addressLabel)
-
+        
         horizontalStack.addArrangedSubview(iconImageView)
         horizontalStack.addArrangedSubview(verticalStack)
-
+        
         return horizontalStack
     }()
-
+    
     
     private lazy var participantsStack: UIStackView = {
         let verticalStack = UIStackView()
@@ -220,13 +220,13 @@ class EventDetailsView: UIView {
             label.textColor = .darkGray
             return label
         }()
-
+        
         horizontalStack.addArrangedSubview(iconsStack)
         horizontalStack.addArrangedSubview(moreLabel)
-
+        
         verticalStack.addArrangedSubview(titleLabel)
         verticalStack.addArrangedSubview(horizontalStack)
-
+        
         return verticalStack
     }()
     
@@ -307,24 +307,79 @@ class EventDetailsView: UIView {
     
     func updateDate(_ text: String) {
         if let label = dateTimeLabel.arrangedSubviews.last as? UILabel {
-            label.text = text.isEmpty ? label.text : text        }
+            if !text.isEmpty && label.text != text {
+                label.text = text
+                label.textColor = .orange
+                label.font = .systemFont(ofSize: 18, weight: .bold)
+            }
+        }
     }
-
+    
     func updateLocation(_ place: String, address: String) {
         if let verticalStack = locationStack.arrangedSubviews.last as? UIStackView,
            let placeLabel = verticalStack.arrangedSubviews.first as? UILabel,
            let addressLabel = verticalStack.arrangedSubviews.last as? UILabel {
-            placeLabel.text = place.isEmpty ? placeLabel.text : place
-            addressLabel.text = address.isEmpty ? addressLabel.text : address
+            if !place.isEmpty && place != placeLabel.text {
+                placeLabel.text = place
+                placeLabel.textColor = .orange
+                placeLabel.font = .systemFont(ofSize: 18, weight: .bold)
+            }
+            
+            if !address.isEmpty && address != addressLabel.text {
+                addressLabel.text = address
+                addressLabel.textColor = .orange
+                addressLabel.font = .systemFont(ofSize: 18, weight: .bold)
+            }
         }
     }
-
+    
     func updateDescription(_ text: String) {
-        descriptionText.text = text.isEmpty ? descriptionText.text : text    }
-
+        if !text.isEmpty && descriptionText.text != text {
+            descriptionText.text = text
+            descriptionText.textColor = .orange
+            descriptionText.font = .systemFont(ofSize: 18, weight: .bold)
+        }
+    }
+    
     func updateCost(_ text: String) {
         if let rightLabel = costStack.arrangedSubviews.last as? UILabel {
-            rightLabel.text = text.isEmpty ? rightLabel.text : text        }
+            if !text.isEmpty && rightLabel.text != text {
+                rightLabel.text = "R$ \(text)"
+                rightLabel.textColor = .orange
+            }
+        }
+    }
+    
+    func showUpdateToast(message: String) {
+        let toastLabel = UILabel()
+        toastLabel.text = message
+        toastLabel.backgroundColor = UIColor(hex: "#00D26A")
+        toastLabel.textColor = .white
+        toastLabel.font = .systemFont(ofSize: 16, weight: .bold)
+        toastLabel.textAlignment = .center
+        toastLabel.alpha = 0.0
+        toastLabel.layer.cornerRadius = 8
+        toastLabel.clipsToBounds = true
+        
+        toastLabel.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(toastLabel)
+        
+        NSLayoutConstraint.activate([
+            toastLabel.topAnchor.constraint(equalTo: contentInnerStackView.topAnchor, constant: -48),
+            toastLabel.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor, constant: 24),
+            toastLabel.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor, constant: -24),
+            toastLabel.heightAnchor.constraint(equalToConstant: 48)
+        ])
+        
+        UIView.animate(withDuration: 0.4, animations: {
+            toastLabel.alpha = 1.0
+        }) { _ in
+            UIView.animate(withDuration: 0.4, delay: 5.0, options: .curveEaseOut, animations: {
+                toastLabel.alpha = 0.0
+            }) { _ in
+                toastLabel.removeFromSuperview()
+            }
+        }
     }
     
     // MARK: - Setup
@@ -373,20 +428,20 @@ class EventDetailsView: UIView {
             scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
-
+            
             // MainStackView (dentro da ScrollView)
             mainStackView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
             mainStackView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
             mainStackView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
             mainStackView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
             mainStackView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
-
+            
             // Componentes dentro do containerHeaderStackView
             eventImageView.heightAnchor.constraint(equalTo: eventImageView.widthAnchor, multiplier: 0.6),
             
             // containerHeaderStackView já está na mainStackView, que tem widthAnchor = scrollView.frameLayoutGuide.widthAnchor.
             // Isso fará com que o header ocupe toda a largura.
-
+            
             // contentInnerStackView também está na mainStackView e ocupará toda a largura.
             // O padding é aplicado internamente por contentInnerStackView.layoutMargins.
             

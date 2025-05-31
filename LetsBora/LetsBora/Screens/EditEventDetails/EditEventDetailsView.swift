@@ -53,10 +53,7 @@ class EditEventDetailsView: UIView {
     
     lazy var descriptionTextView: UITextField = {
         let textfield = UITextField()
-        textfield.layer.borderWidth = 0.5
-        textfield.layer.borderColor = UIColor.systemGray4.cgColor
-        textfield.layer.cornerRadius = 8
-        textfield.font = .systemFont(ofSize: 16)
+        textfield.borderStyle = .roundedRect
         textfield.translatesAutoresizingMaskIntoConstraints = false
         textfield.placeholder = "Descrição"
         return textfield
@@ -144,12 +141,12 @@ extension EditEventDetailsView: ViewCode{
             locationTextField.trailingAnchor.constraint(equalTo: dateTextField.trailingAnchor),
             locationTextField.heightAnchor.constraint(equalToConstant: 44),
             
-            addressTextField.topAnchor.constraint(equalTo: dateTextField.bottomAnchor, constant: 16),
+            addressTextField.topAnchor.constraint(equalTo: locationTextField.bottomAnchor, constant: 16),
             addressTextField.leadingAnchor.constraint(equalTo: dateTextField.leadingAnchor),
             addressTextField.trailingAnchor.constraint(equalTo: dateTextField.trailingAnchor),
             addressTextField.heightAnchor.constraint(equalToConstant: 44),
 
-            descriptionTextView.topAnchor.constraint(equalTo: locationTextField.bottomAnchor, constant: 16),
+            descriptionTextView.topAnchor.constraint(equalTo: addressTextField.bottomAnchor, constant: 16),
             descriptionTextView.leadingAnchor.constraint(equalTo: dateTextField.leadingAnchor),
             descriptionTextView.trailingAnchor.constraint(equalTo: dateTextField.trailingAnchor),
             descriptionTextView.heightAnchor.constraint(equalToConstant: 120),

@@ -30,8 +30,16 @@ class EditEventViewController: UIViewController, EditEventViewDelegate {
         let description = screen.descriptionTextView.text ?? ""
         let cost = screen.costTextField.text ?? ""
 
-        onSave?(date, place, address, description, cost)
-        navigationController?.popViewController(animated: true)
+        if !place.isEmpty && address.isEmpty {
+            let alert = UIAlertController(title: "Atenção",
+                                          message: "Se você alterou o local, informe o novo endereço",
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            present(alert, animated: true)
+        } else {
+            onSave?(date, place, address, description, cost)
+            navigationController?.popViewController(animated: true)
+        }
     }
     
     func didTapCancel() {

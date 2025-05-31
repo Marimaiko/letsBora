@@ -66,14 +66,15 @@ class EventDetailsViewController: UIViewController {
     
     // MARK: - Actions
     @objc func editTapped() {
-        let editVC = EditEventViewController()
-        editVC.onSave = { [weak self] date, place, address, description, cost in
+        let editViewController = EditEventViewController()
+        editViewController.onSave = { [weak self] date, place, address, description, cost in
             self?.eventDetailsView.updateDate(date)
             self?.eventDetailsView.updateLocation(place, address: address)
             self?.eventDetailsView.updateDescription(description)
             self?.eventDetailsView.updateCost(cost)
+            self?.eventDetailsView.showUpdateToast(message: "Confira as alterações no seu evento!")
         }
-        navigationController?.pushViewController(editVC, animated: true)
+        navigationController?.pushViewController(editViewController, animated: true)
     }
 }
 
