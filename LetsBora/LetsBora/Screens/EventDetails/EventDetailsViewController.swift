@@ -27,11 +27,16 @@ class EventDetailsViewController: UIViewController {
         setupNavigation()
         eventDetailsView.delegate = self
     }
-
+    
     // MARK: - Setup
     private func setupNavigation() {
         // Set the title and button
         title = "Detalhes Aniversário do Pedro"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .edit,
+            target: self,
+            action: #selector(editTapped)
+        )
     }
     
     // MARK: - Maps Helper
@@ -58,25 +63,31 @@ class EventDetailsViewController: UIViewController {
         // Abrindo o Maps com as opções definidas
         mapItem.openInMaps(launchOptions: options)
     }
+    
+    // MARK: - Actions
+    @objc func editTapped() {
+        let editVC = EditEventViewController()
+        editVC.onSave = { [weak self] date, place, address, description, cost in
+            self?.eventDetailsView.updateDate(date)
+            self?.eventDetailsView.updateLocation(place, address: address)
+            self?.eventDetailsView.updateDescription(description)
+            self?.eventDetailsView.updateCost(cost)
+        }
+        navigationController?.pushViewController(editVC, animated: true)
+    }
 }
 
 extension EventDetailsViewController: EventDetailsViewDelegate {
     func barButtonTapped(_ sender: UIButton) {
-        if(sender.tag == EventDetailsView.TabTag.chat.rawValue) {
-            navigationController?.pushViewController(
-                ChatViewController(),
-                animated: true
-            )
-        }
-        else if(sender.tag == EventDetailsView.TabTag.costs.rawValue) {
-            navigationController?.pushViewController(
-                CostControlViewController(),
-                animated: true
-            )
-        }
-        else if(sender.tag == EventDetailsView.TabTag.maps.rawValue) {
-            // Abre o Apple Maps na localização mockada
+        switch sender.tag {
+        case EventDetailsView.TabTag.chat.rawValue:
+            navigationController?.pushViewController(ChatViewController(), animated: true)
+        case EventDetailsView.TabTag.costs.rawValue:
+            navigationController?.pushViewController(CostControlViewController(), animated: true)
+        case EventDetailsView.TabTag.maps.rawValue:
             openAppleMaps()
+        default:
+            break
         }
     }
 }

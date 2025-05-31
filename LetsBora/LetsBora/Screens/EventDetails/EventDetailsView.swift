@@ -10,6 +10,7 @@ import UIKit
 
 protocol EventDetailsViewDelegate: AnyObject {
     func barButtonTapped(_ sender: UIButton)
+    func editTapped()
 }
 
 class EventDetailsView: UIView {
@@ -298,6 +299,32 @@ class EventDetailsView: UIView {
     
     @objc private func barButtonTapped(_ sender: UIButton) {
         self.delegate?.barButtonTapped(sender)
+    }
+    
+    @objc private func editTapped() {
+        self.delegate?.editTapped()
+    }
+    
+    func updateDate(_ text: String) {
+        if let label = dateTimeLabel.arrangedSubviews.last as? UILabel {
+            label.text = text.isEmpty ? label.text : text        }
+    }
+
+    func updateLocation(_ place: String, address: String) {
+        if let verticalStack = locationStack.arrangedSubviews.last as? UIStackView,
+           let placeLabel = verticalStack.arrangedSubviews.first as? UILabel,
+           let addressLabel = verticalStack.arrangedSubviews.last as? UILabel {
+            placeLabel.text = place.isEmpty ? placeLabel.text : place
+            addressLabel.text = address.isEmpty ? addressLabel.text : address
+        }
+    }
+
+    func updateDescription(_ text: String) {
+        descriptionText.text = text.isEmpty ? descriptionText.text : text    }
+
+    func updateCost(_ text: String) {
+        if let rightLabel = costStack.arrangedSubviews.last as? UILabel {
+            rightLabel.text = text.isEmpty ? rightLabel.text : text        }
     }
     
     // MARK: - Setup
