@@ -23,5 +23,16 @@ actor Facebook: AuthRepository {
     func logout() async throws {
          
     }
+    func resetPassword(email: String) async throws {
+        do {
+            try await authInstance.sendPasswordReset(
+                withEmail: email
+            )
+        } catch {
+            print("error in resetPassword \(error)")
+            throw AuthRepositoryError.resetPasswordFail
+        }
+    }
+    
     
 }

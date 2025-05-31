@@ -9,6 +9,7 @@
 enum FirebaseAuthErrorCode: String, FirebaseErrorCode {
     case userNotFound = "ERROR_USER_NOT_FOUND"
     case invalidPassword = "ERROR_WRONG_PASSWORD"
+    case incorrectCredentials = "ERROR_INVALID_CREDENTIAL"
     case unknown
 
     init(from rawValue: String) {

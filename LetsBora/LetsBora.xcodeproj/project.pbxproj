@@ -49,6 +49,7 @@
 		0935AA0F2DC54758004B24A2 /* MyEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0935AA0C2DC54758004B24A2 /* MyEventsView.swift */; };
 		0935AA102DC54758004B24A2 /* MyEventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0935AA0D2DC54758004B24A2 /* MyEventsViewController.swift */; };
 		0951EF942DEA35C300668494 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0951EF932DEA35BE00668494 /* ProfileViewModel.swift */; };
+		0951EF962DEAB73000668494 /* ForgetPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0951EF952DEAB72000668494 /* ForgetPasswordViewModel.swift */; };
 		099A927D2DC5034A00415196 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A927C2DC5034A00415196 /* MockData.swift */; };
 		099A92812DC50A7500415196 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A927F2DC50A7500415196 /* RegisterViewController.swift */; };
 		099A92822DC50A7500415196 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A927E2DC50A7500415196 /* RegisterView.swift */; };
@@ -147,6 +148,7 @@
 		0935AA0C2DC54758004B24A2 /* MyEventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEventsView.swift; sourceTree = "<group>"; };
 		0935AA0D2DC54758004B24A2 /* MyEventsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEventsViewController.swift; sourceTree = "<group>"; };
 		0951EF932DEA35BE00668494 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		0951EF952DEAB72000668494 /* ForgetPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordViewModel.swift; sourceTree = "<group>"; };
 		099A927C2DC5034A00415196 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
 		099A927E2DC50A7500415196 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		099A927F2DC50A7500415196 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
@@ -535,6 +537,7 @@
 		365490AB2DDF872D00328E2A /* ForgetPassword */ = {
 			isa = PBXGroup;
 			children = (
+				0951EF952DEAB72000668494 /* ForgetPasswordViewModel.swift */,
 				365490AE2DDFA11900328E2A /* ForgetPasswordViewController.swift */,
 				365490AC2DDF878500328E2A /* ForgetPasswordView.swift */,
 			);
@@ -689,6 +692,7 @@
 				091E48FB2DC4302100F4C44D /* Survey.swift in Sources */,
 				09F5578C2DA9F86000D1D1A7 /* Tag.swift in Sources */,
 				092728EA2DC2BA61000D744C /* Events+MockData.swift in Sources */,
+				0951EF962DEAB73000668494 /* ForgetPasswordViewModel.swift in Sources */,
 				0951EF942DEA35C300668494 /* ProfileViewModel.swift in Sources */,
 				09B02A052DE12D67004654F0 /* HomeViewModel.swift in Sources */,
 				092728E02DC26DB1000D744C /* ChatView.swift in Sources */,

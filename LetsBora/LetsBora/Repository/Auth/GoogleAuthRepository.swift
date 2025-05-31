@@ -15,7 +15,10 @@ actor GoogleAuthRepository: AuthRepository {
         self.authInstance = auth
     }
     
-    func signUp(_ auth: AuthUser) async throws -> AuthUserResponse {
+    func signUp(
+        _ auth: AuthUser
+    ) async throws
+    -> AuthUserResponse {
         return AuthUserResponse(uid: "123")
     }
     
@@ -31,7 +34,11 @@ actor GoogleAuthRepository: AuthRepository {
                 .signIn(with: credential)
             return response.user.uid
         } catch {
-            let _ = FirebaseError<FirebaseAuthErrorCode>(from: error)
+            let _ = FirebaseError<
+                FirebaseAuthErrorCode
+            >(
+                from: error
+            )
             throw AuthRepositoryError.signInFailed
         }
     }
@@ -42,6 +49,17 @@ actor GoogleAuthRepository: AuthRepository {
             print("Erro ao realizar logout \(error)")
             throw AuthRepositoryError.logoutFailed
         }
-        
     }
+    
+    func resetPassword(email: String) async throws {
+        do {
+            try await authInstance.sendPasswordReset(
+                withEmail: email
+            )
+        } catch {
+            print("error in resetPassword \(error)")
+            throw AuthRepositoryError.resetPasswordFail
+        }
+    }
+    
 }

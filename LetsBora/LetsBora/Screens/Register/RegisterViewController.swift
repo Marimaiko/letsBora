@@ -68,7 +68,12 @@ class RegisterViewController: UIViewController, RegisterViewDelegate {
         let user = User(name: nameTextField, email: emailTextField, password: passwordTextField)
          */
         Task {
-            await viewModel?.signUp(user: .init(name: "Davi", email: "davi@gmail.com", password: "123456"))
+            await viewModel?.signUp(
+                user: .init(
+                    name: "Davi Paiva",
+                    email: "daviap87@gmail.com",
+                    password: "123456")
+            )
         }
     }
 }

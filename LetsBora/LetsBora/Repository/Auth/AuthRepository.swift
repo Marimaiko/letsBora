@@ -13,7 +13,8 @@ enum AuthRepositoryError: Error, LocalizedError {
     case signInUserNotFound
     case signInWrongPassword
     case logoutFailed
-
+    case resetPasswordFail
+    
     var errorDescription: String? {
         switch self {
         case .signUpFailed:
@@ -26,6 +27,8 @@ enum AuthRepositoryError: Error, LocalizedError {
             return "Senha incorreta. Tente novamente."
         case .logoutFailed:
             return "Não foi possível fazer logout. Tente novamente."
+        case .resetPasswordFail:
+            return "Não foi possível resetar a senha. Tente novamente mais tarde."
         }
     }
 }
@@ -33,5 +36,8 @@ enum AuthRepositoryError: Error, LocalizedError {
 protocol AuthRepository {
     func signUp(_ auth: AuthUser) async throws -> AuthUserResponse
     func signIn(_ auth: AuthUser) async throws -> String
+    
     func logout() async throws
+    
+    func resetPassword(email: String) async throws
 }

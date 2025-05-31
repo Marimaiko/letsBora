@@ -97,6 +97,9 @@ class ForgetPasswordView: UIView {
         delegate?.didTapCancel()
         print("clicou em cancelar")
     }
+    func getEmailText() -> String?{
+        return emailTextField.text
+    }
 }
 
 extension ForgetPasswordView: ViewCode{

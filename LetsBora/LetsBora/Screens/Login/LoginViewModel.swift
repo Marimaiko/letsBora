@@ -61,9 +61,11 @@ class LoginViewModel {
     func signInGoogle() async throws -> Void
     {
         // Create Google Sign In configuration object.
-        guard let gidSignIn = FirebaseFactory.makeGoogleSignIn() else {
+        guard let gidSignIn = FirebaseFactory
+            .makeGoogleSignIn() else {
             print("error creating Google Sign In configuration object")
-            return }
+            return
+        }
         
         
         let result = try await gidSignIn.signIn(
@@ -103,16 +105,19 @@ class LoginViewModel {
                 id: userId,
                 name: name,
                 email: email,
-                domain: .google
             )
             
             do {
-                let userLoggedIn = try await getUser(id: userId)
+                let userLoggedIn = try await getUser(
+                    id: userId
+                )
                 print("user already exists, just login")
                 Utils.saveLoggedInUser(userLoggedIn)
             } catch  {
                 print("user not found, create new user")
-                try await registerToFirestore(user: userToCreate)
+                try await registerToFirestore(
+                    user: userToCreate
+                )
                 Utils.saveLoggedInUser(userToCreate)
             }
             

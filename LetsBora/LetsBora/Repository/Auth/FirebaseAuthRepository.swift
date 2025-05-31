@@ -37,6 +37,8 @@ actor FirebaseAuthRepository: AuthRepository {
                 throw AuthRepositoryError.signInUserNotFound
             case FirebaseAuthErrorCode.invalidPassword:
                 throw AuthRepositoryError.signInWrongPassword
+            case FirebaseAuthErrorCode.incorrectCredentials:
+                throw AuthRepositoryError.signInFailed
             default:
                 throw AuthRepositoryError.signInFailed
             }
@@ -66,6 +68,7 @@ actor FirebaseAuthRepository: AuthRepository {
         }
         return resut
     }
+    
     func logout() async throws {
         do {
              try authInstance.signOut()
@@ -76,5 +79,15 @@ actor FirebaseAuthRepository: AuthRepository {
             
     }
     
+    func resetPassword(email: String) async throws {
+        do {
+            try await authInstance.sendPasswordReset(
+                withEmail: email
+            )
+        } catch {
+            print("error in resetPassword \(error)")
+            throw AuthRepositoryError.resetPasswordFail
+        }
+    }
     
 }
