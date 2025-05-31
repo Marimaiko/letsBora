@@ -122,29 +122,48 @@ class RegisterViewController: UIViewController, RegisterViewDelegate {
     
     func didTapRegister() {
         if let validUser = validateInputs() {
-            // print("Validação de registro bem-sucedida. Usuário: \(validUser.name), Email: \(validUser.email)")
+            print("Validação de UI bem-sucedida. Tentando registrar usuário: \(validUser.name)")
+            // Desabilitar o botão de registro para evitar múltiplos cliques
+            screen?.registerButton.isEnabled = false
+            screen?.registerButton.alpha = 0.5 // Feedback visual
+            
             Task {
-                // O viewModel.signUp espera um User com email e senha.
-                // O User que passamos já tem esses campos.
-                // O viewModel internamente criará outro User com o ID do Auth.
-                await viewModel?.signUp(user: validUser) //
-                
-                // Após o signUp, você pode querer navegar para outra tela
-                // ou mostrar uma mensagem de sucesso/erro baseada na resposta do viewModel.
-                // Ex: verificar se o usuário foi realmente criado e está logado.
-                // Por enquanto, vamos apenas imprimir.
-                print("Chamada ao viewModel.signUp concluída.")
-                // Exemplo de navegação para a tela de login ou principal após registro bem-sucedido:
-                 navigationController?.popToRootViewController(animated: true)
-                // ou mostrar um alerta de sucesso e pedir para o usuário logar.
+                do {
+                    try await viewModel?.signUp(user: validUser)
+                    print("Registro e salvamento no DB bem-sucedidos!")
+                    
+                    // Ação de Sucesso (executar na thread principal)
+                    await MainActor.run {
+                        screen?.registerButton.isEnabled = true // Reabilitar botão
+                        screen?.registerButton.alpha = 1.0
+                        
+                        let alert = UIAlertController(title: "Registro Concluído", message: "Sua conta foi criada com sucesso! Por favor, faça o login.", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+                            // Navegar para a tela de Login ou pop este controller
+                            self.navigationController?.popViewController(animated: true)
+                            // Ou, se quiser ir para a raiz (ex: tela de login se for a raiz):
+                            // self.navigationController?.popToRootViewController(animated: true)
+                        }))
+                        self.present(alert, animated: true)
+                    }
+                    
+                } catch {
+                    print("Erro durante o processo de signUp no ViewController: \(error.localizedDescription)")
+                    // Ação de Erro (executar na thread principal)
+                    await MainActor.run {
+                        screen?.registerButton.isEnabled = true // Reabilitar botão
+                        screen?.registerButton.alpha = 1.0
+                        
+                        // Mostrar um alerta de erro para o usuário
+                        let alert = UIAlertController(title: "Erro de Registro", message: error.localizedDescription, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self.present(alert, animated: true)
+                    }
+                }
             }
         } else {
-            print("Validação de registro falhou.")
-            // Erros já foram exibidos na tela.
-            // Opcional: Mostrar um alerta geral se preferir.
-            // let alert = UIAlertController(title: "Erro de Registro", message: "Por favor, corrija os campos destacados.", preferredStyle: .alert)
-            // alert.addAction(UIAlertAction(title: "OK", style: .default))
-            // present(alert, animated: true)
+            print("Validação da UI falhou. Erros exibidos na tela.")
+            // Opcional: Feedback tátil ou sonoro de erro
         }
     }
 }

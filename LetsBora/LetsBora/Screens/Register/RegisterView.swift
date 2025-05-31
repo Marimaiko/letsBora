@@ -116,7 +116,7 @@ class RegisterView: UIView {
     // lazy var confirmPasswordTextField: UITextField = { ... }()
     // lazy var confirmPasswordErrorLabel: UILabel = { ... }()
     
-    lazy private var registerButton: UIButton = {
+    lazy var registerButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Cadastrar", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .bold)
