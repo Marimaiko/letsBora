@@ -23,6 +23,12 @@ class CreateEventView: UIView {
         self.delegate =  inject
     }
     
+    // MARK: - variable
+    public var selectedDateAndTime: Date? // Para armazenar a data/hora combinada
+    private var selectedCategory: String?
+    var categories: [String] = []
+    
+    
     //MARK: - UIComponents
     private lazy var titleLabel = ReusableLabel(text: "Criar Evento", labelType: .title)
     
@@ -51,7 +57,7 @@ class CreateEventView: UIView {
         textField.heightAnchor.constraint(equalToConstant: 48).isActive = true
         return textField
     }()
-    
+    // used in validation
     lazy var nameEventErrorLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -153,9 +159,6 @@ class CreateEventView: UIView {
         return button
     }()
     
-    public var selectedDateAndTime: Date? // Para armazenar a data/hora combinada
-    
-    
     // --- Localização ---
     lazy var locationCustomContainer: CustomContainer = {
         let container = CustomContainer(iconName: "pin", labelName: "Localização", arrowName: "chevron.right", type: .location)
@@ -186,9 +189,15 @@ class CreateEventView: UIView {
     }()
     
     lazy var categoryCustomContainer: CustomContainer = {
-        let container = CustomContainer(iconName: "smiley", labelName: "Categoria", arrowName: "chevron.right", type: .category)
+        let container = CustomContainer(
+            iconName: "smiley",
+            labelName: "Categoria",
+            arrowName: "chevron.right",
+            type: .category
+        )
         return container
     }()
+    
     let switchView = UISwitch()
     
     lazy var categoryErrorLabel: UILabel = {
@@ -200,8 +209,6 @@ class CreateEventView: UIView {
         return label
     }()
     
-    var categories: [String] = []
-    private var selectedCategory: String?
     
     // --- Público ou Privado ---
     lazy var eventPrivacySwitch: UISwitch = {
@@ -220,25 +227,38 @@ class CreateEventView: UIView {
         containerView.layer.shadowColor = UIColor.black.cgColor
         containerView.layer.shadowOpacity = 0.1
         containerView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        containerView.heightAnchor.constraint(equalToConstant: 42).isActive = true
-        
-        let leftView = makeIconLabelView(iconName: "lock", labelText: "Evento Privado")
-        leftView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.addSubview(leftView)
-        containerView.addSubview(eventPrivacySwitch)
-        
-        NSLayoutConstraint.activate([
-            leftView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 8),
-            leftView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
-            eventPrivacySwitch.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
-            eventPrivacySwitch.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
-        ])
-        
         return containerView
     }()
-    
+    private lazy var leftView : UIView = {
+        let leftView = makeIconLabelView(iconName: "lock", labelText: "Evento Privado")
+        leftView.translatesAutoresizingMaskIntoConstraints = false
+        return leftView
+    }()
     
     // --- Convidar participantes ---
+    // Label + Ícone (top left)
+    private lazy var iconLabelView: UIView = {
+        let iconLabelView = makeIconLabelView(iconName: "person", labelText: "Participantes")
+        iconLabelView.translatesAutoresizingMaskIntoConstraints = false
+        return iconLabelView
+    }()
+    // Botão "Convidar" (bottom right)
+    private lazy var inviteButton: UIView = {
+        let button = UIButton(type: .system)
+        button.setTitle("Convidar", for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    // Stack de imagens dos participantes (bottom left)
+    private lazy var avatarsGroupView: AvatarGroupView = {
+        let avatarGroupView = AvatarGroupView()
+        avatarGroupView.setAvatars(["James", "James1", "James3"])
+        return avatarGroupView
+    }()
+    
     private lazy var participantsView: UIView = {
         let containerView = UIView()
         containerView.translatesAutoresizingMaskIntoConstraints = false
@@ -247,48 +267,6 @@ class CreateEventView: UIView {
         containerView.layer.shadowColor = UIColor.black.cgColor
         containerView.layer.shadowOpacity = 0.1
         containerView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        
-        // Label + Ícone (top left)
-        let iconLabelView = makeIconLabelView(iconName: "person", labelText: "Participantes")
-        containerView.addSubview(iconLabelView)
-        
-        // Botão "Convidar" (bottom right)
-        let inviteButton = UIButton(type: .system)
-        inviteButton.setTitle("Convidar", for: .normal)
-        inviteButton.setTitleColor(.systemBlue, for: .normal)
-        inviteButton.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
-        inviteButton.translatesAutoresizingMaskIntoConstraints = false
-        containerView.addSubview(inviteButton)
-        
-        // Stack de imagens dos participantes (bottom left)
-        let participantsStackView = UIStackView()
-        participantsStackView.axis = .horizontal
-        participantsStackView.spacing = 6
-        participantsStackView.alignment = .center
-        participantsStackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        for _ in 0..<4 {
-            let imageView = UIImageView()
-            imageView.translatesAutoresizingMaskIntoConstraints = false
-            imageView.layer.cornerRadius = 12
-            imageView.clipsToBounds = true
-            imageView.backgroundColor = .lightGray
-            imageView.widthAnchor.constraint(equalToConstant: 24).isActive = true
-            imageView.heightAnchor.constraint(equalToConstant: 24).isActive = true
-            participantsStackView.addArrangedSubview(imageView)
-        }
-        
-        containerView.addSubview(participantsStackView)
-        
-        // Constraints internas
-        NSLayoutConstraint.activate([
-            iconLabelView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 10),
-            iconLabelView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 12),
-            participantsStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 12),
-            participantsStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -10),
-            inviteButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -12),
-            inviteButton.centerYAnchor.constraint(equalTo: participantsStackView.centerYAnchor)
-        ])
         
         return containerView
     }()
@@ -364,13 +342,17 @@ class CreateEventView: UIView {
     
     private func setupHierarchy() {
         addSubview(scrollView)
+        
+        addSubview(categoryTextField)
+        addSubview(calendarContainerView)
+        
         scrollView.addSubview(contentView)
         
         contentView.addSubview(titleLabel)
         
         contentView.addSubview(nameEventTextField)
         contentView.addSubview(nameEventErrorLabel)
-        
+
         contentView.addSubview(descriptionEventTextView)
         contentView.addSubview(descriptionPlaceholderLabel)
         contentView.addSubview(descriptionErrorLabel)
@@ -390,11 +372,18 @@ class CreateEventView: UIView {
         
         contentView.addSubview(actionButtonsContainerView)
         
-        addSubview(categoryTextField)
-        addSubview(calendarContainerView)
+        
         calendarContainerView.addSubview(calendar)
         calendarContainerView.addSubview(timePicker)
         calendarContainerView.addSubview(dateTimeConfirmButton)
+        
+        publicOrPrivateContainerView.addSubview(leftView)
+        publicOrPrivateContainerView.addSubview(eventPrivacySwitch)
+        
+        participantsView.addSubview(iconLabelView)
+        participantsView.addSubview(inviteButton)
+        participantsView.addSubview(avatarsGroupView)
+        
     }
     
     // MARK: Factory
@@ -652,11 +641,23 @@ extension CreateEventView {
             publicOrPrivateContainerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             publicOrPrivateContainerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             
+            leftView.leadingAnchor.constraint(equalTo: publicOrPrivateContainerView.leadingAnchor, constant: 8),
+            leftView.centerYAnchor.constraint(equalTo: publicOrPrivateContainerView.centerYAnchor),
+            eventPrivacySwitch.trailingAnchor.constraint(equalTo: publicOrPrivateContainerView.trailingAnchor, constant: -16),
+            eventPrivacySwitch.centerYAnchor.constraint(equalTo: publicOrPrivateContainerView.centerYAnchor),
+            
             // Participantes
             participantsView.topAnchor.constraint(equalTo: publicOrPrivateContainerView.bottomAnchor, constant: 24),
             participantsView.heightAnchor.constraint(equalToConstant: 80),
             participantsView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             participantsView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            iconLabelView.topAnchor.constraint(equalTo: participantsView.topAnchor, constant: 10),
+            iconLabelView.leadingAnchor.constraint(equalTo: participantsView.leadingAnchor, constant: 12),
+            avatarsGroupView.leadingAnchor.constraint(equalTo: participantsView.leadingAnchor, constant: 12),
+            avatarsGroupView.bottomAnchor.constraint(equalTo: participantsView.bottomAnchor, constant: -10),
+            inviteButton.trailingAnchor.constraint(equalTo: participantsView.trailingAnchor, constant: -12),
+            inviteButton.centerYAnchor.constraint(equalTo: avatarsGroupView.centerYAnchor),
+            
             
             // Botões de Ação
             actionButtonsContainerView.topAnchor.constraint(equalTo: participantsView.bottomAnchor, constant: 32),
