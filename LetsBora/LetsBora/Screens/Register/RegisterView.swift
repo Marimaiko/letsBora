@@ -30,6 +30,7 @@ class RegisterView: UIView {
         return imageView
     }()
     
+    // --- Name ---
     lazy private var nameLabel: UILabel = {
         let label = UILabel()
         label.text = "Como podemos te chamar?"
@@ -43,10 +44,21 @@ class RegisterView: UIView {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.autocapitalizationType = .words
         return textField
     }()
     
-    private let emailLabel: UILabel = {
+    lazy var nameErrorLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .yellow
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.isHidden = true
+        return label
+    }()
+    
+    // --- Email ---
+    private var emailLabel: UILabel = {
         let label = UILabel()
         label.text = "Qual seu melhor email?"
         label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
@@ -55,15 +67,26 @@ class RegisterView: UIView {
         return label
     }()
     
-    lazy private var emailTextField: UITextField = {
+    lazy var emailTextField: UITextField = {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
-        textField.isSecureTextEntry = true
+        textField.keyboardType = .emailAddress
+        textField.autocapitalizationType = .none
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
     
-    private let passwordLabel: UILabel = {
+    lazy var emailErrorLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .yellow
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.isHidden = true
+        return label
+    }()
+    
+    // --- Password ---
+    private var passwordLabel: UILabel = {
         let label = UILabel()
         label.text = "Qual será sua senha?"
         label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
@@ -72,7 +95,7 @@ class RegisterView: UIView {
         return label
     }()
     
-    lazy private var passwordTextField: UITextField = {
+    lazy var passwordTextField: UITextField = {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.isSecureTextEntry = true
@@ -80,12 +103,25 @@ class RegisterView: UIView {
         return textField
     }()
     
-    lazy private var registerButton: UIButton = {
+    lazy var passwordErrorLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .yellow
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.isHidden = true
+        return label
+    }()
+        
+    // (Opcional) Se quiser "Confirmar Senha", adicionar aqui de forma similar.
+    // lazy var confirmPasswordTextField: UITextField = { ... }()
+    // lazy var confirmPasswordErrorLabel: UILabel = { ... }()
+    
+    lazy var registerButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Cadastrar", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         button.backgroundColor = .white
-        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(UIColor(hex: "#7B61FF"), for: .normal)
         button.layer.cornerRadius = 8
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(didTapRegister), for: .touchUpInside)
@@ -94,7 +130,6 @@ class RegisterView: UIView {
     
     init() {
         super.init(frame: .zero)
-        configView()
         buildView()
         setupConstraints()
     }
@@ -107,11 +142,46 @@ class RegisterView: UIView {
         delegate?.didTapRegister()
         print("clicou em registrar")
     }
+    
+    // Métodos para exibir/ocultar erros
+    func displayNameError(_ message: String?) {
+        nameErrorLabel.text = message
+        nameErrorLabel.isHidden = (message == nil)
+        nameTextField.layer.borderColor = (message == nil) ? UIColor.clear.cgColor : UIColor.yellow.cgColor
+        nameTextField.layer.borderWidth = (message == nil) ? 0 : 1
+    }
+
+    func displayEmailError(_ message: String?) {
+        emailErrorLabel.text = message
+        emailErrorLabel.isHidden = (message == nil)
+        emailTextField.layer.borderColor = (message == nil) ? UIColor.clear.cgColor : UIColor.yellow.cgColor
+        emailTextField.layer.borderWidth = (message == nil) ? 0 : 1
+    }
+
+    func displayPasswordError(_ message: String?) {
+        passwordErrorLabel.text = message
+        passwordErrorLabel.isHidden = (message == nil)
+        passwordTextField.layer.borderColor = (message == nil) ? UIColor.clear.cgColor : UIColor.yellow.cgColor
+        passwordTextField.layer.borderWidth = (message == nil) ? 0 : 1
+    }
+        
+    // Se adicionar confirmação de senha
+    // func displayConfirmPasswordError(_ message: String?) { ... }
+
+    func resetAllErrorVisuals() {
+        displayNameError(nil)
+        displayEmailError(nil)
+        displayPasswordError(nil)
+        // displayConfirmPasswordError(nil) -> Se adicionar confirmação
+    }
 }
 
 extension RegisterView {
     override func layoutSubviews() {
         super.layoutSubviews()
+        if gradientLayer.superlayer == nil {
+            configView()
+        }
         gradientLayer.frame = bounds
     }
     
@@ -123,7 +193,6 @@ extension RegisterView {
         gradientLayer.locations = [0.0, 0.98]
         gradientLayer.startPoint = CGPoint(x: 0.8, y: 0)
         gradientLayer.endPoint = CGPoint(x: 1, y: 1)
-        gradientLayer.frame = bounds
         layer.insertSublayer(gradientLayer, at: 0)
     }
     
@@ -131,12 +200,19 @@ extension RegisterView {
         addSubview(scrollView)
         
         scrollView.addSubview(logoImageView)
+        
         scrollView.addSubview(nameLabel)
         scrollView.addSubview(nameTextField)
+        scrollView.addSubview(nameErrorLabel)
+        
         scrollView.addSubview(emailLabel)
         scrollView.addSubview(emailTextField)
+        scrollView.addSubview(emailErrorLabel)
+        
         scrollView.addSubview(passwordLabel)
         scrollView.addSubview(passwordTextField)
+        scrollView.addSubview(passwordErrorLabel)
+        
         scrollView.addSubview(registerButton)
     }
     
@@ -150,32 +226,50 @@ extension RegisterView {
             logoImageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 28),
             logoImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             logoImageView.heightAnchor.constraint(equalToConstant: 120),
+            logoImageView.widthAnchor.constraint(equalToConstant: 120),
             
-            nameLabel.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 42),
+            nameLabel.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 32),
             nameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             
             nameTextField.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
             nameTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             nameTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            nameTextField.heightAnchor.constraint(equalToConstant: 36),
             
-            emailLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 24),
+            nameErrorLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 4),
+            nameErrorLabel.leadingAnchor.constraint(equalTo: nameTextField.leadingAnchor),
+            nameErrorLabel.trailingAnchor.constraint(equalTo: nameTextField.trailingAnchor),
+            
+            emailLabel.topAnchor.constraint(equalTo: nameErrorLabel.bottomAnchor, constant: 18),
             emailLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             
             emailTextField.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 8),
             emailTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             emailTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            emailTextField.heightAnchor.constraint(equalToConstant: 36),
             
-            passwordLabel.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 24),
+            emailErrorLabel.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 4),
+            emailErrorLabel.leadingAnchor.constraint(equalTo: emailTextField.leadingAnchor),
+            emailErrorLabel.trailingAnchor.constraint(equalTo: emailTextField.trailingAnchor),
+            
+            passwordLabel.topAnchor.constraint(equalTo: emailErrorLabel.bottomAnchor, constant: 18),
             passwordLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             
             passwordTextField.topAnchor.constraint(equalTo: passwordLabel.bottomAnchor, constant: 8),
             passwordTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             passwordTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            passwordTextField.heightAnchor.constraint(equalToConstant: 36),
             
-            registerButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 48),
+            passwordErrorLabel.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 4),
+            passwordErrorLabel.leadingAnchor.constraint(equalTo: passwordTextField.leadingAnchor),
+            passwordErrorLabel.trailingAnchor.constraint(equalTo: passwordTextField.trailingAnchor),
+                        
+            
+            registerButton.topAnchor.constraint(equalTo: passwordErrorLabel.bottomAnchor, constant: 32),
             registerButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             registerButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
-            registerButton.heightAnchor.constraint(equalToConstant: 40),
+            registerButton.heightAnchor.constraint(equalToConstant: 44),
+            registerButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -24)
         ])
     }
 }
