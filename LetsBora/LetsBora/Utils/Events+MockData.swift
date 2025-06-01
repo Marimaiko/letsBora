@@ -16,6 +16,7 @@ extension MockData {
         visibility: "Public",
         date: "25 Mar",
         location: "Arena Show - São Paulo, SP",
+        description: "Festival de Verão 2025",
         participants: [
             .init(name: "John"),
             .init(name: "Julia"),
@@ -32,6 +33,7 @@ extension MockData {
         visibility: "Public",
         date: "30 Ago",
         location: "Kukukaya - Uberlândia, MG",
+        description: "Show dos Casca de Bala",
         participants: [
             .init(name: "Carlos"),
             .init(name: "Lúcia")
@@ -46,6 +48,7 @@ extension MockData {
         visibility: "Public",
         date: "30 Abr",
         location: "Praia do Futuro - Fortaleza, CE",
+        description: "Vôlei de Praia",
         participants: [
             .init(name: "Ana"),
             .init(name: "Bruno"),
@@ -69,6 +72,7 @@ extension MockData {
             visibility: "Public",
             date: "25 Mar",
             location: "Praia do Futuro - Fortaleza, CE",
+            description: "Vôlei de Praia",
             participants: [
                 .init(name: "Ana"),
                 .init(name: "Bruno"),
@@ -91,6 +95,7 @@ extension MockData {
             visibility: "Public",
             date: "25 Mar",
             location: "Arena Show - São Paulo, SP",
+            description: "Festival de Verão 2025",
             participants: [
                 .init(name: "John"),
                 .init(name: "Julia"),
@@ -106,6 +111,7 @@ extension MockData {
             visibility: "Public",
             date: "30 Ago",
             location: "Kukukaya - Uberlândia, MG",
+            description: "Show dos Casca de Bala",
             participants: [
                 .init(name: "Carlos"),
                 .init(name: "Lúcia")

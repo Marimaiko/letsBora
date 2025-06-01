@@ -15,6 +15,8 @@ struct Event:Identifiable {
     var visibility: String?
     var date: String
     var location: String
+    var description: String?
+    var totalCost: String?
     var participants: [User]?
-    var owner: User
+    var owner: User?    //opcional por enquanto, até configurar a persistência de dados
 }
