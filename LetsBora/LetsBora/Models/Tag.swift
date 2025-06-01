@@ -28,6 +28,7 @@ struct Tag: Identifiable {
         self.color = color
         self.bgColor = bgColor
     }
+    
     init?(from data: [String: Any]) {
         guard let id = data[TagKeys.id] as? String,
               let title = data[TagKeys.title] as? String,
@@ -41,5 +42,14 @@ struct Tag: Identifiable {
         self.bgColor  = bgColorHex
     }
     
+    var toDict: [String: Any] {
+        let dict: [String: Any] = [
+            TagKeys.id: id,
+            TagKeys.title: title,
+            TagKeys.colorHex: color,
+            TagKeys.bgColorHex: bgColor,
+        ]
+        return dict
+    }
     
 }

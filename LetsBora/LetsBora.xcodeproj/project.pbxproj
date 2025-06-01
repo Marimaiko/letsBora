@@ -49,6 +49,8 @@
 		0935AA0F2DC54758004B24A2 /* MyEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0935AA0C2DC54758004B24A2 /* MyEventsView.swift */; };
 		0935AA102DC54758004B24A2 /* MyEventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0935AA0D2DC54758004B24A2 /* MyEventsViewController.swift */; };
 		0938AD5D2DEC02E400DB4169 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0938AD5C2DEC02DD00DB4169 /* UIColor+Extension.swift */; };
+		0938AD622DEC069100DB4169 /* TagRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0938AD612DEC068C00DB4169 /* TagRepository.swift */; };
+		0938AD662DEC077D00DB4169 /* FirestoreTagRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0938AD652DEC077D00DB4169 /* FirestoreTagRepository.swift */; };
 		0951EF942DEA35C300668494 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0951EF932DEA35BE00668494 /* ProfileViewModel.swift */; };
 		0951EF962DEAB73000668494 /* ForgetPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0951EF952DEAB72000668494 /* ForgetPasswordViewModel.swift */; };
 		099A927D2DC5034A00415196 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A927C2DC5034A00415196 /* MockData.swift */; };
@@ -152,6 +154,8 @@
 		0935AA0C2DC54758004B24A2 /* MyEventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEventsView.swift; sourceTree = "<group>"; };
 		0935AA0D2DC54758004B24A2 /* MyEventsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEventsViewController.swift; sourceTree = "<group>"; };
 		0938AD5C2DEC02DD00DB4169 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		0938AD612DEC068C00DB4169 /* TagRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagRepository.swift; sourceTree = "<group>"; };
+		0938AD652DEC077D00DB4169 /* FirestoreTagRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreTagRepository.swift; sourceTree = "<group>"; };
 		0951EF932DEA35BE00668494 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		0951EF952DEAB72000668494 /* ForgetPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordViewModel.swift; sourceTree = "<group>"; };
 		099A927C2DC5034A00415196 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
@@ -350,6 +354,15 @@
 			path = MyEvents;
 			sourceTree = "<group>";
 		};
+		0938AD5E2DEC065700DB4169 /* Tag */ = {
+			isa = PBXGroup;
+			children = (
+				0938AD652DEC077D00DB4169 /* FirestoreTagRepository.swift */,
+				0938AD612DEC068C00DB4169 /* TagRepository.swift */,
+			);
+			path = Tag;
+			sourceTree = "<group>";
+		};
 		099A92802DC50A7500415196 /* Register */ = {
 			isa = PBXGroup;
 			children = (
@@ -419,6 +432,7 @@
 		09EAF1512DDFFC5D00D4EE42 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				0938AD5E2DEC065700DB4169 /* Tag */,
 				092AABA92DE7623500CAC738 /* Auth */,
 				09B02A082DE13A81004654F0 /* Event */,
 				09EAF1522DDFFC8B00D4EE42 /* User */,
@@ -694,6 +708,7 @@
 				09B02A0A2DE13AA1004654F0 /* EventRepository.swift in Sources */,
 				53126CF92DE292100020E9C2 /* UserRepository.swift in Sources */,
 				09C2FCF52DE8A7CB00FD6BD2 /* LoginViewModel.swift in Sources */,
+				0938AD662DEC077D00DB4169 /* FirestoreTagRepository.swift in Sources */,
 				09C2FCFA2DE8B9FC00FD6BD2 /* FirebaseError.swift in Sources */,
 				09F557852DA9F86000D1D1A7 /* UIViewController+Extension.swift in Sources */,
 				09B2009E2DC04EA800A26EA2 /* CreateEventViewController.swift in Sources */,
@@ -726,6 +741,7 @@
 				09CE52892DC19B35008D8022 /* EventDetailsViewController.swift in Sources */,
 				09CE528A2DC19B35008D8022 /* EventDetailsView.swift in Sources */,
 				092AABAD2DE763F000CAC738 /* FirebaseAuthRepository.swift in Sources */,
+				0938AD622DEC069100DB4169 /* TagRepository.swift in Sources */,
 				09F557952DA9F86000D1D1A7 /* HomeViewController.swift in Sources */,
 				09F557962DA9F86000D1D1A7 /* SearchView.swift in Sources */,
 				368D35B62DC3E5760050FF68 /* ProfileViewController.swift in Sources */,
