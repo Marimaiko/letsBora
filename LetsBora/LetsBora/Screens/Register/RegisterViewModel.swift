@@ -52,11 +52,12 @@ class RegisterViewModel {
                 domain: UserDomain.email.rawValue
             )
             
-            await saveUser(user: newUser)
+            try await saveUser(user: newUser)
             
             
         } catch {
             print("Error signing up user: \(error.localizedDescription)")
+            throw error
         }
     }
     func fetchUsers() async {

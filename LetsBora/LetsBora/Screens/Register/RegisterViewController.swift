@@ -10,9 +10,12 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class RegisterViewController: UIViewController, RegisterViewDelegate {
-    
     var registerView: RegisterView?
     var viewModel: RegisterViewModel?
+    lazy var alert: AlertController = {
+        let alert = AlertController(controller: self)
+        return alert
+    }()
     
     private var screen: RegisterView? {
         return self.view as? RegisterView
@@ -21,40 +24,17 @@ class RegisterViewController: UIViewController, RegisterViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(
-            false, animated: animated)
+            true, animated: animated)
     }
     
     override func loadView() {
         viewModel = RegisterViewModel()
         registerView = RegisterView()
-        registerView?.delegate = self
+        registerView?.delegate(self)
         self.view = registerView
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        let appearance = UINavigationBarAppearance()
-        
-        // Apply to both standard and scroll edge appearances
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        
-        // Optionally also compact appearance
-        navigationController?.navigationBar.compactAppearance = appearance
-
-        // Set the title and button
-        title = "Registrar-se"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: UIImage(systemName: "chevron.left"),
-            style: .plain,
-            target: self,
-            action: #selector(backButtonTapped)
-        )
-        
-    }
-    
-    
-    @objc func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
     }
     
     // Função helper para validar email
@@ -119,13 +99,21 @@ class RegisterViewController: UIViewController, RegisterViewDelegate {
             return nil
         }
     }
-    
+    private func changeButtonState(to state: Bool) {
+        screen?.registerButton.isEnabled = state
+        screen?.registerButton.alpha = state ? 1.0 : 0.5
+    }
+    private func navigateBack() {
+        navigationController?.popViewController(animated: true)
+    }
+    func didTapButtonBack() {
+        navigateBack()
+    }
     func didTapRegister() {
         if let validUser = validateInputs() {
             print("Validação de UI bem-sucedida. Tentando registrar usuário: \(validUser.name)")
             // Desabilitar o botão de registro para evitar múltiplos cliques
-            screen?.registerButton.isEnabled = false
-            screen?.registerButton.alpha = 0.5 // Feedback visual
+            changeButtonState(to: false)
             
             Task {
                 do {
@@ -134,30 +122,30 @@ class RegisterViewController: UIViewController, RegisterViewDelegate {
                     
                     // Ação de Sucesso (executar na thread principal)
                     await MainActor.run {
-                        screen?.registerButton.isEnabled = true // Reabilitar botão
-                        screen?.registerButton.alpha = 1.0
+                        changeButtonState(to: true)
                         
-                        let alert = UIAlertController(title: "Registro Concluído", message: "Sua conta foi criada com sucesso! Por favor, faça o login.", preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
-                            // Navegar para a tela de Login ou pop este controller
-                            self.navigationController?.popViewController(animated: true)
-                            // Ou, se quiser ir para a raiz (ex: tela de login se for a raiz):
-                            // self.navigationController?.popToRootViewController(animated: true)
-                        }))
-                        self.present(alert, animated: true)
+                        alert.showAlert(
+                            title: "Registro Concluído",
+                            message: "Sua conta foi criada com sucesso! Por favor, faça o login."
+                        ){
+                            self.navigateBack()
+                        }
+                        
                     }
                     
                 } catch {
-                    print("Erro durante o processo de signUp no ViewController: \(error.localizedDescription)")
+                    let message = error as? LocalizedError
+                    print("Erro durante o processo de signUp no ViewController: \(message?.errorDescription ?? error.localizedDescription)")
+                    
                     // Ação de Erro (executar na thread principal)
                     await MainActor.run {
-                        screen?.registerButton.isEnabled = true // Reabilitar botão
-                        screen?.registerButton.alpha = 1.0
-                        
+                        changeButtonState(to: true)
                         // Mostrar um alerta de erro para o usuário
-                        let alert = UIAlertController(title: "Erro de Registro", message: error.localizedDescription, preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                        self.present(alert, animated: true)
+                        alert.showAlert(
+                            title: "Erro de Registro",
+                            message: message?.errorDescription ??
+                            "Falha no registro, tente novamente mais tarde"
+                        )
                     }
                 }
             }
