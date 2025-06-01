@@ -12,30 +12,42 @@ class LoginViewController: UIViewController {
     private var loginScreen: LoginView? {
         return view as? LoginView
     }
+    private var viewModel: LoginViewModel?
+    
+    private lazy var alert: AlertController = {
+        let alert = AlertController(controller: self)
+        return alert
+    }()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
     override func loadView() {
         let loginView = LoginView()
-        loginView.delegate = self
         self.view = loginView
     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        if let _ = Utils.getLoggedInUser() {
+            navigateToHome()
+        }
+        loginScreen?.delegate(self)
+        viewModel = LoginViewModel(loginViewController:self)
+    }
+    
+    
     
     private func isValidEmail(_ email: String) -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
         let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
         return emailPred.evaluate(with: email)
     }
-        
-    private func performValidation() -> Bool {
-        guard let screen = loginScreen else { return false }
+    
+    private func performValidation() ->AuthUser? {
+        guard let screen = loginScreen else { return nil }
         
         screen.resetErrorMessages() // Limpa erros anteriores
         var isValid = true
@@ -60,29 +72,64 @@ class LoginViewController: UIViewController {
             isValid = false
         }
         
-        return isValid
+        if (isValid){
+            return AuthUser(email: email, password: password)
+        }
+        
+        return nil
     }
 }
 extension LoginViewController: LoginViewDelegate {
-    func didTapLoginButton() {
-        if performValidation() {
-            print("Validação de login bem-sucedida!")
-            // Lógica de login real (ex: chamada de API) iria aqui.
-            // Se a chamada de API for bem-sucedida, então navegue.
-            
-            // Por enquanto, navegação direta após validação:
-            if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate,
-               let window = sceneDelegate.window {
-                window.rootViewController = TabBarController()
-                window.makeKeyAndVisible()
+    func didTapGoogleLoginButton() {
+        Task { @MainActor in
+            do {
+                try await viewModel?.signInGoogle()
+                navigateToHome()
+            } catch {
+                print("Erro ao fazer login: \(error)")
             }
-        } else {
-            print("Validação de login falhou.")
-            // Opcional: Mostrar um alerta geral se houver muitos erros ou se preferir
-            // let alert = UIAlertController(title: "Erro de Login", message: "Por favor, corrija os campos destacados.", preferredStyle: .alert)
-            // alert.addAction(UIAlertAction(title: "OK", style: .default))
-            // present(alert, animated: true)
         }
+    }
+    
+    private func navigateToHome() {
+        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate,
+           let window = sceneDelegate.window {
+            window.rootViewController = TabBarController()
+            window.makeKeyAndVisible()
+        }
+    }
+    
+    func didTapLoginButton() {
+        guard let authToLogin = performValidation() else {
+            alert.showAlert(
+                title: "Erro de Login",
+                message: "Por favor, corrija os campos destacados."
+            )
+            return
+        }
+        guard let email = authToLogin.email,
+              let password = authToLogin.password
+        else {
+            return
+        }
+        
+        Task {
+            do {
+                try await viewModel?.login(
+                    email: email,
+                    password: password
+                )
+                navigateToHome()
+            } catch {
+                let message = error as? LocalizedError
+                alert.showAlert(
+                    title: "Erro",
+                    message: message?.errorDescription ?? "Erro ao fazer login. Por favor, tente novamente mais tarde."
+                )
+                print("Login Failed: \(error)")
+            }
+        }
+        
     }
     
     func didTapCreateAccount() {

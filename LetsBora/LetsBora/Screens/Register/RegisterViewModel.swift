@@ -34,26 +34,31 @@ class RegisterViewModel {
     func signUp(user: User) async throws {
         guard let email = user.email,
               let password = user.password else {
-            print("Email and password are required for signUp in ViewModel.")
-            
-            throw NSError(domain: "RegisterViewModel", code: 1, userInfo: [NSLocalizedDescriptionKey: "Email e senha são obrigatórios."])
+            print("Email and password are required.")
+            return
         }
-        
-        let authUserResponse = try await authRepository.signUp(
-            .init(email: email, password: password)
-        )
-        print("User authenticated successfully via Auth: \(email)")
-        
-        let newUser: User = .init(
-            id: authUserResponse.uid, // ID da autenticação
-            name: user.name,          // Nome vindo da UI
-            email: email,             // Email vindo da UI
-            photo: user.photo         // Foto (se houver) vinda da UI
-        )
-        
-        try await saveUser(user: newUser)
+        do {
+            let authUserResponse = try await authRepository.signUp(
+                .init(email: email, password: password)
+            )
+            print("User signed up successfully: \(email)")
+            
+            // create user in database
+            let newUser: User = .init(
+                id: authUserResponse.uid,
+                name: user.name,
+                email: email,
+                photo: user.photo ?? nil,
+                domain: UserDomain.email.rawValue
+            )
+            
+            await saveUser(user: newUser)
+            
+            
+        } catch {
+            print("Error signing up user: \(error.localizedDescription)")
+        }
     }
-    
     func fetchUsers() async {
         do {
             self.users = try await userRepository.retrieveAll()

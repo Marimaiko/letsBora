@@ -6,8 +6,13 @@
 //
 
 struct AuthUser {
-    var email: String
-    var password: String
+    // email auth
+    var email: String?
+    var password: String?
+    
+    // googleAuth
+    var googleIDToken: String?
+    var googleAccessToken: String?
 }
 
 struct AuthUserResponse: Codable {

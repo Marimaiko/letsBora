@@ -84,4 +84,25 @@ actor FirestoreUserRepository : UserRepository {
             throw UserRepositoryError.deleteUserFailed
         }
     }
+    func retrieveEqual(_ query: UserQuery) async throws -> [User] {
+        var users: [User] = []
+        do {
+           let querySnapshot =  try await collection
+                .whereField(
+                    query.key,
+                    isEqualTo: query.value
+                ).getDocuments()
+            for doc in querySnapshot.documents {
+                guard let user = User(from: doc.data()) else {
+                    print("Failed to parse user from document: \(doc.documentID)")
+                    continue
+                }
+                users.append(user)
+            }
+        } catch {
+            throw UserRepositoryError.userNotFound
+        }
+        
+        return users
+    }
 }

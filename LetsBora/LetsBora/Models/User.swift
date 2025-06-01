@@ -5,6 +5,13 @@
 //  Created by Davi Paiva on 07/04/25.
 //
 import Foundation
+
+enum UserDomain: String, Codable {
+    case google = "google"
+    case email = "email"
+    case facebook = "facebook"
+}
+
 enum UserKeys {
     static let collectionName = "users"
     static let id = "userId"
@@ -12,6 +19,7 @@ enum UserKeys {
     static let email = "email"
     static let password = "password"
     static let photo = "photo"
+    static let domain = "domain"
     static let createdAt = "createdAt"
 }
 
@@ -21,19 +29,23 @@ struct User: Identifiable {
     var email: String?
     var password: String? // only use in mock examples
     var photo: String? // will be url after
+    var domain: String?
+
     
     init (
         id: String  = UUID().uuidString,
         name: String,
         email: String? = nil,
         password: String? = nil,
-        photo: String? = nil
+        photo: String? = nil,
+        domain: String? = nil
     ) {
         self.id = id
         self.name = name
         self.email = email
         self.password = password
         self.photo = photo
+        self.domain = domain
     }
     
     init?(from data: [String: Any]) {
@@ -54,6 +66,13 @@ struct User: Identifiable {
         if let photo = data[UserKeys.photo] as? String {
             self.photo = photo
         }
+        
+        if let domain = data[UserKeys.domain] as? String {
+            self.domain = domain
+        } else {
+            print("Failed to parse user domain")
+        }
+     
     }
     
     var toDict: [String: Any] {
@@ -68,6 +87,10 @@ struct User: Identifiable {
         if let photo = photo {
             dict[UserKeys.photo] = photo
         }
+        if let domain = domain {
+            dict[UserKeys.domain] = domain
+        }
+        
         return dict
     }
     

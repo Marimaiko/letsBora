@@ -42,4 +42,9 @@ actor InMemoryUserRepository: UserRepository {
         }
         MockData.users.remove(at: index)
     }
+    
+    func retrieveEqual(_ query: UserQuery) async throws -> [User] {
+        throw UserRepositoryError.retrieveFailed
+    }
+    
 }
