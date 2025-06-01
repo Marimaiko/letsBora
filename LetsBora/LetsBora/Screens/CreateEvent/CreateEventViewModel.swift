@@ -8,15 +8,39 @@
 class CreateEventViewModel {
     private let eventRepository: EventRepository
     private let userRepository: UserRepository
+    private let tagRepository: TagRepository
     
     private(set) var users: [User] = []
     
     init(
         eventRepository: EventRepository = InMemoryEventRepository(),
-        userRepository: UserRepository = InMemoryUserRepository()
+        userRepository: UserRepository = InMemoryUserRepository(),
+        tagRepository: TagRepository = FirestoreTagRepository()
     ) {
         self.eventRepository = eventRepository
         self.userRepository = userRepository
+        self.tagRepository = FirestoreTagRepository()
+    }
+    
+    func getTags() async -> [String] {
+        let tags =  await fetchTags()
+        
+        var titleTags: [String] = []
+        
+        for tag in tags {
+            titleTags.append(tag.title)
+        }
+        
+        return titleTags
+    }
+    
+    private func fetchTags() async -> [Tag] {
+        do {
+            return try await tagRepository.retrieveAll()
+        } catch {
+            print("Error fetching tags: \(error.localizedDescription)")
+            return []
+        }
     }
     
     func saveEvent(event:Event) async {

@@ -13,23 +13,23 @@ class CreateEventViewController: UIViewController {
     private var eventCategoryName: String?
     private var isEventPrivate: Bool = false
     
-    // Lista de categorias
-       private let availableCategories: [String] = ["Festa", "Esporte", "Reunião", "Show", "Cultural", "Curso/Workshop", "Religioso", "Outro"]
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     override func loadView() {
+        viewModel = CreateEventViewModel()
         screen = CreateEventView()
         view = screen
-        screen?.categories = availableCategories
+        Task {
+            screen?.categories = await viewModel?.getTags() ?? []
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         screen?.delegate(inject: self)
-        viewModel = CreateEventViewModel()
         view.backgroundColor = UIColor(red: 248/255, green: 248/255, blue: 248/255, alpha: 1.0)
         
         // Configurar delegate para o TextView de descrição
