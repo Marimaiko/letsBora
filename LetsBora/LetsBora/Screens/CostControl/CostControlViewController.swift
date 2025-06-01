@@ -38,9 +38,11 @@ class CostControlViewController: UIViewController {
         let modal = NewExpenseViewController()
         
         modal.onSave = { [weak self] newExpense in
-            self?.expenses.append(newExpense)
-            self?.screen?.expensesTableView.reloadData()
-            self?.screen?.expensesTableHeightConstraint?.constant = CGFloat(self?.expenses.count ?? 0) * 60
+            guard let self = self else { return }
+            
+            self.expenses.append(newExpense)
+            self.screen?.expensesTableView.reloadData()
+            self.updateTableHeights()
         }
 
         modal.modalPresentationStyle = .pageSheet

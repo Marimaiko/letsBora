@@ -126,6 +126,7 @@ extension CostControlView: ViewCode {
     
     func setConstraints() {
         expensesTableHeightConstraint = expensesTableView.heightAnchor.constraint(equalToConstant: 0)
+        expensesTableHeightConstraint?.isActive = true
         participantsTableHeightConstraint = participantsTableView.heightAnchor.constraint(equalToConstant: 0)
 
         NSLayoutConstraint.activate([
