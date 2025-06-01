@@ -63,8 +63,15 @@ actor FirebaseAuthRepository: AuthRepository {
                 uid: response.user.uid
             )
         } catch {
-            print("error in signUp \(error)")
-            throw AuthRepositoryError.signUpFailed
+            let authError = FirebaseError<FirebaseAuthErrorCode>(from: error)
+            
+            switch authError.code{
+            case FirebaseAuthErrorCode.emailAlreadyInUse:
+                throw AuthRepositoryError.signUpEmailAlreadyInUse
+            default:
+                throw AuthRepositoryError.signUpFailed
+            }
+            
         }
         return resut
     }

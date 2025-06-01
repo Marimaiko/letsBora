@@ -10,7 +10,6 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class RegisterViewController: UIViewController, RegisterViewDelegate {
-    
     var registerView: RegisterView?
     var viewModel: RegisterViewModel?
     lazy var alert: AlertController = {
@@ -25,40 +24,17 @@ class RegisterViewController: UIViewController, RegisterViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(
-            false, animated: animated)
+            true, animated: animated)
     }
     
     override func loadView() {
         viewModel = RegisterViewModel()
         registerView = RegisterView()
-        registerView?.delegate = self
+        registerView?.delegate(self)
         self.view = registerView
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        let appearance = UINavigationBarAppearance()
-        
-        // Apply to both standard and scroll edge appearances
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        
-        // Optionally also compact appearance
-        navigationController?.navigationBar.compactAppearance = appearance
-        
-        // Set the title and button
-        title = "Registrar-se"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: UIImage(systemName: "chevron.left"),
-            style: .plain,
-            target: self,
-            action: #selector(backButtonTapped)
-        )
-        
-    }
-    
-    
-    @objc func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
     }
     
     // Função helper para validar email
@@ -129,6 +105,9 @@ class RegisterViewController: UIViewController, RegisterViewDelegate {
     }
     private func navigateBack() {
         navigationController?.popViewController(animated: true)
+    }
+    func didTapButtonBack() {
+        navigateBack()
     }
     func didTapRegister() {
         if let validUser = validateInputs() {

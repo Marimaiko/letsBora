@@ -9,12 +9,17 @@ import UIKit
 
 protocol RegisterViewDelegate: AnyObject {
     func didTapRegister()
+    func didTapButtonBack()
 }
 
 class RegisterView: UIView {
     private let gradientLayer = CAGradientLayer()
     
-    weak var delegate: RegisterViewDelegate?
+    private weak var delegate: RegisterViewDelegate?
+    
+    func delegate(_ delegate: RegisterViewDelegate){
+        self.delegate = delegate
+    }
     
     lazy private var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -120,13 +125,27 @@ class RegisterView: UIView {
         let button = UIButton(type: .system)
         button.setTitle("Cadastrar", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-        button.backgroundColor = .white
-        button.setTitleColor(UIColor(hex: "#7B61FF"), for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = UIColor(hex: "#7B61FF")
         button.layer.cornerRadius = 8
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(didTapRegister), for: .touchUpInside)
         return button
     }()
+    
+    lazy var backButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Voltar", for: .normal)
+        button.backgroundColor = .white
+        button.setTitleColor(UIColor(hex: "#7B61FF"), for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        button.layer.cornerRadius = 8
+        button.clipsToBounds = true
+        button.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
+        return button
+    }()
+    
     
     init() {
         super.init(frame: .zero)
@@ -141,6 +160,10 @@ class RegisterView: UIView {
     @objc private func didTapRegister() {
         delegate?.didTapRegister()
         print("clicou em registrar")
+    }
+    
+    @objc func didTapBackButton(){
+        delegate?.didTapButtonBack()
     }
     
     // Métodos para exibir/ocultar erros
@@ -214,6 +237,7 @@ extension RegisterView {
         scrollView.addSubview(passwordErrorLabel)
         
         scrollView.addSubview(registerButton)
+        scrollView.addSubview(backButton)
     }
     
     func setupConstraints() {
@@ -269,7 +293,12 @@ extension RegisterView {
             registerButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             registerButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
             registerButton.heightAnchor.constraint(equalToConstant: 44),
-            registerButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -24)
+            
+            backButton.topAnchor.constraint(equalTo: registerButton.bottomAnchor, constant: 24),
+            backButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
+            backButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            backButton.heightAnchor.constraint(equalToConstant: 44),
+            backButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -24),
         ])
     }
 }
