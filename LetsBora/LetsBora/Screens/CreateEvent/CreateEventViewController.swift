@@ -9,7 +9,7 @@ class CreateEventViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     override func loadView() {
-        screen = CreateEventView()
+        screen = CreateEventView(mode: .create)
         view = screen
     }
     

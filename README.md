@@ -65,7 +65,3 @@ We follow the **Git Flow** branching model for feature development. For more det
   <img src="https://github.com/user-attachments/assets/3d3c5a7a-d280-43cc-9ef4-54e92fc03a4e" width="250" />
 </p>
 
----
-
-
-🔧 Feel free to explore the source code and contribute to the development!

@@ -16,6 +16,21 @@ class EventDetailsView: UIView {
     
     weak var delegate: EventDetailsViewDelegate?
     
+    // MARK: - ScrollView e ContentView principal
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        return scrollView
+    }()
+    
+    private lazy var mainStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 0 // Espaçamento entre containerHeader e contentInnerStackView
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
     // MARK: - UI Components
     private lazy var eventImageView: UIImageView = {
         let imageView = UIImageView()
@@ -25,6 +40,7 @@ class EventDetailsView: UIView {
         imageView.image = UIImage(named: "event-sample-image")
         return imageView
     }()
+    
     enum TabTag: Int {
         case chat
         case costs
@@ -36,66 +52,53 @@ class EventDetailsView: UIView {
         let stack = UIStackView()
         stack.axis = .horizontal
         stack.distribution = .fillEqually
-        stack.translatesAutoresizingMaskIntoConstraints = false
+        // translatesAutoresizingMaskIntoConstraints é tratado pela stack pai
         
-        let tabs: [(
-            title: String,
-            systemImageName: String,
-            tag: TabTag
-        )] = [
+        let tabs: [(title: String, systemImageName: String, tag: TabTag)] = [
             ("Chat", "bubble.left", .chat),
             ("Custos", "dollarsign.circle", .costs),
             ("Mapa", "map", .maps),
             ("Alertas", "bell", .alerts)
         ]
         
-        tabs.forEach { tab in
+        tabs.forEach { tabInfo in
             var config = UIButton.Configuration.plain()
-            config.title = tab.title
-            config.image = UIImage(systemName: tab.systemImageName)
+            config.title = tabInfo.title
+            config.image = UIImage(systemName: tabInfo.systemImageName)
             config.imagePlacement = .top
             config.imagePadding = 4
-            
             let button = UIButton(configuration: config)
             button.tintColor = .systemBlue
-            button.tag = tab.tag.rawValue
-            button.addTarget(
-                        self,
-                        action: #selector(barButtonTapped(_:)),
-                        for: .touchUpInside
-                     )
-            
+            button.tag = tabInfo.tag.rawValue
+            button.addTarget(self, action: #selector(barButtonTapped(_:)), for: .touchUpInside)
             stack.addArrangedSubview(button)
         }
-        
         
         return stack
     }()
     
     private lazy var containerHeaderStackView: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [
-            eventImageView,
-            tabStackView
-        ])
+        let stack = UIStackView(arrangedSubviews: [eventImageView, tabStackView])
         stack.axis = .vertical
         stack.spacing = 12
-        stack.translatesAutoresizingMaskIntoConstraints = false
         stack.backgroundColor = .white
         stack.layer.cornerRadius = 16
         stack.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         stack.layer.masksToBounds = true
+        // translatesAutoresizingMaskIntoConstraints é tratado pela stack pai
         return stack
     }()
 
     
-    private lazy var headerContainerView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 16
-        view.translatesAutoresizingMaskIntoConstraints = false
-
-        view.addSubview(containerHeaderStackView)
-        return view
+    // Stack para o conteúdo abaixo do header, com padding lateral
+    private lazy var contentInnerStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 15
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.layoutMargins = UIEdgeInsets(top: 15, left: 16, bottom: 24, right: 16)
+        return stackView
     }()
 
     
@@ -103,19 +106,18 @@ class EventDetailsView: UIView {
         let horizontalStack = UIStackView()
         horizontalStack.axis = .horizontal
         horizontalStack.spacing = 8
-        horizontalStack.alignment = .top
-        horizontalStack.translatesAutoresizingMaskIntoConstraints = false
+        horizontalStack.alignment = .center
         
         let iconImageView = UIImageView(image: UIImage(systemName: "calendar.circle"))
         iconImageView.tintColor = .black
         iconImageView.translatesAutoresizingMaskIntoConstraints = false
         iconImageView.contentMode = .scaleAspectFit
-        iconImageView.widthAnchor.constraint(equalToConstant: 32).isActive = true
-        iconImageView.heightAnchor.constraint(equalToConstant: 32).isActive = true
+        NSLayoutConstraint.activate([
+            iconImageView.widthAnchor.constraint(equalToConstant: 32),
+            iconImageView.heightAnchor.constraint(equalToConstant: 32)
+        ])
         
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        
         let fullText = "29 de março | 19:00 - 21:00"
         let attributedText = NSMutableAttributedString(
             string: fullText,
@@ -133,7 +135,6 @@ class EventDetailsView: UIView {
         
         horizontalStack.addArrangedSubview(iconImageView)
         horizontalStack.addArrangedSubview(label)
-        horizontalStack.alignment = .center
         
         return horizontalStack
     }()
@@ -142,20 +143,20 @@ class EventDetailsView: UIView {
         let horizontalStack = UIStackView()
         horizontalStack.axis = .horizontal
         horizontalStack.spacing = 8
-        horizontalStack.alignment = .top
-        horizontalStack.translatesAutoresizingMaskIntoConstraints = false
+        horizontalStack.alignment = .center
 
         let iconImageView = UIImageView(image: UIImage(systemName: "map.circle"))
         iconImageView.tintColor = .black
         iconImageView.translatesAutoresizingMaskIntoConstraints = false
         iconImageView.contentMode = .scaleAspectFit
-        iconImageView.widthAnchor.constraint(equalToConstant: 32).isActive = true
-        iconImageView.heightAnchor.constraint(equalToConstant: 32).isActive = true
+        NSLayoutConstraint.activate([
+             iconImageView.widthAnchor.constraint(equalToConstant: 32),
+             iconImageView.heightAnchor.constraint(equalToConstant: 32)
+         ])
 
         let verticalStack = UIStackView()
         verticalStack.axis = .vertical
         verticalStack.spacing = 4
-        verticalStack.translatesAutoresizingMaskIntoConstraints = false
 
         let titleLabel = UILabel()
         titleLabel.text = "Casa do Jorge"
@@ -171,7 +172,6 @@ class EventDetailsView: UIView {
 
         horizontalStack.addArrangedSubview(iconImageView)
         horizontalStack.addArrangedSubview(verticalStack)
-        horizontalStack.alignment = .center
 
         return horizontalStack
     }()
@@ -181,19 +181,15 @@ class EventDetailsView: UIView {
         let verticalStack = UIStackView()
         verticalStack.axis = .vertical
         verticalStack.spacing = 8
-        verticalStack.translatesAutoresizingMaskIntoConstraints = false
         
-        // Título
         let titleLabel = UILabel()
         titleLabel.text = "Participantes (25)"
         titleLabel.font = .systemFont(ofSize: 16, weight: .medium)
         
-        // Stack só para os ícones de pessoas (com sobreposição)
         let iconsStack = UIStackView()
         iconsStack.axis = .horizontal
         iconsStack.spacing = -12
         iconsStack.alignment = .center
-        iconsStack.translatesAutoresizingMaskIntoConstraints = false
         
         for _ in 0..<3 {
             let imageView = UIImageView()
@@ -211,27 +207,22 @@ class EventDetailsView: UIView {
             iconsStack.addArrangedSubview(imageView)
         }
         
-        // Stack horizontal principal para ícones + label "+22"
         let horizontalStack = UIStackView()
         horizontalStack.axis = .horizontal
         horizontalStack.spacing = 8
         horizontalStack.alignment = .center
-        horizontalStack.translatesAutoresizingMaskIntoConstraints = false
         
-        // Label "+22"
         let moreLabel: UILabel = {
             let label = UILabel()
             label.text = "+22"
             label.font = .systemFont(ofSize: 14, weight: .medium)
             label.textColor = .darkGray
-            label.translatesAutoresizingMaskIntoConstraints = false
             return label
         }()
 
         horizontalStack.addArrangedSubview(iconsStack)
         horizontalStack.addArrangedSubview(moreLabel)
 
-        // Montagem do vertical stack
         verticalStack.addArrangedSubview(titleLabel)
         verticalStack.addArrangedSubview(horizontalStack)
 
@@ -242,7 +233,6 @@ class EventDetailsView: UIView {
         let label = UILabel()
         label.text = "Descrição"
         label.font = .systemFont(ofSize: 16, weight: .medium)
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -252,7 +242,6 @@ class EventDetailsView: UIView {
         label.numberOfLines = 0
         label.font = .systemFont(ofSize: 14)
         label.textColor = .gray
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -260,7 +249,6 @@ class EventDetailsView: UIView {
         let stack = UIStackView()
         stack.axis = .horizontal
         stack.distribution = .fill
-        stack.translatesAutoresizingMaskIntoConstraints = false
         
         let leftLabel: UILabel = {
             let lbl = UILabel()
@@ -292,6 +280,9 @@ class EventDetailsView: UIView {
         btn.layer.cornerRadius = 8
         btn.titleLabel?.font = .systemFont(ofSize: 16, weight: .semibold)
         btn.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            btn.heightAnchor.constraint(equalToConstant: 48)
+        ])
         return btn
     }()
     
@@ -317,57 +308,63 @@ class EventDetailsView: UIView {
     }
     
     private func setHierarchy() {
-        addSubview(headerContainerView)
+        addSubview(scrollView)
+        scrollView.addSubview(mainStackView)
 
-        addSubview(dateTimeLabel)
-        addSubview(locationStack)
-        addSubview(participantsStack)
-        addSubview(descriptionLabel)
-        addSubview(descriptionText)
-        addSubview(costStack)
-        addSubview(confirmButton)
-    }
+       // Adiciona o header à stack principal
+       mainStackView.addArrangedSubview(containerHeaderStackView)
+       
+       // Adiciona a stack de conteúdo (com padding) à stack principal
+       mainStackView.addArrangedSubview(contentInnerStackView)
+
+       // Adiciona elementos à stack de conteúdo interna (que tem padding)
+       contentInnerStackView.addArrangedSubview(dateTimeLabel)
+       contentInnerStackView.setCustomSpacing(15, after: dateTimeLabel)
+       
+       contentInnerStackView.addArrangedSubview(locationStack)
+       contentInnerStackView.setCustomSpacing(25, after: locationStack)
+
+       contentInnerStackView.addArrangedSubview(participantsStack)
+       contentInnerStackView.setCustomSpacing(25, after: participantsStack)
+
+       contentInnerStackView.addArrangedSubview(descriptionLabel)
+       contentInnerStackView.setCustomSpacing(8, after: descriptionLabel)
+
+       contentInnerStackView.addArrangedSubview(descriptionText)
+       contentInnerStackView.setCustomSpacing(15, after: descriptionText)
+
+       contentInnerStackView.addArrangedSubview(costStack)
+       contentInnerStackView.setCustomSpacing(24, after: costStack)
+
+       contentInnerStackView.addArrangedSubview(confirmButton)
+   }
     
     private func setConstraints() {
         NSLayoutConstraint.activate([
-            headerContainerView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-              headerContainerView.leadingAnchor.constraint(equalTo: leadingAnchor),
-              headerContainerView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            
-            containerHeaderStackView.topAnchor.constraint(equalTo: headerContainerView.topAnchor),
-               containerHeaderStackView.leadingAnchor.constraint(equalTo: headerContainerView.leadingAnchor),
-               containerHeaderStackView.trailingAnchor.constraint(equalTo: headerContainerView.trailingAnchor),
-            containerHeaderStackView.bottomAnchor.constraint(equalTo: headerContainerView.bottomAnchor),
+            // ScrollView
+            scrollView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
 
-            eventImageView.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 0.6),
+            // MainStackView (dentro da ScrollView)
+            mainStackView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
+            mainStackView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
+            mainStackView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
+            mainStackView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
+            mainStackView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
+
+            // Componentes dentro do containerHeaderStackView
+            eventImageView.heightAnchor.constraint(equalTo: eventImageView.widthAnchor, multiplier: 0.6),
             
-            dateTimeLabel.topAnchor.constraint(equalTo: tabStackView.bottomAnchor, constant: 15),
-            dateTimeLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            dateTimeLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            // containerHeaderStackView já está na mainStackView, que tem widthAnchor = scrollView.frameLayoutGuide.widthAnchor.
+            // Isso fará com que o header ocupe toda a largura.
+
+            // contentInnerStackView também está na mainStackView e ocupará toda a largura.
+            // O padding é aplicado internamente por contentInnerStackView.layoutMargins.
             
-            locationStack.topAnchor.constraint(equalTo: dateTimeLabel.bottomAnchor, constant: 15),
-            locationStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            locationStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            
-            participantsStack.topAnchor.constraint(equalTo: locationStack.bottomAnchor, constant: 25),
-            participantsStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            
-            descriptionLabel.topAnchor.constraint(equalTo: participantsStack.bottomAnchor, constant: 25),
-            descriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            descriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            
-            descriptionText.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 8),
-            descriptionText.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            descriptionText.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            
-            costStack.topAnchor.constraint(equalTo: descriptionText.bottomAnchor, constant: 15),
-            costStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            costStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            
-            confirmButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
-            confirmButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            confirmButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
-            confirmButton.heightAnchor.constraint(equalToConstant: 48)
+            // O confirmButton já tem sua altura definida na inicialização.
+            // Sua largura será gerenciada pela contentInnerStackView (que tem padding).
         ])
     }
 }
