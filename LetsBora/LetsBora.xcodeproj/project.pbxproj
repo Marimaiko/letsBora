@@ -48,6 +48,7 @@
 		0935AA0B2DC53D98004B24A2 /* CostControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0935AA072DC53D98004B24A2 /* CostControlView.swift */; };
 		0935AA0F2DC54758004B24A2 /* MyEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0935AA0C2DC54758004B24A2 /* MyEventsView.swift */; };
 		0935AA102DC54758004B24A2 /* MyEventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0935AA0D2DC54758004B24A2 /* MyEventsViewController.swift */; };
+		0938AD5D2DEC02E400DB4169 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0938AD5C2DEC02DD00DB4169 /* UIColor+Extension.swift */; };
 		0951EF942DEA35C300668494 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0951EF932DEA35BE00668494 /* ProfileViewModel.swift */; };
 		0951EF962DEAB73000668494 /* ForgetPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0951EF952DEAB72000668494 /* ForgetPasswordViewModel.swift */; };
 		099A927D2DC5034A00415196 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A927C2DC5034A00415196 /* MockData.swift */; };
@@ -150,6 +151,7 @@
 		0935AA082DC53D98004B24A2 /* CostControlViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CostControlViewController.swift; sourceTree = "<group>"; };
 		0935AA0C2DC54758004B24A2 /* MyEventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEventsView.swift; sourceTree = "<group>"; };
 		0935AA0D2DC54758004B24A2 /* MyEventsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEventsViewController.swift; sourceTree = "<group>"; };
+		0938AD5C2DEC02DD00DB4169 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		0951EF932DEA35BE00668494 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		0951EF952DEAB72000668494 /* ForgetPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordViewModel.swift; sourceTree = "<group>"; };
 		099A927C2DC5034A00415196 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
@@ -437,6 +439,7 @@
 		09F557672DA9F86000D1D1A7 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				0938AD5C2DEC02DD00DB4169 /* UIColor+Extension.swift */,
 				09EEC3D92DE8FF5A00DA8DB3 /* Utils+User.swift */,
 				091E48F82DC4208300F4C44D /* Extension+Constraints.swift */,
 				09F557632DA9F86000D1D1A7 /* UIView+Constraints.swift */,
@@ -730,6 +733,7 @@
 				092AABA82DE7622500CAC738 /* AuthRepository.swift in Sources */,
 				09F557982DA9F86000D1D1A7 /* ViewController.swift in Sources */,
 				09F5579A2DA9F86000D1D1A7 /* HomeView.swift in Sources */,
+				0938AD5D2DEC02E400DB4169 /* UIColor+Extension.swift in Sources */,
 				099A92812DC50A7500415196 /* RegisterViewController.swift in Sources */,
 				09EEC3E32DE9F31C00DA8DB3 /* FacebookAuthRepository.swift in Sources */,
 				099A92822DC50A7500415196 /* RegisterView.swift in Sources */,
