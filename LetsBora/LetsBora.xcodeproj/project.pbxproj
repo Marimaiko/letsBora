@@ -73,6 +73,7 @@
 		09C2FCFF2DE8BD0800FD6BD2 /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C2FCFE2DE8BD0300FD6BD2 /* AlertController.swift */; };
 		09CE52892DC19B35008D8022 /* EventDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CE52872DC19B35008D8022 /* EventDetailsViewController.swift */; };
 		09CE528A2DC19B35008D8022 /* EventDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CE52862DC19B35008D8022 /* EventDetailsView.swift */; };
+		09D6AB342DEE224D00ADD487 /* FirestoreEventRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D6AB332DEE224400ADD487 /* FirestoreEventRepository.swift */; };
 		09E33ED02DECBACD00EF2F50 /* GuestModalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E33ECF2DECBACD00EF2F50 /* GuestModalTableViewCell.swift */; };
 		09E33ED22DECBCEA00EF2F50 /* CheckBoxButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E33ED12DECBCE400EF2F50 /* CheckBoxButton.swift */; };
 		09EAF1502DDFE0C300D4EE42 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 09EAF14F2DDFE0C300D4EE42 /* FirebaseAuth */; };
@@ -180,6 +181,7 @@
 		09C2FCFE2DE8BD0300FD6BD2 /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
 		09CE52862DC19B35008D8022 /* EventDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsView.swift; sourceTree = "<group>"; };
 		09CE52872DC19B35008D8022 /* EventDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsViewController.swift; sourceTree = "<group>"; };
+		09D6AB332DEE224400ADD487 /* FirestoreEventRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreEventRepository.swift; sourceTree = "<group>"; };
 		09E33ECF2DECBACD00EF2F50 /* GuestModalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestModalTableViewCell.swift; sourceTree = "<group>"; };
 		09E33ED12DECBCE400EF2F50 /* CheckBoxButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxButton.swift; sourceTree = "<group>"; };
 		09EEC3D72DE8FDC600DA8DB3 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
@@ -324,7 +326,6 @@
 		0935A9EF2DC53C5B004B24A2 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				09E33ED12DECBCE400EF2F50 /* CheckBoxButton.swift */,
 				0935A9D42DC53C5B004B24A2 /* Avatar */,
 				0935A9DB2DC53C5B004B24A2 /* Chat */,
 				0935A9DE2DC53C5B004B24A2 /* EventCard */,
@@ -341,6 +342,7 @@
 				0935A9EC2DC53C5B004B24A2 /* QuantityAndTitleView.swift */,
 				0935A9ED2DC53C5B004B24A2 /* ReusableLabel.swift */,
 				0935A9EE2DC53C5B004B24A2 /* SettingButtonView.swift */,
+				09E33ED12DECBCE400EF2F50 /* CheckBoxButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -402,6 +404,7 @@
 		09B02A082DE13A81004654F0 /* Event */ = {
 			isa = PBXGroup;
 			children = (
+				09D6AB332DEE224400ADD487 /* FirestoreEventRepository.swift */,
 				09B02A0B2DE13FD4004654F0 /* InMemoryEventRepository.swift */,
 				09B02A092DE13A9B004654F0 /* EventRepository.swift */,
 			);
@@ -742,6 +745,7 @@
 				09F557852DA9F86000D1D1A7 /* UIViewController+Extension.swift in Sources */,
 				09B2009E2DC04EA800A26EA2 /* CreateEventViewController.swift in Sources */,
 				092728EE2DC2BB06000D744C /* Tag+MockData.swift in Sources */,
+				09D6AB342DEE224D00ADD487 /* FirestoreEventRepository.swift in Sources */,
 				365490AF2DDFA12600328E2A /* ForgetPasswordViewController.swift in Sources */,
 				09B2009F2DC04EA800A26EA2 /* CreateEventView.swift in Sources */,
 				09EEC3DA2DE8FF6900DA8DB3 /* Utils+User.swift in Sources */,

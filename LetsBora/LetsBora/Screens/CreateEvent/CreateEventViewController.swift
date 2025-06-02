@@ -136,39 +136,37 @@ class CreateEventViewController: UIViewController {
     }
     
     private func proceedWithEventCreation() {
-        // Aqui você tem todos os dados validados:
-        // self.eventName
-        // self.eventDescription
-        // self.eventDateTime
-        // self.eventLocationName
-        // self.eventCategoryName
-        // self.isEventPrivate
-        
-        print("Validação OK! Dados para criar evento:")
-        print("Nome: \(self.eventName ?? "N/A")")
-        print("Descrição: \(self.eventDescription ?? "N/A")")
-        if let date = self.eventDateTime {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "dd/MM/yyyy HH:mm"
-            print("Data/Hora: \(formatter.string(from: date))")
-        }
-        print("Local: \(self.eventLocationName ?? "N/A")")
-        print("Categoria: \(self.eventCategoryName ?? "N/A")")
-        print("Privado: \(self.isEventPrivate)")
-        
-        // Chame sua API, salve no CoreData, etc.
-        
+        // remove optionality
         guard let titleEvent = self.eventName else {return}
-        if let dateEvent = self.eventDateTime {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "dd/MM/yyyy HH:mm"
-            print("Data/Hora: \(formatter.string(from: dateEvent))")
-        } else {return}
+        
+        guard let dateEvent = self.eventDateTime else { return }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM/yyyy HH:mm"
+        let dateString = formatter.string(from: dateEvent)
+        
         guard let description = self.eventDescription else {return}
         guard let locationName = self.eventLocationName else {return}
-        guard let categoryName = self.eventCategoryName else {return}
+        guard let _ = self.eventCategoryName else {return} // should  be tag struct
         
-        alert.showAlert(title: "Sucesso!", message: "Evento pronto para ser criado/publicado!")
+        // create event to add
+        let eventToCreate = Event(
+            title: titleEvent,
+            // tag: eventCategoryName, // should be a tag instead string
+            visibility: isEventPrivate ? "Privado": "Público",
+            date: dateString,
+            location: locationName,
+            description: description,
+            participants: enventGestNames,
+            owner: Utils.getLoggedInUser()
+        )
+        Task {
+            do {
+                try await viewModel?.saveEvent(event: eventToCreate)
+                alert.showAlert(title: "Sucesso!", message: "Evento pronto para ser criado/publicado!")
+            } catch {
+                alert.showAlert(title: "Erro", message: "Falha ao salvar o evento: \(error.localizedDescription)")
+            }
+        }
     }
     
     private func saveDraft() {

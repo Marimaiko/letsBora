@@ -6,8 +6,16 @@
 //
 
 enum EventRepositoryError: Error {
-    case eventNotFound
-    case emptyData
+    case createEventFailed
+       case eventNotFound
+       case retrieveFailed
+       case retrieveAllFailed
+       case updateEventFailed
+       case deleteEventFailed
+}
+struct EventQuery {
+    let key: String
+    let value: Any
 }
 protocol EventRepository {
     func create(_ event: Event) async throws -> Void
@@ -15,4 +23,5 @@ protocol EventRepository {
     func retrieveAll() async throws -> [Event]
     func update(_ event: Event) async throws -> Void
     func delete(for id: String) async throws -> Void
+    func retrieveEqual(_ query: EventQuery) async throws -> [Event]
 }

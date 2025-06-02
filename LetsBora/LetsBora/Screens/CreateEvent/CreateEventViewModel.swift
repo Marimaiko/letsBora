@@ -13,13 +13,13 @@ class CreateEventViewModel {
     private(set) var users: [User] = []
     
     init(
-        eventRepository: EventRepository = InMemoryEventRepository(),
+        eventRepository: EventRepository = FirestoreEventRepository(),
         userRepository: UserRepository = FirestoreUserRepository(),
         tagRepository: TagRepository = FirestoreTagRepository()
     ) {
         self.eventRepository = eventRepository
         self.userRepository = userRepository
-        self.tagRepository = FirestoreTagRepository()
+        self.tagRepository = tagRepository
     }
     
     func getTags() async -> [String] {
@@ -43,12 +43,13 @@ class CreateEventViewModel {
         }
     }
     
-    func saveEvent(event:Event) async {
+    func saveEvent(event:Event) async throws ->Void {
         do {
             try await eventRepository.create(event)
             print("Event saved successfully: \(event)")
         } catch {
             print("Error saving event: \(error.localizedDescription)")
+            throw error
         }
     }
     
