@@ -5,7 +5,12 @@ class CreateEventViewController: UIViewController {
     var screen: CreateEventView?
     var viewModel: CreateEventViewModel?
     
-    // Propriedades para armazenar os dados do evento
+    private lazy var alert: AlertController = {
+        let alert = AlertController(controller: self)
+        return alert
+    }()
+    
+    // MARK: -  Propriedades para armazenar os dados do evento
     private var eventName: String?
     private var eventDescription: String?
     private var eventDateTime: Date?
@@ -14,7 +19,7 @@ class CreateEventViewController: UIViewController {
     private var enventGestNames: [User] = []
     private var isEventPrivate: Bool = false
     
-    
+    // MARK: - LyfeCycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
@@ -44,6 +49,7 @@ class CreateEventViewController: UIViewController {
         }
     }
     
+    // MARK: - Functions
     private func updateDescriptionPlaceholder() {
         screen?.descriptionPlaceholderLabel.isHidden = !(screen?.descriptionEventTextView.text.isEmpty ?? true)
     }
@@ -151,13 +157,24 @@ class CreateEventViewController: UIViewController {
         print("Privado: \(self.isEventPrivate)")
         
         // Chame sua API, salve no CoreData, etc.
-        showAlert(title: "Sucesso!", message: "Evento pronto para ser criado/publicado!")
+        
+        guard let titleEvent = self.eventName else {return}
+        if let dateEvent = self.eventDateTime {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd/MM/yyyy HH:mm"
+            print("Data/Hora: \(formatter.string(from: dateEvent))")
+        } else {return}
+        guard let description = self.eventDescription else {return}
+        guard let locationName = self.eventLocationName else {return}
+        guard let categoryName = self.eventCategoryName else {return}
+        
+        alert.showAlert(title: "Sucesso!", message: "Evento pronto para ser criado/publicado!")
     }
     
     private func saveDraft() {
         guard let screen = screen else {
             print("Erro: A tela (screen) não está disponível para salvar o rascunho.")
-            showAlert(title: "Erro", message: "Não foi possível salvar o rascunho.")
+            alert.showAlert(title: "Erro", message: "Não foi possível salvar o rascunho.")
             return
         }
         
@@ -192,10 +209,10 @@ class CreateEventViewController: UIViewController {
             UserDefaults.standard.set(data, forKey: "eventDraft")
             print("Rascunho salvo no UserDefaults!")
             // Mostrar alerta de sucesso após o salvamento real
-            showAlert(title: "Rascunho Salvo", message: "Seu evento foi salvo como rascunho.")
+            alert.showAlert(title: "Rascunho Salvo", message: "Seu evento foi salvo como rascunho.")
         } catch {
             print("Erro ao salvar rascunho no UserDefaults: \(error)")
-            showAlert(title: "Erro", message: "Não foi possível salvar o rascunho.")
+            alert.showAlert(title: "Erro", message: "Não foi possível salvar o rascunho.")
         }
         
         // Apenas para debug, você pode imprimir o rascunho:
@@ -251,7 +268,7 @@ class CreateEventViewController: UIViewController {
                 screen.eventPrivacySwitch.setOn(loadedDraft.isPrivate, animated: false)
                 self.isEventPrivate = loadedDraft.isPrivate
                 
-                showAlert(title: "Rascunho Carregado", message: "Os dados do rascunho foram preenchidos.")
+                alert.showAlert(title: "Rascunho Carregado", message: "Os dados do rascunho foram preenchidos.")
             } catch {
                 print("Erro ao carregar rascunho do UserDefaults: \(error)")
             }
@@ -260,11 +277,7 @@ class CreateEventViewController: UIViewController {
         }
     }
     
-    private func showAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        present(alertController, animated: true, completion: nil)
-    }
+    
 }
 
 //MARK: - CreateEventViewDelegate
@@ -287,7 +300,7 @@ extension CreateEventViewController: CreateEventViewDelegate {
             }
             self.present(guestModalViewController, animated: true)
         }
-      
+        
     }
     
     func didConfirmDateTime(date: Date, time: Date) {
@@ -322,8 +335,47 @@ extension CreateEventViewController: CreateEventViewDelegate {
         saveDraft()
     }
     
+    func presentAddressAlert() async -> String? {
+        return await withCheckedContinuation { continuation in
+            let addressAlert = UIAlertController(title: "Adicione um endereço", message: nil, preferredStyle: .alert)
+            
+            addressAlert.addTextField { textField in
+                textField.placeholder = "Endereço"
+            }
+            
+            let confirmAction = UIAlertAction(title: "Confirmar", style: .default) { _ in
+                let address = addressAlert.textFields?.first?.text
+                continuation.resume(returning: address)
+            }
+            
+            let cancelAction = UIAlertAction(title: "Cancelar", style: .cancel) { _ in
+                continuation.resume(returning: nil)
+            }
+            
+            addressAlert.addAction(confirmAction)
+            addressAlert.addAction(cancelAction)
+            
+            self.present(addressAlert, animated: true)
+        }
+    }
+    
     func didTapLocationContainer() {
         print("Container de Localização tocado. Abrir tela de seleção de local.")
+        
+        Task { [weak self] in
+            guard let self = self else { return }
+            
+            if let address = await self.presentAddressAlert(), !address.isEmpty {
+                self.eventLocationName = address
+                
+                self.screen?.locationCustomContainer.updateLabelName(newName: address)
+                self.screen?.locationErrorLabel.isHidden = true
+                print("Localization filled \(address)")
+            } else {
+                print("Endereço não preenchido.")
+            }
+        }
+        
         // Exemplo: Navegar para um LocationPickerViewController
         // let locationPickerVC = LocationPickerViewController()
         // locationPickerVC.delegate = self // Para receber o local selecionado
@@ -331,13 +383,15 @@ extension CreateEventViewController: CreateEventViewDelegate {
         
         // --- MOCK PARA TESTE DE VALIDAÇÃO ---
         // Simular que um local foi selecionado após um tempo
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            let mockLocation = "Shopping Iguatemi Bosque"
-            self.eventLocationName = mockLocation
-            self.screen?.locationCustomContainer.updateLabelName(newName: mockLocation)
-            self.screen?.locationErrorLabel.isHidden = true
-            print("Localização mock selecionada: \(mockLocation)")
-        }
+        /*
+         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+         let mockLocation = "Shopping Iguatemi Bosque"
+         self.eventLocationName = mockLocation
+         self.screen?.locationCustomContainer.updateLabelName(newName: mockLocation)
+         self.screen?.locationErrorLabel.isHidden = true
+         print("Localização mock selecionada: \(mockLocation)")
+         }
+         */
         // --- FIM DO MOCK ---
     }
     

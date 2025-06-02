@@ -268,6 +268,9 @@ class CreateEventView: UIView {
     
     func setAvatars(_ avatars: [String]){
         self.avatarsGroupView.setAvatars(avatars)
+        if(avatars.count > 3) {
+            self.avatarsGroupView.setExtraCount(avatars.count - 3)
+        }
     }
     
     private lazy var participantsView: UIView = {
