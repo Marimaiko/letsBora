@@ -45,8 +45,10 @@ class AvatarImageView: UIImageView {
     }
 }
 
+#if swift(>=5.9)
 @available(iOS 17.0, *)
 #Preview("AvatarImageView", traits: .sizeThatFitsLayout){    
     AvatarImageView()
     
 }
+#endif

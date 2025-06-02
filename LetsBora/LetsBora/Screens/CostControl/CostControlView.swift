@@ -10,6 +10,18 @@ import UIKit
 class CostControlView: UIView{
     
     //MARK: Components
+    lazy private var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        return scrollView
+    }()
+    
+    lazy private var contentView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private lazy var costContainer: CostContainer = {
         let container = CostContainer()
         container.translatesAutoresizingMaskIntoConstraints = false
@@ -141,59 +153,73 @@ class CostControlView: UIView{
 //MARK: Hierarchy e Constraints
 extension CostControlView: ViewCode{
     func setHierarchy() {
-        addSubview(costContainer)
-        addSubview(expensesView)
-        addSubview(expensesCard1)
-        addSubview(expensesCard2)
-        addSubview(participantsView)
-        addSubview(participantCard1)
-        addSubview(participantCard2)
-        addSubview(buttonsContainer)
+        addSubview(scrollView)
+        scrollView.addSubview(contentView)
         
+        contentView.addSubview(costContainer)
+        contentView.addSubview(expensesView)
+        contentView.addSubview(expensesCard1)
+        contentView.addSubview(expensesCard2)
+        contentView.addSubview(participantsView)
+        contentView.addSubview(participantCard1)
+        contentView.addSubview(participantCard2)
+        contentView.addSubview(buttonsContainer)
     }
     
     func setConstraints() {
         NSLayoutConstraint.activate([
-            costContainer.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 8),
+            scrollView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            
+            costContainer.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             costContainer.heightAnchor.constraint(equalToConstant: 146),
-            costContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            costContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+            costContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+            costContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
             
             expensesView.topAnchor.constraint(equalTo: costContainer.bottomAnchor, constant: 48),
             expensesView.heightAnchor.constraint(equalToConstant: 40),
-            expensesView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 32),
-            expensesView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -32),
+            expensesView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 32),
+            expensesView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -32),
             
             expensesCard1.topAnchor.constraint(equalTo: expensesView.bottomAnchor, constant: 0),
             expensesCard1.heightAnchor.constraint(equalToConstant: 60),
-            expensesCard1.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            expensesCard1.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+            expensesCard1.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+            expensesCard1.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
             
             expensesCard2.topAnchor.constraint(equalTo: expensesCard1.bottomAnchor, constant: 16),
             expensesCard2.heightAnchor.constraint(equalToConstant: 60),
-            expensesCard2.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            expensesCard2.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+            expensesCard2.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+            expensesCard2.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
             
             participantsView.topAnchor.constraint(equalTo: expensesCard2.bottomAnchor, constant: 48),
             participantsView.heightAnchor.constraint(equalToConstant: 40),
-            participantsView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 32),
-            participantsView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -32),
+            participantsView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 32),
+            participantsView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -32),
             
             participantCard1.topAnchor.constraint(equalTo: participantsView.bottomAnchor, constant: 0),
             participantCard1.heightAnchor.constraint(equalToConstant: 60),
-            participantCard1.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            participantCard1.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+            participantCard1.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+            participantCard1.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
             
             participantCard2.topAnchor.constraint(equalTo: participantCard1.bottomAnchor, constant: 16),
             participantCard2.heightAnchor.constraint(equalToConstant: 60),
-            participantCard2.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            participantCard2.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+            participantCard2.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+            participantCard2.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
             
             buttonsContainer.topAnchor.constraint(equalTo: participantCard2.bottomAnchor, constant: 48),
             buttonsContainer.heightAnchor.constraint(equalToConstant: 40),
-            buttonsContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            buttonsContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            buttonsContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
+            buttonsContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
             
+            buttonsContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -32)
         ])
     }
 }

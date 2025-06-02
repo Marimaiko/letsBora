@@ -33,7 +33,7 @@ class CustomContainer: UIView{
         container.layer.shadowColor = UIColor.black.cgColor
         container.layer.shadowOpacity = 0.1
         container.layer.shadowOffset = CGSize(width: 0, height: 2)
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(showCalendar))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         container.addGestureRecognizer(tapGesture)
         
         return container
@@ -86,7 +86,23 @@ class CustomContainer: UIView{
     @objc private func showCalendar() {
         self.delegate?.containerTapped(type: self.containerType)
     }
+    
+    // MARK: - Métodos públicos para atualizar e pegar o texto da label
+    public func updateLabelName(newName: String) {
+        self.labelView.text = newName
+    }
+
+    public func getLabelName() -> String? {
+        return self.labelView.text
+    }
+    
+    // MARK: - Ações
+    @objc private func handleTap() {
+        self.delegate?.containerTapped(type: self.containerType)
+    }
 }
+
+
 
 extension CustomContainer: ViewCode {
     func setHierarchy() {
@@ -116,8 +132,10 @@ extension CustomContainer: ViewCode {
 }
 
 //MARK: -Preview
+#if swift(>=5.9)
 @available(iOS 17.0, *)
 #Preview("CustomContainerView", traits: .sizeThatFitsLayout) {
     let dateContainer = CustomContainer(iconName: "calendar", labelName: "Teste", arrowName: "chevron.right", type: .date)
     dateContainer
 }
+#endif

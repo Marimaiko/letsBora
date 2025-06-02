@@ -7,13 +7,16 @@
 
 import Foundation
 
-struct Event {
+struct Event:Identifiable {
+    var id: String = UUID().uuidString
     var title: String
     var image: String?
     var tag: Tag?
     var visibility: String?
-    var date: String
-    var location: String
+    var date: Date
+    var locationDetails: EventLocationDetails?
+    var description: String?
+    var totalCost: String?
     var participants: [User]?
-    var owner: User
+    var owner: User?    //opcional por enquanto, até configurar a persistência de dados
 }

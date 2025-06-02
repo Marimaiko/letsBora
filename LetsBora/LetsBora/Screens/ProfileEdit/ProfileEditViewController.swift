@@ -24,7 +24,9 @@ class ProfileEditViewController: UIViewController {
 }
 
 // MARK: - Preview Profile
+#if swift(>=5.9)
 @available(iOS 17.0,*)
 #Preview(traits: .portrait, body: {
     ProfileEditViewController()
 })
+#endif

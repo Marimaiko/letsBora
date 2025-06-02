@@ -8,28 +8,49 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
-    let profileView = ProfileView()
+    var profileView : ProfileView?
+    var viewModel: ProfileViewModel?
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        profileView.delegate = self
+        profileView?.delegate = self
+        viewModel = ProfileViewModel()
     }
     
     override func loadView() {
+        profileView = ProfileView()
         self.view = profileView
     }
 }
 extension ProfileViewController: ProfileViewDelegate {
-    func exitProfileDidTapButton() {
-        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate,
+    func navigateToLogin(){
+        
+        if let sceneDelegate = UIApplication
+            .shared
+            .connectedScenes
+            .first?
+            .delegate as? SceneDelegate,
            let window = sceneDelegate.window {
+            
             let rootViewController = LoginViewController()
             let navController = UINavigationController(rootViewController: rootViewController)
             window.rootViewController = navController
             window.makeKeyAndVisible()
+        }
+    }
+    func exitProfileDidTapButton() {
+        Task{
+            do {
+                try await viewModel?.logout()
+                navigateToLogin()
+            } catch {
+                print("Failed to logout user: \(error.localizedDescription)")
+            }
         }
     }
     
@@ -40,7 +61,9 @@ extension ProfileViewController: ProfileViewDelegate {
     }
 }
 // MARK: - Preview Profile
-@available(iOS 17.0,*)
+#if swift(>=5.9)
+@available(iOS 17.0, *)
 #Preview(traits: .portrait, body: {
     ProfileViewController()
 })
+#endif

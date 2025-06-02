@@ -75,7 +75,7 @@ extension TagView: ViewCode {
             .setContraintsToParent(self)
     }
 }
-
+#if swift(>=5.9)
 @available(iOS 17.0, *)
 #Preview("Tag View", traits: .sizeThatFitsLayout) {
     let tag = TagView()
@@ -84,3 +84,4 @@ extension TagView: ViewCode {
     return tag
                 
 }
+#endif
