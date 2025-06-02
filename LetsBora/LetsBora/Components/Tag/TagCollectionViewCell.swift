@@ -23,8 +23,8 @@ class TagCollectionViewCell: UICollectionViewCell {
     }
     func setupCell(with tag: Tag){
         tagElement.setText(tag.title)
-        tagElement.setTextColor(tag.color)
-        tagElement.setBackgroundColor(tag.bgColor)
+        tagElement.setTextColor(UIColor(hex:tag.color))
+        tagElement.setBackgroundColor(UIColor(hex:tag.bgColor))
     }
     
 }

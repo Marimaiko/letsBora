@@ -6,9 +6,50 @@
 //
 
 import UIKit
-
-struct Tag {
+enum TagKeys {
+    static let collectionName = "tags"
+    static let id = "tagId"
+    static let title = "title"
+    static let colorHex = "colorHex"
+    static let bgColorHex = "bgColorHex"
+}
+struct Tag: Identifiable {
+    var id:String = UUID().uuidString
     var title: String
-    var color: UIColor
-    var bgColor: UIColor
+    var color: String
+    var bgColor: String
+    
+    init(
+        title: String,
+        color: String,
+        bgColor: String
+    ) {
+        self.title = title
+        self.color = color
+        self.bgColor = bgColor
+    }
+    
+    init?(from data: [String: Any]) {
+        guard let id = data[TagKeys.id] as? String,
+              let title = data[TagKeys.title] as? String,
+              let colorHex = data[TagKeys.colorHex] as? String,
+              let bgColorHex = data[TagKeys.bgColorHex] as? String
+        else { return nil }
+        
+        self.id = id
+        self.title = title
+        self.color = colorHex
+        self.bgColor  = bgColorHex
+    }
+    
+    var toDict: [String: Any] {
+        let dict: [String: Any] = [
+            TagKeys.id: id,
+            TagKeys.title: title,
+            TagKeys.colorHex: color,
+            TagKeys.bgColorHex: bgColor,
+        ]
+        return dict
+    }
+    
 }

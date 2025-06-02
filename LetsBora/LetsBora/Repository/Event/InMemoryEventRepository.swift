@@ -8,6 +8,10 @@
 import Foundation
 
 actor InMemoryEventRepository:EventRepository {
+    func retrieveEqual(_ query: EventQuery) async throws -> [Event] {
+        return MockData.events // not implemented
+    }
+    
     func create(_ event: Event) async throws {
         MockData.events.append(event)
     }
@@ -22,7 +26,7 @@ actor InMemoryEventRepository:EventRepository {
     
     func retrieveAll() async throws -> [Event] {
         guard !MockData.events.isEmpty else {
-            throw EventRepositoryError.emptyData
+            throw EventRepositoryError.eventNotFound
         }
         return MockData.events
     }

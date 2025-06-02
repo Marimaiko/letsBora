@@ -60,9 +60,11 @@ class EventCardTableViewCell: UITableViewCell, EventCardViewDelegate {
         }
         
         if let category = event.tag {
-            eventCard.setTagViewTextColor(text: category.title,
-                                          textColor: category.color,
-                                          backgroundColor: category.bgColor)
+            eventCard.setTagViewTextColor(
+                text: category.title,
+                textColor: UIColor(hex: category.color),
+                backgroundColor: UIColor(hex: category.bgColor)
+            )
         }
         
         if let participants = event.participants {

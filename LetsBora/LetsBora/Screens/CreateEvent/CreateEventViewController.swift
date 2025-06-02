@@ -6,31 +6,37 @@ class CreateEventViewController: UIViewController {
     var screen: CreateEventView?
     var viewModel: CreateEventViewModel?
     
-    // Propriedades para armazenar os dados do evento
+    private lazy var alert: AlertController = {
+        let alert = AlertController(controller: self)
+        return alert
+    }()
+    
+    // MARK: -  Propriedades para armazenar os dados do evento
     private var eventName: String?
     private var eventDescription: String?
     private var eventDateTime: Date?
     private var eventLocation: EventLocationDetails?
     private var eventCategoryName: String?
+    private var enventGestNames: [User] = []
     private var isEventPrivate: Bool = false
     
-    // Lista de categorias
-       private let availableCategories: [String] = ["Festa", "Esporte", "Reunião", "Show", "Cultural", "Curso/Workshop", "Religioso", "Outro"]
-    
+    // MARK: - LyfeCycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     override func loadView() {
+        viewModel = CreateEventViewModel()
         screen = CreateEventView()
         view = screen
-        screen?.categories = availableCategories
+        Task {
+            screen?.categories = await viewModel?.getTags() ?? []
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         screen?.delegate(inject: self)
-        viewModel = CreateEventViewModel()
         view.backgroundColor = UIColor(red: 248/255, green: 248/255, blue: 248/255, alpha: 1.0)
         
         // Configurar delegate para o TextView de descrição
@@ -44,17 +50,18 @@ class CreateEventViewController: UIViewController {
         }
     }
     
+    // MARK: - Functions
     private func updateDescriptionPlaceholder() {
         screen?.descriptionPlaceholderLabel.isHidden = !(screen?.descriptionEventTextView.text.isEmpty ?? true)
     }
-
+    
     // Função para validar todos os campos
     private func validateInputs() -> Bool {
         guard let screen = screen else { return false }
         var isValid = true
         
         screen.resetAllErrorVisuals() // Limpa erros anteriores
-
+        
         // 1. Validar Nome do Evento
         let name = screen.nameEventTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         if name.isEmpty {
@@ -72,7 +79,7 @@ class CreateEventViewController: UIViewController {
         } else {
             self.eventName = name
         }
-
+        
         // 2. Validar Descrição
         let description = screen.descriptionEventTextView.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         if description.isEmpty {
@@ -119,7 +126,7 @@ class CreateEventViewController: UIViewController {
             screen.categoryErrorLabel.isHidden = false
             isValid = false
         }
-
+        
         // 6. Privacidade (O switch já tem um valor, 'isEventPrivate' será atualizado)
         self.isEventPrivate = screen.eventPrivacySwitch.isOn
         
@@ -132,6 +139,7 @@ class CreateEventViewController: UIViewController {
     }
     
     private func proceedWithEventCreation() {
+
         if let date = self.eventDateTime {
             let formatter = DateFormatter()
             formatter.dateFormat = "dd/MM/yyyy HH:mm"
@@ -143,58 +151,49 @@ class CreateEventViewController: UIViewController {
             let location = self.eventLocation,
             let category = self.eventCategoryName
         else {
-            showAlert(title: "Erro Interno", message: "Alguns dados do evento estão faltando.")
+            alert.showAlert(title: "Erro Interno", message: "Alguns dados do evento estão faltando.")
             return
         }
         
         let newEvent = Event(
             title: name,
             image: nil, // TODO: Adicionar lógica para imagem
-            tag: nil,   // TODO: Definir o que é Tag
+            tag: nil,   // // should be a tag instead string
             visibility: self.isEventPrivate ? "Privado" : "Público",
             date: dateTime, 
             locationDetails: location, // Usar o objeto EventLocationDetails
             description: self.eventDescription,
             totalCost: nil, // TODO: Adicionar lógica para custo
-            participants: nil, // TODO: Adicionar lógica para participantes
-            owner: nil // TODO: Definir o owner (usuário logado)
+            participants: enventGestNames,
+            owner: Utils.getLoggedInUser()
         )
         
-        print("Validação OK! Criando evento:")
-                print("- Título: \(newEvent.title)")
-                print("- Data: \(newEvent.date)")
-                print("- Local: \(newEvent.locationDetails?.displayString ?? "N/A")")
-                print("- Categoria: \(category)")
-                print("- Privado: \(self.isEventPrivate)")
-                print("- Descrição: \(newEvent.description ?? "N/A")")
-
-                // Chamar o ViewModel para salvar o evento
-                Task {
-                    await viewModel?.saveEvent(event: newEvent)
-                    await MainActor.run {
-                        showAlert(title: "Sucesso!", message: "Evento publicado com sucesso!")
-                        // Ex: self.navigationController?.popViewController(animated: true)
-                        // ou resetar os campos para criar um novo evento.
-                    }
-                }
+        Task {
+            do {
+                try await viewModel?.saveEvent(event: newEvent)
+                alert.showAlert(title: "Sucesso!", message: "Evento pronto para ser criado/publicado!")
+            } catch {
+                alert.showAlert(title: "Erro", message: "Falha ao salvar o evento: \(error.localizedDescription)")
+            }
+        }
     }
     
     private func saveDraft() {
         guard let screen = screen else {
             print("Erro: A tela (screen) não está disponível para salvar o rascunho.")
-            showAlert(title: "Erro", message: "Não foi possível salvar o rascunho.")
+            alert.showAlert(title: "Erro", message: "Não foi possível salvar o rascunho.")
             return
         }
-
+        
         print("Iniciando salvamento do rascunho...")
-
+        
         // 1. Coletar os dados atuais dos campos
         let draftName = screen.nameEventTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         let draftDescription = screen.descriptionEventTextView.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         let draftDateTime = self.eventDateTime
         let draftCategoryName = self.eventCategoryName
         let draftIsPrivate = screen.eventPrivacySwitch.isOn
-
+        
         // 2. Criar um objeto de rascunho (usando a struct EventDraft)
         let draft = EventDraft(
             name: draftName,
@@ -204,18 +203,18 @@ class CreateEventViewController: UIViewController {
             categoryName: draftCategoryName,
             isPrivate: draftIsPrivate
         )
-
+        
         // 3. Lógica de Salvamento (Placeholder - Implemente conforme sua necessidade)
         do {
             let encoder = JSONEncoder()
             let data = try encoder.encode(draft)
             UserDefaults.standard.set(data, forKey: "eventDraft")
-            showAlert(title: "Rascunho Salvo", message: "Seu evento foi salvo como rascunho.")
+            alert.showAlert(title: "Rascunho Salvo", message: "Seu evento foi salvo como rascunho.")
         } catch {
-            showAlert(title: "Erro", message: "Não foi possível salvar o rascunho.")
+            alert.showAlert(title: "Erro", message: "Não foi possível salvar o rascunho.")
         }
     }
-
+    
     // Função para carregar o rascunho
     func loadDraft() {
         guard let screen = screen else { return }
@@ -253,7 +252,7 @@ class CreateEventViewController: UIViewController {
                 self.isEventPrivate = loadedDraft.isPrivate
                 
                 updateDescriptionPlaceholder() // Chamar após preencher descrição
-                showAlert(title: "Rascunho Carregado", message: "Os dados do rascunho foram preenchidos.")
+                alert.showAlert(title: "Rascunho Carregado", message: "Os dados do rascunho foram preenchidos.")
             } catch {
                 print("Erro ao carregar rascunho do UserDefaults: \(error)")
             }
@@ -262,15 +261,32 @@ class CreateEventViewController: UIViewController {
         }
     }
     
-    private func showAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        present(alertController, animated: true, completion: nil)
-    }
+    
 }
 
 //MARK: - CreateEventViewDelegate
 extension CreateEventViewController: CreateEventViewDelegate {
+    
+    func didTapInviteButton() {
+        Task{[weak self] in
+            guard let self = self else { return }
+            
+            let guests = await self.viewModel?.fetchUsers() ?? []
+            let guestModalViewController = CreateEventGuestModalViewController(
+                guests: guests, selectedGuests: self.enventGestNames)
+            guestModalViewController.onGuestsSelected = {[weak self] selectedGuests in
+                guard let self = self else { return }
+                
+                print("Selected guests: \(selectedGuests.map({$0.name}))")
+                self.enventGestNames = selectedGuests
+                self.screen?.setAvatars(selectedGuests.map({$0.photo ?? ""}))
+                
+            }
+            self.present(guestModalViewController, animated: true)
+        }
+        
+    }
+    
     func didConfirmDateTime(date: Date, time: Date) {
         // A view já combinou e formatou em 'selectedDateAndTime'
         // Mas se precisar dos componentes separados:
@@ -298,6 +314,30 @@ extension CreateEventViewController: CreateEventViewDelegate {
     
     func saveDraftTapped() {
         saveDraft()
+    }
+    
+    func presentAddressAlert() async -> String? {
+        return await withCheckedContinuation { continuation in
+            let addressAlert = UIAlertController(title: "Adicione um endereço", message: nil, preferredStyle: .alert)
+            
+            addressAlert.addTextField { textField in
+                textField.placeholder = "Endereço"
+            }
+            
+            let confirmAction = UIAlertAction(title: "Confirmar", style: .default) { _ in
+                let address = addressAlert.textFields?.first?.text
+                continuation.resume(returning: address)
+            }
+            
+            let cancelAction = UIAlertAction(title: "Cancelar", style: .cancel) { _ in
+                continuation.resume(returning: nil)
+            }
+            
+            addressAlert.addAction(confirmAction)
+            addressAlert.addAction(cancelAction)
+            
+            self.present(addressAlert, animated: true)
+        }
     }
     
     func didTapLocationContainer() {
