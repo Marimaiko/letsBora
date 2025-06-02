@@ -23,7 +23,7 @@ enum UserKeys {
     static let createdAt = "createdAt"
 }
 
-struct User: Identifiable {
+struct User: Identifiable, Equatable{
     var id: String = UUID().uuidString
     var name: String
     var email: String?
@@ -93,6 +93,9 @@ struct User: Identifiable {
         
         return dict
     }
+    static func == (lhs: User, rhs: User) -> Bool {
+           return lhs.id == rhs.id
+       }
     
 }
 

@@ -13,6 +13,7 @@ protocol CreateEventViewDelegate: AnyObject {
     func saveDraftTapped()
     func didTapLocationContainer()
     func didSelectCategory(_ category: String)
+    func didTapInviteButton()
 }
 
 class CreateEventView: UIView {
@@ -248,16 +249,26 @@ class CreateEventView: UIView {
         button.setTitle("Convidar", for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+        button.addTarget(self, action: #selector(handleInviteButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
+        
         return button
     }()
+    
+    @objc func handleInviteButtonTapped(){
+        self.delegate?.didTapInviteButton()
+    }
     
     // Stack de imagens dos participantes (bottom left)
     private lazy var avatarsGroupView: AvatarGroupView = {
         let avatarGroupView = AvatarGroupView()
-        avatarGroupView.setAvatars(["James", "James1", "James3"])
+        avatarGroupView.setAvatars([])
         return avatarGroupView
     }()
+    
+    func setAvatars(_ avatars: [String]){
+        self.avatarsGroupView.setAvatars(avatars)
+    }
     
     private lazy var participantsView: UIView = {
         let containerView = UIView()
@@ -656,7 +667,7 @@ extension CreateEventView {
             avatarsGroupView.leadingAnchor.constraint(equalTo: participantsView.leadingAnchor, constant: 12),
             avatarsGroupView.bottomAnchor.constraint(equalTo: participantsView.bottomAnchor, constant: -10),
             inviteButton.trailingAnchor.constraint(equalTo: participantsView.trailingAnchor, constant: -12),
-            inviteButton.centerYAnchor.constraint(equalTo: avatarsGroupView.centerYAnchor),
+            inviteButton.bottomAnchor.constraint(equalTo: participantsView.bottomAnchor, constant: -12),
             
             
             // Botões de Ação

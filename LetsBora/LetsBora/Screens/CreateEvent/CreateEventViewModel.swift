@@ -14,7 +14,7 @@ class CreateEventViewModel {
     
     init(
         eventRepository: EventRepository = InMemoryEventRepository(),
-        userRepository: UserRepository = InMemoryUserRepository(),
+        userRepository: UserRepository = FirestoreUserRepository(),
         tagRepository: TagRepository = FirestoreTagRepository()
     ) {
         self.eventRepository = eventRepository
@@ -52,12 +52,15 @@ class CreateEventViewModel {
         }
     }
     
-    func fetchUsers() async {
+    func fetchUsers() async -> [User] {
+        
         do {
-            self.users = try await userRepository.retrieveAll()
+            return try await userRepository.retrieveAll()
         } catch {
             print("Error fetching users: \(error.localizedDescription)")
+        return []
         }
+        
     }
     
     

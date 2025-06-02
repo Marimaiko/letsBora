@@ -11,6 +11,7 @@ class CreateEventViewController: UIViewController {
     private var eventDateTime: Date?
     private var eventLocationName: String?
     private var eventCategoryName: String?
+    private var enventGestNames: [User] = []
     private var isEventPrivate: Bool = false
     
     
@@ -46,14 +47,14 @@ class CreateEventViewController: UIViewController {
     private func updateDescriptionPlaceholder() {
         screen?.descriptionPlaceholderLabel.isHidden = !(screen?.descriptionEventTextView.text.isEmpty ?? true)
     }
-
+    
     // Função para validar todos os campos
     private func validateInputs() -> Bool {
         guard let screen = screen else { return false }
         var isValid = true
         
         screen.resetAllErrorVisuals() // Limpa erros anteriores
-
+        
         // 1. Validar Nome do Evento
         let name = screen.nameEventTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         if name.isEmpty {
@@ -71,7 +72,7 @@ class CreateEventViewController: UIViewController {
         } else {
             self.eventName = name
         }
-
+        
         // 2. Validar Descrição
         let description = screen.descriptionEventTextView.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         if description.isEmpty {
@@ -101,22 +102,22 @@ class CreateEventViewController: UIViewController {
             screen.dateTimeErrorLabel.isHidden = false
             isValid = false
         }
-
+        
         // 4. Validar Localização (Verifica se o label foi alterado do padrão)
         // Esta é uma validação simples. Idealmente, você teria um valor selecionado.
         if eventLocationName == nil || eventLocationName!.isEmpty {
-             screen.locationErrorLabel.text = "Localização é obrigatória."
-             screen.locationErrorLabel.isHidden = false
-             isValid = false
+            screen.locationErrorLabel.text = "Localização é obrigatória."
+            screen.locationErrorLabel.isHidden = false
+            isValid = false
         }
-
+        
         // 5. Validar Categoria (Similar à localização)
         if eventCategoryName == nil || eventCategoryName!.isEmpty {
             screen.categoryErrorLabel.text = "Categoria é obrigatória."
             screen.categoryErrorLabel.isHidden = false
             isValid = false
         }
-
+        
         // 6. Privacidade (O switch já tem um valor, 'isEventPrivate' será atualizado)
         self.isEventPrivate = screen.eventPrivacySwitch.isOn
         
@@ -159,9 +160,9 @@ class CreateEventViewController: UIViewController {
             showAlert(title: "Erro", message: "Não foi possível salvar o rascunho.")
             return
         }
-
+        
         print("Iniciando salvamento do rascunho...")
-
+        
         // 1. Coletar os dados atuais dos campos
         let draftName = screen.nameEventTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         let draftDescription = screen.descriptionEventTextView.text?.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -173,7 +174,7 @@ class CreateEventViewController: UIViewController {
         let draftCategoryName = self.eventCategoryName
         
         let draftIsPrivate = screen.eventPrivacySwitch.isOn
-
+        
         // 2. Criar um objeto de rascunho (usando a struct EventDraft)
         let draft = EventDraft(
             name: draftName,
@@ -183,7 +184,7 @@ class CreateEventViewController: UIViewController {
             categoryName: draftCategoryName,
             isPrivate: draftIsPrivate
         )
-
+        
         // 3. Lógica de Salvamento (Placeholder - Implemente conforme sua necessidade)
         do {
             let encoder = JSONEncoder()
@@ -198,22 +199,22 @@ class CreateEventViewController: UIViewController {
         }
         
         // Apenas para debug, você pode imprimir o rascunho:
-//        print("Dados do Rascunho:")
-//        print("- Nome: \(draft.name ?? "N/A")")
-//        print("- Descrição: \(draft.description ?? "N/A")")
-//        if let date = draft.dateTime {
-//            let formatter = DateFormatter()
-//            formatter.dateStyle = .medium
-//            formatter.timeStyle = .short
-//            print("- Data/Hora: \(formatter.string(from: date))")
-//        } else {
-//            print("- Data/Hora: N/A")
-//        }
-//        print("- Local: \(draft.locationName ?? "N/A")")
-//        print("- Categoria: \(draft.categoryName ?? "N/A")")
-//        print("- Privado: \(draft.isPrivate)")
+        //        print("Dados do Rascunho:")
+        //        print("- Nome: \(draft.name ?? "N/A")")
+        //        print("- Descrição: \(draft.description ?? "N/A")")
+        //        if let date = draft.dateTime {
+        //            let formatter = DateFormatter()
+        //            formatter.dateStyle = .medium
+        //            formatter.timeStyle = .short
+        //            print("- Data/Hora: \(formatter.string(from: date))")
+        //        } else {
+        //            print("- Data/Hora: N/A")
+        //        }
+        //        print("- Local: \(draft.locationName ?? "N/A")")
+        //        print("- Categoria: \(draft.categoryName ?? "N/A")")
+        //        print("- Privado: \(draft.isPrivate)")
     }
-
+    
     // Função para carregar o rascunho
     func loadDraft() {
         guard let screen = screen else { return }
@@ -268,6 +269,27 @@ class CreateEventViewController: UIViewController {
 
 //MARK: - CreateEventViewDelegate
 extension CreateEventViewController: CreateEventViewDelegate {
+    
+    func didTapInviteButton() {
+        Task{[weak self] in
+            guard let self = self else { return }
+            
+            let guests = await self.viewModel?.fetchUsers() ?? []
+            let guestModalViewController = CreateEventGuestModalViewController(
+                guests: guests, selectedGuests: self.enventGestNames)
+            guestModalViewController.onGuestsSelected = {[weak self] selectedGuests in
+                guard let self = self else { return }
+                
+                print("Selected guests: \(selectedGuests.map({$0.name}))")
+                self.enventGestNames = selectedGuests
+                self.screen?.setAvatars(selectedGuests.map({$0.photo ?? ""}))
+                
+            }
+            self.present(guestModalViewController, animated: true)
+        }
+      
+    }
+    
     func didConfirmDateTime(date: Date, time: Date) {
         // A view já combinou e formatou em 'selectedDateAndTime'
         // Mas se precisar dos componentes separados:
@@ -313,7 +335,7 @@ extension CreateEventViewController: CreateEventViewDelegate {
             let mockLocation = "Shopping Iguatemi Bosque"
             self.eventLocationName = mockLocation
             self.screen?.locationCustomContainer.updateLabelName(newName: mockLocation)
-            self.screen?.locationErrorLabel.isHidden = true 
+            self.screen?.locationErrorLabel.isHidden = true
             print("Localização mock selecionada: \(mockLocation)")
         }
         // --- FIM DO MOCK ---
@@ -336,9 +358,9 @@ extension CreateEventViewController: UITextViewDelegate {
             updateDescriptionPlaceholder()
             // Opcional: Limpar erro de descrição enquanto o usuário digita
             if !(textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty) {
-                 // screen?.descriptionErrorLabel.isHidden = true
-                 // screen?.descriptionEventTextView.layer.borderColor = UIColor.systemGray4.cgColor
-                 // screen?.descriptionEventTextView.layer.borderWidth = 0.5
+                // screen?.descriptionErrorLabel.isHidden = true
+                // screen?.descriptionEventTextView.layer.borderColor = UIColor.systemGray4.cgColor
+                // screen?.descriptionEventTextView.layer.borderWidth = 0.5
             }
         }
     }
@@ -346,9 +368,9 @@ extension CreateEventViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView == screen?.descriptionEventTextView {
             // Pode-se remover o erro ao começar a editar
-             screen?.descriptionErrorLabel.isHidden = true
-             screen?.descriptionEventTextView.layer.borderColor = UIColor.systemGray4.cgColor
-             screen?.descriptionEventTextView.layer.borderWidth = 0.5
+            screen?.descriptionErrorLabel.isHidden = true
+            screen?.descriptionEventTextView.layer.borderColor = UIColor.systemGray4.cgColor
+            screen?.descriptionEventTextView.layer.borderWidth = 0.5
         }
     }
     

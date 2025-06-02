@@ -51,6 +51,8 @@
 		0938AD5D2DEC02E400DB4169 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0938AD5C2DEC02DD00DB4169 /* UIColor+Extension.swift */; };
 		0938AD622DEC069100DB4169 /* TagRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0938AD612DEC068C00DB4169 /* TagRepository.swift */; };
 		0938AD662DEC077D00DB4169 /* FirestoreTagRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0938AD652DEC077D00DB4169 /* FirestoreTagRepository.swift */; };
+		0938AD682DEC0CD200DB4169 /* CreateEventGuestModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0938AD672DEC0CD200DB4169 /* CreateEventGuestModalView.swift */; };
+		0938AD6B2DEC0EB300DB4169 /* CreateEventGuestModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0938AD6A2DEC0EA600DB4169 /* CreateEventGuestModalViewController.swift */; };
 		0951EF942DEA35C300668494 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0951EF932DEA35BE00668494 /* ProfileViewModel.swift */; };
 		0951EF962DEAB73000668494 /* ForgetPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0951EF952DEAB72000668494 /* ForgetPasswordViewModel.swift */; };
 		099A927D2DC5034A00415196 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A927C2DC5034A00415196 /* MockData.swift */; };
@@ -71,6 +73,8 @@
 		09C2FCFF2DE8BD0800FD6BD2 /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C2FCFE2DE8BD0300FD6BD2 /* AlertController.swift */; };
 		09CE52892DC19B35008D8022 /* EventDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CE52872DC19B35008D8022 /* EventDetailsViewController.swift */; };
 		09CE528A2DC19B35008D8022 /* EventDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CE52862DC19B35008D8022 /* EventDetailsView.swift */; };
+		09E33ED02DECBACD00EF2F50 /* GuestModalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E33ECF2DECBACD00EF2F50 /* GuestModalTableViewCell.swift */; };
+		09E33ED22DECBCEA00EF2F50 /* CheckBoxButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E33ED12DECBCE400EF2F50 /* CheckBoxButton.swift */; };
 		09EAF1502DDFE0C300D4EE42 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 09EAF14F2DDFE0C300D4EE42 /* FirebaseAuth */; };
 		09EEC3D82DE8FDE400DA8DB3 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EEC3D72DE8FDC600DA8DB3 /* Utils.swift */; };
 		09EEC3DA2DE8FF6900DA8DB3 /* Utils+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EEC3D92DE8FF5A00DA8DB3 /* Utils+User.swift */; };
@@ -156,6 +160,8 @@
 		0938AD5C2DEC02DD00DB4169 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		0938AD612DEC068C00DB4169 /* TagRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagRepository.swift; sourceTree = "<group>"; };
 		0938AD652DEC077D00DB4169 /* FirestoreTagRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreTagRepository.swift; sourceTree = "<group>"; };
+		0938AD672DEC0CD200DB4169 /* CreateEventGuestModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventGuestModalView.swift; sourceTree = "<group>"; };
+		0938AD6A2DEC0EA600DB4169 /* CreateEventGuestModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventGuestModalViewController.swift; sourceTree = "<group>"; };
 		0951EF932DEA35BE00668494 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		0951EF952DEAB72000668494 /* ForgetPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordViewModel.swift; sourceTree = "<group>"; };
 		099A927C2DC5034A00415196 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
@@ -174,6 +180,8 @@
 		09C2FCFE2DE8BD0300FD6BD2 /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
 		09CE52862DC19B35008D8022 /* EventDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsView.swift; sourceTree = "<group>"; };
 		09CE52872DC19B35008D8022 /* EventDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsViewController.swift; sourceTree = "<group>"; };
+		09E33ECF2DECBACD00EF2F50 /* GuestModalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestModalTableViewCell.swift; sourceTree = "<group>"; };
+		09E33ED12DECBCE400EF2F50 /* CheckBoxButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxButton.swift; sourceTree = "<group>"; };
 		09EEC3D72DE8FDC600DA8DB3 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		09EEC3D92DE8FF5A00DA8DB3 /* Utils+User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Utils+User.swift"; sourceTree = "<group>"; };
 		09EEC3E02DE90F8A00DA8DB3 /* GoogleAuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAuthRepository.swift; sourceTree = "<group>"; };
@@ -316,6 +324,7 @@
 		0935A9EF2DC53C5B004B24A2 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				09E33ED12DECBCE400EF2F50 /* CheckBoxButton.swift */,
 				0935A9D42DC53C5B004B24A2 /* Avatar */,
 				0935A9DB2DC53C5B004B24A2 /* Chat */,
 				0935A9DE2DC53C5B004B24A2 /* EventCard */,
@@ -363,6 +372,16 @@
 			path = Tag;
 			sourceTree = "<group>";
 		};
+		0938AD692DEC0D0D00DB4169 /* GuestModalView */ = {
+			isa = PBXGroup;
+			children = (
+				09E33ECE2DECBAA500EF2F50 /* Cell */,
+				0938AD6A2DEC0EA600DB4169 /* CreateEventGuestModalViewController.swift */,
+				0938AD672DEC0CD200DB4169 /* CreateEventGuestModalView.swift */,
+			);
+			path = GuestModalView;
+			sourceTree = "<group>";
+		};
 		099A92802DC50A7500415196 /* Register */ = {
 			isa = PBXGroup;
 			children = (
@@ -392,6 +411,7 @@
 		09B2009B2DC04E3500A26EA2 /* CreateEvent */ = {
 			isa = PBXGroup;
 			children = (
+				0938AD692DEC0D0D00DB4169 /* GuestModalView */,
 				09B02A062DE139A6004654F0 /* CreateEventViewModel.swift */,
 				09B2009C2DC04EA800A26EA2 /* CreateEventView.swift */,
 				09B2009D2DC04EA800A26EA2 /* CreateEventViewController.swift */,
@@ -427,6 +447,14 @@
 				09CE52872DC19B35008D8022 /* EventDetailsViewController.swift */,
 			);
 			path = EventDetails;
+			sourceTree = "<group>";
+		};
+		09E33ECE2DECBAA500EF2F50 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				09E33ECF2DECBACD00EF2F50 /* GuestModalTableViewCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		09EAF1512DDFFC5D00D4EE42 /* Repository */ = {
@@ -700,6 +728,7 @@
 			files = (
 				0935AA0A2DC53D98004B24A2 /* CostControlViewController.swift in Sources */,
 				0935AA0B2DC53D98004B24A2 /* CostControlView.swift in Sources */,
+				0938AD6B2DEC0EB300DB4169 /* CreateEventGuestModalViewController.swift in Sources */,
 				092AABB12DE76D6700CAC738 /* FirebaseFactory.swift in Sources */,
 				09B02A0C2DE13FDF004654F0 /* InMemoryEventRepository.swift in Sources */,
 				365490B62DEA5CF700328E2A /* EditEventDetailsViewModel.swift in Sources */,
@@ -762,6 +791,7 @@
 				0935A9F22DC53C5B004B24A2 /* TagView.swift in Sources */,
 				0935A9F32DC53C5B004B24A2 /* ExpensesCard.swift in Sources */,
 				0935A9F42DC53C5B004B24A2 /* EventCardView.swift in Sources */,
+				09E33ED22DECBCEA00EF2F50 /* CheckBoxButton.swift in Sources */,
 				365490B22DEA479300328E2A /* EditEventDetailsView.swift in Sources */,
 				0935A9F52DC53C5B004B24A2 /* ChatNotificationTableViewCell.swift in Sources */,
 				0935A9F62DC53C5B004B24A2 /* ChatMessageTableViewCell.swift in Sources */,
@@ -777,6 +807,7 @@
 				53126CFA2DE292100020E9C2 /* InMemoryUserRepository.swift in Sources */,
 				0935A9FC2DC53C5B004B24A2 /* SettingButtonView.swift in Sources */,
 				0935A9FD2DC53C5B004B24A2 /* TagCollectionViewCell.swift in Sources */,
+				09E33ED02DECBACD00EF2F50 /* GuestModalTableViewCell.swift in Sources */,
 				0935A9FE2DC53C5B004B24A2 /* AvatarImageView.swift in Sources */,
 				0935A9FF2DC53C5B004B24A2 /* ParticipantesCard.swift in Sources */,
 				09EEC3E12DE90F9300DA8DB3 /* GoogleAuthRepository.swift in Sources */,
@@ -790,6 +821,7 @@
 				09F5579D2DA9F86000D1D1A7 /* ProfileEditViewController.swift in Sources */,
 				099A927D2DC5034A00415196 /* MockData.swift in Sources */,
 				368D35B42DC3E56E0050FF68 /* ProfileView.swift in Sources */,
+				0938AD682DEC0CD200DB4169 /* CreateEventGuestModalView.swift in Sources */,
 				09F5579E2DA9F86000D1D1A7 /* UIView+Constraints.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
