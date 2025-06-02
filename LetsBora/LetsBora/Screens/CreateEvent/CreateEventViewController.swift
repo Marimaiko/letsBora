@@ -1,4 +1,5 @@
 import UIKit
+import CoreLocation
 
 class CreateEventViewController: UIViewController {
     
@@ -9,7 +10,7 @@ class CreateEventViewController: UIViewController {
     private var eventName: String?
     private var eventDescription: String?
     private var eventDateTime: Date?
-    private var eventLocationName: String?
+    private var eventLocation: EventLocationDetails?
     private var eventCategoryName: String?
     private var isEventPrivate: Bool = false
     
@@ -102,13 +103,15 @@ class CreateEventViewController: UIViewController {
             isValid = false
         }
 
-        // 4. Validar Localização (Verifica se o label foi alterado do padrão)
-        // Esta é uma validação simples. Idealmente, você teria um valor selecionado.
-        if eventLocationName == nil || eventLocationName!.isEmpty {
-             screen.locationErrorLabel.text = "Localização é obrigatória."
-             screen.locationErrorLabel.isHidden = false
-             isValid = false
-        }
+        // 4. Validar Localização
+                if eventLocation == nil {
+                     screen.locationErrorLabel.text = "Localização é obrigatória."
+                     screen.locationErrorLabel.isHidden = false
+                     // Adicionar destaque visual ao locationCustomContainer se desejar
+                     // screen.locationCustomContainer.layer.borderColor = UIColor.red.cgColor
+                     // screen.locationCustomContainer.layer.borderWidth = 1.0
+                     isValid = false
+                }
 
         // 5. Validar Categoria (Similar à localização)
         if eventCategoryName == nil || eventCategoryName!.isEmpty {
@@ -129,28 +132,51 @@ class CreateEventViewController: UIViewController {
     }
     
     private func proceedWithEventCreation() {
-        // Aqui você tem todos os dados validados:
-        // self.eventName
-        // self.eventDescription
-        // self.eventDateTime
-        // self.eventLocationName
-        // self.eventCategoryName
-        // self.isEventPrivate
-        
-        print("Validação OK! Dados para criar evento:")
-        print("Nome: \(self.eventName ?? "N/A")")
-        print("Descrição: \(self.eventDescription ?? "N/A")")
         if let date = self.eventDateTime {
             let formatter = DateFormatter()
             formatter.dateFormat = "dd/MM/yyyy HH:mm"
             print("Data/Hora: \(formatter.string(from: date))")
         }
-        print("Local: \(self.eventLocationName ?? "N/A")")
-        print("Categoria: \(self.eventCategoryName ?? "N/A")")
-        print("Privado: \(self.isEventPrivate)")
+
+        guard let name = self.eventName,
+            let dateTime = self.eventDateTime,
+            let location = self.eventLocation,
+            let category = self.eventCategoryName
+        else {
+            showAlert(title: "Erro Interno", message: "Alguns dados do evento estão faltando.")
+            return
+        }
         
-        // Chame sua API, salve no CoreData, etc.
-        showAlert(title: "Sucesso!", message: "Evento pronto para ser criado/publicado!")
+        let newEvent = Event(
+            title: name,
+            image: nil, // TODO: Adicionar lógica para imagem
+            tag: nil,   // TODO: Definir o que é Tag
+            visibility: self.isEventPrivate ? "Privado" : "Público",
+            date: dateTime, 
+            locationDetails: location, // Usar o objeto EventLocationDetails
+            description: self.eventDescription,
+            totalCost: nil, // TODO: Adicionar lógica para custo
+            participants: nil, // TODO: Adicionar lógica para participantes
+            owner: nil // TODO: Definir o owner (usuário logado)
+        )
+        
+        print("Validação OK! Criando evento:")
+                print("- Título: \(newEvent.title)")
+                print("- Data: \(newEvent.date)")
+                print("- Local: \(newEvent.locationDetails?.displayString ?? "N/A")")
+                print("- Categoria: \(category)")
+                print("- Privado: \(self.isEventPrivate)")
+                print("- Descrição: \(newEvent.description ?? "N/A")")
+
+                // Chamar o ViewModel para salvar o evento
+                Task {
+                    await viewModel?.saveEvent(event: newEvent)
+                    await MainActor.run {
+                        showAlert(title: "Sucesso!", message: "Evento publicado com sucesso!")
+                        // Ex: self.navigationController?.popViewController(animated: true)
+                        // ou resetar os campos para criar um novo evento.
+                    }
+                }
     }
     
     private func saveDraft() {
@@ -165,13 +191,8 @@ class CreateEventViewController: UIViewController {
         // 1. Coletar os dados atuais dos campos
         let draftName = screen.nameEventTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         let draftDescription = screen.descriptionEventTextView.text?.trimmingCharacters(in: .whitespacesAndNewlines)
-        
-        // self.eventDateTime, self.eventLocationName, self.eventCategoryName já devem estar
-        // sendo atualizados pelas interações do usuário através dos métodos de delegate.
         let draftDateTime = self.eventDateTime
-        let draftLocationName = self.eventLocationName
         let draftCategoryName = self.eventCategoryName
-        
         let draftIsPrivate = screen.eventPrivacySwitch.isOn
 
         // 2. Criar um objeto de rascunho (usando a struct EventDraft)
@@ -179,7 +200,7 @@ class CreateEventViewController: UIViewController {
             name: draftName,
             description: draftDescription,
             dateTime: draftDateTime,
-            locationName: draftLocationName,
+            locationDetails: self.eventLocation,
             categoryName: draftCategoryName,
             isPrivate: draftIsPrivate
         )
@@ -189,29 +210,10 @@ class CreateEventViewController: UIViewController {
             let encoder = JSONEncoder()
             let data = try encoder.encode(draft)
             UserDefaults.standard.set(data, forKey: "eventDraft")
-            print("Rascunho salvo no UserDefaults!")
-            // Mostrar alerta de sucesso após o salvamento real
             showAlert(title: "Rascunho Salvo", message: "Seu evento foi salvo como rascunho.")
         } catch {
-            print("Erro ao salvar rascunho no UserDefaults: \(error)")
             showAlert(title: "Erro", message: "Não foi possível salvar o rascunho.")
         }
-        
-        // Apenas para debug, você pode imprimir o rascunho:
-//        print("Dados do Rascunho:")
-//        print("- Nome: \(draft.name ?? "N/A")")
-//        print("- Descrição: \(draft.description ?? "N/A")")
-//        if let date = draft.dateTime {
-//            let formatter = DateFormatter()
-//            formatter.dateStyle = .medium
-//            formatter.timeStyle = .short
-//            print("- Data/Hora: \(formatter.string(from: date))")
-//        } else {
-//            print("- Data/Hora: N/A")
-//        }
-//        print("- Local: \(draft.locationName ?? "N/A")")
-//        print("- Categoria: \(draft.categoryName ?? "N/A")")
-//        print("- Privado: \(draft.isPrivate)")
     }
 
     // Função para carregar o rascunho
@@ -227,29 +229,30 @@ class CreateEventViewController: UIViewController {
                 
                 screen.nameEventTextField.text = loadedDraft.name
                 screen.descriptionEventTextView.text = loadedDraft.description
-                updateDescriptionPlaceholder() // Atualiza a visibilidade do placeholder da descrição
                 
+                self.eventDateTime = loadedDraft.dateTime
                 if let dateTime = loadedDraft.dateTime {
-                    self.eventDateTime = dateTime
-                    // Atualizar o label do dateCustomContainer
                     let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "dd/MM/yyyy 'às' HH:mm" // Mesmo formato usado ao confirmar
+                    dateFormatter.dateFormat = "dd/MM/yyyy 'às' HH:mm"
                     screen.dateCustomContainer.updateLabelName(newName: dateFormatter.string(from: dateTime))
                 }
                 
-                if let locationName = loadedDraft.locationName, !locationName.isEmpty {
-                    self.eventLocationName = locationName
-                    screen.locationCustomContainer.updateLabelName(newName: locationName)
+                // Carregar locationDetails
+                self.eventLocation = loadedDraft.locationDetails
+                if let location = loadedDraft.locationDetails {
+                    screen.locationCustomContainer.updateLabelName(newName: location.displayString)
                 }
                 
+                self.eventCategoryName = loadedDraft.categoryName
                 if let categoryName = loadedDraft.categoryName, !categoryName.isEmpty {
-                    self.eventCategoryName = categoryName
                     screen.categoryCustomContainer.updateLabelName(newName: categoryName)
+                    // TODO: Atualizar o picker se necessário
                 }
                 
                 screen.eventPrivacySwitch.setOn(loadedDraft.isPrivate, animated: false)
                 self.isEventPrivate = loadedDraft.isPrivate
                 
+                updateDescriptionPlaceholder() // Chamar após preencher descrição
                 showAlert(title: "Rascunho Carregado", message: "Os dados do rascunho foram preenchidos.")
             } catch {
                 print("Erro ao carregar rascunho do UserDefaults: \(error)")
@@ -276,7 +279,6 @@ extension CreateEventViewController: CreateEventViewDelegate {
         if let hour = timeComponents.hour, let minute = timeComponents.minute {
             if let combinedDate = calendar.date(bySettingHour: hour, minute: minute, second: 0, of: date) {
                 self.eventDateTime = combinedDate
-                // Limpar erro de data/hora se estiver visível e a data for válida
                 if combinedDate > Date() {
                     screen?.dateTimeErrorLabel.isHidden = true
                 }
@@ -286,7 +288,6 @@ extension CreateEventViewController: CreateEventViewDelegate {
     }
     
     func publishEventTapped() {
-        print("Botão Publicar Evento Tocado no ViewController")
         if validateInputs() {
             proceedWithEventCreation()
         } else {
@@ -296,33 +297,25 @@ extension CreateEventViewController: CreateEventViewDelegate {
     }
     
     func saveDraftTapped() {
-        print("Botão Salvar Rascunho Tocado no ViewController")
         saveDraft()
     }
     
     func didTapLocationContainer() {
-        print("Container de Localização tocado. Abrir tela de seleção de local.")
-        // Exemplo: Navegar para um LocationPickerViewController
-        // let locationPickerVC = LocationPickerViewController()
-        // locationPickerVC.delegate = self // Para receber o local selecionado
-        // self.navigationController?.pushViewController(locationPickerVC, animated: true)
-        
-        // --- MOCK PARA TESTE DE VALIDAÇÃO ---
-        // Simular que um local foi selecionado após um tempo
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            let mockLocation = "Shopping Iguatemi Bosque"
-            self.eventLocationName = mockLocation
-            self.screen?.locationCustomContainer.updateLabelName(newName: mockLocation)
-            self.screen?.locationErrorLabel.isHidden = true 
-            print("Localização mock selecionada: \(mockLocation)")
+        let locationPickerVC = LocationPickerViewController()
+        locationPickerVC.delegate = self
+        let navigationControllerForPicker = UINavigationController(rootViewController: locationPickerVC)
+        navigationControllerForPicker.modalPresentationStyle = .pageSheet // Ou .formSheet, .automatic
+        if let sheet = navigationControllerForPicker.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+            sheet.prefersGrabberVisible = true
         }
-        // --- FIM DO MOCK ---
+        
+        // APRESENTE O NAVIGATION CONTROLLER
+        self.present(navigationControllerForPicker, animated: true, completion: nil)
     }
     
     func didSelectCategory(_ category: String) { // Novo método do delegate
         self.eventCategoryName = category
-        print("Categoria selecionada pelo ViewController: \(category)")
-        // Limpar erro da categoria, se houver
         if !(category.isEmpty) {
             screen?.categoryErrorLabel.isHidden = true
         }
@@ -336,25 +329,31 @@ extension CreateEventViewController: UITextViewDelegate {
             updateDescriptionPlaceholder()
             // Opcional: Limpar erro de descrição enquanto o usuário digita
             if !(textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty) {
-                 // screen?.descriptionErrorLabel.isHidden = true
-                 // screen?.descriptionEventTextView.layer.borderColor = UIColor.systemGray4.cgColor
-                 // screen?.descriptionEventTextView.layer.borderWidth = 0.5
+                screen?.descriptionErrorLabel.isHidden = true
+                screen?.descriptionEventTextView.layer.borderColor = UIColor.systemGray4.cgColor
+                screen?.descriptionEventTextView.layer.borderWidth = 0.5
             }
         }
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView == screen?.descriptionEventTextView {
-            // Pode-se remover o erro ao começar a editar
              screen?.descriptionErrorLabel.isHidden = true
              screen?.descriptionEventTextView.layer.borderColor = UIColor.systemGray4.cgColor
              screen?.descriptionEventTextView.layer.borderWidth = 0.5
         }
     }
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        // A validação principal ocorrerá ao tentar publicar.
-        // Mas você pode adicionar alguma validação leve aqui se desejar.
+}
+
+extension CreateEventViewController: LocationPickerDelegate {
+    func didSelectLocation(_ location: EventLocationDetails) {
+        self.eventLocation = location
+        self.screen?.locationCustomContainer.updateLabelName(newName: location.displayString)
+        self.screen?.locationErrorLabel.isHidden = true // Limpa o erro
+        // O LocationPickerViewController deve se dispensar após a seleção,
+        // ou você pode dispensá-lo aqui:
+        // presentedViewController?.dismiss(animated: true, completion: nil)
+        print("Localização selecionada: \(location.displayString)")
     }
 }
 
@@ -362,7 +361,7 @@ struct EventDraft: Codable {
     let name: String?
     let description: String?
     let dateTime: Date?
-    let locationName: String?
+    let locationDetails: EventLocationDetails?
     let categoryName: String?
     let isPrivate: Bool
 }

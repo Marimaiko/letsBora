@@ -6,9 +6,7 @@
 //
 
 import UIKit
-protocol HomeViewDelegate {
-    func seeDetailsTapped()
-}
+
 class HomeView: UIView {
     var delegate: HomeViewDelegate?
     
@@ -19,12 +17,11 @@ class HomeView: UIView {
     
     private lazy var eventCardView1 : EventCardView = {
         let eventCard = EventCardView()
-        eventCard.setTitleLabel("Aniversário do João")
-        eventCard.setLocationLabel("Casa do João")
-        eventCard.setTagViewTextColor(text: "Particular")
-        eventCard.setDateLabel("15 Marc")
-        eventCard.setAvatars(["Jim", "John", "Julia"], 25)
-        
+//        eventCard.setTitleLabel("Aniversário do João")
+//        eventCard.setLocationLabel("Casa do João")
+//        eventCard.setTagViewTextColor(text: "Particular")
+//        eventCard.setDateLabel("15 jun.")
+//        eventCard.setAvatars(["Jim", "John", "Julia"], 25)
         return eventCard
     }()
     
@@ -50,6 +47,36 @@ class HomeView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    public func configureNextEventCard(with event: Event) {
+        eventCardView1.setTitleLabel(event.title)
+        eventCardView1.setLocationLabel(event.locationDetails?.displayString ?? "Local não informado")
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd MMM"
+        dateFormatter.locale = Locale(identifier: "pt_BR")
+        eventCardView1.setDateLabel(dateFormatter.string(from: event.date)) // Assumindo event.date é Date
+        
+        if let tag = event.tag {
+            eventCardView1.setTagViewTextColor(text: tag.title, textColor: tag.color, backgroundColor: tag.bgColor)
+        } else {
+            // Lógica para ocultar ou mostrar uma tag padrão se não houver tag
+            // eventCardView1.hideTagView() // Exigiria este método em EventCardView
+        }
+        if let imageName = event.image {
+            eventCardView1.setImage(imageName)
+        } else {
+            // eventCardView1.removeImage() // Exigiria este método em EventCardView
+        }
+        if let participants = event.participants {
+            let listOfNames = participants.prefix(3).map { $0.name }
+            let extraCount = participants.count > 3 ? participants.count - 3 : 0
+            eventCardView1.setAvatars(listOfNames, extraCount)
+        } else {
+            // eventCardView1.hideAvatars() // Exigiria este método em EventCardView
+        }
+        // Configurar outros aspectos do eventCardView1 se necessário
     }
 }
 // MARK: - ViewCode Extension

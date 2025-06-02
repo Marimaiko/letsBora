@@ -4,7 +4,9 @@
 //
 //  Created by Mariana Maiko on 30/05/25.
 //
+
 import Foundation
+import CoreLocation
 
 final class EditEventViewModel {
     private(set) var event: Event
@@ -15,15 +17,24 @@ final class EditEventViewModel {
         
     func updateEvent(
         title: String?,
-        date: String?,
-        location: String?,
+        date: Date?,
+        location: EventLocationDetails?,
         description: String?,
         totalCost: String?
     ) {
-        event.title = title ?? ""
-        event.date = date ?? ""
-        event.location = location ?? ""
-        event.description = description ?? ""
-        event.totalCost = totalCost ?? ""
+        if let newTitle = title, !newTitle.isEmpty { // Não atualizar para vazio se o campo for opcional
+            event.title = newTitle
+        }
+               
+        if let newDate = date {
+            event.date = newDate
+        }
+               
+        if let newLocation = location {
+            event.locationDetails = newLocation
+        }
+        
+        event.description = description // Se nil, a propriedade opcional será nil
+        event.totalCost = totalCost     // Se nil, a propriedade opcional será nil
     }
 }

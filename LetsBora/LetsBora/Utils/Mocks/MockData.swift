@@ -28,12 +28,10 @@ struct MockData {
         user6
     ]
     
-    static var events: [Event]
-    = [
-        eventMock1,
-        eventMock2,
-        eventMock3
-    ]
+    static var events: [Event] = [
+        eventMock1, eventMock2, eventMock3
+    ] + pastEvents
+    
     static var tags: [Tag]
     =  [
         tag1,
