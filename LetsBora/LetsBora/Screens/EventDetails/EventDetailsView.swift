@@ -287,6 +287,21 @@ class EventDetailsView: UIView {
         return btn
     }()
     
+    // Formatter para a data (pode ser o mesmo da EventCardTableViewCell ou um específico)
+    private let eventDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd 'de' MMMM | HH:mm" // Ex: "29 de março | 19:00"
+        formatter.locale = Locale(identifier: "pt_BR")
+        return formatter
+    }()
+
+    private let eventTimeFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        formatter.locale = Locale(identifier: "pt_BR")
+        return formatter
+    }()
+    
     // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -303,6 +318,78 @@ class EventDetailsView: UIView {
     
     @objc private func editTapped() {
         self.delegate?.editTapped()
+    }
+    
+    // MARK: - Public Configuration
+    public func configure(with event: Event) {
+        // Imagem do Evento
+        if let imageName = event.image, !imageName.isEmpty {
+            eventImageView.image = UIImage(named: imageName)
+        } else {
+            eventImageView.image = UIImage(named: "event-sample-image") // Placeholder
+        }
+
+        // Data e Hora
+        if let dateLabel = dateTimeLabel.arrangedSubviews.last as? UILabel {
+            // Supondo que event.date é um objeto Date. Se você tiver data de início e fim:
+            // let startTime = eventTimeFormatter.string(from: event.startDate)
+            // let endTime = eventTimeFormatter.string(from: event.endDate)
+            // let dateString = eventDateFormatter.string(from: event.startDate)
+            // dateLabel.text = "\(dateString) | \(startTime) - \(endTime)"
+            // Por ora, usando a formatação que você tinha, adaptada para um único Date:
+            
+            let fullText = "\(eventDateFormatter.string(from: event.date))" // Ajustar se tiver hora de término
+            let attributedText = NSMutableAttributedString(
+                string: fullText,
+                attributes: [.font: UIFont.systemFont(ofSize: 15)]
+            )
+            
+            // Se quiser destacar a data principal
+            let datePartFormatter = DateFormatter()
+            datePartFormatter.dateFormat = "dd 'de' MMMM"
+            datePartFormatter.locale = Locale(identifier: "pt_BR")
+            let datePart = datePartFormatter.string(from: event.date)
+
+            if let range = fullText.range(of: datePart) {
+                let nsRange = NSRange(range, in: fullText)
+                attributedText.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: 15), range: nsRange)
+            }
+            dateLabel.attributedText = attributedText
+        }
+
+        // Localização
+        if let locationStackView = locationStack.arrangedSubviews.last as? UIStackView,
+           let placeLabel = locationStackView.arrangedSubviews.first as? UILabel,
+           let addressLabel = locationStackView.arrangedSubviews.last as? UILabel {
+            placeLabel.text = event.locationDetails?.name ?? "Local não definido"
+            addressLabel.text = event.locationDetails?.address ?? ""
+            addressLabel.isHidden = addressLabel.text?.isEmpty ?? true
+        }
+
+        // Participantes (exemplo, ajuste conforme sua lógica real)
+        if let participantsTitleLabel = participantsStack.arrangedSubviews.first as? UILabel {
+            let count = event.participants?.count ?? 0
+            participantsTitleLabel.text = "Participantes (\(count))"
+        }
+        // A lógica de ícones dos participantes precisaria ser atualizada dinamicamente também.
+
+        // Descrição
+        descriptionText.text = event.description ?? "Nenhuma descrição fornecida."
+
+        // Custo
+        if let costValueLabel = costStack.arrangedSubviews.last as? UILabel,
+           let costLeftLabel = costStack.arrangedSubviews.first as? UILabel {
+            if let totalCost = event.totalCost, !totalCost.isEmpty {
+                costValueLabel.text = totalCost.lowercased() == "grátis" ? "Grátis" : "R$\(totalCost)"
+                costStack.isHidden = false
+            } else {
+                costStack.isHidden = true // Ocultar se não houver custo
+            }
+        }
+        
+        // Título (se o título da navigation bar for o título do evento)
+        // Isso é geralmente feito no ViewController, mas se a view tivesse um título principal:
+        // self.titleLabel.text = event.title
     }
     
     func updateDate(_ text: String) {

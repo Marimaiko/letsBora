@@ -13,8 +13,8 @@ struct Event:Identifiable {
     var image: String?
     var tag: Tag?
     var visibility: String?
-    var date: String
-    var location: String
+    var date: Date
+    var locationDetails: EventLocationDetails?
     var description: String?
     var totalCost: String?
     var participants: [User]?
