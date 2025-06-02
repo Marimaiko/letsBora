@@ -9,7 +9,6 @@ extension Utils {
     private static let userDefaultsUserKey = "loggedInUser"
     
     static func saveLoggedInUser(_ user: User) {
-        print("saving user default: \(user)")
         addUserDefaults(value:user.toDict, key: userDefaultsUserKey)
     }
     

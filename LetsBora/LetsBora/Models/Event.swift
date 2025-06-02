@@ -15,7 +15,7 @@ enum EventKeys {
     static let tag: String = "tag"
     static let visibility: String = "visibility"
     static let date: String = "date"
-    static let location: String = "location"
+    static let locationDetails: String = "location"
     static let description: String = "description"
     static let totalCost: String = "totalCost"
     static let participants: String = "participants"
@@ -28,7 +28,7 @@ struct Event:Identifiable {
     var image: String?
     var tag: Tag?
     var visibility: String?
-    var date: Date
+    var date: String
     var locationDetails: EventLocationDetails?
     var description: String?
     var totalCost: String?
@@ -42,7 +42,7 @@ struct Event:Identifiable {
         tag: Tag? = nil,
         visibility: String? = nil,
         date: String,
-        location: String,
+        locationDetails: EventLocationDetails,
         description: String? = nil,
         totalCost: String? = nil,
         participants: [User]? = nil,
@@ -54,7 +54,7 @@ struct Event:Identifiable {
         self.tag = tag
         self.visibility = visibility
         self.date = date
-        self.location = location
+        self.locationDetails = locationDetails
         self.description = description
         self.totalCost = totalCost
         self.participants = participants
@@ -68,8 +68,7 @@ struct Event:Identifiable {
         // Required fields
         guard let id = data[EventKeys.id] as? String,
               let title = data[EventKeys.title] as? String,
-              let date = data[EventKeys.date] as? String,
-              let location = data[EventKeys.location] as? String
+              let date = data[EventKeys.date] as? String
         else {
             print("Failed to parse required Event fields")
             return nil
@@ -78,7 +77,8 @@ struct Event:Identifiable {
         self.id = id
         self.title = title
         self.date = date
-        self.location = location
+        
+       
         
         // Optional fields
         if let image = data[EventKeys.image] as? String {
@@ -95,6 +95,13 @@ struct Event:Identifiable {
         
         if let totalCost = data[EventKeys.totalCost] as? String {
             self.totalCost = totalCost
+        }
+        
+        if let locationData = data[EventKeys.locationDetails] as? [String: Any],
+        let location = EventLocationDetails(from: locationData){
+            self.locationDetails = location
+        } else if data[EventKeys.locationDetails] != nil {
+            print("Failed to parse location")
         }
         
         if let tagData = data[EventKeys.tag] as? [String: Any],
@@ -130,7 +137,7 @@ struct Event:Identifiable {
             EventKeys.id: id,
             EventKeys.title: title,
             EventKeys.date: date,
-            EventKeys.location: location
+            EventKeys.locationDetails: locationDetails?.toDict ?? ""
         ]
         
         if let image = image {

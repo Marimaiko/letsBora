@@ -338,7 +338,7 @@ class EventDetailsView: UIView {
             // dateLabel.text = "\(dateString) | \(startTime) - \(endTime)"
             // Por ora, usando a formatação que você tinha, adaptada para um único Date:
             
-            let fullText = "\(eventDateFormatter.string(from: event.date))" // Ajustar se tiver hora de término
+            let fullText = event.date // Ajustar se tiver hora de término
             let attributedText = NSMutableAttributedString(
                 string: fullText,
                 attributes: [.font: UIFont.systemFont(ofSize: 15)]
@@ -348,7 +348,7 @@ class EventDetailsView: UIView {
             let datePartFormatter = DateFormatter()
             datePartFormatter.dateFormat = "dd 'de' MMMM"
             datePartFormatter.locale = Locale(identifier: "pt_BR")
-            let datePart = datePartFormatter.string(from: event.date)
+            let datePart = event.date
 
             if let range = fullText.range(of: datePart) {
                 let nsRange = NSRange(range, in: fullText)

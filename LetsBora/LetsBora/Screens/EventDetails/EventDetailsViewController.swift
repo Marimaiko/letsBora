@@ -117,6 +117,7 @@ extension EventDetailsViewController: EventDetailsViewDelegate {
     }
 }
 #if swift(>=5.9)
+/*
 @available(iOS 17.0, *)
 #Preview(traits: .portrait, body: {
     // Crie um evento mock aqui usando a struct Event atualizada
@@ -133,6 +134,7 @@ extension EventDetailsViewController: EventDetailsViewDelegate {
         owner: User(name: "Pedro")
     )
     let navController = UINavigationController(rootViewController: EventDetailsViewController(event: mockEvent))
-    return navController
+    navController
 })
+*/
 #endif

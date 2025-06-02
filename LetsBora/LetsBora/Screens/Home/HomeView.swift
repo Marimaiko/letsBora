@@ -56,10 +56,14 @@ class HomeView: UIView {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd MMM"
         dateFormatter.locale = Locale(identifier: "pt_BR")
-        eventCardView1.setDateLabel(dateFormatter.string(from: event.date)) // Assumindo event.date é Date
+        eventCardView1.setDateLabel(event.date) // Assumindo event.date é Date
         
         if let tag = event.tag {
-            eventCardView1.setTagViewTextColor(text: tag.title, textColor: tag.color, backgroundColor: tag.bgColor)
+            eventCardView1.setTagViewTextColor(
+                text: tag.title,
+                textColor: tag.color.hex,
+                backgroundColor: tag.bgColor
+            )
         } else {
             // Lógica para ocultar ou mostrar uma tag padrão se não houver tag
             // eventCardView1.hideTagView() // Exigiria este método em EventCardView

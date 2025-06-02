@@ -7,7 +7,13 @@
 
 import Foundation
 import CoreLocation
-
+enum EventLocationDetailsKeys{
+    static let collectionName = "eventLocationDetails" // maybe will not be used
+    static let name = "name"
+    static let addressKey = "address"
+    static let latitudeKey = "latitude"
+    static let longitudeKey = "longitude"
+}
 struct EventLocationDetails: Codable { // Codable se você salva rascunhos
     let name: String?
     let address: String?
@@ -20,9 +26,6 @@ struct EventLocationDetails: Codable { // Codable se você salva rascunhos
 
     // Texto para exibição na UI (ex: no CustomContainer)
     var displayString: String {
-        if let name = name, !name.isEmpty {
-            return name
-        }
         if let address = address, !address.isEmpty {
             return address
         }
@@ -43,4 +46,36 @@ struct EventLocationDetails: Codable { // Codable se você salva rascunhos
         self.latitude = coordinates.latitude
         self.longitude = coordinates.longitude
     }
+    
+    init?(from data: [String:Any] ) {
+        guard let latitude = data[EventLocationDetailsKeys.latitudeKey] as? Double,
+              let longitude = data[EventLocationDetailsKeys.longitudeKey] as? Double
+        else { return nil }
+        
+        self.latitude = latitude
+        self.longitude = longitude
+
+        
+        if let address = data[EventLocationDetailsKeys.addressKey] as? String {
+            self.address = address
+        }else {
+            self.address = nil
+        }
+        if let name = data[EventLocationDetailsKeys.name] as? String {
+            self.name = name
+        }else {
+            self.name = nil
+        }
+    }
+    
+    var toDict: [String:Any] {
+        let dict: [String:Any] = [
+            EventLocationDetailsKeys.name: name ?? "",
+            EventLocationDetailsKeys.addressKey: address ?? "",
+            EventLocationDetailsKeys.latitudeKey: latitude,
+            EventLocationDetailsKeys.longitudeKey: longitude
+        ]
+        return dict
+    }
+    
 }

@@ -51,7 +51,8 @@ class EventCardTableViewCell: UITableViewCell, EventCardViewDelegate {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd MMM" // Ex: "15 Mar"
         dateFormatter.locale = Locale(identifier: "pt_BR")
-        eventCard.setDateLabel(dateFormatter.string(from: event.date))
+        #warning("Check if event.date is present correctly")
+        eventCard.setDateLabel(event.date) 
         
         eventCard.setDetailButtonTitle(!isPast ? "Participar" : "Ver Detalhes")
         
