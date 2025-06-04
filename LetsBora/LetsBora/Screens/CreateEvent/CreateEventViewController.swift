@@ -160,7 +160,7 @@ class CreateEventViewController: UIViewController {
             image: nil, // TODO: Adicionar lógica para imagem
             tag: nil,   // // should be a tag instead string
             visibility: self.isEventPrivate ? "Privado" : "Público",
-            date: dateTime, 
+            date: dateTime.toString(),
             locationDetails: location, // Usar o objeto EventLocationDetails
             description: self.eventDescription,
             totalCost: nil, // TODO: Adicionar lógica para custo
@@ -252,7 +252,7 @@ class CreateEventViewController: UIViewController {
                 self.isEventPrivate = loadedDraft.isPrivate
                 
                 updateDescriptionPlaceholder() // Chamar após preencher descrição
-                alert.showAlert(title: "Rascunho Carregado", message: "Os dados do rascunho foram preenchidos.")
+                //alert.showAlert(title: "Rascunho Carregado", message: "Os dados do rascunho foram preenchidos.")
             } catch {
                 print("Erro ao carregar rascunho do UserDefaults: \(error)")
             }

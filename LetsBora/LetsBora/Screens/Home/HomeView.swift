@@ -61,8 +61,8 @@ class HomeView: UIView {
         if let tag = event.tag {
             eventCardView1.setTagViewTextColor(
                 text: tag.title,
-                textColor: tag.color.hex,
-                backgroundColor: tag.bgColor
+                textColor: UIColor(hex: tag.color),
+                backgroundColor: UIColor(hex: tag.bgColor)
             )
         } else {
             // Lógica para ocultar ou mostrar uma tag padrão se não houver tag

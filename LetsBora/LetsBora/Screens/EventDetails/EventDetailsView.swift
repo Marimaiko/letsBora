@@ -378,7 +378,7 @@ class EventDetailsView: UIView {
 
         // Custo
         if let costValueLabel = costStack.arrangedSubviews.last as? UILabel,
-           let costLeftLabel = costStack.arrangedSubviews.first as? UILabel {
+           let _ = costStack.arrangedSubviews.first as? UILabel {
             if let totalCost = event.totalCost, !totalCost.isEmpty {
                 costValueLabel.text = totalCost.lowercased() == "grátis" ? "Grátis" : "R$\(totalCost)"
                 costStack.isHidden = false
