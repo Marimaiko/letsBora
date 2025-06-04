@@ -44,17 +44,20 @@ class CreateEventViewController: UIViewController {
         
         // Tenta carregar um rascunho ao iniciar a tela
         loadDraft()
+        /*
         // Se nenhum rascunho for carregado, o placeholder da descrição precisa ser checado:
         if screen?.descriptionEventTextView.text.isEmpty ?? true {
             updateDescriptionPlaceholder()
         }
+         */
     }
     
     // MARK: - Functions
+/*
     private func updateDescriptionPlaceholder() {
-        screen?.descriptionPlaceholderLabel.isHidden = !(screen?.descriptionEventTextView.text.isEmpty ?? true)
+        screen?.descriptionEventTextView.set = !(screen?.descriptionEventTextView.text.isEmpty ?? true)
     }
-    
+  */
     // Função para validar todos os campos
     private func validateInputs() -> Bool {
         guard let screen = screen else { return false }
@@ -251,7 +254,7 @@ class CreateEventViewController: UIViewController {
                 screen.eventPrivacySwitch.setOn(loadedDraft.isPrivate, animated: false)
                 self.isEventPrivate = loadedDraft.isPrivate
                 
-                updateDescriptionPlaceholder() // Chamar após preencher descrição
+                //updateDescriptionPlaceholder() // Chamar após preencher descrição
                 //alert.showAlert(title: "Rascunho Carregado", message: "Os dados do rascunho foram preenchidos.")
             } catch {
                 print("Erro ao carregar rascunho do UserDefaults: \(error)")
@@ -366,7 +369,7 @@ extension CreateEventViewController: CreateEventViewDelegate {
 extension CreateEventViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         if textView == screen?.descriptionEventTextView {
-            updateDescriptionPlaceholder()
+            //updateDescriptionPlaceholder()
             // Opcional: Limpar erro de descrição enquanto o usuário digita
             if !(textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty) {
                 screen?.descriptionErrorLabel.isHidden = true

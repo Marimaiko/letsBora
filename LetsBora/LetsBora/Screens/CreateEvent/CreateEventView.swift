@@ -17,14 +17,12 @@ protocol CreateEventViewDelegate: AnyObject {
 }
 
 class CreateEventView: UIView {
-    // Delegate para o ViewController
+    // MARK: -  Variables
     private weak var delegate: CreateEventViewDelegate?
     
     func delegate(inject: CreateEventViewDelegate){
         self.delegate =  inject
     }
-    
-    // MARK: - variable
     public var selectedDateAndTime: Date? // Para armazenar a data/hora combinada
     private var selectedCategory: String?
     var categories: [String] = []
@@ -46,76 +44,50 @@ class CreateEventView: UIView {
     }()
     
     // --- Nome do Evento ---
-    lazy var nameEventTextField: UITextField = {
-        let textField = UITextField()
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "Nome do evento"
-        textField.borderStyle = .roundedRect
-        textField.textColor = .black
-        textField.layer.shadowColor = UIColor.black.cgColor
-        textField.layer.shadowOpacity = 0.1
-        textField.layer.shadowOffset = CGSize(width: 0, height: 2)
-        textField.heightAnchor.constraint(equalToConstant: 48).isActive = true
-        return textField
+    lazy var nameEventTextField: ReusableTextField = {
+       let reusabelTextField = ReusableTextField(
+        placeholder: "Nome do Evento")
+        return reusabelTextField
     }()
     // used in validation
-    lazy var nameEventErrorLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .red
-        label.font = .systemFont(ofSize: 12)
-        label.isHidden = true
-        return label
+    lazy var nameEventErrorLabel: ReusableLabel = {
+        let reusableLabel = ReusableLabel(
+            preset: .errorLabel
+        )
+        return reusableLabel
     }()
     
     // --- Descrição ---
-    lazy var descriptionEventTextView: UITextView = {
-        let textView = UITextView()
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.textColor = .black
-        textView.layer.borderColor = UIColor.systemGray4.cgColor
-        textView.layer.borderWidth = 0.5
-        textView.layer.cornerRadius = 5
-        textView.layer.shadowColor = UIColor.black.cgColor
-        textView.layer.shadowOpacity = 0.1
-        textView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        textView.isScrollEnabled = true
-        textView.textContainerInset = UIEdgeInsets(top: 8, left: 5, bottom: 8, right: 5)
-        textView.heightAnchor.constraint(equalToConstant: 108).isActive = true
-        return textView
+    let descriptionEventTextView : ReusableTextView = {
+       let reusableTextView = ReusableTextView(
+            placeholder: "Adicione uma descrição para o seu evento"
+       )
+        return reusableTextView
     }()
     
-    lazy var descriptionPlaceholderLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Descrição"
-        label.font = UIFont.systemFont(ofSize: (descriptionEventTextView.font?.pointSize ?? 16))
-        label.textColor = .placeholderText
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    lazy var descriptionErrorLabel: UILabel = { // Label de erro para descrição
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .red
-        label.font = .systemFont(ofSize: 12)
-        label.isHidden = true
-        return label
+    lazy var descriptionErrorLabel: ReusableLabel = { // Label de erro para descrição
+        let reusableLabel = ReusableLabel(
+            preset: .errorLabel
+        )
+        return reusableLabel
     }()
     
     // --- Data e Hora ---
     lazy var dateCustomContainer: CustomContainer = {
-        let container = CustomContainer(iconName: "calendar", labelName: "Data e Hora", arrowName: "chevron.right", type: .date)
+        let container = CustomContainer(
+            iconName: "calendar",
+            labelName: "Data e Hora",
+            arrowName: "chevron.right",
+            type: .date
+        )
         return container
     }()
     
     lazy var dateTimeErrorLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .red
-        label.font = .systemFont(ofSize: 12)
-        label.isHidden = true
-        return label
+        let reusableLabel = ReusableLabel(
+            preset: .errorLabel
+        )
+        return reusableLabel
     }()
     
     lazy var calendarContainerView: UIView = {
@@ -368,7 +340,6 @@ class CreateEventView: UIView {
         contentView.addSubview(nameEventErrorLabel)
 
         contentView.addSubview(descriptionEventTextView)
-        contentView.addSubview(descriptionPlaceholderLabel)
         contentView.addSubview(descriptionErrorLabel)
         
         contentView.addSubview(dateCustomContainer)
@@ -611,9 +582,6 @@ extension CreateEventView {
             descriptionEventTextView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             descriptionEventTextView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             // descriptionEventTextView.heightAnchor já definido
-            
-            descriptionPlaceholderLabel.topAnchor.constraint(equalTo: descriptionEventTextView.topAnchor, constant: 8),
-            descriptionPlaceholderLabel.leadingAnchor.constraint(equalTo: descriptionEventTextView.leadingAnchor, constant: 10), // Ajustado para alinhar com textContainerInset.left
             
             descriptionErrorLabel.topAnchor.constraint(equalTo: descriptionEventTextView.bottomAnchor, constant: 4),
             descriptionErrorLabel.leadingAnchor.constraint(equalTo: descriptionEventTextView.leadingAnchor),

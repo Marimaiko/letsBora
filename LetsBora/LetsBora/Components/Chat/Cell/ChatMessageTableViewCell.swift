@@ -85,7 +85,7 @@ class ChatMessageTableViewCell: UITableViewCell {
         
         
         avatarImageView.setImage(named: user.photo ?? "")
-        nameLabel.setText(user.name)
+        nameLabel.updateText(user.name)
         
         dateLabel.text = date
         
