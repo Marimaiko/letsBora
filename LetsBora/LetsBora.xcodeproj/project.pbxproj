@@ -420,11 +420,11 @@
 		09B2009B2DC04E3500A26EA2 /* CreateEvent */ = {
 			isa = PBXGroup;
 			children = (
+				09F7158F2DF0BF0F00A66114 /* Location */,
 				0938AD692DEC0D0D00DB4169 /* GuestModalView */,
 				09B02A062DE139A6004654F0 /* CreateEventViewModel.swift */,
 				09B2009C2DC04EA800A26EA2 /* CreateEventView.swift */,
 				09B2009D2DC04EA800A26EA2 /* CreateEventViewController.swift */,
-				3CDCB8902DEDC5AE00A9DDFF /* LocationPickerViewController.swift */,
 			);
 			path = CreateEvent;
 			sourceTree = "<group>";
@@ -596,6 +596,14 @@
 				09EEC3D72DE8FDC600DA8DB3 /* Utils.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		09F7158F2DF0BF0F00A66114 /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				3CDCB8902DEDC5AE00A9DDFF /* LocationPickerViewController.swift */,
+			);
+			path = Location;
 			sourceTree = "<group>";
 		};
 		365490AB2DDF872D00328E2A /* ForgetPassword */ = {
