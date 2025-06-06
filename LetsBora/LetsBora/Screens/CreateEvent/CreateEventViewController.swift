@@ -269,6 +269,52 @@ class CreateEventViewController: UIViewController {
 
 //MARK: - CreateEventViewDelegate
 extension CreateEventViewController: CreateEventViewDelegate {
+    func didTapPublishButton() {
+        if validateInputs() {
+            proceedWithEventCreation()
+        } else {
+            print("Validação falhou.")
+            // Opcional: Role para o primeiro erro
+        }
+    }
+    
+    func didTapDraftButton() {
+        saveDraft()
+    }
+    
+    func didTapCategoryContainer() {
+        print("Open Category")
+    }
+    
+    func didTapCalendarContainer() {
+        Task{
+            [weak self] in
+            guard let self = self else { return }
+            let calendarViewController = CalendarViewController()
+            let calendarNavigationController = UINavigationController(
+                rootViewController: calendarViewController
+            )
+            calendarNavigationController.modalPresentationStyle = .formSheet
+            
+            if let sheet = calendarNavigationController.sheetPresentationController {
+                sheet.detents = [
+                    .custom { context in
+                        return context.maximumDetentValue * 0.75
+                    }
+                ]
+                sheet.prefersGrabberVisible = true
+            }
+            
+            calendarViewController.onSelectDate = {[weak self] date in
+                guard let self = self else { return }
+                self.screen?.dateCustomContainer
+                    .updateLabelName(
+                        newName:date.toString()
+                    )
+            }
+            self.present(calendarNavigationController, animated: true)
+        }
+    }
     
     func didTapInviteButton() {
         Task{[weak self] in
@@ -276,8 +322,11 @@ extension CreateEventViewController: CreateEventViewDelegate {
             
             let guests = await self.viewModel?.fetchUsers() ?? []
             let guestModalViewController = CreateEventGuestModalViewController(
-                guests: guests, selectedGuests: self.enventGestNames)
-            guestModalViewController.onGuestsSelected = {[weak self] selectedGuests in
+                guests: guests,
+                selectedGuests: self.enventGestNames
+            )
+            guestModalViewController
+                .onGuestsSelected = {[weak self] selectedGuests in
                 guard let self = self else { return }
                 
                 print("Selected guests: \(selectedGuests.map({$0.name}))")
@@ -287,7 +336,6 @@ extension CreateEventViewController: CreateEventViewDelegate {
             }
             self.present(guestModalViewController, animated: true)
         }
-        
     }
     
     func didConfirmDateTime(date: Date, time: Date) {
@@ -305,20 +353,7 @@ extension CreateEventViewController: CreateEventViewDelegate {
         }
         print("Data e hora confirmadas pelo ViewController: \(String(describing: self.eventDateTime))")
     }
-    
-    func publishEventTapped() {
-        if validateInputs() {
-            proceedWithEventCreation()
-        } else {
-            print("Validação falhou.")
-            // Opcional: Role para o primeiro erro
-        }
-    }
-    
-    func saveDraftTapped() {
-        saveDraft()
-    }
-    
+  
     func presentAddressAlert() async -> String? {
         return await withCheckedContinuation { continuation in
             let addressAlert = UIAlertController(title: "Adicione um endereço", message: nil, preferredStyle: .alert)
@@ -346,7 +381,9 @@ extension CreateEventViewController: CreateEventViewDelegate {
     func didTapLocationContainer() {
         let locationPickerVC = LocationPickerViewController()
         locationPickerVC.delegate = self
-        let navigationControllerForPicker = UINavigationController(rootViewController: locationPickerVC)
+        let navigationControllerForPicker = UINavigationController(
+            rootViewController: locationPickerVC
+        )
         navigationControllerForPicker.modalPresentationStyle = .pageSheet // Ou .formSheet, .automatic
         if let sheet = navigationControllerForPicker.sheetPresentationController {
             sheet.detents = [.medium(), .large()]

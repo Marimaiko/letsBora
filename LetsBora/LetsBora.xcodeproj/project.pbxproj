@@ -109,6 +109,7 @@
 		09F715992DF0C35000A66114 /* ReusableTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F715982DF0C34B00A66114 /* ReusableTextView.swift */; };
 		09F7159C2DF0CBD200A66114 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F7159B2DF0CBCD00A66114 /* CalendarView.swift */; };
 		09F7159E2DF0CBDB00A66114 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F7159D2DF0CBD600A66114 /* CalendarViewController.swift */; };
+		09F715A02DF1025500A66114 /* ReusablePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F7159F2DF1024F00A66114 /* ReusablePickerView.swift */; };
 		365490AD2DDF878500328E2A /* ForgetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365490AC2DDF878500328E2A /* ForgetPasswordView.swift */; };
 		365490AF2DDFA12600328E2A /* ForgetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365490AE2DDFA11900328E2A /* ForgetPasswordViewController.swift */; };
 		365490B22DEA479300328E2A /* EditEventDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365490B12DEA479300328E2A /* EditEventDetailsView.swift */; };
@@ -222,6 +223,7 @@
 		09F715982DF0C34B00A66114 /* ReusableTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableTextView.swift; sourceTree = "<group>"; };
 		09F7159B2DF0CBCD00A66114 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		09F7159D2DF0CBD600A66114 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
+		09F7159F2DF1024F00A66114 /* ReusablePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusablePickerView.swift; sourceTree = "<group>"; };
 		365490AC2DDF878500328E2A /* ForgetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordView.swift; sourceTree = "<group>"; };
 		365490AE2DDFA11900328E2A /* ForgetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordViewController.swift; sourceTree = "<group>"; };
 		365490B12DEA479300328E2A /* EditEventDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditEventDetailsView.swift; sourceTree = "<group>"; };
@@ -632,6 +634,7 @@
 				09F715962DF0C13D00A66114 /* ReusableTextField.swift */,
 				0935A9ED2DC53C5B004B24A2 /* ReusableLabel.swift */,
 				09E33ED12DECBCE400EF2F50 /* CheckBoxButton.swift */,
+				09F7159F2DF1024F00A66114 /* ReusablePickerView.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -805,6 +808,7 @@
 				09B2009E2DC04EA800A26EA2 /* CreateEventViewController.swift in Sources */,
 				092728EE2DC2BB06000D744C /* Tag+MockData.swift in Sources */,
 				09D6AB342DEE224D00ADD487 /* FirestoreEventRepository.swift in Sources */,
+				09F715A02DF1025500A66114 /* ReusablePickerView.swift in Sources */,
 				365490AF2DDFA12600328E2A /* ForgetPasswordViewController.swift in Sources */,
 				09B2009F2DC04EA800A26EA2 /* CreateEventView.swift in Sources */,
 				09EEC3DA2DE8FF6900DA8DB3 /* Utils+User.swift in Sources */,
