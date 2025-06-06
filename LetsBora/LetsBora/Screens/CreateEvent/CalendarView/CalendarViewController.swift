@@ -8,11 +8,15 @@
 import UIKit
 class CalendarViewController: UIViewController {
     private var screen: CalendarView?
-    
+    private var initialDate: Date?
     var onSelectDate: ((Date) -> Void)?
     
     override func loadView() {
-        screen = CalendarView()
+        if let initialDate = initialDate {
+            screen = CalendarView(with: initialDate)
+        } else {
+            screen = CalendarView()
+        }
         view = screen
     }
     
@@ -32,6 +36,15 @@ class CalendarViewController: UIViewController {
             action: #selector(doneTapped)
         )
     }
+    init(with date: Date?) {
+        self.initialDate = date
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     
     @objc func cancelTapped() {
         dismiss(animated: true)

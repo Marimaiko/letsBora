@@ -290,7 +290,7 @@ extension CreateEventViewController: CreateEventViewDelegate {
         Task{
             [weak self] in
             guard let self = self else { return }
-            let calendarViewController = CalendarViewController()
+            let calendarViewController = CalendarViewController(with: eventDateTime)
             let calendarNavigationController = UINavigationController(
                 rootViewController: calendarViewController
             )
@@ -307,6 +307,7 @@ extension CreateEventViewController: CreateEventViewDelegate {
             
             calendarViewController.onSelectDate = {[weak self] date in
                 guard let self = self else { return }
+                self.eventDateTime = date
                 self.screen?.dateCustomContainer
                     .updateLabelName(
                         newName:date.toString()

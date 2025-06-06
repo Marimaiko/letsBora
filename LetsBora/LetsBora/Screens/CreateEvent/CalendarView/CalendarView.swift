@@ -54,6 +54,7 @@ class CalendarView: UIView {
     // MARK: - Functions/ Computed var
     
     var combinedDateAndTime: Date? {
+        self.endEditing(true) // why use this ???
         let calendatDate = calendar.date
         let timeComponents = Calendar.current.dateComponents([.hour, .minute], from: timePicker.date)
         guard let hour = timeComponents.hour,
@@ -62,9 +63,14 @@ class CalendarView: UIView {
     }
    
     // MARK: - LifeCyles
-    init() {
+    init(with DateAndTime: Date? = nil) {
         super.init(frame: .zero)
         self.backgroundColor = .systemGray6
+        if let dateAndTime = DateAndTime {
+            calendar.date = dateAndTime
+            timePicker.date = dateAndTime
+        }
+        
         setupView()
         
     }
