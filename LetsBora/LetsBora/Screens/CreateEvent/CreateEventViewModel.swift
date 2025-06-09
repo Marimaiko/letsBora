@@ -22,16 +22,9 @@ class CreateEventViewModel {
         self.tagRepository = tagRepository
     }
     
-    func getTags() async -> [String] {
+    func getTags() async -> [Tag] {
         let tags =  await fetchTags()
-        
-        var titleTags: [String] = []
-        
-        for tag in tags {
-            titleTags.append(tag.title)
-        }
-        
-        return titleTags
+        return tags
     }
     
     private func fetchTags() async -> [Tag] {

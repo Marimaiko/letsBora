@@ -16,7 +16,7 @@ class CreateEventViewController: UIViewController {
     private var eventDescription: String?
     private var eventDateTime: Date?
     private var eventLocation: EventLocationDetails?
-    private var eventCategoryName: String?
+    private var eventCategory: Tag?
     private var enventGestNames: [User] = []
     private var isEventPrivate: Bool = false
     
@@ -29,9 +29,11 @@ class CreateEventViewController: UIViewController {
         viewModel = CreateEventViewModel()
         screen = CreateEventView()
         view = screen
+        /*
         Task {
             screen?.categories = await viewModel?.getTags() ?? []
         }
+        */
     }
     
     override func viewDidLoad() {
@@ -124,7 +126,7 @@ class CreateEventViewController: UIViewController {
                 }
 
         // 5. Validar Categoria (Similar à localização)
-        if eventCategoryName == nil || eventCategoryName!.isEmpty {
+        if eventCategory?.title == nil || ((eventCategory?.title.isEmpty) != nil) {
             screen.categoryErrorLabel.text = "Categoria é obrigatória."
             screen.categoryErrorLabel.isHidden = false
             isValid = false
@@ -152,7 +154,7 @@ class CreateEventViewController: UIViewController {
         guard let name = self.eventName,
             let dateTime = self.eventDateTime,
             let location = self.eventLocation,
-            let category = self.eventCategoryName
+            let category = self.eventCategory
         else {
             alert.showAlert(title: "Erro Interno", message: "Alguns dados do evento estão faltando.")
             return
@@ -194,7 +196,7 @@ class CreateEventViewController: UIViewController {
         let draftName = screen.nameEventTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         let draftDescription = screen.descriptionEventTextView.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         let draftDateTime = self.eventDateTime
-        let draftCategoryName = self.eventCategoryName
+        let draftCategory = self.eventCategory
         let draftIsPrivate = screen.eventPrivacySwitch.isOn
         
         // 2. Criar um objeto de rascunho (usando a struct EventDraft)
@@ -203,7 +205,7 @@ class CreateEventViewController: UIViewController {
             description: draftDescription,
             dateTime: draftDateTime,
             locationDetails: self.eventLocation,
-            categoryName: draftCategoryName,
+            category: eventCategory,
             isPrivate: draftIsPrivate
         )
         
@@ -245,8 +247,8 @@ class CreateEventViewController: UIViewController {
                     screen.locationCustomContainer.updateLabelName(newName: location.displayString)
                 }
                 
-                self.eventCategoryName = loadedDraft.categoryName
-                if let categoryName = loadedDraft.categoryName, !categoryName.isEmpty {
+                self.eventCategory = loadedDraft.category
+                if let categoryName = loadedDraft.category?.title, !categoryName.isEmpty {
                     screen.categoryCustomContainer.updateLabelName(newName: categoryName)
                     // TODO: Atualizar o picker se necessário
                 }
@@ -283,14 +285,63 @@ extension CreateEventViewController: CreateEventViewDelegate {
     }
     
     func didTapCategoryContainer() {
-        print("Open Category")
+        Task {
+            [weak self] in
+            guard let self = self else { return }
+            // update avaible tags
+            let tags = await self.viewModel?.getTags()
+            
+            let categoryViewController = CategoryViewController(
+                option: tags,
+                initialOption: self.eventCategory ?? nil
+            )
+            
+            // closure to update category
+            categoryViewController.onSelectCategory = { [weak self] selectedCategory in
+                guard let self else {return}
+                
+                self.eventCategory = selectedCategory
+                self.screen?.categoryCustomContainer.updateLabelName(
+                    newName: selectedCategory.title
+                )
+            }
+            
+            // present
+            let categoryNavigationController = UINavigationController(
+                rootViewController: categoryViewController
+            )
+            categoryNavigationController.modalPresentationStyle = .automatic
+            if let sheet = categoryNavigationController.sheetPresentationController {
+                sheet.detents = [
+                    .custom { context in
+                        return context.maximumDetentValue * 0.25
+                    }
+                ]
+                sheet.prefersGrabberVisible = true
+            }
+            self.present(categoryNavigationController, animated: true)
+        }
     }
     
     func didTapCalendarContainer() {
         Task{
             [weak self] in
             guard let self = self else { return }
-            let calendarViewController = CalendarViewController(with: eventDateTime)
+            let calendarViewController = CalendarViewController(
+                with: eventDateTime
+            )
+            
+            // closure to update date
+            calendarViewController.onSelectDate = {[weak self] date in
+                guard let self = self else { return }
+                self.eventDateTime = date
+                self.screen?.dateCustomContainer
+                    .updateLabelName(
+                        newName:date.toString()
+                    )
+            }
+            
+            // present with navigation bar
             let calendarNavigationController = UINavigationController(
                 rootViewController: calendarViewController
             )
@@ -303,15 +354,6 @@ extension CreateEventViewController: CreateEventViewDelegate {
                     }
                 ]
                 sheet.prefersGrabberVisible = true
-            }
-            
-            calendarViewController.onSelectDate = {[weak self] date in
-                guard let self = self else { return }
-                self.eventDateTime = date
-                self.screen?.dateCustomContainer
-                    .updateLabelName(
-                        newName:date.toString()
-                    )
             }
             self.present(calendarNavigationController, animated: true)
         }
@@ -335,7 +377,12 @@ extension CreateEventViewController: CreateEventViewDelegate {
                 self.screen?.setAvatars(selectedGuests.map({$0.photo ?? ""}))
                 
             }
-            self.present(guestModalViewController, animated: true)
+            // present with navigation bar
+            let guestModalNavigationController = UINavigationController(
+                rootViewController: guestModalViewController
+            )
+            guestModalNavigationController.modalPresentationStyle = .formSheet
+            self.present(guestModalNavigationController, animated: true)
         }
     }
     
@@ -394,13 +441,6 @@ extension CreateEventViewController: CreateEventViewDelegate {
         // APRESENTE O NAVIGATION CONTROLLER
         self.present(navigationControllerForPicker, animated: true, completion: nil)
     }
-    
-    func didSelectCategory(_ category: String) { // Novo método do delegate
-        self.eventCategoryName = category
-        if !(category.isEmpty) {
-            screen?.categoryErrorLabel.isHidden = true
-        }
-    }
 }
 
 //MARK: - UITextViewDelegate
@@ -443,7 +483,7 @@ struct EventDraft: Codable {
     let description: String?
     let dateTime: Date?
     let locationDetails: EventLocationDetails?
-    let categoryName: String?
+    let category: Tag?
     let isPrivate: Bool
 }
 

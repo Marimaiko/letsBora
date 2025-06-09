@@ -11,6 +11,7 @@ class CreateEventGuestModalViewController: UIViewController {
     private var guestsSelected: [User]
     var onGuestsSelected: (([User]) -> Void)?
     
+    // MARK: - Init
     init(guests: [User], selectedGuests: [User]) {
         self.usersToInvite = guests
         self.guestsSelected = selectedGuests
@@ -19,31 +20,55 @@ class CreateEventGuestModalViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Lyfecycle
     override func loadView() {
         screen = CreateEventGuestModalView()
         view  = screen
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        screen?.delegate(self)
+        setupNavigationBar()
         screen?.delegateTableView(to: self, data: self)
     }
+    
+    // MARK: - Setup UI
+    func setupNavigationBar() {
+        navigationItem.title = "Selecionar Convidados"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "OK",
+            style: .done,
+            target: self,
+            action: #selector(handleDone)
+        )
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: "Cancelar",
+            style: .plain,
+            target: self,
+            action: #selector(handleCancel)
+        )
+    }
+    
+    // MARK: Functions
     private func isSelected(_ user: User) -> Bool {
         return guestsSelected.contains(user)
     }
 }
-extension CreateEventGuestModalViewController: CreateEventGuestModalDelegate {
-    func didTappedInviteAFriendButton() {
+extension CreateEventGuestModalViewController {
+    @objc func handleDone() {
         onGuestsSelected?(guestsSelected)
         dismiss(animated: true)
     }
     
-    func didTappedCloseButton() {
+    @objc func handleCancel() {
         dismiss(animated: true)
     }
     
 }
-extension CreateEventGuestModalViewController : UITableViewDelegate, UITableViewDataSource {
+extension CreateEventGuestModalViewController :
+    UITableViewDelegate,
+        UITableViewDataSource
+{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return usersToInvite.count
     }

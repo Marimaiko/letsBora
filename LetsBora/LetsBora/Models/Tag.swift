@@ -13,7 +13,7 @@ enum TagKeys {
     static let colorHex = "colorHex"
     static let bgColorHex = "bgColorHex"
 }
-struct Tag: Identifiable {
+struct Tag: Identifiable, Codable {
     var id:String = UUID().uuidString
     var title: String
     var color: String
