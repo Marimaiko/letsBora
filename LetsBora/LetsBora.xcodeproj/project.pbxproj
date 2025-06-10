@@ -20,6 +20,7 @@
 		092AABAB2DE7626600CAC738 /* AuthUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092AABAA2DE7626400CAC738 /* AuthUser.swift */; };
 		092AABAD2DE763F000CAC738 /* FirebaseAuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092AABAC2DE763E900CAC738 /* FirebaseAuthRepository.swift */; };
 		092AABB12DE76D6700CAC738 /* FirebaseFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092AABB02DE76D6700CAC738 /* FirebaseFactory.swift */; };
+		0932B84B2DF8EA2D00B34476 /* EventDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0932B84A2DF8EA2600B34476 /* EventDTO.swift */; };
 		0935A9F02DC53C5B004B24A2 /* ReusableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0935A9ED2DC53C5B004B24A2 /* ReusableLabel.swift */; };
 		0935A9F12DC53C5B004B24A2 /* CustomContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0935A9E62DC53C5B004B24A2 /* CustomContainer.swift */; };
 		0935A9F22DC53C5B004B24A2 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0935A9E22DC53C5B004B24A2 /* TagView.swift */; };
@@ -140,6 +141,8 @@
 		092AABAA2DE7626400CAC738 /* AuthUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUser.swift; sourceTree = "<group>"; };
 		092AABAC2DE763E900CAC738 /* FirebaseAuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthRepository.swift; sourceTree = "<group>"; };
 		092AABB02DE76D6700CAC738 /* FirebaseFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseFactory.swift; sourceTree = "<group>"; };
+		0932B8442DF884EE00B34476 /* ApiCodeble.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = ApiCodeble.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		0932B84A2DF8EA2600B34476 /* EventDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDTO.swift; sourceTree = "<group>"; };
 		0935A9D22DC53C5B004B24A2 /* AvatarGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarGroupView.swift; sourceTree = "<group>"; };
 		0935A9D32DC53C5B004B24A2 /* AvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarImageView.swift; sourceTree = "<group>"; };
 		0935A9D52DC53C5B004B24A2 /* ChatMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageTableViewCell.swift; sourceTree = "<group>"; };
@@ -288,6 +291,14 @@
 			path = Auth;
 			sourceTree = "<group>";
 		};
+		0932B8492DF8EA1900B34476 /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				0932B84A2DF8EA2600B34476 /* EventDTO.swift */,
+			);
+			path = DTO;
+			sourceTree = "<group>";
+		};
 		0935A9D42DC53C5B004B24A2 /* Avatar */ = {
 			isa = PBXGroup;
 			children = (
@@ -423,6 +434,7 @@
 		09B02A082DE13A81004654F0 /* Event */ = {
 			isa = PBXGroup;
 			children = (
+				0932B8492DF8EA1900B34476 /* DTO */,
 				09D6AB332DEE224400ADD487 /* FirestoreEventRepository.swift */,
 				09B02A0B2DE13FD4004654F0 /* InMemoryEventRepository.swift */,
 				09B02A092DE13A9B004654F0 /* EventRepository.swift */,
@@ -709,6 +721,7 @@
 		539D7B802D8D9C050061BB67 /* LetsBora */ = {
 			isa = PBXGroup;
 			children = (
+				0932B8442DF884EE00B34476 /* ApiCodeble.playground */,
 				092AABA62DE755BD00CAC738 /* Network */,
 				09F557742DA9F86000D1D1A7 /* Resources */,
 				09F557672DA9F86000D1D1A7 /* Extensions */,
@@ -835,6 +848,7 @@
 				092AABAB2DE7626600CAC738 /* AuthUser.swift in Sources */,
 				09F715972DF0C14100A66114 /* ReusableTextField.swift in Sources */,
 				09F5578B2DA9F86000D1D1A7 /* LoginView.swift in Sources */,
+				0932B84B2DF8EA2D00B34476 /* EventDTO.swift in Sources */,
 				091E48FB2DC4302100F4C44D /* Survey.swift in Sources */,
 				09F5578C2DA9F86000D1D1A7 /* Tag.swift in Sources */,
 				0951EF962DEAB73000668494 /* ForgetPasswordViewModel.swift in Sources */,

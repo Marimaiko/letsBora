@@ -16,6 +16,17 @@ actor FirestoreTagRepository : TagRepository {
         self.collection = firestore.collection(TagKeys.collectionName)
     }
     
+    func retrieve(for id: String) async throws -> Tag {
+        let snapshot = try await collection.document(id).getDocument()
+        guard let data = snapshot.data() else {
+            throw TagRepositoryError.tagNotFound
+        }
+        guard let tag = Tag(from: data) else {
+            throw TagRepositoryError.retrieveFailed
+        }
+        return tag
+    }
+    
     func retrieveAll() async throws -> [Tag] {
         var tags: [Tag] = []
         

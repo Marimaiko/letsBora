@@ -17,7 +17,7 @@ protocol CreateEventViewDelegate: AnyObject {
 }
 
 class CreateEventView: UIView {
-    // MARK: -  Variables
+    // MARK: - Properties
     private weak var delegate: CreateEventViewDelegate?
     
     func delegate(inject: CreateEventViewDelegate){

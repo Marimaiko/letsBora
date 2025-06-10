@@ -23,7 +23,7 @@ enum UserKeys {
     static let createdAt = "createdAt"
 }
 
-struct User: Identifiable, Equatable{
+struct User: Identifiable, Equatable, Codable{
     var id: String = UUID().uuidString
     var name: String
     var email: String?

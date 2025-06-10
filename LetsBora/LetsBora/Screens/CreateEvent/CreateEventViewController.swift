@@ -17,7 +17,7 @@ class CreateEventViewController: UIViewController {
     private var eventDateTime: Date?
     private var eventLocation: EventLocationDetails?
     private var eventCategory: Tag?
-    private var enventGestNames: [User] = []
+    private var eventGuestNames: [User] = []
     private var isEventPrivate: Bool = false
     
     // MARK: - LyfeCycle
@@ -170,7 +170,7 @@ class CreateEventViewController: UIViewController {
             locationDetails: location, // Usar o objeto EventLocationDetails
             description: self.eventDescription,
             totalCost: nil, // TODO: Adicionar lógica para custo
-            participants: enventGestNames,
+            participants: eventGuestNames,
             owner: Utils.getLoggedInUser()
         )
 
@@ -367,14 +367,14 @@ extension CreateEventViewController: CreateEventViewDelegate {
             let guests = await self.viewModel?.fetchUsers() ?? []
             let guestModalViewController = CreateEventGuestModalViewController(
                 guests: guests,
-                selectedGuests: self.enventGestNames
+                selectedGuests: self.eventGuestNames
             )
             guestModalViewController
                 .onGuestsSelected = {[weak self] selectedGuests in
                 guard let self = self else { return }
                 
                 print("Selected guests: \(selectedGuests.map({$0.name}))")
-                self.enventGestNames = selectedGuests
+                self.eventGuestNames = selectedGuests
                 self.screen?.setAvatars(selectedGuests.map({$0.photo ?? ""}))
                 
             }

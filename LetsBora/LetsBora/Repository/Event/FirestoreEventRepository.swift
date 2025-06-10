@@ -28,27 +28,28 @@ actor FirestoreEventRepository: EventRepository {
     func retrieve(for id: String) async throws -> Event {
         let snapshot = try await collection.document(id).getDocument()
 
-        guard let data = snapshot.data() else {
-            throw EventRepositoryError.eventNotFound
-        }
-
-        guard let event = Event(from: data) else {
+        do {
+            let eventDTO = try snapshot.data(as: EventDTO.self)
+            let event = try await eventDTO.toEvent()
+            return event
+        } catch {
+            print("Failed to parse event or resolve references from document: \(id). Error: \(error)")
             throw EventRepositoryError.retrieveFailed
         }
-
-        return event
     }
-
     func retrieveAll() async throws -> [Event] {
         var events: [Event] = []
         do {
             let querySnapshot = try await collection.getDocuments()
             for doc in querySnapshot.documents {
-                guard let event = Event(from: doc.data()) else {
+                do {
+                    let eventDTO = try doc.data(as: EventDTO.self)
+                    let event = try await eventDTO.toEvent()
+                    events.append(event)
+                } catch {
                     print("Failed to parse event from document: \(doc.documentID)")
                     continue
                 }
-                events.append(event)
             }
         } catch {
             throw EventRepositoryError.retrieveAllFailed
@@ -80,12 +81,16 @@ actor FirestoreEventRepository: EventRepository {
             let querySnapshot = try await collection
                 .whereField(query.key, isEqualTo: query.value)
                 .getDocuments()
+            
             for doc in querySnapshot.documents {
-                guard let event = Event(from: doc.data()) else {
+                do {
+                    let eventDTO = try doc.data(as: EventDTO.self)
+                    let event = try await eventDTO.toEvent()
+                    events.append(event)
+                } catch {
                     print("Failed to parse event from document: \(doc.documentID)")
                     continue
                 }
-                events.append(event)
             }
         } catch {
             throw EventRepositoryError.eventNotFound
