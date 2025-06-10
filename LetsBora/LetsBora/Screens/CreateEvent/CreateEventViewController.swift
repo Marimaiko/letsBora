@@ -126,7 +126,8 @@ class CreateEventViewController: UIViewController {
                 }
 
         // 5. Validar Categoria (Similar à localização)
-        if eventCategory?.title == nil || ((eventCategory?.title.isEmpty) != nil) {
+        if eventCategory?.title == nil || eventCategory?.title == ""{
+            print(eventCategory ?? "Nenhum")
             screen.categoryErrorLabel.text = "Categoria é obrigatória."
             screen.categoryErrorLabel.isHidden = false
             isValid = false
@@ -163,7 +164,7 @@ class CreateEventViewController: UIViewController {
         let newEvent = Event(
             title: name,
             image: nil, // TODO: Adicionar lógica para imagem
-            tag: nil,   // // should be a tag instead string
+            tag: category,   // // should be a tag instead string
             visibility: self.isEventPrivate ? "Privado" : "Público",
             date: dateTime.toString(),
             locationDetails: location, // Usar o objeto EventLocationDetails
@@ -172,11 +173,11 @@ class CreateEventViewController: UIViewController {
             participants: enventGestNames,
             owner: Utils.getLoggedInUser()
         )
-        
+
         Task {
             do {
                 try await viewModel?.saveEvent(event: newEvent)
-                alert.showAlert(title: "Sucesso!", message: "Evento pronto para ser criado/publicado!")
+                alert.showAlert(title: "Sucesso!", message: "Evento criado com sucesso!")
             } catch {
                 alert.showAlert(title: "Erro", message: "Falha ao salvar o evento: \(error.localizedDescription)")
             }
