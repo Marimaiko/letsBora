@@ -31,13 +31,13 @@ class CreateEventView: UIView {
     //MARK: - UIComponents
     private lazy var titleLabel = ReusableLabel(text: "Criar Evento", labelType: .title)
     
-    lazy private var scrollView: UIScrollView = {
+    private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         return scrollView
     }()
     
-    lazy private var contentView: UIView = {
+    private lazy var contentView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -237,9 +237,9 @@ class CreateEventView: UIView {
         buttonStackView.spacing = 16
         buttonStackView.distribution = .fillEqually
         buttonStackView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         containerView.addSubview(buttonStackView)
-        
+
         NSLayoutConstraint.activate([
             buttonStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
             buttonStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
@@ -248,6 +248,9 @@ class CreateEventView: UIView {
         ])
         return containerView
     }()
+
+    
+    private let mode: EventViewMode
     
     //MARK: - Init
     override init(frame: CGRect) {
@@ -259,6 +262,7 @@ class CreateEventView: UIView {
         categoryCustomContainer.delegate = self
         
     }
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -376,6 +380,7 @@ extension CreateEventView: CustomContainerDelegate {
         }
     }
 }
+
 
 //MARK: - Constraints
 extension CreateEventView {

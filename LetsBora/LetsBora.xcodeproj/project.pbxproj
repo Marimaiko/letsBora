@@ -244,6 +244,12 @@
 		53126CFB2DE292220020E9C2 /* RegisterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		539D7B7E2D8D9C050061BB67 /* LetsBora.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LetsBora.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		539D7B8F2D8D9C070061BB67 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		920580A22DE7ED2E00B17E06 /* EditEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditEventView.swift; sourceTree = "<group>"; };
+		920580A32DE7ED2E00B17E06 /* EditEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditEventViewController.swift; sourceTree = "<group>"; };
+		920580A92DE8117900B17E06 /* EventViewMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewMode.swift; sourceTree = "<group>"; };
+		920580AB2DE892AC00B17E06 /* ExpensesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesCell.swift; sourceTree = "<group>"; };
+		920580AD2DE892BE00B17E06 /* ParticipantsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantsCell.swift; sourceTree = "<group>"; };
+		920580E72DECD7BE00B17E06 /* NewExpenseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewExpenseViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -380,6 +386,7 @@
 		0935AA092DC53D98004B24A2 /* CostControl */ = {
 			isa = PBXGroup;
 			children = (
+				920580E72DECD7BE00B17E06 /* NewExpenseViewController.swift */,
 				0935AA072DC53D98004B24A2 /* CostControlView.swift */,
 				0935AA082DC53D98004B24A2 /* CostControlViewController.swift */,
 			);
@@ -736,6 +743,15 @@
 			path = LetsBora;
 			sourceTree = "<group>";
 		};
+		920580A42DE7ED2E00B17E06 /* EditEvent */ = {
+			isa = PBXGroup;
+			children = (
+				920580A22DE7ED2E00B17E06 /* EditEventView.swift */,
+				920580A32DE7ED2E00B17E06 /* EditEventViewController.swift */,
+			);
+			path = EditEvent;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -869,6 +885,7 @@
 				09F7159C2DF0CBD200A66114 /* CalendarView.swift in Sources */,
 				09F557952DA9F86000D1D1A7 /* HomeViewController.swift in Sources */,
 				09F557962DA9F86000D1D1A7 /* SearchView.swift in Sources */,
+				920580E82DECD7D300B17E06 /* NewExpenseViewController.swift in Sources */,
 				368D35B62DC3E5760050FF68 /* ProfileViewController.swift in Sources */,
 				09F557972DA9F86000D1D1A7 /* SceneDelegate.swift in Sources */,
 				092AABA82DE7622500CAC738 /* AuthRepository.swift in Sources */,
@@ -904,6 +921,8 @@
 				0935A9FB2DC53C5B004B24A2 /* DividerView.swift in Sources */,
 				53126CFA2DE292100020E9C2 /* InMemoryUserRepository.swift in Sources */,
 				0935A9FC2DC53C5B004B24A2 /* SettingButtonView.swift in Sources */,
+				920580A52DE7ED2E00B17E06 /* EditEventView.swift in Sources */,
+				920580A62DE7ED2E00B17E06 /* EditEventViewController.swift in Sources */,
 				0935A9FD2DC53C5B004B24A2 /* TagCollectionViewCell.swift in Sources */,
 				09E33ED02DECBACD00EF2F50 /* GuestModalTableViewCell.swift in Sources */,
 				0935A9FE2DC53C5B004B24A2 /* AvatarImageView.swift in Sources */,
