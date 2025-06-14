@@ -6,14 +6,14 @@
 //
 import UIKit
 enum ContainerType{
-    case date, location, category
+    case date, location, category, privacity
 }
 
 protocol CustomContainerDelegate: AnyObject{
     func containerTapped(type: ContainerType)
 }
 
-class CustomContainer: UIView{
+class CustomContainer: UIView {
     
     weak var delegate: CustomContainerDelegate?
     var containerType: ContainerType
@@ -21,7 +21,7 @@ class CustomContainer: UIView{
     let fontSize: CGFloat = 16
     var iconName: String
     var labelName: String
-    var arrowName: String
+    
     
     private lazy var containerView: UIView = {
         let container = UIView()
@@ -60,25 +60,44 @@ class CustomContainer: UIView{
         return label
     }()
     
-    private lazy var arrowView: UIImageView = {
-        let arrowIcon = UIImageView(image: UIImage(systemName:arrowName))
-        arrowIcon.translatesAutoresizingMaskIntoConstraints = false
-        arrowIcon.contentMode = .scaleAspectFit
-        arrowIcon.tintColor = .gray
-        
-        return arrowIcon
-    }()
+    private var rightView: UIView?
+    
+    private func createRightView(_ view: UIView) -> UIView {
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }
     
     // MARK: - Init
     init(iconName: String, labelName: String, arrowName: String, type: ContainerType) {
+        
         self.iconName = iconName
         self.labelName = labelName
-        self.arrowName = arrowName
         self.containerType = type
+        
         super.init(frame: .zero)
         self.translatesAutoresizingMaskIntoConstraints = false
+        self.rightView = createRightView(
+            UIImageView(
+                image: UIImage(
+                    systemName: arrowName)
+            )
+        )
+        
         setupView()
     }
+    
+    init(iconName: String, labelName: String, rightView: UIView, type: ContainerType){
+        self.iconName = iconName
+        self.labelName = labelName
+        self.containerType = type
+        
+        super.init(frame: .zero)
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.rightView = createRightView(rightView)
+        
+        setupView()
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -102,14 +121,16 @@ class CustomContainer: UIView{
     }
 }
 
-
-
 extension CustomContainer: ViewCode {
     func setHierarchy() {
         self.addSubview(containerView)
         containerView.addSubview(iconView)
         containerView.addSubview(labelView)
-        containerView.addSubview(arrowView)
+        
+        if let rightView = rightView {
+            containerView.addSubview(rightView)
+        }
+        
     }
     
     func setConstraints() {
@@ -124,10 +145,20 @@ extension CustomContainer: ViewCode {
             
             labelView.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 8),
             labelView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
-            
-            arrowView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -8),
-            arrowView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
         ])
+        
+        if let rightView = rightView {
+            NSLayoutConstraint.activate([
+                rightView.trailingAnchor.constraint(
+                    equalTo: containerView.trailingAnchor,
+                    constant: -8
+                ),
+                rightView.centerYAnchor.constraint(
+                    equalTo: containerView.centerYAnchor
+                )
+            ])
+        }
+        
     }
 }
 

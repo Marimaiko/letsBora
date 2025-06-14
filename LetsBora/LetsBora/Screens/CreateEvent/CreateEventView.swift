@@ -8,23 +8,21 @@
 import UIKit
 
 protocol CreateEventViewDelegate: AnyObject {
-    func didConfirmDateTime(date: Date, time: Date)
-    func publishEventTapped()
-    func saveDraftTapped()
+    func didTapPublishButton()
+    func didTapDraftButton()
     func didTapLocationContainer()
-    func didSelectCategory(_ category: String)
+    func didTapCalendarContainer()
+    func didTapCategoryContainer()
     func didTapInviteButton()
 }
 
 class CreateEventView: UIView {
-    // Delegate para o ViewController
+    // MARK: - Properties
     private weak var delegate: CreateEventViewDelegate?
     
     func delegate(inject: CreateEventViewDelegate){
         self.delegate =  inject
     }
-    
-    // MARK: - variable
     public var selectedDateAndTime: Date? // Para armazenar a data/hora combinada
     private var selectedCategory: String?
     var categories: [String] = []
@@ -46,119 +44,52 @@ class CreateEventView: UIView {
     }()
     
     // --- Nome do Evento ---
-    lazy var nameEventTextField: UITextField = {
-        let textField = UITextField()
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "Nome do evento"
-        textField.borderStyle = .roundedRect
-        textField.textColor = .black
-        textField.layer.shadowColor = UIColor.black.cgColor
-        textField.layer.shadowOpacity = 0.1
-        textField.layer.shadowOffset = CGSize(width: 0, height: 2)
-        textField.heightAnchor.constraint(equalToConstant: 48).isActive = true
-        return textField
+    lazy var nameEventTextField: ReusableTextField = {
+        let reusabelTextField = ReusableTextField(
+            placeholder: "Nome do Evento")
+        return reusabelTextField
     }()
     // used in validation
-    lazy var nameEventErrorLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .red
-        label.font = .systemFont(ofSize: 12)
-        label.isHidden = true
-        return label
+    lazy var nameEventErrorLabel: ReusableLabel = {
+        let reusableLabel = ReusableLabel(
+            preset: .errorLabel
+        )
+        return reusableLabel
     }()
     
     // --- Descrição ---
-    lazy var descriptionEventTextView: UITextView = {
-        let textView = UITextView()
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.textColor = .black
-        textView.layer.borderColor = UIColor.systemGray4.cgColor
-        textView.layer.borderWidth = 0.5
-        textView.layer.cornerRadius = 5
-        textView.layer.shadowColor = UIColor.black.cgColor
-        textView.layer.shadowOpacity = 0.1
-        textView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        textView.isScrollEnabled = true
-        textView.textContainerInset = UIEdgeInsets(top: 8, left: 5, bottom: 8, right: 5)
-        textView.heightAnchor.constraint(equalToConstant: 108).isActive = true
-        return textView
+    let descriptionEventTextView : ReusableTextView = {
+        let reusableTextView = ReusableTextView(
+            placeholder: "Adicione uma descrição para o seu evento"
+        )
+        return reusableTextView
     }()
     
-    lazy var descriptionPlaceholderLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Descrição"
-        label.font = UIFont.systemFont(ofSize: (descriptionEventTextView.font?.pointSize ?? 16))
-        label.textColor = .placeholderText
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    lazy var descriptionErrorLabel: UILabel = { // Label de erro para descrição
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .red
-        label.font = .systemFont(ofSize: 12)
-        label.isHidden = true
-        return label
+    lazy var descriptionErrorLabel: ReusableLabel = { // Label de erro para descrição
+        let reusableLabel = ReusableLabel(
+            preset: .errorLabel
+        )
+        return reusableLabel
     }()
     
     // --- Data e Hora ---
     lazy var dateCustomContainer: CustomContainer = {
-        let container = CustomContainer(iconName: "calendar", labelName: "Data e Hora", arrowName: "chevron.right", type: .date)
+        let container = CustomContainer(
+            iconName: "calendar",
+            labelName: "Data e Hora",
+            arrowName: "chevron.right",
+            type: .date
+        )
         return container
     }()
     
     lazy var dateTimeErrorLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .red
-        label.font = .systemFont(ofSize: 12)
-        label.isHidden = true
-        return label
+        let reusableLabel = ReusableLabel(
+            preset: .errorLabel
+        )
+        return reusableLabel
     }()
     
-    lazy var calendarContainerView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 10
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOpacity = 0.2
-        view.layer.shadowOffset = CGSize(width: 0, height: 2)
-        view.isHidden = true
-        return view
-    }()
-    
-    lazy var calendar: UIDatePicker = {
-        let picker = UIDatePicker()
-        picker.translatesAutoresizingMaskIntoConstraints = false
-        picker.datePickerMode = .date
-        picker.preferredDatePickerStyle = .inline
-        picker.minimumDate = Date()
-        return picker
-    }()
-    
-    lazy var timePicker: UIDatePicker = {
-        let picker = UIDatePicker()
-        picker.translatesAutoresizingMaskIntoConstraints = false
-        picker.datePickerMode = .time
-        picker.preferredDatePickerStyle = .wheels
-        return picker
-    }()
-    
-    private lazy var dateTimeConfirmButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Confirmar", for: .normal)
-        button.setTitleColor(.systemBlue, for: .normal)
-        button.backgroundColor = UIColor(red: 238/255, green: 238/255, blue: 238/255, alpha: 1.0)
-        button.layer.cornerRadius = 8
-        button.heightAnchor.constraint(equalToConstant: 44).isActive = true
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 22)
-        button.addTarget(self, action: #selector(confirmDateTimeTapped), for: .touchUpInside)
-        return button
-    }()
     
     // --- Localização ---
     lazy var locationCustomContainer: CustomContainer = {
@@ -167,12 +98,10 @@ class CreateEventView: UIView {
     }()
     
     lazy var locationErrorLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .red
-        label.font = .systemFont(ofSize: 12)
-        label.isHidden = true
-        return label
+        let reusableLabel = ReusableLabel(
+            preset: .errorLabel
+        )
+        return reusableLabel
     }()
     
     // --- Categoria ---
@@ -180,13 +109,6 @@ class CreateEventView: UIView {
         let textField = UITextField()
         textField.isHidden = true
         return textField
-    }()
-    
-    private lazy var categoryPickerView: UIPickerView = {
-        let picker = UIPickerView()
-        picker.delegate = self
-        picker.dataSource = self
-        return picker
     }()
     
     lazy var categoryCustomContainer: CustomContainer = {
@@ -199,17 +121,12 @@ class CreateEventView: UIView {
         return container
     }()
     
-    let switchView = UISwitch()
-    
     lazy var categoryErrorLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .red
-        label.font = .systemFont(ofSize: 12)
-        label.isHidden = true
-        return label
+        let reusableLabel = ReusableLabel(
+            preset: .errorLabel
+        )
+        return reusableLabel
     }()
-    
     
     // --- Público ou Privado ---
     lazy var eventPrivacySwitch: UISwitch = {
@@ -220,20 +137,14 @@ class CreateEventView: UIView {
         return switchView
     }()
     
-    private lazy var publicOrPrivateContainerView: UIView = {
-        let containerView = UIView()
-        containerView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.backgroundColor = .white
-        containerView.layer.cornerRadius = 5
-        containerView.layer.shadowColor = UIColor.black.cgColor
-        containerView.layer.shadowOpacity = 0.1
-        containerView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        return containerView
-    }()
-    private lazy var leftView : UIView = {
-        let leftView = makeIconLabelView(iconName: "lock", labelText: "Evento Privado")
-        leftView.translatesAutoresizingMaskIntoConstraints = false
-        return leftView
+    lazy var publicOrPrivateContainerView: CustomContainer = {
+        let container = CustomContainer(
+            iconName: "lock",
+            labelName: "Evento Privado",
+            rightView: eventPrivacySwitch,
+            type: .privacity
+        )
+        return container
     }()
     
     // --- Convidar participantes ---
@@ -343,8 +254,6 @@ class CreateEventView: UIView {
         super.init(frame: frame)
         setupHierarchy()
         setupConstraints()
-        setupCategoryPicker()
-        setupCalendarConstraints()
         dateCustomContainer.delegate = self
         locationCustomContainer.delegate = self
         categoryCustomContainer.delegate = self
@@ -358,7 +267,6 @@ class CreateEventView: UIView {
         addSubview(scrollView)
         
         addSubview(categoryTextField)
-        addSubview(calendarContainerView)
         
         scrollView.addSubview(contentView)
         
@@ -366,9 +274,8 @@ class CreateEventView: UIView {
         
         contentView.addSubview(nameEventTextField)
         contentView.addSubview(nameEventErrorLabel)
-
+        
         contentView.addSubview(descriptionEventTextView)
-        contentView.addSubview(descriptionPlaceholderLabel)
         contentView.addSubview(descriptionErrorLabel)
         
         contentView.addSubview(dateCustomContainer)
@@ -381,18 +288,8 @@ class CreateEventView: UIView {
         contentView.addSubview(categoryErrorLabel)
         
         contentView.addSubview(publicOrPrivateContainerView)
-        
         contentView.addSubview(participantsView)
-        
         contentView.addSubview(actionButtonsContainerView)
-        
-        
-        calendarContainerView.addSubview(calendar)
-        calendarContainerView.addSubview(timePicker)
-        calendarContainerView.addSubview(dateTimeConfirmButton)
-        
-        publicOrPrivateContainerView.addSubview(leftView)
-        publicOrPrivateContainerView.addSubview(eventPrivacySwitch)
         
         participantsView.addSubview(iconLabelView)
         participantsView.addSubview(inviteButton)
@@ -436,69 +333,13 @@ class CreateEventView: UIView {
         return stackView
     }
     
-    //Função Ícone de seta
-    func makeArrowIconView() -> UIView {
-        let arrowContainerView = UIView()
-        arrowContainerView.translatesAutoresizingMaskIntoConstraints = false
-        
-        let arrowIcon = UIImageView(image: UIImage(systemName: "chevron.right"))
-        arrowIcon.translatesAutoresizingMaskIntoConstraints = false
-        arrowIcon.contentMode = .scaleAspectFit
-        arrowIcon.tintColor = .gray
-        
-        arrowContainerView.addSubview(arrowIcon)
-        
-        NSLayoutConstraint.activate([
-            arrowContainerView.widthAnchor.constraint(equalToConstant: 30),
-            arrowContainerView.heightAnchor.constraint(equalToConstant: 42),
-            
-            arrowIcon.centerXAnchor.constraint(equalTo: arrowContainerView.centerXAnchor),
-            arrowIcon.centerYAnchor.constraint(equalTo: arrowContainerView.centerYAnchor),
-            arrowIcon.widthAnchor.constraint(equalToConstant: 16),
-            arrowIcon.heightAnchor.constraint(equalToConstant: 16)
-        ])
-        
-        return arrowContainerView
-    }
-    
-    //FUNÇÕES DO CALENDÁRIO
-    // Função para mostrar o calendário
-    @objc private func showCalendar() {
-        calendarContainerView.isHidden = false
-        self.bringSubviewToFront(calendarContainerView)
-    }
-    
-    // Função para fechar o calendário
-    @objc private func confirmDateTimeTapped() {
-        self.endEditing(true)
-        
-        // Combina data do calendário com hora do timePicker
-        let calendarDate = calendar.date
-        let timeComponents = Calendar.current.dateComponents([.hour, .minute], from: timePicker.date)
-        
-        if let hour = timeComponents.hour, let minute = timeComponents.minute {
-            if let combinedDate = Calendar.current.date(bySettingHour: hour, minute: minute, second: 0, of: calendarDate) {
-                self.selectedDateAndTime = combinedDate
-                
-                // Formata a data e hora para mostrar no `dateCustomContainer`
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "dd/MM/yyyy 'às' HH:mm"
-                dateCustomContainer.updateLabelName(newName: dateFormatter.string(from: combinedDate))
-                
-                // Notifica o delegate (ViewController)
-                delegate?.didConfirmDateTime(date: calendarDate, time: timePicker.date)
-            }
-        }
-        calendarContainerView.isHidden = true
-    }
-    
     // Funções para os botões de ação notificarem o delegate
     @objc private func publishButtonAction() {
-        delegate?.publishEventTapped()
+        delegate?.didTapPublishButton()
     }
     
     @objc private func draftButtonAction() {
-        delegate?.saveDraftTapped()
+        delegate?.didTapDraftButton()
     }
     
     // Limpa todos os erros visuais
@@ -524,54 +365,14 @@ class CreateEventView: UIView {
     
 }
 
-extension CreateEventView: UIPickerViewDelegate, UIPickerViewDataSource {
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1 // Apenas uma coluna para categorias
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return categories.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return categories[row]
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if !categories.isEmpty && row < categories.count {
-            selectedCategory = categories[row]
-            // Opcional: Atualizar o label do container imediatamente ao selecionar,
-            // mas geralmente se faz isso ao clicar em "OK" na toolbar.
-            categoryCustomContainer.updateLabelName(newName: selectedCategory ?? "Categoria")
-        }
-    }
-    
-    @objc private func categoryPickerDoneTapped() {
-        if let category = selectedCategory {
-            categoryCustomContainer.updateLabelName(newName: category)
-            delegate?.didSelectCategory(category) // Notifica o ViewController
-        } else if !categories.isEmpty {
-            // Se nada foi explicitamente selecionado, mas há categorias,
-            // seleciona a primeira e notifica.
-            let firstCategory = categories[0]
-            selectedCategory = firstCategory
-            categoryPickerView.selectRow(0, inComponent: 0, animated: false) // Atualiza o picker visualmente
-            categoryCustomContainer.updateLabelName(newName: firstCategory)
-            delegate?.didSelectCategory(firstCategory)
-        }
-        categoryTextField.resignFirstResponder() // Dispensa o picker
-    }
-}
-
 extension CreateEventView: CustomContainerDelegate {
     func containerTapped(type: ContainerType) {
         if type == .date {
-            calendarContainerView.isHidden = false
-            self.bringSubviewToFront(calendarContainerView)
+            delegate?.didTapCalendarContainer()
         } else if type == .location {
             delegate?.didTapLocationContainer()
         } else if type == .category {
-            categoryTextField.becomeFirstResponder()
+            delegate?.didTapCategoryContainer()
         }
     }
 }
@@ -607,13 +408,10 @@ extension CreateEventView {
             nameEventErrorLabel.trailingAnchor.constraint(equalTo: nameEventTextField.trailingAnchor),
             
             // Descrição + Erro
-            descriptionEventTextView.topAnchor.constraint(equalTo: nameEventErrorLabel.bottomAnchor, constant: 16), // Ajustado para vir após o erro
+            descriptionEventTextView.topAnchor.constraint(equalTo: nameEventErrorLabel.bottomAnchor, constant: 16),
             descriptionEventTextView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             descriptionEventTextView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             // descriptionEventTextView.heightAnchor já definido
-            
-            descriptionPlaceholderLabel.topAnchor.constraint(equalTo: descriptionEventTextView.topAnchor, constant: 8),
-            descriptionPlaceholderLabel.leadingAnchor.constraint(equalTo: descriptionEventTextView.leadingAnchor, constant: 10), // Ajustado para alinhar com textContainerInset.left
             
             descriptionErrorLabel.topAnchor.constraint(equalTo: descriptionEventTextView.bottomAnchor, constant: 4),
             descriptionErrorLabel.leadingAnchor.constraint(equalTo: descriptionEventTextView.leadingAnchor),
@@ -650,15 +448,10 @@ extension CreateEventView {
             categoryErrorLabel.trailingAnchor.constraint(equalTo: categoryCustomContainer.trailingAnchor),
             
             // Privacidade
-            publicOrPrivateContainerView.topAnchor.constraint(equalTo: categoryErrorLabel.bottomAnchor, constant: 16), // publicOrPrivateTextField renomeado
+            publicOrPrivateContainerView.topAnchor.constraint(equalTo: categoryErrorLabel.bottomAnchor, constant: 16),
             publicOrPrivateContainerView.heightAnchor.constraint(equalToConstant: 48),
             publicOrPrivateContainerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             publicOrPrivateContainerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            
-            leftView.leadingAnchor.constraint(equalTo: publicOrPrivateContainerView.leadingAnchor, constant: 8),
-            leftView.centerYAnchor.constraint(equalTo: publicOrPrivateContainerView.centerYAnchor),
-            eventPrivacySwitch.trailingAnchor.constraint(equalTo: publicOrPrivateContainerView.trailingAnchor, constant: -16),
-            eventPrivacySwitch.centerYAnchor.constraint(equalTo: publicOrPrivateContainerView.centerYAnchor),
             
             // Participantes
             participantsView.topAnchor.constraint(equalTo: publicOrPrivateContainerView.bottomAnchor, constant: 24),
@@ -672,7 +465,6 @@ extension CreateEventView {
             inviteButton.trailingAnchor.constraint(equalTo: participantsView.trailingAnchor, constant: -12),
             inviteButton.bottomAnchor.constraint(equalTo: participantsView.bottomAnchor, constant: -12),
             
-            
             // Botões de Ação
             actionButtonsContainerView.topAnchor.constraint(equalTo: participantsView.bottomAnchor, constant: 32),
             actionButtonsContainerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -681,7 +473,7 @@ extension CreateEventView {
             actionButtonsContainerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -32) // Garante que o scrollview tenha conteúdo suficiente
         ])
     }
-    
+    /*
     private func setupCategoryPicker() {
         // Configura o inputView e inputAccessoryView para o categoryTextField
         categoryTextField.inputView = categoryPickerView
@@ -697,32 +489,6 @@ extension CreateEventView {
         // Mesmo que oculto, ele precisa estar na view.
         addSubview(categoryTextField)
     }
+     */
     
-    func setupCalendarConstraints() { // Renomeado
-        NSLayoutConstraint.activate([
-            calendarContainerView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            calendarContainerView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            calendarContainerView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.9),
-            // Ajustar altura do container do calendário para caber os componentes
-            // calendarContainerView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.7), // Pode ser muito grande
-            // Vamos definir uma altura baseada nos seus componentes internos
-            
-            calendar.topAnchor.constraint(equalTo: calendarContainerView.topAnchor, constant: 8),
-            calendar.leadingAnchor.constraint(equalTo: calendarContainerView.leadingAnchor, constant: 16),
-            calendar.trailingAnchor.constraint(equalTo: calendarContainerView.trailingAnchor, constant: -16),
-            calendar.heightAnchor.constraint(equalToConstant: 300), // Como definido antes
-            
-            timePicker.topAnchor.constraint(equalTo: calendar.bottomAnchor, constant: 8),
-            timePicker.leadingAnchor.constraint(equalTo: calendarContainerView.leadingAnchor, constant: 16),
-            timePicker.trailingAnchor.constraint(equalTo: calendarContainerView.trailingAnchor, constant: -16),
-            // Altura do timePicker é intrínseca para .wheels, mas pode-se adicionar uma constraint se necessário.
-            // timePicker.heightAnchor.constraint(equalToConstant: 150), // Exemplo
-            
-            dateTimeConfirmButton.topAnchor.constraint(equalTo: timePicker.bottomAnchor, constant: 16), // Aumentar espaçamento
-            dateTimeConfirmButton.centerXAnchor.constraint(equalTo: calendarContainerView.centerXAnchor),
-            dateTimeConfirmButton.bottomAnchor.constraint(equalTo: calendarContainerView.bottomAnchor, constant: -16),
-            dateTimeConfirmButton.widthAnchor.constraint(equalToConstant: 160),
-            // dateTimeConfirmButton.heightAnchor já definido na criação
-        ])
-    }
 }
