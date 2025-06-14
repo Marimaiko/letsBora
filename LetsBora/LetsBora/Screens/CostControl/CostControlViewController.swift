@@ -34,7 +34,7 @@ class CostControlViewController: UIViewController {
         view.backgroundColor = UIColor(red: 248/255, green: 248/255, blue: 248/255, alpha: 1.0)
     }
     
-    @objc func didTapNewExpense() {
+    func handleNewExpense() {
         let modal = NewExpenseViewController()
         
         modal.onSave = { [weak self] newExpense in
@@ -44,7 +44,7 @@ class CostControlViewController: UIViewController {
             self.screen?.expensesTableView.reloadData()
             self.updateTableHeights()
         }
-
+        
         modal.modalPresentationStyle = .pageSheet
         if let sheet = modal.sheetPresentationController {
             sheet.detents = [.medium()]
@@ -52,28 +52,32 @@ class CostControlViewController: UIViewController {
         present(modal, animated: true)
     }
     
+    @objc func didTapNewExpense() {
+        handleNewExpense()
+    }
+    
     // MARK: - Setup
     private func setupTableViews() {
         guard let screen = screen else { return }
-
+        
         screen.expensesTableView.dataSource = self
         screen.expensesTableView.delegate = self
         screen.expensesTableView.register(ExpenseCell.self, forCellReuseIdentifier: ExpenseCell.identifier)
-
+        
         screen.participantsTableView.dataSource = self
         screen.participantsTableView.delegate = self
         screen.participantsTableView.register(ParticipantCell.self, forCellReuseIdentifier: ParticipantCell.identifier)
     }
-
+    
     // MARK: - Table Height Updates
     private func updateTableHeights() {
         guard let screen = screen else { return }
-
+        
         let cellHeight: CGFloat = 76 // Altura real considerando padding
-
+        
         screen.expensesTableHeightConstraint?.constant = CGFloat(expenses.count) * cellHeight
         screen.participantsTableHeightConstraint?.constant = CGFloat(participants.count) * cellHeight
-
+        
         screen.layoutIfNeeded()
     }
 }

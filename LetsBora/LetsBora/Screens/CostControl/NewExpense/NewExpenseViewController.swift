@@ -15,7 +15,6 @@ class NewExpenseViewController: UIViewController {
     private let valueField = UITextField()
     private let iconImageView = UIImageView()
     private let saveButton = UIButton(type: .system)
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()

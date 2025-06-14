@@ -250,8 +250,6 @@ class CreateEventView: UIView {
     }()
 
     
-    private let mode: EventViewMode
-    
     //MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
