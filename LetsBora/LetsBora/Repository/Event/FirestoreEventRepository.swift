@@ -44,6 +44,7 @@ actor FirestoreEventRepository: EventRepository {
             for doc in querySnapshot.documents {
                 do {
                     let eventDTO = try doc.data(as: EventDTO.self)
+                    print("event DTO: \(eventDTO)")
                     let event = try await eventDTO.toEvent()
                     events.append(event)
                 } catch {

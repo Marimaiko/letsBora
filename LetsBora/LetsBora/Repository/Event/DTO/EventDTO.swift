@@ -14,7 +14,7 @@ struct EventDTO: Identifiable, Codable {
     var tag: String? // tagId
     var visibility: String?
     var date: String
-    var locationDetails: EventLocationDetails?
+    var location: EventLocationDetails?
     var description: String?
     var totalCost: String?
     var participants: [String]? // participants IDs
@@ -60,7 +60,7 @@ struct EventDTO: Identifiable, Codable {
             tag: nil, // não carregado
             visibility: visibility,
             date: date,
-            locationDetails: locationDetails,
+            locationDetails: location,
             description: description,
             totalCost: totalCost,
             participants: nil, // não carregado

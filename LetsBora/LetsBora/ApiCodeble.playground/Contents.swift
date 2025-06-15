@@ -1,6 +1,16 @@
 import UIKit
 
-var viewModel = MyEventViewModel()
+// event
+let eventRepository = FirestoreEventRepository()
 
-print(viewModel.myEvents)
-
+Task{
+    do {
+        var events = try await eventRepository.retrieveAll()
+        for event in events {
+            print(event)
+            print()
+        }
+    } catch {
+        print(error)
+    }
+}

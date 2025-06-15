@@ -23,6 +23,13 @@ class MyEventsViewController: UIViewController {
             true,
             animated: animated
         )
+        // fetch data
+        viewModel.loadEvents { [weak self] events in
+            guard let self = self else { return }
+            self.events = events
+            print("events fetched \(events.count) successfully")
+            loadDataAndUpdateView()
+        }
     }
     
     override func loadView() {
@@ -32,21 +39,13 @@ class MyEventsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.loadEvents { [weak self] events in
-            guard let self = self else { return }
-            self.events = events
-            print("events fetched \(events.count) successfully")
-            self.mainView?.tableView.reloadData()
-            loadDataAndUpdateView()
-            
-            configureTableView()
-        }
-        
+        configureTableView()
         self.mainView?.delegate = self
-        loadDataAndUpdateView()
+        
     }
     
     private func loadDataAndUpdateView() {
+        
         // Lógica para carregar/definir o nextEvent e pastEvents
         // Por enquanto, vamos pegar o primeiro dos "MockData.events" como "próximo evento"
         // e os "MockData.pastEvents" para a tabela.

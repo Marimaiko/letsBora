@@ -42,11 +42,18 @@ class EventCardTableViewCell: UITableViewCell, EventCardViewDelegate {
     }()
 
     // MARK: - Public Method
-    public func setupCell(with event: Event, isPast: Bool = false) {
+    public func setupCell(
+        with event: Event,
+        isPast: Bool = false
+    ) {
         self.currentEvent = event
         
         eventCard.setTitleLabel(event.title)
-        eventCard.setLocationLabel(event.locationDetails?.displayString ?? "Local não informado")
+        print(event.locationDetails ?? "Local não informado")
+        eventCard.setLocationLabel(
+            event.locationDetails?.displayString
+            ?? "Local não informado"
+        )
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd MMM" // Ex: "15 Mar"
