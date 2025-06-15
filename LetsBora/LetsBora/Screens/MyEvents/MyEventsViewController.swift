@@ -9,26 +9,40 @@ import UIKit
 
 class MyEventsViewController: UIViewController {
     //MARK: Properties
-    private let mainView = MyEventsView()
-    private var events: [Event] = MockData.pastEvents
+    private var mainView: MyEventsView?
+    private var events: [Event]?
     private var nextEvent: Event?
+    private var viewModel: MyEventViewModel = MyEventViewModel()
     
     // MARK: - LifeCycle
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(
+        _ animated: Bool
+    ) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-        mainView.tableView.reloadData()
-        loadDataAndUpdateView()
+        navigationController?.setNavigationBarHidden(
+            true,
+            animated: animated
+        )
     }
     
     override func loadView() {
+        mainView = MyEventsView()
         self.view = mainView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureTableView()
-        self.mainView.delegate = self
+        viewModel.loadEvents { [weak self] events in
+            guard let self = self else { return }
+            self.events = events
+            print("events fetched \(events.count) successfully")
+            self.mainView?.tableView.reloadData()
+            loadDataAndUpdateView()
+            
+            configureTableView()
+        }
+        
+        self.mainView?.delegate = self
         loadDataAndUpdateView()
     }
     
@@ -54,20 +68,23 @@ class MyEventsViewController: UIViewController {
         
         
         // Para a tableView, os dados já estão em self.pastEvents
-        self.mainView.tableView.reloadData()
+        self.mainView?.tableView.reloadData()
     }
 
     
     func configureTableView() {
-        mainView.tableView.register(
+        mainView?.tableView.register(
             EventCardTableViewCell.self,
             forCellReuseIdentifier: EventCardTableViewCell.identifier
         )
-        mainView.tableView.dataSource = self
+        mainView?.tableView.dataSource = self
     }
 
     // Função helper para navegação
-    private func navigateToDetails(for event: Event, isPast: Bool = false) {
+    private func navigateToDetails(
+        for event: Event,
+        isPast: Bool = false
+    ) {
         let detailVC = EventDetailsViewController(event: event) // Passa o evento correto
         // Você pode querer passar 'isPast' para EventDetailsViewController se ele se comportar diferente
         // Ex: detailVC.isPastEvent = isPast
@@ -81,7 +98,10 @@ extension MyEventsViewController: MyEventsViewDelegate {
     func seeDetailsTapped() {
         // Este é chamado pelo eventCardView1 da MyEventsView
         if let eventToShow = self.nextEvent { // Usa o evento que definimos como "próximo"
-            navigateToDetails(for: eventToShow, isPast: false) // Próximo evento não é "passado"
+            navigateToDetails(
+                for: eventToShow,
+                isPast: false
+            ) // Próximo evento não é "passado"
         } else {
             print("Nenhum 'próximo evento' definido para exibir detalhes.")
             // Opcional: Mostrar um alerta ou tratar o caso de nenhum evento em destaque.
@@ -92,11 +112,21 @@ extension MyEventsViewController: MyEventsViewDelegate {
 // MARK: - Table View Delegate
 extension MyEventsViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return events.count
+        
+        print("events?.count ?? 0: \(events?.count ?? 0)")
+        
+        return events?.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: EventCardTableViewCell.identifier, for: indexPath) as? EventCardTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: EventCardTableViewCell.identifier,
+            for: indexPath
+        ) as? EventCardTableViewCell else {
+            return UITableViewCell()
+        }
+        
+        guard let events = self.events else {
             return UITableViewCell()
         }
         let event = events[indexPath.row]

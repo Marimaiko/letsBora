@@ -197,7 +197,7 @@ class CreateEventViewController: UIViewController {
         let draftName = screen.nameEventTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         let draftDescription = screen.descriptionEventTextView.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         let draftDateTime = self.eventDateTime
-        let draftCategory = self.eventCategory
+        // let draftCategory = self.eventCategory
         let draftIsPrivate = screen.eventPrivacySwitch.isOn
         
         // 2. Criar um objeto de rascunho (usando a struct EventDraft)
