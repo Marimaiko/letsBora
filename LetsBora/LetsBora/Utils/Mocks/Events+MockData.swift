@@ -6,7 +6,7 @@ import CoreLocation
 extension MockData {
     #warning("Refactor this to use as a extension to convert string to date")
     // Helper para criar datas para os mocks
-    static func createMockDate(dayMonthString: String, year: Int = 2025) -> Date {
+     static func createMockDate(dayMonthString: String, year: Int = 2025) -> Date {
         let dateFormatter = DateFormatter()
         // O formato deve corresponder exatamente às suas strings "DD Mes"
         dateFormatter.dateFormat = "dd MMM yyyy"

@@ -478,8 +478,6 @@ extension CreateEventView {
     }
     /*
      private func setupCategoryPicker() {
-     
-     
      // Configura o inputView e inputAccessoryView para o categoryTextField
      categoryTextField.inputView = categoryPickerView
      
