@@ -337,9 +337,9 @@ extension CreateEventViewController: CreateEventViewDelegate {
                 guard let self = self else { return }
                 self.eventDateTime = date
                 self.screen?.dateCustomContainer
-                     .updateLabelName(
-                         newName:date.toString()
-                     )
+                    .updateLabelName(
+                        newName:date.toString()
+                    )
             }
             
             // present with navigation bar

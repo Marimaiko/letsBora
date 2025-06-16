@@ -477,21 +477,21 @@ extension CreateEventView {
         ])
     }
     /*
-     private func setupCategoryPicker() {
-     // Configura o inputView e inputAccessoryView para o categoryTextField
-     categoryTextField.inputView = categoryPickerView
+    private func setupCategoryPicker() {
+        // Configura o inputView e inputAccessoryView para o categoryTextField
+        categoryTextField.inputView = categoryPickerView
+        
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let doneButton = UIBarButtonItem(title: "OK", style: .done, target: self, action: #selector(categoryPickerDoneTapped))
+        toolbar.setItems([flexibleSpace, doneButton], animated: false)
+        categoryTextField.inputAccessoryView = toolbar
      
-     let toolbar = UIToolbar()
-     toolbar.sizeToFit()
-     let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-     let doneButton = UIBarButtonItem(title: "OK", style: .done, target: self, action: #selector(categoryPickerDoneTapped))
-     toolbar.setItems([flexibleSpace, doneButton], animated: false)
-     categoryTextField.inputAccessoryView = toolbar
-     
-     // Adicionar o categoryTextField à hierarquia para que possa se tornar first responder
-     // Mesmo que oculto, ele precisa estar na view.
-     addSubview(categoryTextField)
-     }
+        // Adicionar o categoryTextField à hierarquia para que possa se tornar first responder
+        // Mesmo que oculto, ele precisa estar na view.
+        addSubview(categoryTextField)
+    }
      */
     
 }
