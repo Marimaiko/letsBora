@@ -395,7 +395,7 @@ extension CreateEventView {
             contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             
-            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20), // Reduzido o top para caber mais na tela
             titleLabel.heightAnchor.constraint(equalToConstant: 40),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
@@ -473,7 +473,25 @@ extension CreateEventView {
             actionButtonsContainerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             actionButtonsContainerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             actionButtonsContainerView.heightAnchor.constraint(equalToConstant: 50),
-            actionButtonsContainerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -32)
+            actionButtonsContainerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -32) // Garante que o scrollview tenha conteúdo suficiente
         ])
     }
-}
+    /*
+         private func setupCategoryPicker() {
+             // Configura o inputView e inputAccessoryView para o categoryTextField
+             categoryTextField.inputView = categoryPickerView
+
+             let toolbar = UIToolbar()
+             toolbar.sizeToFit()
+             let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+             let doneButton = UIBarButtonItem(title: "OK", style: .done, target: self, action: #selector(categoryPickerDoneTapped))
+             toolbar.setItems([flexibleSpace, doneButton], animated: false)
+             categoryTextField.inputAccessoryView = toolbar
+
+             // Adicionar o categoryTextField à hierarquia para que possa se tornar first responder
+             // Mesmo que oculto, ele precisa estar na view.
+             addSubview(categoryTextField)
+         }
+          */
+
+     }

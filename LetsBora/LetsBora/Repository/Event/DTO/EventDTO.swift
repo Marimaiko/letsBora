@@ -13,7 +13,7 @@ struct EventDTO: Identifiable, Codable {
     var image: String?
     var tag: String? // tagId
     var visibility: String?
-    var date: Date
+    var date: String
     var locationDetails: EventLocationDetails?
     var description: String?
     var totalCost: String?

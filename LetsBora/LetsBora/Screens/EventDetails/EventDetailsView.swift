@@ -331,7 +331,14 @@ class EventDetailsView: UIView {
 
         // Data e Hora
         if let dateLabel = dateTimeLabel.arrangedSubviews.last as? UILabel {
-            let fullText = eventDateFormatter.string(from: event.date)
+            // Supondo que event.date é um objeto Date. Se você tiver data de início e fim:
+            // let startTime = eventTimeFormatter.string(from: event.startDate)
+            // let endTime = eventTimeFormatter.string(from: event.endDate)
+            // let dateString = eventDateFormatter.string(from: event.startDate)
+            // dateLabel.text = "\(dateString) | \(startTime) - \(endTime)"
+            // Por ora, usando a formatação que você tinha, adaptada para um único Date:
+
+            let fullText = event.date // Ajustar se tiver hora de término
             
             let attributedText = NSMutableAttributedString(
                 string: fullText,
@@ -342,9 +349,9 @@ class EventDetailsView: UIView {
             let datePartFormatter = DateFormatter()
             datePartFormatter.dateFormat = "dd 'de' MMMM"
             datePartFormatter.locale = Locale(identifier: "pt_BR")
-            let datePartString = datePartFormatter.string(from: event.date)
+            let datePart = event.date
 
-            if let range = fullText.range(of: datePartString) {
+            if let range = fullText.range(of: datePart) {
                 let nsRange = NSRange(range, in: fullText)
                 attributedText.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: 15), range: nsRange)
             }

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import FirebaseFirestore
 
 enum EventKeys {
     static let collectionName: String = "events"
@@ -29,7 +28,7 @@ struct Event: Identifiable {
     var image: String?
     var tag: Tag? // update to reference
     var visibility: String?
-    var date: Date
+    var date: String
     var locationDetails: EventLocationDetails?
     var description: String?
     var totalCost: String?
@@ -42,7 +41,7 @@ struct Event: Identifiable {
         var dict: [String: Any] = [
             EventKeys.id: id,
             EventKeys.title: title,
-            EventKeys.date: Timestamp(date: self.date),
+            EventKeys.date: date,
             EventKeys.locationDetails: locationDetails?.toDict ?? ""
         ]
         

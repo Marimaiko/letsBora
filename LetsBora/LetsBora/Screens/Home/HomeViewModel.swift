@@ -11,40 +11,41 @@ class HomeViewModel {
     
     private let eventRepository: EventRepository
     
-    // O resultado da busca de eventos, já separado.
-    typealias FetchedEvents = (highlighted: Event?, list: [Event])
-    
     init(eventRepository: EventRepository = FirestoreEventRepository()) {
         self.eventRepository = eventRepository
     }
     
     /// Busca todos os eventos e os separa em "próximo evento" e "destaques".
-    func fetchAndDistributeEvents() async -> FetchedEvents {
+    func fetchFutureEvents() async -> [Event] {
         do {
             let allEvents = try await eventRepository.retrieveAll()
             
+            let dateFormatter = DateFormatter()
+            // O formato PRECISA corresponder ao formato da sua string, ex: "dd MMM"
+            dateFormatter.dateFormat = "dd MMM"
+            dateFormatter.locale = Locale(identifier: "pt_BR")
+            
+            
             // Filtra apenas eventos futuros
-            let futureEvents = allEvents.filter { $0.date >= Date() }
-            
-            // Ordena os eventos futuros por data, do mais próximo para o mais distante
-            let sortedFutureEvents = futureEvents.sorted { $0.date < $1.date }
-            
-            // O primeiro da lista ordenada é o nosso evento de destaque ("próximo rolê")
-            let highlightedEvent = sortedFutureEvents.first
-            
-            var listEvents: [Event] = []
-            
-            if highlightedEvent != nil {
-                // A lista de "destaques" contém os outros eventos futuros
-                listEvents = Array(sortedFutureEvents.dropFirst())
+            let futureEvents = allEvents.filter {
+                // Se a conversão falhar, considera a data como uma data no passado distante
+                let eventDate = dateFormatter.date(from: $0.date) ?? Date.distantPast
+                return eventDate >= Date()
             }
             
-            return (highlighted: highlightedEvent, list: listEvents)
+            // Ordena os eventos futuros por data, do mais próximo para o mais distante
+            let sortedFutureEvents = futureEvents.sorted {
+                let date1 = dateFormatter.date(from: $0.date) ?? Date.distantPast
+                let date2 = dateFormatter.date(from: $1.date) ?? Date.distantPast
+                return date1 < date2
+            }
+            
+            return sortedFutureEvents
             
         } catch {
             print("Erro ao buscar e distribuir eventos no HomeViewModel: \(error.localizedDescription)")
-            // Retorna tupla vazia em caso de erro
-            return (highlighted: nil, list: [])
+            // Retorna array vazio em caso de erro
+            return []
         }
     }
 }

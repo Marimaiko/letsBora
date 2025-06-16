@@ -7,16 +7,12 @@
 
 import UIKit
 
-protocol HomeViewDelegate: AnyObject {
-    func seeDetailsTapped()
-}
-
 class HomeViewController: UIViewController {
     //MARK: Properties
     private let mainView = HomeView()
     private let viewModel = HomeViewModel()
-    private var highlightedEvent: Event?
-    private var tableEvents: [Event] = []
+    
+    private var events: [Event] = []
     
     // MARK: - LifeCycle
     override func viewWillAppear(_ animated: Bool) {
@@ -31,34 +27,19 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.mainView.delegate = self
         configureTableView()
         setupNavigationBar()
     }
     
     private func fetchData() {
-        mainView.activityIndicator.startAnimating() // Inicia o loading
-        mainView.yourNextEventLabel.isHidden = true
-        mainView.eventCardView1.isHidden = true
-        
+        mainView.activityIndicator.startAnimating()
         Task {
-            let result = await viewModel.fetchAndDistributeEvents()
+            let fetchedEvents = await viewModel.fetchFutureEvents()
             
-            // Atualizar a UI na thread principal
             await MainActor.run {
-                self.highlightedEvent = result.highlighted
-                self.tableEvents = result.list
-                
-                // Configurar a view com os dados recebidos
-                if let event = self.highlightedEvent {
-                    mainView.configureNextEventCard(with: event)
-                    // Mostrar os componentes relacionados ao "próximo rolê"
-                    mainView.yourNextEventLabel.isHidden = false
-                    mainView.eventCardView1.isHidden = false
-                }
-                
+                self.events = fetchedEvents
                 mainView.tableView.reloadData()
-                mainView.activityIndicator.stopAnimating() // Para o loading
+                mainView.activityIndicator.stopAnimating()
             }
         }
     }
@@ -92,29 +73,17 @@ class HomeViewController: UIViewController {
     }
 }
 
-// MARK: - HomeView Delegate
-extension HomeViewController: HomeViewDelegate {
-    func seeDetailsTapped() {
-        // Chamado quando o eventCardView1 (destacado) é tocado
-        if let eventToDetail = self.highlightedEvent {
-            navigateToDetails(for: eventToDetail)
-        } else {
-            print("Nenhum evento destacado para mostrar detalhes.")
-        }
-    }
-}
-
 // MARK: - Table View Delegate
 extension HomeViewController : UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-           return tableEvents.count
+           return events.count
        }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: EventCardTableViewCell.identifier, for: indexPath) as? EventCardTableViewCell else {
             return UITableViewCell()
         }
-        let event = tableEvents[indexPath.row]
+        let event = events[indexPath.row]
         cell.setupCell(with: event)
         cell.cellDelegate = self
         return cell
