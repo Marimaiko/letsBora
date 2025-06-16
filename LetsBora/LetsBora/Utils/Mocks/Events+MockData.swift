@@ -15,7 +15,7 @@ extension MockData {
         dateFormatter.locale = Locale(identifier: "pt_BR")
         // Se estiverem em inglês ("Mar", "Aug", "Apr"):
         // dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        
+
         if let date = dateFormatter.date(from: "\(dayMonthString) \(year)") {
             return date
         }
@@ -29,7 +29,7 @@ extension MockData {
         image: "imageCard1",
         tag: tag1,
         visibility: "Public",
-        date: "25 Mar",
+        date:  "25 Mar",
         locationDetails: EventLocationDetails(name: "Arena Show", address: "São Paulo, SP", latitude: -23.5505, longitude: -46.6333),
         description: "Festival de Verão 2025",
         participants: [

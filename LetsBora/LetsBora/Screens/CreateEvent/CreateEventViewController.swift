@@ -336,12 +336,10 @@ extension CreateEventViewController: CreateEventViewDelegate {
             calendarViewController.onSelectDate = {[weak self] date in
                 guard let self = self else { return }
                 self.eventDateTime = date
-
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "dd/MM/yyyy 'às' HH:mm"
-                let dateString = dateFormatter.string(from: date)
-
-                self.screen?.dateCustomContainer.updateLabelName(newName: dateString)
+                self.screen?.dateCustomContainer
+                     .updateLabelName(
+                         newName:date.toString()
+                     )
             }
             
             // present with navigation bar
