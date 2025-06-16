@@ -487,7 +487,7 @@ extension CreateEventView {
         let doneButton = UIBarButtonItem(title: "OK", style: .done, target: self, action: #selector(categoryPickerDoneTapped))
         toolbar.setItems([flexibleSpace, doneButton], animated: false)
         categoryTextField.inputAccessoryView = toolbar
-     
+        
         // Adicionar o categoryTextField à hierarquia para que possa se tornar first responder
         // Mesmo que oculto, ele precisa estar na view.
         addSubview(categoryTextField)
