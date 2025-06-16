@@ -168,7 +168,7 @@ extension EventCardView: ViewCode {
         stackView
             .top(anchor: cardView.topAnchor, constant: 10)
             .leading(anchor: cardView.leadingAnchor,constant: 10)
-            .bottom(anchor: cardView.bottomAnchor,constant: -10)
+            .bottom(anchor: cardView.bottomAnchor,constant: -16)
         
         tagView
             .top(anchor: tagDateLabelView.topAnchor)

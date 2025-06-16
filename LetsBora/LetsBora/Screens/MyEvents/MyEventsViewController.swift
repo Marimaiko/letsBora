@@ -68,23 +68,37 @@ class MyEventsViewController: UIViewController {
         
         // Para a tableView, os dados já estão em self.pastEvents
         self.mainView?.tableView.reloadData()
+        self.mainView?.nextEventCollectionView.reloadData()
     }
-
+    
     
     func configureTableView() {
+        // configure table view
         mainView?.tableView.register(
             EventCardTableViewCell.self,
             forCellReuseIdentifier: EventCardTableViewCell.identifier
         )
         mainView?.tableView.dataSource = self
+        
+        // configure collection view
+        mainView?.nextEventCollectionView.register(
+            EventCardCollectionViewCell
+                .self
+            ,
+            forCellWithReuseIdentifier:
+                EventCardCollectionViewCell
+                .identifier
+        )
+        mainView?.nextEventCollectionView.dataSource = self
     }
-
+    
     // Função helper para navegação
     private func navigateToDetails(
         for event: Event,
         isPast: Bool = false
     ) {
-        let detailVC = EventDetailsViewController(event: event) // Passa o evento correto
+        let detailVC = EventDetailsViewController(event: event)
+        // Passa o evento correto
         // Você pode querer passar 'isPast' para EventDetailsViewController se ele se comportar diferente
         // Ex: detailVC.isPastEvent = isPast
         detailVC.hidesBottomBarWhenPushed = true
@@ -96,18 +110,48 @@ class MyEventsViewController: UIViewController {
 extension MyEventsViewController: MyEventsViewDelegate {
     func seeDetailsTapped() {
         // Este é chamado pelo eventCardView1 da MyEventsView
-        if let eventToShow = self.nextEvent { // Usa o evento que definimos como "próximo"
+        if let eventToShow = self.nextEvent {
+            // Usa o evento que definimos como "próximo"
             navigateToDetails(
                 for: eventToShow,
                 isPast: false
-            ) // Próximo evento não é "passado"
+            )
+            // Próximo evento não é "passado"
         } else {
             print("Nenhum 'próximo evento' definido para exibir detalhes.")
             // Opcional: Mostrar um alerta ou tratar o caso de nenhum evento em destaque.
         }
     }
 }
-
+// MARK: - Collection View Delegate
+extension MyEventsViewController: UICollectionViewDataSource {
+    func collectionView(
+        _ collectionView: UICollectionView, numberOfItemsInSection section: Int
+    ) -> Int {
+        return events?.count ?? 0
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        guard let cell = collectionView
+            .dequeueReusableCell(
+                withReuseIdentifier: EventCardCollectionViewCell.identifier,
+            for: indexPath
+        ) as? EventCardCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        
+        guard let events = self.events else {
+            return UICollectionViewCell()
+        }
+        
+        cell.setupCell(with: events[indexPath.row])
+        return cell
+    }
+    
+    
+}
 // MARK: - Table View Delegate
 extension MyEventsViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -116,7 +160,7 @@ extension MyEventsViewController : UITableViewDataSource {
         
         return events?.count ?? 0
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: EventCardTableViewCell.identifier,

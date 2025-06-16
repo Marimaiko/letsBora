@@ -13,7 +13,9 @@ protocol EventCardTableViewCellDelegate: AnyObject {
 
 class EventCardTableViewCell: UITableViewCell, EventCardViewDelegate {
     // Identifier for reuse
-    static let identifier: String = String(describing: EventCardTableViewCell.self)
+    static let identifier: String = String(
+        describing: EventCardTableViewCell.self
+    )
 
     // MARK: - UI Components
     private lazy var eventCard = EventCardView()
@@ -21,8 +23,14 @@ class EventCardTableViewCell: UITableViewCell, EventCardViewDelegate {
     weak var cellDelegate: EventCardTableViewCellDelegate?
 
     // MARK: - Init
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(
+        style: UITableViewCell.CellStyle,
+        reuseIdentifier: String?
+    ) {
+        super.init(
+            style: style,
+            reuseIdentifier: reuseIdentifier
+        )
         setupView()
         
         self.backgroundColor = .clear
@@ -49,7 +57,7 @@ class EventCardTableViewCell: UITableViewCell, EventCardViewDelegate {
         self.currentEvent = event
         
         eventCard.setTitleLabel(event.title)
-        print(event.locationDetails ?? "Local não informado")
+        
         eventCard.setLocationLabel(
             event.locationDetails?.displayString
             ?? "Local não informado"

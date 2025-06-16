@@ -19,17 +19,27 @@ class MyEventsView: UIView {
     private lazy var yourNextEventLabel = ReusableLabel(text: "Meu próximo rolê", labelType: .h2)
     private lazy var pastEventsLabel = ReusableLabel(text: "Eventos passados", labelType: .h2)
     
-    private lazy var eventCardView1 : EventCardView = {
-        let eventCard = EventCardView()
-        eventCard.setTitleLabel("Aniversário do João")
-        eventCard.setLocationLabel("Casa do João")
-        eventCard.setTagViewTextColor(text: "Particular")
-        eventCard.setDateLabel("15 Mar")
-        eventCard.setAvatars(["Jim", "John", "Julia"], 25)
+    lazy var nextEventCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 16
+        layout.minimumInteritemSpacing = 0
+        layout.estimatedItemSize = CGSize(
+            width: 350,
+            height: 145
+        )
         
-        return eventCard
+        let collectionView = UICollectionView(
+            frame: .zero,
+            collectionViewLayout: layout
+        )
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.backgroundColor = .clear
+        collectionView.allowsSelection = false
+        
+        return collectionView
     }()
-    
     
     lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -47,7 +57,6 @@ class MyEventsView: UIView {
         super.init(frame: .zero)
         setupView()
         self.backgroundColor = .systemGray6
-        eventCardView1.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -60,7 +69,7 @@ extension MyEventsView: ViewCode {
     func setHierarchy() {
         self.addSubview(titleLabel)
         self.addSubview(yourNextEventLabel)
-        self.addSubview(eventCardView1)
+        self.addSubview(nextEventCollectionView)
         self.addSubview(pastEventsLabel)
         self.addSubview(tableView)
         
@@ -78,14 +87,15 @@ extension MyEventsView: ViewCode {
             .leading(anchor: self.leadingAnchor,constant: 18)
         
         // event card view
-        eventCardView1
+        nextEventCollectionView
             .top(anchor: yourNextEventLabel.bottomAnchor, constant: 15)
             .leading(anchor: self.leadingAnchor, constant: 16)
             .trailing(anchor: self.trailingAnchor, constant: -16)
+            .height(constant: 145)
         
         // Highlight Event Label constraints
         pastEventsLabel
-            .top(anchor: eventCardView1.bottomAnchor, constant: 10)
+            .top(anchor: nextEventCollectionView.bottomAnchor, constant: 10)
             .leading(anchor: self.leadingAnchor,constant: 20)
         
         // table View Events constraints

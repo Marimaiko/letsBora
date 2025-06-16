@@ -40,7 +40,10 @@ class SearchViewController: ViewController {
         mainView.tableView.dataSource = self
     }
     func configureCollectionView() {
-        mainView.collectionView.register(TagCollectionViewCell.self, forCellWithReuseIdentifier: TagCollectionViewCell.identifier)
+        mainView.collectionView.register(
+            TagCollectionViewCell.self,
+            forCellWithReuseIdentifier: TagCollectionViewCell.identifier
+        )
         mainView.collectionView.dataSource = self
         mainView.collectionView.delegate = self
     }
