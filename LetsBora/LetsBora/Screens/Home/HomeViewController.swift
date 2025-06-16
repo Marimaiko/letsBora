@@ -69,6 +69,7 @@ class HomeViewController: UIViewController {
             forCellReuseIdentifier: EventCardTableViewCell.identifier
         )
         mainView.tableView.dataSource = self
+        mainView.tableView.delegate = self
     }
     
     func setupNavigationBar() {

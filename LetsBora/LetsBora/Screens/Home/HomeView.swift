@@ -10,6 +10,8 @@ import UIKit
 class HomeView: UIView {
     var delegate: HomeViewDelegate?
     
+    var tableViewHeightConstraint: NSLayoutConstraint?
+    
     // MARK: - UI Components
     lazy var titleLabel = ReusableLabel(text: "Let's Bora", labelType: .title)
     lazy var yourNextEventLabel = ReusableLabel(text: "Seu próximo rolê", labelType: .h2)
@@ -98,6 +100,8 @@ extension  HomeView: ViewCode {
     }
     
     func setConstraints() {
+        self.tableViewHeightConstraint = tableView.heightAnchor.constraint(equalToConstant: 0)
+        
         // title constraints
         titleLabel
             .top(anchor: self.safeAreaLayoutGuide.topAnchor)
@@ -113,10 +117,11 @@ extension  HomeView: ViewCode {
             .top(anchor: yourNextEventLabel.bottomAnchor, constant: 15)
             .leading(anchor: self.leadingAnchor, constant: 16)
             .trailing(anchor: self.trailingAnchor, constant: -16)
+            .height(constant: 100)
         
         // Highlight Event Label constraints
         highlightEventLabel
-            .top(anchor: eventCardView1.bottomAnchor, constant: 10)
+            .top(anchor: eventCardView1.bottomAnchor, constant: 20)
             .leading(anchor: self.leadingAnchor,constant: 20)
         
         // table View Events constraints
@@ -124,7 +129,7 @@ extension  HomeView: ViewCode {
             .top(anchor: highlightEventLabel.bottomAnchor,constant: 8)
             .leading(anchor: self.leadingAnchor, constant: 16)
             .trailing(anchor: self.trailingAnchor, constant: -16)
-            .bottom(anchor: self.bottomAnchor,constant: -16)
+            .bottom(anchor: self.safeAreaLayoutGuide.bottomAnchor)
         
         activityIndicator
             .centerX(self.centerXAnchor)
