@@ -4,7 +4,6 @@ import Foundation
 import CoreLocation
 
 extension MockData {
-    #warning("Refactor this to use as a extension to convert string to date")
     // Helper para criar datas para os mocks
      static func createMockDate(dayMonthString: String, year: Int = 2025) -> Date {
         let dateFormatter = DateFormatter()
@@ -29,7 +28,7 @@ extension MockData {
         image: "imageCard1",
         tag: tag1,
         visibility: "Public",
-        date:  "25 Mar",
+        date: Date(),
         locationDetails: EventLocationDetails(name: "Arena Show", address: "São Paulo, SP", latitude: -23.5505, longitude: -46.6333),
         description: "Festival de Verão 2025",
         participants: [
@@ -46,7 +45,7 @@ extension MockData {
         image: "imageCard2",
         tag: tag1,
         visibility: "Public",
-        date: "30 Ago",
+        date: Date(),
         locationDetails: EventLocationDetails(name: "Kukukaya", address: "Uberlândia, MG", latitude: -18.9186, longitude: -48.2772),
         description: "Show dos Casca de Bala",
         participants: [
@@ -61,7 +60,7 @@ extension MockData {
         image: "imageCard3",
         tag: tag2,
         visibility: "Public",
-        date: "30 Abr",
+        date: Date(),
         locationDetails: EventLocationDetails(name: "Praia do Futuro", address: "Fortaleza, CE", latitude: -3.7319, longitude: -38.4901),
         description: "Vôlei de Praia",
         participants: [
@@ -77,7 +76,7 @@ extension MockData {
             title: "Vôlei de Praia",
             tag: tag2,
             visibility: "Public",
-            date: "25 Mar",
+            date: Date(),
             locationDetails: EventLocationDetails(name: "Praia do Futuro", address: "Fortaleza, CE", latitude: -3.7319, longitude: -38.4901),
             description: "Vôlei de Praia que já aconteceu",
             participants: [
@@ -90,7 +89,7 @@ extension MockData {
             title: "Festival de Verão 2025",
             tag: tag1,
             visibility: "Public",
-            date: "10 Jan",
+            date: Date(),
             locationDetails: EventLocationDetails(name: "Arena Gelada", address: "Campos do Jordão, SP", latitude: -22.7395, longitude: -45.5910),
             description: "Festival de Inverno que já rolou",
             participants: [
@@ -103,7 +102,7 @@ extension MockData {
             title: "Show dos Casca de Bala",
             tag: tag1,
             visibility: "Public",
-            date: "30 Ago",
+            date: Date(),
             locationDetails: EventLocationDetails(name: "Arena Gelada", address: "Campos do Jordão, SP", latitude: -22.7395, longitude: -45.5910),
             description: "Show dos Casca de Bala",
             participants: [

@@ -166,7 +166,7 @@ class CreateEventViewController: UIViewController {
             image: nil, // TODO: Adicionar lógica para imagem
             tag: category,   // // should be a tag instead string
             visibility: self.isEventPrivate ? "Privado" : "Público",
-            date: dateTime.toString(),
+            date: dateTime,
             locationDetails: location, // Usar o objeto EventLocationDetails
             description: self.eventDescription,
             totalCost: nil, // TODO: Adicionar lógica para custo
@@ -336,10 +336,12 @@ extension CreateEventViewController: CreateEventViewDelegate {
             calendarViewController.onSelectDate = {[weak self] date in
                 guard let self = self else { return }
                 self.eventDateTime = date
-                self.screen?.dateCustomContainer
-                    .updateLabelName(
-                        newName:date.toString()
-                    )
+                
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "dd/MM/yyyy 'às' HH:mm"
+                let dateString = dateFormatter.string(from: date)
+                
+                self.screen?.dateCustomContainer.updateLabelName(newName: dateString) 
             }
             
             // present with navigation bar

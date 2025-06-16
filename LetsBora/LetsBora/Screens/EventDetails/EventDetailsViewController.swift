@@ -55,7 +55,6 @@ class EventDetailsViewController: UIViewController {
     private func openAppleMaps() {
         guard let location = event.locationDetails else {
             print("Detalhes da localização não disponíveis para abrir no mapa.")
-            // Opcional: Mostrar um alerta para o usuário
             let alert = UIAlertController(title: "Localização Indisponível", message: "Não há informações de coordenadas para este evento.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default))
             present(alert, animated: true)
@@ -89,8 +88,9 @@ class EventDetailsViewController: UIViewController {
         editViewController.onDismissAndUpdate = { [weak self] updatedEventFromEdit in
             guard let self = self else { return }
             self.event = updatedEventFromEdit // Atualiza o evento neste controller
-            // self.eventDetailsView.configure(with: updatedEventFromEdit) // viewWillAppear já faz isso
-            // self.title = updatedEventFromEdit.title // viewWillAppear já faz isso
+            
+            // A view será reconfigurada no viewWillAppear, então não precisa chamar aqui,
+            // mas o toast de confirmação é uma boa ideia.
             self.eventDetailsView.showUpdateToast(message: "Evento atualizado com sucesso!")
         }
         
@@ -116,25 +116,3 @@ extension EventDetailsViewController: EventDetailsViewDelegate {
         self.editButtonTapped()
     }
 }
-#if swift(>=5.9)
-/*
-@available(iOS 17.0, *)
-#Preview(traits: .portrait, body: {
-    // Crie um evento mock aqui usando a struct Event atualizada
-    let mockEvent = Event(
-        title: "Aniversário do Pedro (Preview)",
-        image: "event-sample-image",
-        tag: .init(title: "Festa", color: .white, bgColor: .blue), // Ajuste Tag conforme sua struct
-        visibility: "Público",
-        date: Date(), // Use uma data real
-        locationDetails: .init(name: "Casa do Pedro (Preview)", address: "Rua Fictícia, 123", latitude: -23.5632, longitude: -46.6542),
-        description: "Uma festa de aniversário para o Pedro.",
-        totalCost: "Grátis",
-        participants: [User(name: "Amigo 1")], // Supondo que User(name:) exista
-        owner: User(name: "Pedro")
-    )
-    let navController = UINavigationController(rootViewController: EventDetailsViewController(event: mockEvent))
-    navController
-})
-*/
-#endif

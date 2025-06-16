@@ -11,17 +11,12 @@ class HomeView: UIView {
     var delegate: HomeViewDelegate?
     
     // MARK: - UI Components
-    private lazy var titleLabel = ReusableLabel(text: "Let's Bora", labelType: .title)
-    private lazy var yourNextEventLabel = ReusableLabel(text: "Seu próximo rolê", labelType: .h2)
-    private lazy var highlightEventLabel = ReusableLabel(text: "Destaques", labelType: .h2)
+    lazy var titleLabel = ReusableLabel(text: "Let's Bora", labelType: .title)
+    lazy var yourNextEventLabel = ReusableLabel(text: "Seu próximo rolê", labelType: .h2)
+    lazy var highlightEventLabel = ReusableLabel(text: "Destaques", labelType: .h2)
     
-    private lazy var eventCardView1 : EventCardView = {
+    lazy var eventCardView1 : EventCardView = {
         let eventCard = EventCardView()
-//        eventCard.setTitleLabel("Aniversário do João")
-//        eventCard.setLocationLabel("Casa do João")
-//        eventCard.setTagViewTextColor(text: "Particular")
-//        eventCard.setDateLabel("15 jun.")
-//        eventCard.setAvatars(["Jim", "John", "Julia"], 25)
         return eventCard
     }()
     
@@ -35,6 +30,13 @@ class HomeView: UIView {
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
         return tableView
+    }()
+    
+    lazy var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.hidesWhenStopped = true
+        return indicator
     }()
     
     // MARK: - LifeCycle
@@ -56,7 +58,7 @@ class HomeView: UIView {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd MMM"
         dateFormatter.locale = Locale(identifier: "pt_BR")
-        eventCardView1.setDateLabel(event.date) // Assumindo event.date é Date
+        eventCardView1.setDateLabel(dateFormatter.string(from: event.date))
         
         if let tag = event.tag {
             eventCardView1.setTagViewTextColor(
@@ -92,7 +94,7 @@ extension  HomeView: ViewCode {
         self.addSubview(eventCardView1)
         self.addSubview(highlightEventLabel)
         self.addSubview(tableView)
-        
+        self.addSubview(activityIndicator)
     }
     
     func setConstraints() {
@@ -123,6 +125,10 @@ extension  HomeView: ViewCode {
             .leading(anchor: self.leadingAnchor, constant: 16)
             .trailing(anchor: self.trailingAnchor, constant: -16)
             .bottom(anchor: self.bottomAnchor,constant: -16)
+        
+        activityIndicator
+            .centerX(self.centerXAnchor)
+            .centerY(self.centerYAnchor)
     }
 }
 extension HomeView: EventCardViewDelegate {

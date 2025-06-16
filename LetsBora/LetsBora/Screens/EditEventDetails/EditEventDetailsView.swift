@@ -41,6 +41,7 @@ class EditEventDetailsView: UIView {
         textField.placeholder = "Data e Hora"
         textField.borderStyle = .roundedRect
         textField.translatesAutoresizingMaskIntoConstraints = false
+        
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .dateAndTime
         if #available(iOS 13.4, *) {
@@ -152,10 +153,11 @@ class EditEventDetailsView: UIView {
     
     // --- Public methods to populate fields ---
     func configure(with event: Event) {
-        selectedDate = MockData.createMockDate(dayMonthString: event.date)
-        dateTextField.text =  event.date
+        self.selectedDate = event.date
+        dateTextField.text = dateFormatter.string(from: event.date)
+        
         if let datePicker = dateTextField.inputView as? UIDatePicker {
-            datePicker.setDate(MockData.createMockDate(dayMonthString: event.date), animated:false)
+            datePicker.setDate(event.date, animated: false)
         }
         
         locationTextField.text = event.locationDetails?.name

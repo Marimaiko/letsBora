@@ -27,8 +27,7 @@ final class EditEventViewModel {
         }
                
         if let newDate = date {
-            
-            event.date = newDate.toString()
+            event.date = newDate
         }
                
         if let newLocation = location {

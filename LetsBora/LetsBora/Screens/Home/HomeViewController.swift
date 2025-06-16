@@ -14,16 +14,15 @@ protocol HomeViewDelegate: AnyObject {
 class HomeViewController: UIViewController {
     //MARK: Properties
     private let mainView = HomeView()
-    private var allEvents: [Event] = MockData.events // Todos os eventos, incluindo o próximo
-    private var highlightedEvent: Event? // O evento para o eventCardView1
-    private var tableEvents: [Event] = [] // Eventos para a tableView (excluindo o destacado)
-
-    // private var viewModel = HomeViewModel() // Quando você começar a usar o ViewModel
+    private let viewModel = HomeViewModel()
+    private var highlightedEvent: Event?
+    private var tableEvents: [Event] = []
     
     // MARK: - LifeCycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        fetchData()
     }
     
     override func loadView() {
@@ -35,8 +34,35 @@ class HomeViewController: UIViewController {
         self.mainView.delegate = self
         configureTableView()
         setupNavigationBar()
-        loadAndDistributeEvents()
     }
+    
+    private func fetchData() {
+        mainView.activityIndicator.startAnimating() // Inicia o loading
+        mainView.yourNextEventLabel.isHidden = true
+        mainView.eventCardView1.isHidden = true
+        
+        Task {
+            let result = await viewModel.fetchAndDistributeEvents()
+            
+            // Atualizar a UI na thread principal
+            await MainActor.run {
+                self.highlightedEvent = result.highlighted
+                self.tableEvents = result.list
+                
+                // Configurar a view com os dados recebidos
+                if let event = self.highlightedEvent {
+                    mainView.configureNextEventCard(with: event)
+                    // Mostrar os componentes relacionados ao "próximo rolê"
+                    mainView.yourNextEventLabel.isHidden = false
+                    mainView.eventCardView1.isHidden = false
+                }
+                
+                mainView.tableView.reloadData()
+                mainView.activityIndicator.stopAnimating() // Para o loading
+            }
+        }
+    }
+    
     func configureTableView() {
         mainView.tableView.register(
             EventCardTableViewCell.self,
@@ -58,33 +84,6 @@ class HomeViewController: UIViewController {
         navigationController?.navigationBar.compactAppearance = appearance
     }
     
-    private func loadAndDistributeEvents() {
-        // Lógica para determinar o evento destacado e os eventos da tabela.
-        // Exemplo: O primeiro evento da lista geral é o destacado.
-        // Em um app real, isso viria de um ViewModel com lógica de negócios.
-        
-        // Para o exemplo, vamos definir o eventMock1 como o destacado
-        // e o resto para a tabela.
-        if let highlight = MockData.events.first(where: { $0.id == MockData.eventMock1.id }) { // Supondo que eventMock1 é o desejado
-            self.highlightedEvent = highlight
-            mainView.configureNextEventCard(with: highlight) // Configura a HomeView
-            
-            // Preenche tableEvents com os eventos restantes
-            self.tableEvents = MockData.events.filter { $0.id != highlight.id }
-        } else {
-            // Fallback se não encontrar o evento específico
-            self.highlightedEvent = MockData.events.first
-            if let first = self.highlightedEvent {
-                mainView.configureNextEventCard(with: first)
-                self.tableEvents = Array(MockData.events.dropFirst())
-            } else {
-                self.tableEvents = []
-            }
-        }
-        mainView.tableView.reloadData()
-    }
-    
-    // Função para navegar para os detalhes do evento
     private func navigateToDetails(for event: Event) {
         let detailVC = EventDetailsViewController(event: event)
         detailVC.hidesBottomBarWhenPushed = true
