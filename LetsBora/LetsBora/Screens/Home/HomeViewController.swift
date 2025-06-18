@@ -7,23 +7,18 @@
 
 import UIKit
 
-protocol HomeViewDelegate: AnyObject {
-    func seeDetailsTapped()
-}
-
 class HomeViewController: UIViewController {
     //MARK: Properties
     private let mainView = HomeView()
-    private var allEvents: [Event] = MockData.events // Todos os eventos, incluindo o próximo
-    private var highlightedEvent: Event? // O evento para o eventCardView1
-    private var tableEvents: [Event] = [] // Eventos para a tableView (excluindo o destacado)
-
-    // private var viewModel = HomeViewModel() // Quando você começar a usar o ViewModel
+    private let viewModel = HomeViewModel()
+    
+    private var events: [Event] = []
     
     // MARK: - LifeCycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        fetchData()
     }
     
     override func loadView() {
@@ -32,17 +27,30 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.mainView.delegate = self
         configureTableView()
         setupNavigationBar()
-        loadAndDistributeEvents()
     }
+    
+    private func fetchData() {
+        mainView.activityIndicator.startAnimating()
+        Task {
+            let fetchedEvents = await viewModel.fetchFutureEvents()
+            
+            await MainActor.run {
+                self.events = fetchedEvents
+                mainView.tableView.reloadData()
+                mainView.activityIndicator.stopAnimating()
+            }
+        }
+    }
+    
     func configureTableView() {
         mainView.tableView.register(
             EventCardTableViewCell.self,
             forCellReuseIdentifier: EventCardTableViewCell.identifier
         )
         mainView.tableView.dataSource = self
+        mainView.tableView.delegate = self
     }
     
     func setupNavigationBar() {
@@ -58,33 +66,6 @@ class HomeViewController: UIViewController {
         navigationController?.navigationBar.compactAppearance = appearance
     }
     
-    private func loadAndDistributeEvents() {
-        // Lógica para determinar o evento destacado e os eventos da tabela.
-        // Exemplo: O primeiro evento da lista geral é o destacado.
-        // Em um app real, isso viria de um ViewModel com lógica de negócios.
-        
-        // Para o exemplo, vamos definir o eventMock1 como o destacado
-        // e o resto para a tabela.
-        if let highlight = MockData.events.first(where: { $0.id == MockData.eventMock1.id }) { // Supondo que eventMock1 é o desejado
-            self.highlightedEvent = highlight
-            mainView.configureNextEventCard(with: highlight) // Configura a HomeView
-            
-            // Preenche tableEvents com os eventos restantes
-            self.tableEvents = MockData.events.filter { $0.id != highlight.id }
-        } else {
-            // Fallback se não encontrar o evento específico
-            self.highlightedEvent = MockData.events.first
-            if let first = self.highlightedEvent {
-                mainView.configureNextEventCard(with: first)
-                self.tableEvents = Array(MockData.events.dropFirst())
-            } else {
-                self.tableEvents = []
-            }
-        }
-        mainView.tableView.reloadData()
-    }
-    
-    // Função para navegar para os detalhes do evento
     private func navigateToDetails(for event: Event) {
         let detailVC = EventDetailsViewController(event: event)
         detailVC.hidesBottomBarWhenPushed = true
@@ -92,29 +73,17 @@ class HomeViewController: UIViewController {
     }
 }
 
-// MARK: - HomeView Delegate
-extension HomeViewController: HomeViewDelegate {
-    func seeDetailsTapped() {
-        // Chamado quando o eventCardView1 (destacado) é tocado
-        if let eventToDetail = self.highlightedEvent {
-            navigateToDetails(for: eventToDetail)
-        } else {
-            print("Nenhum evento destacado para mostrar detalhes.")
-        }
-    }
-}
-
 // MARK: - Table View Delegate
 extension HomeViewController : UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-           return tableEvents.count
+           return events.count
        }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: EventCardTableViewCell.identifier, for: indexPath) as? EventCardTableViewCell else {
             return UITableViewCell()
         }
-        let event = tableEvents[indexPath.row]
+        let event = events[indexPath.row]
         cell.setupCell(with: event)
         cell.cellDelegate = self
         return cell
