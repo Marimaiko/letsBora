@@ -7,12 +7,15 @@
 
 import UIKit
 
-protocol MyEventsViewDelegate {
+protocol MyEventsViewDelegate: AnyObject {
     func seeDetailsTapped()
 }
 
 class MyEventsView: UIView {
-    var delegate: MyEventsViewDelegate?
+    private weak var delegate: MyEventsViewDelegate?
+    func delegateTo(_ delegate: MyEventsViewDelegate?) {
+        self.delegate = delegate
+    }
     
     // MARK: - UI Components
     private lazy var titleLabel = ReusableLabel(text: "Meus Eventos", labelType: .title)

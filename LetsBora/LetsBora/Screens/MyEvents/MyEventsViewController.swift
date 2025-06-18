@@ -10,8 +10,6 @@ import UIKit
 class MyEventsViewController: UIViewController {
     //MARK: Properties
     private var mainView: MyEventsView?
-    private var events: [Event]?
-    private var nextEvent: Event?
     private var viewModel: MyEventViewModel = MyEventViewModel()
     
     // MARK: - LifeCycle
@@ -24,12 +22,7 @@ class MyEventsViewController: UIViewController {
             animated: animated
         )
         // fetch data
-        viewModel.loadEvents { [weak self] events in
-            guard let self = self else { return }
-            self.events = events
-            print("events fetched \(events.count) successfully")
-            loadDataAndUpdateView()
-        }
+        viewModel.loadEvents()
     }
     
     override func loadView() {
@@ -40,35 +33,14 @@ class MyEventsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTableView()
-        self.mainView?.delegate = self
+        mainView?.delegateTo(self)
+        viewModel.delegate(self)
         
     }
     
     private func loadDataAndUpdateView() {
-        
-        // Lógica para carregar/definir o nextEvent e pastEvents
-        // Por enquanto, vamos pegar o primeiro dos "MockData.events" como "próximo evento"
-        // e os "MockData.pastEvents" para a tabela.
-        // Em um app real, isso viria de um ViewModel ou serviço.
-        
-        // Configurar o eventCardView1 (próximo rolê)
-        // Precisamos de uma maneira para a MyEventsView atualizar seu eventCardView1 dinamicamente.
-        // Se eventCardView1 é fixo na MyEventsView com dados mockados,
-        // o nextEvent aqui é mais para saber qual evento abrir ao tocar nele.
-        // Vamos assumir que MockData.eventMock1 (ou similar) é o "próximo evento"
-        // que MyEventsView.eventCardView1 está mostrando.
-        if let potentialNextEvent = MockData.events.first(where: { $0.title == "Aniversário do João" }) { // Exemplo de como identificar o evento do eventCardView1
-            self.nextEvent = potentialNextEvent
-            // Se a MyEventsView tiver um método para configurar o eventCardView1:
-            // self.mainView.configureNextEventCard(with: potentialNextEvent)
-        } else if !MockData.events.isEmpty {
-            self.nextEvent = MockData.events.first // Fallback
-        }
-        
-        
-        // Para a tableView, os dados já estão em self.pastEvents
-        self.mainView?.tableView.reloadData()
-        self.mainView?.nextEventCollectionView.reloadData()
+        mainView?.tableView.reloadData()
+        mainView?.nextEventCollectionView.reloadData()
     }
     
     
@@ -82,12 +54,10 @@ class MyEventsViewController: UIViewController {
         
         // configure collection view
         mainView?.nextEventCollectionView.register(
-            EventCardCollectionViewCell
-                .self
+            EventCardCollectionViewCell.self
             ,
             forCellWithReuseIdentifier:
-                EventCardCollectionViewCell
-                .identifier
+                EventCardCollectionViewCell.identifier
         )
         mainView?.nextEventCollectionView.dataSource = self
     }
@@ -110,7 +80,7 @@ class MyEventsViewController: UIViewController {
 extension MyEventsViewController: MyEventsViewDelegate {
     func seeDetailsTapped() {
         // Este é chamado pelo eventCardView1 da MyEventsView
-        if let eventToShow = self.nextEvent {
+        if let eventToShow = viewModel.nextEvent {
             // Usa o evento que definimos como "próximo"
             navigateToDetails(
                 for: eventToShow,
@@ -123,12 +93,23 @@ extension MyEventsViewController: MyEventsViewDelegate {
         }
     }
 }
-// MARK: - Collection View Delegate
+// MARK: - ViewModel Delegate extenstions
+extension MyEventsViewController: MyEventViewModelDelegate {
+    func didUpdateEvents() {
+        loadDataAndUpdateView()
+    }
+
+    func didFailToLoadEvents(with error: Error) {
+        // Show an alert or handle the error
+        print("Failed to load events: \(error.localizedDescription)")
+    }
+}
+// MARK: - Collection View Data Source Delegate
 extension MyEventsViewController: UICollectionViewDataSource {
     func collectionView(
         _ collectionView: UICollectionView, numberOfItemsInSection section: Int
     ) -> Int {
-        return events?.count ?? 0
+        return viewModel.nextEvents.count
     }
     
     func collectionView(
@@ -137,28 +118,21 @@ extension MyEventsViewController: UICollectionViewDataSource {
         guard let cell = collectionView
             .dequeueReusableCell(
                 withReuseIdentifier: EventCardCollectionViewCell.identifier,
-            for: indexPath
-        ) as? EventCardCollectionViewCell else {
+                for: indexPath
+            ) as? EventCardCollectionViewCell else {
             return UICollectionViewCell()
         }
         
-        guard let events = self.events else {
-            return UICollectionViewCell()
-        }
-        
-        cell.setupCell(with: events[indexPath.row])
+        let event = viewModel.nextEvents[indexPath.row]
+        cell.setupCell(with: event)
         return cell
     }
-    
-    
 }
+
 // MARK: - Table View Delegate
 extension MyEventsViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        print("events?.count ?? 0: \(events?.count ?? 0)")
-        
-        return events?.count ?? 0
+        return viewModel.pastEvents.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -169,12 +143,9 @@ extension MyEventsViewController : UITableViewDataSource {
             return UITableViewCell()
         }
         
-        guard let events = self.events else {
-            return UITableViewCell()
-        }
-        let event = events[indexPath.row]
-        cell.setupCell(with: event, isPast: true) // Passando isPast: true como no original
-        cell.cellDelegate = self // MyEventsViewController é o delegate da célula
+        let event = viewModel.pastEvents[indexPath.row]
+        cell.setupCell(with: event, isPast: true)
+        cell.cellDelegate = self
         return cell
     }
 }
