@@ -22,21 +22,24 @@ class HomeViewModel {
             
             let dateFormatter = DateFormatter()
             // O formato PRECISA corresponder ao formato da sua string, ex: "dd MMM"
-            dateFormatter.dateFormat = "dd MMM"
+            dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
             dateFormatter.locale = Locale(identifier: "pt_BR")
             
-            
             // Filtra apenas eventos futuros
-            let futureEvents = allEvents.filter {
+            let futureEvents = allEvents.filter { event in
                 // Se a conversão falhar, considera a data como uma data no passado distante
-                let eventDate = dateFormatter.date(from: $0.date) ?? Date.distantPast
+                guard let eventDate = dateFormatter.date(from: event.date) else {
+                    return false
+                }
                 return eventDate >= Date()
             }
             
             // Ordena os eventos futuros por data, do mais próximo para o mais distante
-            let sortedFutureEvents = futureEvents.sorted {
-                let date1 = dateFormatter.date(from: $0.date) ?? Date.distantPast
-                let date2 = dateFormatter.date(from: $1.date) ?? Date.distantPast
+            let sortedFutureEvents = futureEvents.sorted { event1, event2 in
+                guard let date1 = dateFormatter.date(from: event1.date),
+                      let date2 = dateFormatter.date(from: event2.date) else {
+                    return false
+                }
                 return date1 < date2
             }
             
