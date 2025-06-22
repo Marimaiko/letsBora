@@ -63,10 +63,7 @@ class EventCardTableViewCell: UITableViewCell, EventCardViewDelegate {
             ?? "Local não informado"
         )
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd MMM" // Ex: "15 Mar"
-        dateFormatter.locale = Locale(identifier: "pt_BR")
-        eventCard.setDateLabel(event.date) 
+        eventCard.setDateLabel(event.date)
         
         eventCard.setDetailButtonTitle(!isPast ? "Participar" : "Ver Detalhes")
         
@@ -95,8 +92,7 @@ class EventCardTableViewCell: UITableViewCell, EventCardViewDelegate {
     
     // MARK: - EventCardViewDelegate
     func didTapDetailButton(in view: EventCardView) {
-        // Quando o botão no EventCardView interno é tocado,
-        // notifica o delegate da célula (HomeViewController) com o evento específico.
+        print("Tapped Detail Button")
         if let event = currentEvent {
             cellDelegate?.didTapDetailButtonInCell(for: event)
         }

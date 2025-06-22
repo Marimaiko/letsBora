@@ -7,16 +7,8 @@
 
 import UIKit
 
-protocol MyEventsViewDelegate: AnyObject {
-    func seeDetailsTapped()
-}
-
 class MyEventsView: UIView {
-    private weak var delegate: MyEventsViewDelegate?
-    func delegateTo(_ delegate: MyEventsViewDelegate?) {
-        self.delegate = delegate
-    }
-    
+
     // MARK: - UI Components
     private lazy var titleLabel = ReusableLabel(text: "Meus Eventos", labelType: .title)
     private lazy var yourNextEventLabel = ReusableLabel(text: "Meu próximo rolê", labelType: .h2)
@@ -108,12 +100,6 @@ extension MyEventsView: ViewCode {
             .trailing(anchor: self.trailingAnchor, constant: -16)
             .bottom(anchor: self.bottomAnchor,constant: -16)
     }
-}
-extension MyEventsView: EventCardViewDelegate {
-    func didTapDetailButton(in view: EventCardView) {
-        self.delegate?.seeDetailsTapped()
-    }
-    
 }
 // MARK: - Preview
 #if swift(>=5.9)

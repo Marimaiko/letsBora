@@ -33,7 +33,6 @@ class MyEventsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTableView()
-        mainView?.delegateTo(self)
         viewModel.delegate(self)
         
     }
@@ -76,23 +75,6 @@ class MyEventsViewController: UIViewController {
     }
 }
 
-// MARK: - MyEventsViewDelegate (para o eventCardView1)
-extension MyEventsViewController: MyEventsViewDelegate {
-    func seeDetailsTapped() {
-        // Este é chamado pelo eventCardView1 da MyEventsView
-        if let eventToShow = viewModel.nextEvent {
-            // Usa o evento que definimos como "próximo"
-            navigateToDetails(
-                for: eventToShow,
-                isPast: false
-            )
-            // Próximo evento não é "passado"
-        } else {
-            print("Nenhum 'próximo evento' definido para exibir detalhes.")
-            // Opcional: Mostrar um alerta ou tratar o caso de nenhum evento em destaque.
-        }
-    }
-}
 // MARK: - ViewModel Delegate extenstions
 extension MyEventsViewController: MyEventViewModelDelegate {
     func didUpdateEvents() {
@@ -153,6 +135,7 @@ extension MyEventsViewController : UITableViewDataSource {
 // MARK: - EventCardTableViewCellDelegate
 extension MyEventsViewController: EventCardTableViewCellDelegate {
     func didTapDetailButtonInCell(for event: Event) {
+        print("tapped detail button for event: \(event) ")
         navigateToDetails(for: event, isPast: true)
     }
 }
