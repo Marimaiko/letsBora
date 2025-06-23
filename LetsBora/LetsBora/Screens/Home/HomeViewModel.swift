@@ -18,10 +18,11 @@ class HomeViewModel {
     /// Busca todos os eventos e os separa em "próximo evento" e "destaques".
     func fetchFutureEvents() async -> [Event] {
         do {
-            let allEvents = try await eventRepository.retrieveAll()
+            let publicEventsQuery = EventQuery(key: EventKeys.visibility, value: "Público")
+            let publicEvents = try await eventRepository.retrieveEqual(publicEventsQuery)
             
             // Filtra apenas eventos futuros
-            let futureEvents = allEvents.filter { event in
+            let futureEvents = publicEvents.filter { event in
                 // Se a conversão falhar, considera a data como uma data no passado distante
                 guard let eventDate = event.date.toDate() else {
                     return false
