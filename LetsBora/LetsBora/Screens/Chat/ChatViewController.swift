@@ -7,6 +7,7 @@
 
 import UIKit
 
+//TODO: Fazer separação com view model; chat private
 class ChatViewController: UIViewController {
     let chats: [Chat] = MockData.chats
     
