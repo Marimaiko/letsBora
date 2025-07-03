@@ -9,9 +9,8 @@ import UIKit
 
 //TODO: Fazer separação com view model; chat private
 class ChatViewController: UIViewController {
-    let chats: [Chat] = MockData.chats
-    
-    let chatView = ChatView()
+    var screen: ChatView?
+    var viewModel: ChatViewModel?
     
     // MARK: - LyfeCycle
     override func viewWillAppear(
@@ -24,25 +23,27 @@ class ChatViewController: UIViewController {
         )
     }
     override func loadView() {
-        self.view = chatView
+        screen = ChatView()
+        self.view = screen
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel = ChatViewModel()
         setupUI()
         
     }
     func setupUI() {
-        chatView.tableView.dataSource = self
-        chatView.tableView.register(
+        screen?.tableView.dataSource = self
+        screen?.tableView.register(
             ChatNotificationTableViewCell.self,
             forCellReuseIdentifier: ChatNotificationTableViewCell.identifier
         )
-        chatView.tableView.register(
+        screen?.tableView.register(
             ChatMessageTableViewCell.self,
             forCellReuseIdentifier: ChatMessageTableViewCell.identifier
         )
-        chatView.tableView.register(
+        screen?.tableView.register(
             ChatSurveyTableViewCell.self,
             forCellReuseIdentifier: ChatSurveyTableViewCell.identifier
         )
@@ -54,7 +55,7 @@ extension ChatViewController: UITableViewDataSource {
         _ tableView: UITableView,
         numberOfRowsInSection section: Int
     ) -> Int {
-        return chats.count
+        return viewModel?.chats?.count ?? 0
     }
     
     func tableView(
@@ -62,7 +63,9 @@ extension ChatViewController: UITableViewDataSource {
         cellForRowAt indexPath: IndexPath
     ) -> UITableViewCell {
         
-        let chat = chats[indexPath.row]
+        guard let chat = viewModel?.chats?[indexPath.row] else {
+            return UITableViewCell()
+        }
         
         switch chat.type {
             
