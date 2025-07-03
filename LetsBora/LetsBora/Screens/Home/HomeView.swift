@@ -58,8 +58,8 @@ extension  HomeView: ViewCode {
         // table View Events constraints
         tableView
             .top(anchor: titleLabel.bottomAnchor,constant: 20)
-            .leading(anchor: self.leadingAnchor)
-            .trailing(anchor: self.trailingAnchor)
+            .leading(anchor: self.leadingAnchor, constant: 16)
+            .trailing(anchor: self.trailingAnchor, constant: -16)
             .bottom(anchor: self.safeAreaLayoutGuide.bottomAnchor)
         
         activityIndicator

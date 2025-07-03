@@ -40,6 +40,7 @@ class EditEventViewController: UIViewController, EditEventViewDelegate {
     
     var onDismissAndUpdate: ((_ updatedEvent: Event) -> Void)?
     
+    //TODO: Dividir em métodos menores
     func didTapSave() {
         guard let screen = self.screen else { // Garante que a screen existe
             print("Erro: A tela (screen) não está disponível.")
@@ -173,6 +174,7 @@ class EditEventViewController: UIViewController, EditEventViewDelegate {
         } else {
             // Se 'isValid' for false, os erros já foram exibidos pelos métodos display...Error.
             // Um alerta geral pode ser útil para resumir.
+            //TODO: criar um componente de alert
             let alert = UIAlertController(title: "Campos Inválidos",
                                           message: "Por favor, corrija os campos destacados e tente novamente.",
                                           preferredStyle: .alert)

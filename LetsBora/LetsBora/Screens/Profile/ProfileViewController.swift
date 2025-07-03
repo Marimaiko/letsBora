@@ -54,6 +54,7 @@ extension ProfileViewController: ProfileViewDelegate {
         }
     }
     
+    //TODO: Poderia ser uma modal, por ser uma tela mais simples
     func profileViewDidTapEditButton() {
         let profileEditViewController = ProfileEditViewController()
         profileEditViewController.hidesBottomBarWhenPushed = true

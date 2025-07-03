@@ -9,6 +9,7 @@ import Foundation
 import MapKit
 import UIKit
 
+//TODO: Fazer separação com view model
 class EventDetailsViewController: UIViewController {
     let eventDetailsView = EventDetailsView()
     var event: Event

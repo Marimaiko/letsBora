@@ -8,6 +8,7 @@ struct Expense {
     let image: UIImage?
 }
 
+//TODO: Fazer separação com view model
 class CostControlViewController: UIViewController {
     
     var screen: CostControlView?

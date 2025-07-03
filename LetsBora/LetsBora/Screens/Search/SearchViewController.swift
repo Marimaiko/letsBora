@@ -7,6 +7,7 @@
 
 import UIKit
 
+//TODO: Fazer separação com view model
 class SearchViewController: ViewController {
     //MARK: Properties
     private let mainView = SearchView()
