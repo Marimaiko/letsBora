@@ -56,7 +56,6 @@ class SearchViewModel {
             var filteredByTextEvents = futureEvents
             if let text = searchText, !text.isEmpty {
                 filteredByTextEvents = futureEvents.filter { event in
-                    // 'localizedCaseInsensitiveContains' faz uma busca "like" ignorando maiúsculas/minúsculas
                     return event.title.localizedCaseInsensitiveContains(text)
                 }
             }

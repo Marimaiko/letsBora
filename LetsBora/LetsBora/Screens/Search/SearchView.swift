@@ -13,7 +13,7 @@ class SearchView: UIView {
     
     // MARK: - UI Components
     private lazy var titleLabel = ReusableLabel(text: "Buscar", labelType: .title)
-    lazy var searchEventTextField = createTextField(placeholder: "Digite o nome  do evento" )
+    lazy var searchEventTextField = createTextField(placeholder: "Digite o nome do evento" )
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, env -> NSCollectionLayoutSection? in
@@ -80,6 +80,7 @@ class SearchView: UIView {
         textField.placeholder = placeholder
         textField.font = UIFont.systemFont(ofSize: 16)
         textField.heightAnchor.constraint(equalToConstant: height).isActive = true
+        textField.autocapitalizationType = .none
         return textField
     }
 }

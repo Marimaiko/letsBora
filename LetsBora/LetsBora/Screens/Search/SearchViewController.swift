@@ -30,22 +30,17 @@ class SearchViewController: ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        fetchInitialData()
+        fetchTags()
     }
     
-    private func fetchInitialData() {
+    private func fetchTags() {
         mainView.activityIndicator.startAnimating()
         Task {
-            // Busca as tags para a collectionView
             let fetchedTags = await viewModel.fetchTags()
-            // Busca uma lista inicial de eventos (todos os públicos futuros)
-            let initialEvents = await viewModel.searchEvents(withText: nil, forTag: nil)
             
             await MainActor.run {
                 self.tags = fetchedTags
-                self.events = initialEvents
                 self.mainView.collectionView.reloadData()
-                self.mainView.tableView.reloadData()
                 self.mainView.activityIndicator.stopAnimating()
             }
         }
@@ -75,7 +70,7 @@ class SearchViewController: ViewController {
     }
     
     private func performSearch() {
-        let searchText = mainView.searchEventTextField.text
+        let searchText = mainView.searchEventTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         
         mainView.activityIndicator.startAnimating()
         Task {
