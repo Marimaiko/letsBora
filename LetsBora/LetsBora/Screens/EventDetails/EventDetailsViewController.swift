@@ -104,8 +104,15 @@ extension EventDetailsViewController: EventDetailsViewDelegate {
     func barButtonTapped(_ sender: UIButton) {
         switch sender.tag {
         case EventDetailsView.TabTag.chat.rawValue:
-            
-            navigationController?.pushViewController(ChatViewController(), animated: true)
+            Task{
+                await viewModel?.openChat()
+                
+                // TODO: PASS CHAT TO VIEWMODEL CHATVIEW
+                navigationController?.pushViewController(
+                    ChatViewController(),
+                    animated: true
+                )
+            }
         case EventDetailsView.TabTag.costs.rawValue:
             navigationController?.pushViewController(CostControlViewController(), animated: true)
         case EventDetailsView.TabTag.maps.rawValue:

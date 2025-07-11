@@ -14,7 +14,7 @@ actor FirestoreChatRepository: ChatRepository {
         self.collection = firestore.collection(ChatKeys.collectionName)
     }
     
-    func create(_ chat: Chat) async throws {
+    func create(_ chat: ChatGroup) async throws {
         do {
             let data = try chat.toDictionary()
             try await collection
@@ -25,13 +25,13 @@ actor FirestoreChatRepository: ChatRepository {
         }
     }
     
-    func retrieve(for id: String) async throws -> Chat{
+    func retrieve(for id: String) async throws -> ChatGroup{
         do {
             let snapshot = try await collection
                 .document(id)
                 .getDocument()
             let chat = try snapshot
-                .decoded(as:Chat.self)
+                .decoded(as:ChatGroup.self)
             return chat
         } catch {
             throw ChatRepositoryError.retrieveFailed
@@ -39,8 +39,8 @@ actor FirestoreChatRepository: ChatRepository {
     }
     
     func retrieveAll(
-    ) async throws -> [Chat] {
-        var chats: [Chat] = []
+    ) async throws -> [ChatGroup] {
+        var chats: [ChatGroup] = []
         do {
             let querySnapshot = try await collection
                 .getDocuments()
@@ -48,7 +48,7 @@ actor FirestoreChatRepository: ChatRepository {
                 .documents {
                 do {
                     let chat = try doc
-                        .decoded(as: Chat.self)
+                        .decoded(as: ChatGroup.self)
                     chats.append(chat)
                 } catch {
                     print(
@@ -65,7 +65,7 @@ actor FirestoreChatRepository: ChatRepository {
     }
     
     func update(
-        _ chat: Chat
+        _ chat: ChatGroup
     ) async throws {
         do {
             try await collection
@@ -92,7 +92,7 @@ actor FirestoreChatRepository: ChatRepository {
     
     func retrieveEqual(
         _ query: ChatQuery
-    ) async throws -> [Chat] {
+    ) async throws -> [ChatGroup] {
         throw ChatRepositoryError.retrieveFailed
     }
     

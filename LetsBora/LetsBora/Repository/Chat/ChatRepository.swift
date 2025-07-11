@@ -17,10 +17,10 @@ struct ChatQuery {
     let value: Any
 }
 protocol ChatRepository {
-    func create(_ chat: Chat) async throws -> Void
-    func retrieve(for id: String) async throws -> Chat
-    func retrieveAll() async throws -> [Chat]
-    func update(_ chat: Chat) async throws -> Void
+    func create(_ chat: ChatGroup) async throws -> Void
+    func retrieve(for id: String) async throws -> ChatGroup
+    func retrieveAll() async throws -> [ChatGroup]
+    func update(_ chat: ChatGroup) async throws -> Void
     func delete(for id: String) async throws -> Void
-    func retrieveEqual(_ query: ChatQuery) async throws -> [Chat]
+    func retrieveEqual(_ query: ChatQuery) async throws -> [ChatGroup]
 }
