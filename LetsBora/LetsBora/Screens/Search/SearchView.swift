@@ -13,7 +13,7 @@ class SearchView: UIView {
     
     // MARK: - UI Components
     private lazy var titleLabel = ReusableLabel(text: "Buscar", labelType: .title)
-    private lazy var searchEventTextField = createTextField(placeholder: "Digite o nome  do evento" )
+    lazy var searchEventTextField = createTextField(placeholder: "Digite o nome do evento" )
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, env -> NSCollectionLayoutSection? in
@@ -54,6 +54,13 @@ class SearchView: UIView {
         return tableView
     }()
     
+    lazy var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.hidesWhenStopped = true
+        return indicator
+    }()
+    
     // MARK: - LifeCycle
     init(){
         super.init(frame: .zero)
@@ -73,6 +80,7 @@ class SearchView: UIView {
         textField.placeholder = placeholder
         textField.font = UIFont.systemFont(ofSize: 16)
         textField.heightAnchor.constraint(equalToConstant: height).isActive = true
+        textField.autocapitalizationType = .none
         return textField
     }
 }
@@ -84,6 +92,7 @@ extension SearchView: ViewCode {
         self.addSubview(searchEventTextField)
         self.addSubview(collectionView)
         self.addSubview(tableView)
+        self.addSubview(activityIndicator)
     }
     
     func setConstraints() {
@@ -108,6 +117,10 @@ extension SearchView: ViewCode {
             .leading(anchor: self.leadingAnchor, constant: 16)
             .trailing(anchor: self.trailingAnchor, constant: -16)
             .bottom(anchor: self.bottomAnchor,constant: -16)
+        
+        activityIndicator
+            .centerX(self.centerXAnchor)
+            .centerY(self.tableView.centerYAnchor)
     }
 }
 
