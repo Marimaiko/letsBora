@@ -75,9 +75,18 @@ class ChatMessageTableViewCell: UITableViewCell {
         contentView.backgroundColor = .systemGray6
     }
     
+    func checkActiveOwner(_ user: User) -> Bool{
+        let owner:User? = Utils.getLoggedInUser()
+        guard let loggedUserId = owner?.id else { return false }
+        if(loggedUserId == user.id ){
+            return true
+        }
+        return false
+    }
+    
     func setupCell(with chat: Chat){
         guard let user = chat.user else { return }
-        guard let activeOwner = chat.activeOwner else { return }
+        let activeOwner = checkActiveOwner(user)
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
         let date = chat.date ?? formatter.string(from: Date())

@@ -38,7 +38,7 @@ class ChatViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        
+        scrollToBottom()
     }
     func setupUI() {
         screen?.tableView.dataSource = self
@@ -57,11 +57,36 @@ class ChatViewController: UIViewController {
         screen?.delegateChatTabBarView(with: self)
     }
     
+    func scrollToBottom() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self,
+                  let tableView = self.screen?.tableView else { return }
+
+            let sections = tableView.numberOfSections
+            guard sections > 0 else { return }
+
+            let rows = tableView.numberOfRows(inSection: sections - 1)
+            guard rows > 0 else { return }
+
+            let indexPath = IndexPath(row: rows - 1, section: sections - 1)
+            tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+        }
+    }
 }
 extension ChatViewController: ChatTabBarViewDelegate {
     func chatTabBarViewDidTapSendButton(_ chatTabBarView: ChatTabBarView) {
         print("Send Button Tapped")
-        print("\(chatTabBarView.getText())")
+        let newMessage = chatTabBarView.getText( )
+        Task {
+            let success = await viewModel.sendMessage(newMessage)
+            if (success) {
+                chatTabBarView.clearMessage()
+                screen?.tableView.reloadData()
+                scrollToBottom()
+            } else {
+                print("Erro ao enviar a mensagem")
+            }
+        }
     }
     
     func chatTabBarViewDidTapMicrofoneButton(_ chatTabBarView: ChatTabBarView) {
@@ -82,7 +107,7 @@ extension ChatViewController: UITableViewDataSource {
         return viewModel.chatGroup.messages.count
     }
     
-    func tableView(
+    func tableView (
         _ tableView: UITableView,
         cellForRowAt indexPath: IndexPath
     ) -> UITableViewCell {
@@ -118,7 +143,6 @@ extension ChatViewController: UITableViewDataSource {
             cell?.setupCell(with: chat)
             
             return cell ?? UITableViewCell()
-            
         }
     }
 }
@@ -129,7 +153,7 @@ extension ChatViewController: UITableViewDataSource {
     ChatViewController(
         with: .init(
             messages: [
-                MockData.chat1
+                MockData.chat3
             ]
         )
     )

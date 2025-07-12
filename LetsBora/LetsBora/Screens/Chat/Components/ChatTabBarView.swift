@@ -31,7 +31,6 @@ class ChatTabBarView: UIView {
                 weight: .regular
             )
             if (isSendButtonEnable){
-                print("set send button")
                 rightBarItem.setImage(
                     UIImage(
                         systemName: "paperplane.fill",
@@ -40,7 +39,6 @@ class ChatTabBarView: UIView {
                     for: .normal
                 )
             } else {
-                print("set microphone")
                 rightBarItem.setImage(
                     UIImage(
                         systemName: "microphone.fill",
@@ -153,6 +151,10 @@ class ChatTabBarView: UIView {
     }
     func getText() -> String {
         return textField.text ?? ""
+    }
+    func clearMessage() {
+        textField.text = ""
+        isSendButtonEnable = false
     }
 }
 extension ChatTabBarView: UITextFieldDelegate {
