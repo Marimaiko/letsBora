@@ -9,9 +9,17 @@ import UIKit
 
 //TODO: Fazer separação com view model; chat private
 class ChatViewController: UIViewController {
-    var screen: ChatView?
-    var viewModel: ChatViewModel?
     
+    var screen: ChatView?
+    var viewModel: ChatViewModel
+    // MARK: - Init
+    init(with chat: ChatGroup) {
+        viewModel = ChatViewModel(chat)
+        super.init(nibName: nil, bundle: nil)
+    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     // MARK: - LyfeCycle
     override func viewWillAppear(
         _ animated: Bool
@@ -29,7 +37,6 @@ class ChatViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel = ChatViewModel()
         setupUI()
         
     }
@@ -47,7 +54,24 @@ class ChatViewController: UIViewController {
             ChatSurveyTableViewCell.self,
             forCellReuseIdentifier: ChatSurveyTableViewCell.identifier
         )
+        screen?.delegateChatTabBarView(with: self)
     }
+    
+}
+extension ChatViewController: ChatTabBarViewDelegate {
+    func chatTabBarViewDidTapSendButton(_ chatTabBarView: ChatTabBarView) {
+        print("Send Button Tapped")
+        print("\(chatTabBarView.getText())")
+    }
+    
+    func chatTabBarViewDidTapMicrofoneButton(_ chatTabBarView: ChatTabBarView) {
+        print("Microphone Button Tapped")
+    }
+    
+    func chatTabBarViewDidTapPlusButton(_ chatTabBarView: ChatTabBarView) {
+        print("Plus Button Tapped")
+    }
+    
     
 }
 extension ChatViewController: UITableViewDataSource {
@@ -55,7 +79,7 @@ extension ChatViewController: UITableViewDataSource {
         _ tableView: UITableView,
         numberOfRowsInSection section: Int
     ) -> Int {
-        return viewModel?.chats?.count ?? 0
+        return viewModel.chatGroup.messages.count
     }
     
     func tableView(
@@ -63,9 +87,7 @@ extension ChatViewController: UITableViewDataSource {
         cellForRowAt indexPath: IndexPath
     ) -> UITableViewCell {
         
-        guard let chat = viewModel?.chats?[indexPath.row] else {
-            return UITableViewCell()
-        }
+        let chat = viewModel.chatGroup.messages[indexPath.row]
         
         switch chat.type {
             
@@ -104,7 +126,13 @@ extension ChatViewController: UITableViewDataSource {
 #if swift(>=5.9)
 @available(iOS 17.0,*)
 #Preview(traits: .sizeThatFitsLayout, body: {
-    ChatViewController()
+    ChatViewController(
+        with: .init(
+            messages: [
+                MockData.chat1
+            ]
+        )
+    )
 })
 
 #endif

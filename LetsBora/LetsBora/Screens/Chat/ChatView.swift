@@ -10,8 +10,8 @@ import UIKit
 class ChatView: UIView {
     
     private lazy var chatTabBarView: ChatTabBarView = {
-       let chatBar = ChatTabBarView()
-            return chatBar
+        let chatBar = ChatTabBarView()
+        return chatBar
     }()
     lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -33,7 +33,6 @@ class ChatView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }
 extension ChatView:ViewCode{
     func setHierarchy() {
@@ -49,18 +48,21 @@ extension ChatView:ViewCode{
             .bottom(anchor: chatTabBarView.topAnchor)
         
         chatTabBarView
-            .bottom(anchor: self.bottomAnchor)
+            .bottom(anchor: keyboardLayoutGuide.topAnchor)
             .leading(anchor: self.leadingAnchor)
             .trailing(anchor: self.trailingAnchor)
             .height(constant: ChatTabBarView.InternalLayout.containerHeight)
         
     }
-
+    // MARK: - Behaviors
+    func delegateChatTabBarView(with delegate: ChatTabBarViewDelegate) {
+        chatTabBarView.delegate(delegate)
+    }
 }
 // MARK: - Preview Profile
 #if swift(>=5.9)
 @available(iOS 17.0,*)
 #Preview(traits: .sizeThatFitsLayout, body: {
-    ChatViewController()
+    ChatViewController(with: .init())
 })
 #endif

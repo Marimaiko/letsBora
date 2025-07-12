@@ -6,13 +6,50 @@
 //
 
 import UIKit
-
+protocol ChatTabBarViewDelegate: AnyObject {
+    func chatTabBarViewDidTapSendButton(_ chatTabBarView: ChatTabBarView)
+    func chatTabBarViewDidTapMicrofoneButton(_ chatTabBarView: ChatTabBarView)
+    func chatTabBarViewDidTapPlusButton(_ chatTabBarView: ChatTabBarView)
+}
 class ChatTabBarView: UIView {
+    weak private var delegate: ChatTabBarViewDelegate?
+    
+    func delegate(_ delegate: ChatTabBarViewDelegate){
+        self.delegate = delegate
+    }
+    
     struct InternalLayout {
         static let iconSize: CGFloat = 48
         static let marginHorizontal: CGFloat = 8
         static let marginVertical: CGFloat = 12
-        static let containerHeight: CGFloat = iconSize + 3 * marginVertical
+        static let containerHeight: CGFloat = iconSize + 2 * marginVertical
+    }
+    private var isSendButtonEnable: Bool = false {
+        didSet {
+            let config = UIImage.SymbolConfiguration(
+                pointSize: InternalLayout.iconSize * 0.5,
+                weight: .regular
+            )
+            if (isSendButtonEnable){
+                print("set send button")
+                rightBarItem.setImage(
+                    UIImage(
+                        systemName: "paperplane.fill",
+                        withConfiguration: config
+                    ),
+                    for: .normal
+                )
+            } else {
+                print("set microphone")
+                rightBarItem.setImage(
+                    UIImage(
+                        systemName: "microphone.fill",
+                        withConfiguration: config
+                    ),
+                    for: .normal
+                )
+            }
+        }
     }
     private lazy var container: UIView = {
         let view = UIView()
@@ -40,6 +77,7 @@ class ChatTabBarView: UIView {
         button.imageView?.contentMode = .scaleAspectFit
         button.contentHorizontalAlignment = .center
         button.contentVerticalAlignment = .center
+        button.addTarget(self, action: #selector(didTapPlusButton), for: .touchUpInside)
         return button
     }()
     
@@ -63,6 +101,7 @@ class ChatTabBarView: UIView {
         button.imageView?.contentMode = .scaleAspectFit
         button.contentHorizontalAlignment = .center
         button.contentVerticalAlignment = .center
+        button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
         return button
     }()
     
@@ -92,19 +131,55 @@ class ChatTabBarView: UIView {
         
         return textField
     }()
-    
-    
     // MARK: - LifeCycle
     init() {
         super.init(frame: .zero)
         self.translatesAutoresizingMaskIntoConstraints = false
         self.backgroundColor = .white
+        textField.delegate = self
         setupView()
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+    // MARK: - Behaviors
+    @objc func didTapPlusButton(){
+        
+    }
+    @objc func didTapButton(){
+        isSendButtonEnable ?
+        self.delegate?.chatTabBarViewDidTapSendButton(self) :
+        self.delegate?.chatTabBarViewDidTapMicrofoneButton(self)
+    }
+    func getText() -> String {
+        return textField.text ?? ""
+    }
+}
+extension ChatTabBarView: UITextFieldDelegate {
+    func textField(
+        _ textField: UITextField,
+        shouldChangeCharactersIn range: NSRange,
+        replacementString string: String
+    ) -> Bool {
+        // Actual Text
+        let currentText = textField.text ?? ""
+        
+        // Changed Text
+        guard let stringRange = Range(range, in: currentText) else { return true }
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+        
+        // Case: First character digited
+        if currentText.isEmpty && !updatedText.isEmpty {
+            self.isSendButtonEnable = true
+        }
+        
+        // Case: erase last character and emptied the field
+        if !currentText.isEmpty && updatedText.isEmpty {
+            self.isSendButtonEnable = false
+        }
+        
+        return true
+    }
 }
 extension ChatTabBarView: ViewCode {
     func setHierarchy() {
@@ -158,7 +233,7 @@ extension ChatTabBarView: ViewCode {
             )
             .trailing(
                 anchor: rightBarItem.leadingAnchor,
-                constant: -InternalLayout.marginVertical
+                constant: -InternalLayout.marginHorizontal
             )
             .height(constant: InternalLayout.iconSize)
         

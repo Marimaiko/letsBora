@@ -208,7 +208,7 @@ extension ChatMessageTableViewCell: ViewCode {
                 constant: cellLayout.marginVertical / 2
             )
         
-        
+         
     }
 }
 
@@ -216,6 +216,8 @@ extension ChatMessageTableViewCell: ViewCode {
 #if swift(>=5.9)
 @available(iOS 17.0,*)
 #Preview(traits: .sizeThatFitsLayout, body: {
-    ChatViewController()
+    ChatViewController(
+        with: .init()
+    )
 })
 #endif

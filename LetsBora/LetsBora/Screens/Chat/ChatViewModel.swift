@@ -7,8 +7,10 @@
 
 class ChatViewModel {
     
-    var chats: [Chat]? {
-        return MockData.chats
+    private(set) var chatGroup: ChatGroup
+    
+    init(_ chat: ChatGroup){
+        chatGroup = chat
     }
     
     

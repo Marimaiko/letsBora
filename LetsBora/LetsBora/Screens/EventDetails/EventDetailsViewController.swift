@@ -106,10 +106,10 @@ extension EventDetailsViewController: EventDetailsViewDelegate {
         case EventDetailsView.TabTag.chat.rawValue:
             Task{
                 await viewModel?.openChat()
-                
+                guard let chat = viewModel?.chat else {return}
                 // TODO: PASS CHAT TO VIEWMODEL CHATVIEW
                 navigationController?.pushViewController(
-                    ChatViewController(),
+                    ChatViewController(with: chat),
                     animated: true
                 )
             }
