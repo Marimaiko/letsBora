@@ -9,10 +9,17 @@ import UIKit
 
 //TODO: Fazer separação com view model; chat private
 class ChatViewController: UIViewController {
-    let chats: [Chat] = MockData.chats
     
-    let chatView = ChatView()
-    
+    var screen: ChatView?
+    var viewModel: ChatViewModel
+    // MARK: - Init
+    init(with chat: ChatGroup) {
+        viewModel = ChatViewModel(chat)
+        super.init(nibName: nil, bundle: nil)
+    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     // MARK: - LyfeCycle
     override func viewWillAppear(
         _ animated: Bool
@@ -24,29 +31,72 @@ class ChatViewController: UIViewController {
         )
     }
     override func loadView() {
-        self.view = chatView
+        screen = ChatView()
+        self.view = screen
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        
+        scrollToBottom()
     }
     func setupUI() {
-        chatView.tableView.dataSource = self
-        chatView.tableView.register(
+        screen?.tableView.dataSource = self
+        screen?.tableView.register(
             ChatNotificationTableViewCell.self,
             forCellReuseIdentifier: ChatNotificationTableViewCell.identifier
         )
-        chatView.tableView.register(
+        screen?.tableView.register(
             ChatMessageTableViewCell.self,
             forCellReuseIdentifier: ChatMessageTableViewCell.identifier
         )
-        chatView.tableView.register(
+        screen?.tableView.register(
             ChatSurveyTableViewCell.self,
             forCellReuseIdentifier: ChatSurveyTableViewCell.identifier
         )
+        screen?.delegateChatTabBarView(with: self)
     }
+    
+    func scrollToBottom() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self,
+                  let tableView = self.screen?.tableView else { return }
+
+            let sections = tableView.numberOfSections
+            guard sections > 0 else { return }
+
+            let rows = tableView.numberOfRows(inSection: sections - 1)
+            guard rows > 0 else { return }
+
+            let indexPath = IndexPath(row: rows - 1, section: sections - 1)
+            tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+        }
+    }
+}
+extension ChatViewController: ChatTabBarViewDelegate {
+    func chatTabBarViewDidTapSendButton(_ chatTabBarView: ChatTabBarView) {
+        print("Send Button Tapped")
+        let newMessage = chatTabBarView.getText( )
+        Task {
+            let success = await viewModel.sendMessage(newMessage)
+            if (success) {
+                chatTabBarView.clearMessage()
+                screen?.tableView.reloadData()
+                scrollToBottom()
+            } else {
+                print("Erro ao enviar a mensagem")
+            }
+        }
+    }
+    
+    func chatTabBarViewDidTapMicrofoneButton(_ chatTabBarView: ChatTabBarView) {
+        print("Microphone Button Tapped")
+    }
+    
+    func chatTabBarViewDidTapPlusButton(_ chatTabBarView: ChatTabBarView) {
+        print("Plus Button Tapped")
+    }
+    
     
 }
 extension ChatViewController: UITableViewDataSource {
@@ -54,15 +104,15 @@ extension ChatViewController: UITableViewDataSource {
         _ tableView: UITableView,
         numberOfRowsInSection section: Int
     ) -> Int {
-        return chats.count
+        return viewModel.chatGroup.messages.count
     }
     
-    func tableView(
+    func tableView (
         _ tableView: UITableView,
         cellForRowAt indexPath: IndexPath
     ) -> UITableViewCell {
         
-        let chat = chats[indexPath.row]
+        let chat = viewModel.chatGroup.messages[indexPath.row]
         
         switch chat.type {
             
@@ -93,7 +143,6 @@ extension ChatViewController: UITableViewDataSource {
             cell?.setupCell(with: chat)
             
             return cell ?? UITableViewCell()
-            
         }
     }
 }
@@ -101,7 +150,13 @@ extension ChatViewController: UITableViewDataSource {
 #if swift(>=5.9)
 @available(iOS 17.0,*)
 #Preview(traits: .sizeThatFitsLayout, body: {
-    ChatViewController()
+    ChatViewController(
+        with: .init(
+            messages: [
+                MockData.chat3
+            ]
+        )
+    )
 })
 
 #endif

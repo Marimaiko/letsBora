@@ -202,7 +202,7 @@ extension ChatSurveyTableViewCell: ViewCode  {
 // MARK: - Preview Profile
 @available(iOS 17.0,*)
 #Preview(traits: .sizeThatFitsLayout, body: {
-    ChatViewController()
+    ChatViewController(with: .init())
 })
 
 #endif

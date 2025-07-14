@@ -88,6 +88,6 @@ extension ChatNotificationTableViewCell: ViewCode {
 #if swift(>=5.9)
 @available(iOS 17.0,*)
 #Preview(traits: .portrait, body: {
-    ChatViewController()
+    ChatViewController(with: .init())
 })
 #endif

@@ -16,6 +16,7 @@ struct EventDTO: Identifiable, Codable {
     var date: String
     var location: EventLocationDetails?
     var description: String?
+    var chatId: String?
     var totalCost: String?
     var participants: [String]? // participants IDs
     var owner: String? // ownerId
@@ -62,6 +63,7 @@ struct EventDTO: Identifiable, Codable {
             date: date,
             locationDetails: location,
             description: description,
+            chatId: chatId,
             totalCost: totalCost,
             participants: nil, // não carregado
             owner: nil // não carregado

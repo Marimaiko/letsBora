@@ -11,12 +11,12 @@ import UIKit
 
 //TODO: Fazer separação com view model
 class EventDetailsViewController: UIViewController {
-    let eventDetailsView = EventDetailsView()
-    var event: Event
+    var screen: EventDetailsView?
+    var viewModel: EventDetailViewModel?
     
     // Inicializador para injetar o evento
     init(event: Event) {
-        self.event = event
+        viewModel = EventDetailViewModel(event: event)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -28,23 +28,25 @@ class EventDetailsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
-        eventDetailsView.configure(with: self.event)
-        title = self.event.title
     }
     override func loadView() {
-        self.view = eventDetailsView
+        screen = EventDetailsView()
+        self.view = screen
     }
         
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigation()
-        eventDetailsView.delegate = self
-        eventDetailsView.configure(with: self.event)
+        screen?.delegate = self
+        //screen?.configure(with: self.event)
     }
     
     // MARK: - Setup
     private func setupNavigation() {
-        title = self.event.title
+        guard let event = viewModel?.event else {return}
+        screen?.configure(with: event)
+        
+        title = event.title
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .edit,
             target: self,
@@ -54,7 +56,7 @@ class EventDetailsViewController: UIViewController {
     
     // MARK: - Maps Helper
     private func openAppleMaps() {
-        guard let location = event.locationDetails else {
+        guard let location = viewModel?.event.locationDetails else {
             print("Detalhes da localização não disponíveis para abrir no mapa.")
             // Opcional: Mostrar um alerta para o usuário
             let alert = UIAlertController(title: "Localização Indisponível", message: "Não há informações de coordenadas para este evento.", preferredStyle: .alert)
@@ -84,15 +86,14 @@ class EventDetailsViewController: UIViewController {
     
     // MARK: - Actions
     @objc func editButtonTapped() {
-        let editVM = EditEventViewModel(event: self.event)
+        guard let event = viewModel?.event else { return }
+        let editVM = EditEventViewModel(event: event)
         let editViewController = EditEventViewController(viewModel: editVM)
         
-        editViewController.onDismissAndUpdate = { [weak self] updatedEventFromEdit in
+        editViewController.onDismissAndUpdate = { [weak self] updatedEvent in
             guard let self = self else { return }
-            self.event = updatedEventFromEdit // Atualiza o evento neste controller
-            // self.eventDetailsView.configure(with: updatedEventFromEdit) // viewWillAppear já faz isso
-            // self.title = updatedEventFromEdit.title // viewWillAppear já faz isso
-            self.eventDetailsView.showUpdateToast(message: "Evento atualizado com sucesso!")
+            viewModel?.updateEvent(updatedEvent)
+            screen?.showUpdateToast(message: "Evento atualizado com sucesso!")
         }
         
         navigationController?.pushViewController(editViewController, animated: true)
@@ -103,7 +104,15 @@ extension EventDetailsViewController: EventDetailsViewDelegate {
     func barButtonTapped(_ sender: UIButton) {
         switch sender.tag {
         case EventDetailsView.TabTag.chat.rawValue:
-            navigationController?.pushViewController(ChatViewController(), animated: true)
+            Task{
+                await viewModel?.openChat()
+                guard let chat = viewModel?.chat else {return}
+                // TODO: PASS CHAT TO VIEWMODEL CHATVIEW
+                navigationController?.pushViewController(
+                    ChatViewController(with: chat),
+                    animated: true
+                )
+            }
         case EventDetailsView.TabTag.costs.rawValue:
             navigationController?.pushViewController(CostControlViewController(), animated: true)
         case EventDetailsView.TabTag.maps.rawValue:
@@ -117,25 +126,3 @@ extension EventDetailsViewController: EventDetailsViewDelegate {
         self.editButtonTapped()
     }
 }
-#if swift(>=5.9)
-/*
-@available(iOS 17.0, *)
-#Preview(traits: .portrait, body: {
-    // Crie um evento mock aqui usando a struct Event atualizada
-    let mockEvent = Event(
-        title: "Aniversário do Pedro (Preview)",
-        image: "event-sample-image",
-        tag: .init(title: "Festa", color: .white, bgColor: .blue), // Ajuste Tag conforme sua struct
-        visibility: "Público",
-        date: Date(), // Use uma data real
-        locationDetails: .init(name: "Casa do Pedro (Preview)", address: "Rua Fictícia, 123", latitude: -23.5632, longitude: -46.6542),
-        description: "Uma festa de aniversário para o Pedro.",
-        totalCost: "Grátis",
-        participants: [User(name: "Amigo 1")], // Supondo que User(name:) exista
-        owner: User(name: "Pedro")
-    )
-    let navController = UINavigationController(rootViewController: EventDetailsViewController(event: mockEvent))
-    navController
-})
-*/
-#endif

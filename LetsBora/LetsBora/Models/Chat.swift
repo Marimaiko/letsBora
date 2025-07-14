@@ -4,14 +4,22 @@
 //
 //  Created by Davi Paiva on 30/04/25.
 //
-
-enum MessageType {
+import Foundation
+enum ChatKeys {
+    static let collectionName: String = "chat"
+}
+enum MessageType: String, Codable {
     case notification
     case message
     case survey
 }
+struct Survey: Codable {
+    var title: String
+    var votes: String
+}
 
-struct Chat {
+struct Chat: Codable {
+    var id: String = UUID().uuidString
     var type: MessageType
     var text: String
     var desciption:  String?

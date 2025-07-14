@@ -47,14 +47,12 @@ class CreateEventViewModel {
     }
     
     func fetchUsers() async -> [User] {
-        
         do {
             return try await userRepository.retrieveAll()
         } catch {
             print("Error fetching users: \(error.localizedDescription)")
         return []
         }
-        
     }
     
     

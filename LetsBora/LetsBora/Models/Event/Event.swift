@@ -17,6 +17,7 @@ enum EventKeys {
     static let date: String = "date"
     static let locationDetails: String = "location"
     static let description: String = "description"
+    static let chatId: String = "chatId"
     static let totalCost: String = "totalCost"
     static let participants: String = "participants"
     static let owner: String = "owner"
@@ -31,6 +32,7 @@ struct Event: Identifiable {
     var date: String
     var locationDetails: EventLocationDetails?
     var description: String?
+    var chatId: String?
     var totalCost: String?
     var participants: [User]? // update to reference
     var owner: User? // update to reference
@@ -54,6 +56,9 @@ struct Event: Identifiable {
         if let description = description {
             dict[EventKeys.description] = description
         }
+        if let chatId = chatId {
+            dict[EventKeys.chatId] = chatId
+        }
         if let totalCost = totalCost {
             dict[EventKeys.totalCost] = totalCost
         }
@@ -76,6 +81,3 @@ struct Event: Identifiable {
       }
     
 }
-
-
-
