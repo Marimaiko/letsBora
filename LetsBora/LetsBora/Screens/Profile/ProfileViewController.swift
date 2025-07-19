@@ -39,12 +39,16 @@ class ProfileViewController: UIViewController {
             } catch {
                 await MainActor.run {
                     profileView.showLoading(false)
-                    print("Erro ao carregar dados do perfil: \(error.localizedDescription)")
-                    // Opcional: Mostrar um alerta para o usuário
-                    // showAlert(title: "Erro", message: "Não foi possível carregar seu perfil.")
+                    showAlert(title: "Erro", message: "Não foi possível carregar seu perfil. Por favor, tente novamente.")
                 }
             }
         }
+    }
+                        
+    private func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
     }
 }
 extension ProfileViewController: ProfileViewDelegate {
