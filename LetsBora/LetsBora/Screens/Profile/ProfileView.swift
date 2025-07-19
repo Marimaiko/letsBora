@@ -38,18 +38,22 @@ class ProfileView: UIView {
     
     lazy private var profileInfo: ProfileInfoView = {
         let view = ProfileInfoView()
-        view.config(
-            name: "Julia",
-            email: "julia@example.com",
-            image: UIImage(named: "Julia"))
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     lazy private var numberTitleLabel: QuantityTitleView = {
-        let view = QuantityTitleView(number: "24", title: "Eventos")
+        // Inicializa com valores padrão que serão substituídos
+        let view = QuantityTitleView(number: "0", title: "Eventos")
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
+    }()
+    
+    lazy private var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.hidesWhenStopped = true
+        return indicator
     }()
     
     lazy private var conquerTitleLabel: UILabel = {
@@ -128,6 +132,24 @@ class ProfileView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    public func configure(with data: ProfileViewModel.ProfileData) {
+        profileInfo.config(
+            name: data.user.name,
+            email: data.user.email ?? "Falha ao obter e-mail",
+            image: UIImage(named: data.user.photo ?? "user-placeholder")
+        )
+        
+        numberTitleLabel.update(number: "\(data.eventCount)")
+    }
+    
+    func showLoading(_ isLoading: Bool) {
+        if isLoading {
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.stopAnimating()
+        }
+    }
+    
     @objc func editProfileTapped(){
         self.delegate?.profileViewDidTapEditButton()
     }
@@ -154,6 +176,7 @@ extension ProfileView {
         contentView.addSubview(settingButtonStack)
         contentView.addSubview(exitButton)
         contentView.addSubview(editButton)
+        contentView.addSubview(activityIndicator)
     }
     
     func setupConstraint() {
@@ -205,6 +228,9 @@ extension ProfileView {
             editButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
             editButton.heightAnchor.constraint(equalToConstant: 44),
             editButton.widthAnchor.constraint(equalToConstant: 88),
+            
+            activityIndicator.centerXAnchor.constraint(equalTo: centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
 }

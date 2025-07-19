@@ -8,23 +8,43 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
-    var profileView : ProfileView?
-    var viewModel: ProfileViewModel?
+    private let profileView = ProfileView()
+    private let viewModel = ProfileViewModel()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        loadUserProfileData()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        profileView?.delegate = self
-        viewModel = ProfileViewModel()
+        profileView.delegate = self
     }
     
     override func loadView() {
-        profileView = ProfileView()
         self.view = profileView
+    }
+    
+    private func loadUserProfileData() {
+        profileView.showLoading(true)
+        Task {
+            do {
+                let profileData = try await viewModel.fetchUserProfileData()
+                
+                await MainActor.run {
+                    profileView.configure(with: profileData)
+                    profileView.showLoading(false)
+                }
+            } catch {
+                await MainActor.run {
+                    profileView.showLoading(false)
+                    print("Erro ao carregar dados do perfil: \(error.localizedDescription)")
+                    // Opcional: Mostrar um alerta para o usuário
+                    // showAlert(title: "Erro", message: "Não foi possível carregar seu perfil.")
+                }
+            }
+        }
     }
 }
 extension ProfileViewController: ProfileViewDelegate {
@@ -46,7 +66,7 @@ extension ProfileViewController: ProfileViewDelegate {
     func exitProfileDidTapButton() {
         Task{
             do {
-                try await viewModel?.logout()
+                try await viewModel.logout()
                 navigateToLogin()
             } catch {
                 print("Failed to logout user: \(error.localizedDescription)")

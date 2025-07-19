@@ -62,5 +62,9 @@ class QuantityTitleView: UIView {
     public func config(number: String, title: String) {
         numberLabel.text = number
         titleLabel.text = title
-        }
+    }
+    
+    public func update(number: String) {
+        numberLabel.text = number
+    }
 }
