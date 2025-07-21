@@ -7,8 +7,9 @@
 
 import FirebaseFirestore
 
-actor FirestoreChatRepository: ChatRepository {
+actor FirestoreChatRepository: @preconcurrency ChatRepository {
     let collection: CollectionReference
+    var listener: ListenerRegistration? = nil
     
     init(firestore: Firestore = FirebaseFactory.makeFirestore()){
         self.collection = firestore.collection(ChatKeys.collectionName)
@@ -95,8 +96,35 @@ actor FirestoreChatRepository: ChatRepository {
     ) async throws -> [ChatGroup] {
         throw ChatRepositoryError.retrieveFailed
     }
-    
-    
-    
+    func listenChat(for id: String, completion: @escaping (Result<ChatGroup, Error>) -> Void) {
+        self.listener = collection.document(id).addSnapshotListener { documentSnapshot, error in
+            if let error = error {
+                print("Error fetching document: \(error)")
+                completion(.failure(error))
+                return
+            }
+
+            guard let document = documentSnapshot, let _ = document.data() else {
+                print("Document data was empty.")
+                completion(.failure(ChatRepositoryError.retrieveFailed))
+                return
+            }
+
+            do {
+                let chatGroup = try document.decoded(as: ChatGroup.self)
+                completion(.success(chatGroup))
+            } catch {
+                print("Decoding failed: \(error)")
+                completion(.failure(error))
+            }
+        }
+    }
+    func stopListenChat(for id: String)  throws -> Void {
+        
+        guard let listener else {
+            return
+        }
+        listener.remove()
+    }
     
 }

@@ -27,7 +27,7 @@ class ParticipantCell: UITableViewCell {
     }()
 
     private lazy var imageParticipant: UIImageView = {
-        let image = UIImageView(image: .julia)
+        let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
         image.contentMode = .scaleAspectFit
         return image
