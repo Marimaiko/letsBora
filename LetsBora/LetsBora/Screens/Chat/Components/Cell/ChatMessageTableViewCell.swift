@@ -60,12 +60,16 @@ class ChatMessageTableViewCell: UITableViewCell {
         label.setContentHuggingPriority(.defaultHigh, for: .vertical)
         return label
     }()
+    // MARK: - Constraint Groups
+    private var ownerConstraints: [NSLayoutConstraint] = []
+    private var otherConstraints: [NSLayoutConstraint] = []
     
     // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()
         setupUI()
+        setupConstraintGroups()
     }
     required init?(coder: NSCoder) {
         fatalError("init (coder:) has not been implemented")
@@ -97,56 +101,54 @@ class ChatMessageTableViewCell: UITableViewCell {
         nameLabel.updateText(user.name)
         
         dateLabel.text = date
-        
-        if activeOwner {
-            ballonView.backgroundColor = .systemBlue
-            messageLabel.textColor = .white
-            ballonView.trailing(
-                anchor: containerView.trailingAnchor,
-                constant: -cellLayout.avatarSize
-            )
-            avatarImageView.trailing(anchor: containerView.trailingAnchor)
-            nameLabel.trailing(
-                anchor: avatarImageView.leadingAnchor,
-                constant: -cellLayout.marginHorizontal / 2
-            )
-            ballonView.layer.maskedCorners = [
-                .layerMaxXMaxYCorner,
-                .layerMinXMaxYCorner,
-                .layerMinXMinYCorner
-            ]
-            
-            dateLabel
-                .trailing(anchor: ballonView.trailingAnchor)
-            
-            
-        } else {
-            ballonView.backgroundColor = .white
-            messageLabel.textColor = .black
-            ballonView.leading(
-                anchor: containerView.leadingAnchor,
-                constant: cellLayout.avatarSize
-            )
-            avatarImageView.leading(anchor: containerView.leadingAnchor)
-            nameLabel.leading(
-                anchor: avatarImageView.trailingAnchor,
-                constant: cellLayout.marginHorizontal / 2
-            )
-            ballonView.layer.maskedCorners = [
-                .layerMinXMaxYCorner,
-                .layerMaxXMinYCorner,
-                .layerMaxXMaxYCorner
-                
-            ]
-            
-            dateLabel
-                .leading(anchor: ballonView.leadingAnchor)
-            
-        }
         messageLabel.text = chat.text
         
+        ballonView.backgroundColor = activeOwner ? .systemBlue : .white
+        messageLabel.textColor = activeOwner ? .white : .black
+        ballonView.layer.maskedCorners = activeOwner
+                    ? [.layerMaxXMaxYCorner, .layerMinXMaxYCorner, .layerMinXMinYCorner]
+                    : [.layerMinXMaxYCorner, .layerMaxXMinYCorner, .layerMaxXMaxYCorner]
+        NSLayoutConstraint.deactivate(ownerConstraints + otherConstraints)
+        NSLayoutConstraint.activate(activeOwner ? ownerConstraints : otherConstraints)
+        
     }
-    
+    private func setupConstraintGroups() {
+        // Constraints do dono da mensagem (à direita)
+        ownerConstraints = [
+            ballonView.trailingAnchor.constraint(
+                equalTo: containerView.trailingAnchor,
+                constant: -cellLayout.avatarSize
+            ),
+            avatarImageView.trailingAnchor.constraint(
+                equalTo: containerView.trailingAnchor
+            ),
+            nameLabel.trailingAnchor.constraint(
+                equalTo: avatarImageView.leadingAnchor,
+                constant: -cellLayout.marginHorizontal / 2
+            ),
+            dateLabel.trailingAnchor.constraint(
+                equalTo: ballonView.trailingAnchor
+            )
+        ]
+        
+        // Constraints de outras pessoas (à esquerda)
+        otherConstraints = [
+            avatarImageView.leadingAnchor.constraint(
+                equalTo: leadingAnchor
+            ),
+            nameLabel.leadingAnchor.constraint(
+                equalTo: avatarImageView.trailingAnchor,
+                constant: 8
+            ),
+            ballonView.leadingAnchor.constraint(
+                equalTo: leadingAnchor,
+                constant: cellLayout.avatarSize
+            ),
+            dateLabel.leadingAnchor.constraint(
+                equalTo: ballonView.leadingAnchor
+            )
+        ]
+    }
 }
 
 extension ChatMessageTableViewCell: ViewCode {
@@ -157,7 +159,7 @@ extension ChatMessageTableViewCell: ViewCode {
         containerView.addSubview(ballonView)
         containerView.addSubview(nameLabel)
         containerView.addSubview(dateLabel)
-
+        
         ballonView.addSubview(messageLabel)
     }
     
@@ -216,8 +218,6 @@ extension ChatMessageTableViewCell: ViewCode {
                 anchor: ballonView.bottomAnchor,
                 constant: cellLayout.marginVertical / 2
             )
-        
-         
     }
 }
 
@@ -226,7 +226,22 @@ extension ChatMessageTableViewCell: ViewCode {
 @available(iOS 17.0,*)
 #Preview(traits: .sizeThatFitsLayout, body: {
     ChatViewController(
-        with: .init()
+        with: .init(
+            messages: [
+                MockData.chat3,
+                MockData.chat4,
+                MockData.chat5,
+                MockData.chat3,
+                MockData.chat4,
+                MockData.chat5,
+                MockData.chat3,
+                MockData.chat4,
+                MockData.chat5,
+                MockData.chat3,
+                MockData.chat4,
+                MockData.chat5,
+            ]
+        )
     )
 })
 #endif

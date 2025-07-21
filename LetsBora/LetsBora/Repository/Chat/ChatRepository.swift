@@ -23,4 +23,6 @@ protocol ChatRepository {
     func update(_ chat: ChatGroup) async throws -> Void
     func delete(for id: String) async throws -> Void
     func retrieveEqual(_ query: ChatQuery) async throws -> [ChatGroup]
+    func listenChat(for id: String, completion: @escaping (Result<ChatGroup, Error>) -> Void) 
+    func stopListenChat(for id: String) throws -> Void 
 }

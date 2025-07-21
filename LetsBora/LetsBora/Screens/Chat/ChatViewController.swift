@@ -12,6 +12,7 @@ class ChatViewController: UIViewController {
     
     var screen: ChatView?
     var viewModel: ChatViewModel
+    
     // MARK: - Init
     init(with chat: ChatGroup) {
         viewModel = ChatViewModel(chat)
@@ -39,6 +40,8 @@ class ChatViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         scrollToBottom()
+        viewModel.delegate(with: self)
+        viewModel.listenForNewMessages()
     }
     func setupUI() {
         screen?.tableView.dataSource = self
@@ -146,6 +149,16 @@ extension ChatViewController: UITableViewDataSource {
         }
     }
 }
+extension ChatViewController: ChatViewModelProtocol{
+    func reloadTable() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.screen?.tableView.reloadData()
+            self.scrollToBottom()
+        }
+    }
+}
+
 // MARK: - Preview Profile
 #if swift(>=5.9)
 @available(iOS 17.0,*)
