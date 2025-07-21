@@ -8,23 +8,47 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
-    var profileView : ProfileView?
-    var viewModel: ProfileViewModel?
+    private let profileView = ProfileView()
+    private let viewModel = ProfileViewModel()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        loadUserProfileData()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        profileView?.delegate = self
-        viewModel = ProfileViewModel()
+        profileView.delegate = self
     }
     
     override func loadView() {
-        profileView = ProfileView()
         self.view = profileView
+    }
+    
+    private func loadUserProfileData() {
+        profileView.showLoading(true)
+        Task {
+            do {
+                let profileData = try await viewModel.fetchUserProfileData()
+                
+                await MainActor.run {
+                    profileView.configure(with: profileData)
+                    profileView.showLoading(false)
+                }
+            } catch {
+                await MainActor.run {
+                    profileView.showLoading(false)
+                    showAlert(title: "Erro", message: "Não foi possível carregar seu perfil. Por favor, tente novamente.")
+                }
+            }
+        }
+    }
+                        
+    private func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
     }
 }
 extension ProfileViewController: ProfileViewDelegate {
@@ -46,7 +70,7 @@ extension ProfileViewController: ProfileViewDelegate {
     func exitProfileDidTapButton() {
         Task{
             do {
-                try await viewModel?.logout()
+                try await viewModel.logout()
                 navigateToLogin()
             } catch {
                 print("Failed to logout user: \(error.localizedDescription)")
