@@ -10,13 +10,14 @@ import UIKit
 class HomeView: UIView {
     // MARK: - UI Components
     lazy var titleLabel = ReusableLabel(text: "Let's Bora", labelType: .title)
-    lazy var notificationButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(systemName: "bell"), for: .normal)
-        button.tintColor = .black
-        button.imageView?.contentMode = .scaleAspectFit
-        return button
+    lazy var notificationImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(systemName: "bell")
+        imageView.contentMode = .scaleAspectFit
+        imageView.tintColor = .black
+        return imageView
+
     }()
     
     lazy var tableView: UITableView = {
@@ -53,7 +54,7 @@ class HomeView: UIView {
         UIImage(systemName: "bell.badge") :
         UIImage(systemName: "bell")
         
-        notificationButton.setImage(image, for: .normal)
+        notificationImageView.image = image
         
     }
 }
@@ -62,7 +63,7 @@ extension  HomeView: ViewCode {
     
     func setHierarchy() {
         self.addSubview(titleLabel)
-        self.addSubview(notificationButton)
+        self.addSubview(notificationImageView)
         self.addSubview(tableView)
         self.addSubview(activityIndicator)
     }
@@ -74,7 +75,7 @@ extension  HomeView: ViewCode {
             .leading(anchor: self.leadingAnchor,constant: 18)
         
         // notification button constraints
-        notificationButton
+        notificationImageView
             .top(anchor: safeAreaLayoutGuide.topAnchor, constant: 18)
             .trailing(anchor: trailingAnchor, constant: -18)
             .height(constant: 32)
