@@ -364,7 +364,7 @@ extension CreateEventViewController: CreateEventViewDelegate {
         Task{[weak self] in
             guard let self = self else { return }
             
-            let guests = await self.viewModel?.fetchUsers() ?? []
+            let guests = await self.viewModel?.getUserToInvite() ?? []
             let guestModalViewController = CreateEventGuestModalViewController(
                 guests: guests,
                 selectedGuests: self.eventGuestNames

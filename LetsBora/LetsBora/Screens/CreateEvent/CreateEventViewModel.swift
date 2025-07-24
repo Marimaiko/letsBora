@@ -45,15 +45,20 @@ class CreateEventViewModel {
             throw error
         }
     }
-    
-    func fetchUsers() async -> [User] {
+    func getUserToInvite() async -> [User] {
+        var users: [User] = []
         do {
-            return try await userRepository.retrieveAll()
+            users = try await userRepository.retrieveAll()
         } catch {
             print("Error fetching users: \(error.localizedDescription)")
-        return []
+            return []
         }
+        let userId = Utils.getLoggedInUser()?.id
+        
+        if let userId = userId {
+            users.removeAll { $0.id == userId }
+        }
+        
+        return users
     }
-    
-    
 }
