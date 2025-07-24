@@ -10,11 +10,45 @@ import Foundation
 class HomeViewModel {
     
     private let eventRepository: EventRepository
+    private let notificationRepository: NotificationRepository
+    private let userRepository: UserRepository
     
-    init(eventRepository: EventRepository = FirestoreEventRepository()) {
+    init(
+        eventRepository: EventRepository = FirestoreEventRepository(),
+        notificationRepository: NotificationRepository = FirestoreNotificationRepository(),
+        userRepository: UserRepository = FirestoreUserRepository()
+    ) {
         self.eventRepository = eventRepository
+        self.notificationRepository = notificationRepository
+        self.userRepository = userRepository
+    }
+    func hasNotification() async -> Bool {
+        return await getNotificationCount() > 0
     }
     
+
+    private func getNotificationCount() async -> Int {
+        guard let userId = Utils.getLoggedInUser()?.id else {
+            return 0
+        }
+        do {
+            
+            let user = try await userRepository.retrieve(for: userId)
+            Utils.saveLoggedInUser(user)
+            
+            guard let notificationId = user.notificationID else {
+                return 0
+            }
+        
+            let notification = try await notificationRepository.retrieve(for: notificationId)
+            guard let notification = notification else {
+                return 0
+            }
+            return notification.totalCount
+        } catch {
+            return 0
+        }
+    }
     /// Busca todos os eventos e os separa em "próximo evento" e "destaques".
     func fetchFutureEvents() async -> [Event] {
         do {

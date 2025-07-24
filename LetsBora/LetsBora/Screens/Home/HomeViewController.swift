@@ -29,8 +29,14 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         configureTableView()
         setupNavigationBar()
+        Task {
+            await updateNotificationIcon()
+        }
     }
-    
+    func updateNotificationIcon() async {
+        let hasNotification: Bool = await viewModel.hasNotification()
+        mainView.setNotificationAvailability(hasNotification)
+    }
     private func fetchData() {
         mainView.activityIndicator.startAnimating()
         Task {
