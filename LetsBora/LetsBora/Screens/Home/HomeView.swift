@@ -10,6 +10,14 @@ import UIKit
 class HomeView: UIView {
     // MARK: - UI Components
     lazy var titleLabel = ReusableLabel(text: "Let's Bora", labelType: .title)
+    lazy var notificationButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "bell"), for: .normal)
+        button.tintColor = .black
+        button.imageView?.contentMode = .scaleAspectFit
+        return button
+    }()
     
     lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -39,12 +47,22 @@ class HomeView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    // MARK: - Functions
+    func setNotificationAvailability(_ isAvailable: Bool) {
+        let image = isAvailable ?
+        UIImage(systemName: "bell.badge") :
+        UIImage(systemName: "bell")
+        
+        notificationButton.setImage(image, for: .normal)
+        
+    }
 }
 // MARK: - ViewCode Extension
 extension  HomeView: ViewCode {
     
     func setHierarchy() {
         self.addSubview(titleLabel)
+        self.addSubview(notificationButton)
         self.addSubview(tableView)
         self.addSubview(activityIndicator)
     }
@@ -54,6 +72,13 @@ extension  HomeView: ViewCode {
         titleLabel
             .top(anchor: self.safeAreaLayoutGuide.topAnchor)
             .leading(anchor: self.leadingAnchor,constant: 18)
+        
+        // notification button constraints
+        notificationButton
+            .top(anchor: safeAreaLayoutGuide.topAnchor, constant: 18)
+            .trailing(anchor: trailingAnchor, constant: -18)
+            .height(constant: 32)
+            .width(constant: 32)
         
         // table View Events constraints
         tableView

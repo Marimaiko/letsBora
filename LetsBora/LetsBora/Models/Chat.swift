@@ -4,6 +4,7 @@
 //
 //  Created by Davi Paiva on 30/04/25.
 //
+
 import Foundation
 enum ChatKeys {
     static let collectionName: String = "chat"

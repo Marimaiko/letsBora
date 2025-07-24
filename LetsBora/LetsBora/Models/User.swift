@@ -20,6 +20,7 @@ enum UserKeys {
     static let password = "password"
     static let photo = "photo"
     static let domain = "domain"
+    static let notificationID = "notification_id"
     static let createdAt = "createdAt"
 }
 
@@ -30,7 +31,8 @@ struct User: Identifiable, Equatable, Codable{
     var password: String? // only use in mock examples
     var photo: String? // will be url after
     var domain: String?
-
+    var notificationID: String?
+    
     
     init (
         id: String  = UUID().uuidString,
@@ -38,7 +40,8 @@ struct User: Identifiable, Equatable, Codable{
         email: String? = nil,
         password: String? = nil,
         photo: String? = nil,
-        domain: String? = nil
+        domain: String? = nil,
+        notificationID: String? = nil
     ) {
         self.id = id
         self.name = name
@@ -46,6 +49,7 @@ struct User: Identifiable, Equatable, Codable{
         self.password = password
         self.photo = photo
         self.domain = domain
+        self.notificationID = notificationID
     }
     
     init?(from data: [String: Any]) {
@@ -69,10 +73,10 @@ struct User: Identifiable, Equatable, Codable{
         
         if let domain = data[UserKeys.domain] as? String {
             self.domain = domain
-        } else {
-            print("Failed to parse user domain")
         }
-     
+        if let notificationID = data[UserKeys.notificationID] as? String {
+            self.notificationID = notificationID
+        }
     }
     
     var toDict: [String: Any] {
@@ -90,12 +94,15 @@ struct User: Identifiable, Equatable, Codable{
         if let domain = domain {
             dict[UserKeys.domain] = domain
         }
+        if let notificationID = notificationID {
+            dict[UserKeys.notificationID] = notificationID
+        }
         
         return dict
     }
     static func == (lhs: User, rhs: User) -> Bool {
-           return lhs.id == rhs.id
-       }
+        return lhs.id == rhs.id
+    }
     
 }
 
