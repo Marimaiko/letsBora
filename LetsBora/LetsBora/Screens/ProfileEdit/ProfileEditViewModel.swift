@@ -57,9 +57,18 @@ class ProfileEditViewModel {
     }
     
     /// Atualiza os dados do usuário no Firebase.
-    func updateUser(name: String, email: String, newPassword: String?) async throws -> User {
+    func updateUser(name: String, email: String, newPassword: String?, confirmPassword: String?) async throws -> User {
         guard var userToUpdate = self.currentUser else {
             throw UserRepositoryError.userNotFound
+        }
+        
+        if let password = newPassword, !password.isEmpty {
+            guard password == confirmPassword else {
+                throw ProfileUpdateError.passwordMismatch
+            }
+            guard password.count >= 6 else {
+                throw ProfileUpdateError.weakPassword
+            }
         }
         
         // Atualiza o nome no objeto local

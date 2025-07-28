@@ -106,7 +106,7 @@ actor FirebaseAuthRepository: AuthRepository {
             try await user.sendEmailVerification(beforeUpdatingEmail: newEmail)
         } catch {
             print("Erro ao atualizar o e-mail no Firebase Auth: \(error)")
-            throw AuthRepositoryError.signUpFailed
+            throw AuthRepositoryError.updateFailed
         }
     }
         
@@ -119,7 +119,7 @@ actor FirebaseAuthRepository: AuthRepository {
             try await user.updatePassword(to: newPassword)
         } catch {
             print("Erro ao atualizar a senha no Firebase Auth: \(error)")
-            throw AuthRepositoryError.signUpFailed
+            throw AuthRepositoryError.updateFailed
         }
     }
 }

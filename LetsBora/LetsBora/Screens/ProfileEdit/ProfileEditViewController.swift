@@ -39,18 +39,22 @@ class ProfileEditViewController: UIViewController {
                     mainView.showLoading(false)
                 }
             } catch {
-                mainView.showLoading(false)
-                print("Erro ao buscar dados do usuário: \(error.localizedDescription)")
-                // TODO: Mostrar um alerta para o usuário
+                await MainActor.run {
+                    mainView.showLoading(false)
+                    print("Erro ao buscar dados do usuário: \(error.localizedDescription)")
+                    let errorAlert = UIAlertController(title: "Erro", message: error.localizedDescription, preferredStyle: .alert)
+                    errorAlert.addAction(UIAlertAction(title: "OK", style: .default))
+                    self.present(errorAlert, animated: true)
+                }
             }
         }
     }
     
-    private func handleUpdate(name: String, email: String, newPassword: String) {
+    private func handleUpdate(name: String, email: String, newPassword: String?, confirmPassword: String?) {
         mainView.showLoading(true)
         Task {
             do {
-                let updatedUser = try await viewModel.updateUser(name: name, email: email, newPassword: newPassword.isEmpty ? nil : newPassword)
+                let updatedUser = try await viewModel.updateUser(name: name, email: email, newPassword: newPassword, confirmPassword: confirmPassword)
                 
                 Utils.saveLoggedInUser(updatedUser)
                 
@@ -87,24 +91,7 @@ class ProfileEditViewController: UIViewController {
 
 extension ProfileEditViewController: ProfileEditViewDelegate {
     func didTapSaveButton(name: String, email: String, newPassword: String, confirmPassword: String) {
-        // Validação básica
-        if newPassword != confirmPassword {
-            print("As senhas não correspondem!")
-            // TODO: Mostrar um alerta para o usuário
-            return
-        }
-        
-        // Chama a função para lidar com a atualização
-        handleUpdate(name: name, email: email, newPassword: newPassword)
-    }
-    
-    func profileViewDidTapEditButton() {
-        let profileEditViewController = ProfileEditViewController()
-        profileEditViewController.onProfileUpdated = { [weak self] updatedUser in
-            print("Perfil atualizado para: \(updatedUser.name)")
-        }
-        profileEditViewController.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(profileEditViewController, animated: true)
+        handleUpdate(name: name, email: email, newPassword: newPassword.isEmpty ? nil : newPassword, confirmPassword: confirmPassword.isEmpty ? nil : confirmPassword)
     }
 }
 
