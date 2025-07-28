@@ -7,8 +7,12 @@
 
 import UIKit
 
+protocol ProfileEditViewDelegate: AnyObject {
+    func didTapSaveButton(name: String, email: String, newPassword: String, confirmPassword: String)
+}
+
 class ProfileEditView: UIView {
-    // MARK: - UI Components
+    weak var delegate: ProfileEditViewDelegate?
     
     private lazy var nameLabel: UILabel = createLabel(withText: "Nome ")
     private lazy var nameTextField: UITextField = createTextField()
@@ -36,10 +40,18 @@ class ProfileEditView: UIView {
                     saveButton],
         spacing: 16)
     
+    lazy var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.hidesWhenStopped = true
+        return indicator
+    }()
+    
     // MARK: - LifeCycle
     init(){
         super.init(frame: .zero)
         setupView()
+        saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
     }
     required init?(coder:NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -54,6 +66,7 @@ class ProfileEditView: UIView {
     /// Adds subviews to the view hierarchy
     private func setHierarchy(){
         addSubview(stackView)
+        addSubview(activityIndicator)
     }
     /// Sets up Auto Layout constraints for the stack view
     private func setConstraints(){
@@ -62,8 +75,32 @@ class ProfileEditView: UIView {
             stackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             stackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor,constant: 16),
             stackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor,constant: -16),
+            activityIndicator.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ]
         NSLayoutConstraint.activate(constraints)
+    }
+    
+    @objc private func saveButtonTapped() {
+        delegate?.didTapSaveButton(
+            name: nameTextField.text ?? "",
+            email: emailTextField.text ?? "",
+            newPassword: newPasswordTextField.text ?? "",
+            confirmPassword: confirmPwdTextField.text ?? ""
+        )
+    }
+    
+    public func configure(with user: User) {
+        nameTextField.text = user.name
+        emailTextField.text = user.email
+    }
+    
+    public func showLoading(_ isLoading: Bool) {
+        if isLoading {
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.stopAnimating()
+        }
     }
     
     // MARK: - Factory Components

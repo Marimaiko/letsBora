@@ -97,4 +97,29 @@ actor FirebaseAuthRepository: AuthRepository {
         }
     }
     
+    func updateEmail(to newEmail: String) async throws {
+        guard let user = authInstance.currentUser else {
+            throw AuthRepositoryError.signInUserNotFound
+        }
+        
+        do {
+            try await user.sendEmailVerification(beforeUpdatingEmail: newEmail)
+        } catch {
+            print("Erro ao atualizar o e-mail no Firebase Auth: \(error)")
+            throw AuthRepositoryError.signUpFailed
+        }
+    }
+        
+    func updatePassword(to newPassword: String) async throws {
+        guard let user = authInstance.currentUser else {
+            throw AuthRepositoryError.signInUserNotFound
+        }
+        
+        do {
+            try await user.updatePassword(to: newPassword)
+        } catch {
+            print("Erro ao atualizar a senha no Firebase Auth: \(error)")
+            throw AuthRepositoryError.signUpFailed
+        }
+    }
 }

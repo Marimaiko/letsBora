@@ -43,4 +43,7 @@ protocol AuthRepository {
     func logout() async throws
     
     func resetPassword(email: String) async throws
+    
+    func updateEmail(to newEmail: String) async throws
+    func updatePassword(to newPassword: String) async throws
 }
