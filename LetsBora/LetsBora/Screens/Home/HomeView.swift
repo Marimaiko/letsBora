@@ -6,8 +6,16 @@
 //
 
 import UIKit
-
+protocol HomeViewDelegate : AnyObject {
+    func didTapNotification()
+}
 class HomeView: UIView {
+    private weak var delegate: HomeViewDelegate?
+    
+    func delegate(_ delegate: HomeViewDelegate){
+        self.delegate = delegate
+    }
+    
     // MARK: - UI Components
     lazy var titleLabel = ReusableLabel(text: "Let's Bora", labelType: .title)
     lazy var notificationImageView: UIImageView = {
@@ -16,8 +24,12 @@ class HomeView: UIView {
         imageView.image = UIImage(systemName: "bell")
         imageView.contentMode = .scaleAspectFit
         imageView.tintColor = .black
+        imageView.isUserInteractionEnabled = true
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(notificationTapped))
+        imageView.addGestureRecognizer(tapGesture)
+        
         return imageView
-
     }()
     
     lazy var tableView: UITableView = {
@@ -37,7 +49,9 @@ class HomeView: UIView {
         indicator.hidesWhenStopped = true
         return indicator
     }()
-    
+    @objc private func notificationTapped() {
+        delegate?.didTapNotification()
+    }
     // MARK: - LifeCycle
     init() {
         super.init(frame: .zero)

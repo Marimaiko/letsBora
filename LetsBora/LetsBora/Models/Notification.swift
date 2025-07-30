@@ -38,6 +38,7 @@ struct Notification: Codable {
 }
 
 struct MessageNotification: Codable {
+    var title: String
     var text: String
     var isRead: Bool
     var createdAt: Date
@@ -46,6 +47,7 @@ struct MessageNotification: Codable {
     var eventID: String?
     
     init(
+        title: String,
         text: String,
         isRead: Bool = false,
         createdAt: Date = Date(),
@@ -53,6 +55,7 @@ struct MessageNotification: Codable {
         chatID: String? = nil,
         eventID: String? = nil
     ) {
+        self.title = title
         self.text = text
         self.isRead = isRead
         self.createdAt = createdAt

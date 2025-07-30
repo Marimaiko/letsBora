@@ -87,6 +87,7 @@ class CreateEventViewModel {
         }
         
         let message: MessageNotification = .init(
+            title: "Event Invite",
             text: "\(sender.name) invite to a new Event called \(event.title)",
             senderID: sender.id,
             eventID: event.id

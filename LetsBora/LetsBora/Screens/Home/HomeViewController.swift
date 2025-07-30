@@ -27,6 +27,7 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        mainView.delegate(self)
         configureTableView()
         setupNavigationBar()
         Task {
@@ -77,8 +78,18 @@ class HomeViewController: UIViewController {
         detailVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(detailVC, animated: true)
     }
+    private func navigateToNotification(){
+        let notificationViewController = NotificationViewController()
+        notificationViewController.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(notificationViewController, animated: true)
+    }
 }
-
+// MARK: - Home View Delegate
+extension HomeViewController: HomeViewDelegate {
+    func didTapNotification() {
+        self.navigateToNotification()
+    }
+}
 // MARK: - Table View Delegate
 extension HomeViewController : UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
