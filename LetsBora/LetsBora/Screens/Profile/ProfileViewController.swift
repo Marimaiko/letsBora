@@ -50,8 +50,25 @@ class ProfileViewController: UIViewController {
         alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alertController, animated: true, completion: nil)
     }
+    private func navigateToNotification(){
+        let notificationViewController = NotificationViewController()
+        notificationViewController.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(notificationViewController, animated: true)
+    }
 }
 extension ProfileViewController: ProfileViewDelegate {
+    func notificationDidTapButton() {
+        self.navigateToNotification()
+    }
+    
+    func privacyDidTapButton() {
+        print("Privacy tapped")
+    }
+    
+    func helpAndSupportDidTapButton() {
+        print("Help and Support tapped")
+    }
+    
     func navigateToLogin(){
         
         if let sceneDelegate = UIApplication
