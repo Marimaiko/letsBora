@@ -40,7 +40,9 @@ class NotificationView: UIView {
         notificationTableView.delegate = delegate
         notificationTableView.dataSource = delegateDataSource
     }
-    
+    func reloadTable(){
+        notificationTableView.reloadData()
+    }
 }
 // MARK: - ViewCode Extension
 extension NotificationView: ViewCode {

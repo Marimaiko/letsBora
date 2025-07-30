@@ -68,7 +68,6 @@ class CreateEventViewModel {
             guard let notification = notification else {
                 return
             }
-            
             try await notificationRepository.create(notification)
             var updatedUser = invitedUser
             updatedUser.notificationID = notification.id
@@ -76,6 +75,7 @@ class CreateEventViewModel {
             
         } else {
             guard let notificationID = notificationID else {
+             print("Null notification ID founded")
                 return
             }
             notification = try await notificationRepository.retrieve(for: notificationID)

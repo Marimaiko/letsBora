@@ -70,6 +70,7 @@ actor FirestoreUserRepository : UserRepository {
             try await collection.document(user.id)
                 .updateData(user.toDict)
         } catch {
+            print("Failed to update User \(error.localizedDescription)")
             throw UserRepositoryError.updateUserFailed
         }
         

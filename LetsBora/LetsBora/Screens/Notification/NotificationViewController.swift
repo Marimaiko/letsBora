@@ -35,6 +35,16 @@ class NotificationViewController: UIViewController{
         title = "Notificações"
         screen?.registerCell(NotificationTableViewCell.self)
         screen?.delegateTableView(self, self)
+        Task { [weak self] in
+            guard let self else { return }
+            
+            do {
+                try await viewModel.loadNotifications()
+                self.screen?.reloadTable()
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
     }
     
 }
@@ -53,7 +63,12 @@ extension NotificationViewController: UITableViewDataSource, UITableViewDelegate
         }
         
         let notification = self.viewModel.getNotificationByIndex(indexPath.row)
-        cell.configure(with: notification)
+        
+        guard let notification = notification else {
+            return UITableViewCell()
+        }
+        
+        cell.configure(with: notification )
         return cell
     }
 }

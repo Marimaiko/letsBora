@@ -24,7 +24,8 @@ actor FirestoreNotificationRepository: @preconcurrency NotificationRepository {
                 .document(notification.id)
                 .setData(data)
         } catch {
-            throw NotificationError.creationFailed
+            print("Failed to create notification")
+            throw NotificationError.creationFailed(error.localizedDescription)
         }
     }
     
@@ -33,12 +34,12 @@ actor FirestoreNotificationRepository: @preconcurrency NotificationRepository {
             let snapshot = try await collection
                 .document(id)
                 .getDocument()
-            
+            print(snapshot.data() ?? "No data")
             let notification = try snapshot.decoded(as: Notification.self)
             return notification
             
         } catch {
-            throw NotificationError.retrievalFailed
+            throw NotificationError.retrievalFailed(error.localizedDescription)
         }
     }
     
@@ -59,7 +60,7 @@ actor FirestoreNotificationRepository: @preconcurrency NotificationRepository {
                 }
             }
         } catch {
-            throw NotificationError.retrievalFailed
+            throw NotificationError.retrievalFailed(error.localizedDescription)
         }
         return notifications
     }
@@ -70,7 +71,7 @@ actor FirestoreNotificationRepository: @preconcurrency NotificationRepository {
                 .document(notification.id)
                 .updateData(notification.toDictionary())
         } catch {
-            throw NotificationError.updateFailed
+            throw NotificationError.updateFailed(error.localizedDescription)
         }
     }
     
@@ -78,7 +79,7 @@ actor FirestoreNotificationRepository: @preconcurrency NotificationRepository {
         do {
             try await collection.document(id).delete()
         } catch {
-            throw NotificationError.deletionFailed
+            throw NotificationError.deletionFailed(error.localizedDescription)
         }
     }
 }
