@@ -9,11 +9,18 @@ import UIKit
 protocol ProfileViewDelegate: AnyObject {
     func profileViewDidTapEditButton()
     func exitProfileDidTapButton()
+    func notificationDidTapButton()
+    func privacyDidTapButton()
+    func helpAndSupportDidTapButton()
 }
 
 class ProfileView: UIView {
     
     weak var delegate: ProfileViewDelegate?
+    let notifications: String = "Notificações"
+    let privacy: String = "Privacidade"
+    let helpAndSupport: String = "Ajuda e Suporte"
+    
     
     lazy private var scrollview: UIScrollView = {
         let scrollview = UIScrollView()
@@ -85,9 +92,9 @@ class ProfileView: UIView {
         return label
     }()
     
-    lazy private var notificationButton = SettingsButtonView(iconImageName: "bell", title: "Notificações")
-    lazy private var privacyButton: SettingsButtonView = SettingsButtonView(iconImageName: "lock", title: "Privacidade")
-    lazy private var helpButton = SettingsButtonView(iconImageName: "questionmark.circle", title: "Ajuda e Suporte")
+    lazy private var notificationButton = SettingsButtonView(iconImageName: "bell", title: notifications, identifier: notifications)
+    lazy private var privacyButton: SettingsButtonView = SettingsButtonView(iconImageName: "lock", title: privacy, identifier: privacy)
+    lazy private var helpButton = SettingsButtonView(iconImageName: "questionmark.circle", title: helpAndSupport, identifier: helpAndSupport)
 
     lazy private var settingButtonStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [notificationButton, privacyButton, helpButton])
@@ -126,6 +133,11 @@ class ProfileView: UIView {
         configView()
         buildViews()
         setupConstraint()
+        
+        // buttons
+        notificationButton.delegateSettingButton(delegate: self)
+        privacyButton.delegateSettingButton(delegate: self)
+        helpButton.delegateSettingButton(delegate: self)
     }
     
     required init?(coder: NSCoder) {
@@ -157,7 +169,27 @@ class ProfileView: UIView {
         self.delegate?.exitProfileDidTapButton()
     }
 }
-
+extension ProfileView: SettingButtonDelegate{
+    func buttonTapped(id identifier: String) {
+        switch identifier {
+        case self.notifications:
+            self.delegate?.notificationDidTapButton()
+            break
+        case self.helpAndSupport:
+            self.delegate?.helpAndSupportDidTapButton()
+            break
+        case self.privacy:
+            self.delegate?.privacyDidTapButton()
+            break
+        default:
+            print("unknow identifier \(identifier)")
+            return
+        }
+    }
+    
+    
+    
+}
 extension ProfileView {
     func configView() {
         backgroundColor = UIColor(hex: "#F2F2F7")

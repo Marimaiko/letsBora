@@ -6,10 +6,31 @@
 //
 
 import UIKit
-
+protocol HomeViewDelegate : AnyObject {
+    func didTapNotification()
+}
 class HomeView: UIView {
+    private weak var delegate: HomeViewDelegate?
+    
+    func delegate(_ delegate: HomeViewDelegate){
+        self.delegate = delegate
+    }
+    
     // MARK: - UI Components
     lazy var titleLabel = ReusableLabel(text: "Let's Bora", labelType: .title)
+    lazy var notificationImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(systemName: "bell")
+        imageView.contentMode = .scaleAspectFit
+        imageView.tintColor = .black
+        imageView.isUserInteractionEnabled = true
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(notificationTapped))
+        imageView.addGestureRecognizer(tapGesture)
+        
+        return imageView
+    }()
     
     lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -28,7 +49,9 @@ class HomeView: UIView {
         indicator.hidesWhenStopped = true
         return indicator
     }()
-    
+    @objc private func notificationTapped() {
+        delegate?.didTapNotification()
+    }
     // MARK: - LifeCycle
     init() {
         super.init(frame: .zero)
@@ -39,12 +62,22 @@ class HomeView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    // MARK: - Functions
+    func setNotificationAvailability(_ isAvailable: Bool) {
+        let image = isAvailable ?
+        UIImage(systemName: "bell.badge") :
+        UIImage(systemName: "bell")
+        
+        notificationImageView.image = image
+        
+    }
 }
 // MARK: - ViewCode Extension
 extension  HomeView: ViewCode {
     
     func setHierarchy() {
         self.addSubview(titleLabel)
+        self.addSubview(notificationImageView)
         self.addSubview(tableView)
         self.addSubview(activityIndicator)
     }
@@ -54,6 +87,13 @@ extension  HomeView: ViewCode {
         titleLabel
             .top(anchor: self.safeAreaLayoutGuide.topAnchor)
             .leading(anchor: self.leadingAnchor,constant: 18)
+        
+        // notification button constraints
+        notificationImageView
+            .top(anchor: safeAreaLayoutGuide.topAnchor, constant: 18)
+            .trailing(anchor: trailingAnchor, constant: -18)
+            .height(constant: 32)
+            .width(constant: 32)
         
         // table View Events constraints
         tableView

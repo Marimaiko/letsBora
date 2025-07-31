@@ -164,12 +164,14 @@ extension EventCardView: ViewCode {
         detailButton
             .bottom(anchor: cardView.bottomAnchor, constant: -10)
             .trailing(anchor: cardView.trailingAnchor, constant: -10)
+            .widthAnchor.constraint(lessThanOrEqualTo: cardView.widthAnchor, multiplier: 0.4).isActive = true
         
         stackView
             .top(anchor: cardView.topAnchor, constant: 10)
             .leading(anchor: cardView.leadingAnchor,constant: 10)
             .bottom(anchor: cardView.bottomAnchor,constant: -16)
             .trailing(anchor: detailButton.leadingAnchor, constant: -16)
+            .widthAnchor.constraint(lessThanOrEqualTo: cardView.widthAnchor, multiplier: 0.6).isActive = true
         
         tagView
             .top(anchor: tagDateLabelView.topAnchor)

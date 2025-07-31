@@ -27,10 +27,17 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        mainView.delegate(self)
         configureTableView()
         setupNavigationBar()
+        Task {
+            await updateNotificationIcon()
+        }
     }
-    
+    func updateNotificationIcon() async {
+        let hasNotification: Bool = await viewModel.hasNotification()
+        mainView.setNotificationAvailability(hasNotification)
+    }
     private func fetchData() {
         mainView.activityIndicator.startAnimating()
         Task {
@@ -71,8 +78,25 @@ class HomeViewController: UIViewController {
         detailVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(detailVC, animated: true)
     }
+    private func navigateToNotification(){
+        let notificationViewController = NotificationViewController()
+        notificationViewController.hidesBottomBarWhenPushed = true
+        notificationViewController.onDismiss = { [weak self] in
+            guard let self else {return}
+            Task{ 
+                await self.updateNotificationIcon()
+            }
+        }
+        
+        navigationController?.pushViewController(notificationViewController, animated: true)
+    }
 }
-
+// MARK: - Home View Delegate
+extension HomeViewController: HomeViewDelegate {
+    func didTapNotification() {
+        self.navigateToNotification()
+    }
+}
 // MARK: - Table View Delegate
 extension HomeViewController : UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
