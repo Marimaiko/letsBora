@@ -23,7 +23,7 @@ class NotificationDetailView: UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-
+    
     // Caixinha flutuante
     private lazy var containerView: UIView = {
         let view = UIView()
@@ -33,7 +33,7 @@ class NotificationDetailView: UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-
+    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .headline)
@@ -41,7 +41,7 @@ class NotificationDetailView: UIView {
         label.numberOfLines = 0
         return label
     }()
-
+    
     private lazy var messageLabel: UILabel = {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .body)
@@ -49,16 +49,71 @@ class NotificationDetailView: UIView {
         label.textAlignment = .justified
         return label
     }()
-
+    private lazy var messageFrom: UILabel = {
+        let label = UILabel()
+        label.font = .preferredFont(forTextStyle: .caption1)
+        label.numberOfLines = 0
+        label.textAlignment = .natural
+        return label
+    }()
+    private lazy var messageDate: UILabel = {
+        let label = UILabel()
+        label.font = .preferredFont(forTextStyle: .caption1)
+        label.numberOfLines = 0
+        label.textAlignment = .natural
+        return label
+    }()
     private lazy var closeButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Fechar", for: .normal)
+        var config = UIButton.Configuration.filled()
+        config.title = "Fechar"
+        config.cornerStyle = .medium
+        config.baseBackgroundColor = .lightGray
+        config.baseForegroundColor = .white
+        config.titleAlignment = .center
+        button.configuration = config
         button.addTarget(self, action: #selector(dismissSelf), for: .touchUpInside)
         return button
     }()
-    
+
+    private lazy var goToEventButton: UIButton = {
+        let button = UIButton(type: .system)
+        var config = UIButton.Configuration.filled()
+        config.title = "Visualizar Evento"
+        config.image = UIImage(systemName: "calendar")
+        config.imagePadding = 16
+        config.imagePlacement = .leading
+        config.cornerStyle = .small
+        config.baseBackgroundColor = .systemBlue
+        config.baseForegroundColor = .white
+        config.titleAlignment = .center
+        button.configuration = config
+        button.addTarget(self, action: #selector(goToEvent), for: .touchUpInside)
+        return button
+    }()
+
+    private lazy var markAsReadedButton: UIButton = {
+        let button = UIButton(type: .system)
+        var config = UIButton.Configuration.filled()
+        config.title = "Marcar como Lido"
+        config.cornerStyle = .medium
+        config.baseBackgroundColor = .systemGreen
+        config.baseForegroundColor = .white
+        config.titleAlignment = .center
+        button.configuration = config
+        button.addTarget(self, action: #selector(markAsReaded), for: .touchUpInside)
+        return button
+    }()
+    private lazy var buttonStackView: UIStackView = {
+        var stackView = UIStackView(arrangedSubviews: [closeButton])
+        stackView.axis = .horizontal
+        stackView.spacing = 16
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return stackView
+    }()
     private lazy var stackView: UIStackView = {
-        var stack = UIStackView(arrangedSubviews: [titleLabel, messageLabel, closeButton])
+        var stack = UIStackView(arrangedSubviews: [titleLabel, messageDate])
         stack.axis = .vertical
         stack.spacing = 16
         stack.translatesAutoresizingMaskIntoConstraints = false
@@ -69,22 +124,60 @@ class NotificationDetailView: UIView {
     @objc private func dismissSelf() {
         delegate?.didTapDismissButton()
     }
+    @objc private func goToEvent() {
+        
+    }
+    @objc private func markAsReaded(){
+        
+    }
     
     init() {
         super.init(frame: .zero)
         setupView()
-        self.backgroundColor = .clear 
+        self.backgroundColor = .clear
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(message: MessageNotification){
+    func configure(
+        message: MessageNotification,
+        from: User? = nil
+    ){
         titleLabel.text = message.title
+        messageDate.text = message.createdAt.toString()
+        
+        if let user = from {
+            if !stackView.arrangedSubviews.contains(messageFrom){
+                messageFrom.text = "De: \(user.name) \(user.email ?? "")"
+                stackView.addArrangedSubview(messageFrom)
+            }
+        }
+        
         messageLabel.text = message.text
+        if !stackView.arrangedSubviews.contains(messageLabel){
+            stackView.addArrangedSubview(messageLabel)
+        }
+        
+        
+        if let _ = message.eventID {
+            goToEventButton.setTitle("Visualizar Evento", for: .normal)
+            if !stackView.arrangedSubviews.contains(goToEventButton) {
+                stackView.addArrangedSubview(goToEventButton)
+            }
+        }
+        
+        if(!message.isRead){
+            if !buttonStackView.arrangedSubviews.contains(markAsReadedButton){
+                buttonStackView.addArrangedSubview(markAsReadedButton)
+            }
+        }
+        
+        if !stackView.arrangedSubviews.contains(buttonStackView){
+            stackView.addArrangedSubview(buttonStackView)
+        }
     }
-    
 }
 extension NotificationDetailView: ViewCode {
     func setHierarchy() {

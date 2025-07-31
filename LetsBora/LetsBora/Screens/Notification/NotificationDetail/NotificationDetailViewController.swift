@@ -32,9 +32,20 @@ class NotificationDetailViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        screen?.configure(message: viewModel.message)
         screen?.delegate(self)
+        Task {[weak self] in
+            guard let self = self else {return}
+            
+            let sender = await viewModel.getSender()
+            guard let sender = sender else {
+                self.screen?.configure(message: viewModel.message)
+                return
+            }
+            self.screen?.configure(message: viewModel.message, from: sender)
+        }
     }
+    
+    
 }
 extension NotificationDetailViewController: NotificationDetailViewDelegate {
     func didTapDismissButton() {

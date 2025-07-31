@@ -45,14 +45,8 @@ class NotificationViewModel {
             
             self.notificationGroup = try await notificationRepository.retrieve(for: notificationID)
             
-            if let notificationGroup = self.notificationGroup {
-                print(notificationGroup)
-            }
-            
         } catch {
             print("Failed to Load Notifications: \(error.localizedDescription)")
         }
-        
     }
-    
 }

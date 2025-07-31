@@ -34,7 +34,6 @@ actor FirestoreNotificationRepository: @preconcurrency NotificationRepository {
             let snapshot = try await collection
                 .document(id)
                 .getDocument()
-            print(snapshot.data() ?? "No data")
             let notification = try snapshot.decoded(as: Notification.self)
             return notification
             
