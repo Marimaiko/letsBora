@@ -10,7 +10,7 @@ class NotificationDetailViewController: UIViewController {
 
     private var screen: NotificationDetailView?
     private var viewModel: NotificationDetailViewModel
-    var onDismiss: (() -> Void)?
+    var onDismiss: ((Event?) -> Void)?
     
     // Init
     init(
@@ -49,11 +49,16 @@ class NotificationDetailViewController: UIViewController {
         }
     }
     
-    
 }
 extension NotificationDetailViewController: NotificationDetailViewDelegate {
     func didTapGoToEvent() {
-        
+        Task{ [weak self] in
+            guard let self = self else {return}
+            let event = await self.viewModel.getEvent()
+            guard let event else {return}
+            onDismiss?(event)
+            dismiss(animated: true)
+        }
     }
     
     func didTapMarkAsReaded() {
@@ -62,13 +67,13 @@ extension NotificationDetailViewController: NotificationDetailViewDelegate {
                 return
             }
             await self.viewModel.markAsReaded()
-            onDismiss?()
+            onDismiss?(nil)
             dismiss(animated: true)
         }
     }
     
     func didTapDismissButton() {
-        onDismiss?()
+        onDismiss?(nil)
         dismiss(animated: true)
     }
 }

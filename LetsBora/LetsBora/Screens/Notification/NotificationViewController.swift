@@ -50,7 +50,7 @@ class NotificationViewController: UIViewController{
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        if self.isMovingFromParent { 
+        if self.isMovingFromParent {
             onDismiss?()
         }
     }
@@ -97,12 +97,17 @@ extension NotificationViewController: UITableViewDataSource, UITableViewDelegate
         }
         let detailVC = NotificationDetailViewController(notification: notificationGroup, index: indexPath.section)
         // Quando fechar, recarrega a tabela
-        detailVC.onDismiss = { [weak self] in
-            Task{
-                try await self?.viewModel.loadNotifications()
-                self?.screen?.reloadTable()
+        detailVC.onDismiss = { [weak self] event in
+            if let event {
+                let eventDetailVC = EventDetailsViewController(event: event)
+                eventDetailVC.hidesBottomBarWhenPushed = true
+                self?.navigationController?.pushViewController(eventDetailVC, animated: true)
+            } else {
+                Task{
+                    try await self?.viewModel.loadNotifications()
+                    self?.screen?.reloadTable()
+                }
             }
-            
         }
         present(detailVC, animated: true)
     }

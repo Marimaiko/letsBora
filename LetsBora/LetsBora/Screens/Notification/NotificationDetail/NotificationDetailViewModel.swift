@@ -8,6 +8,7 @@
 class NotificationDetailViewModel {
     private var userRepository: UserRepository
     private var notificationRepository: NotificationRepository
+    private var eventRepository: EventRepository
     
     private var notificationGroup: Notification
     private var index: Int
@@ -20,12 +21,29 @@ class NotificationDetailViewModel {
         notification: Notification,
         index: Int,
         userRepository: UserRepository = FirestoreUserRepository(),
-        notificationRepository: NotificationRepository = FirestoreNotificationRepository()
+        notificationRepository: NotificationRepository = FirestoreNotificationRepository(),
+        eventRepository: EventRepository = FirestoreEventRepository()
     ) {
         self.notificationGroup = notification
         self.index = index
         self.userRepository = userRepository
         self.notificationRepository = notificationRepository
+        self.eventRepository = eventRepository
+        
+    }
+    func getEvent() async -> Event? {
+        guard let eventID = message.eventID else {
+            print("No event ID provided")
+            return nil
+        }
+        
+        do {
+            let event = try await eventRepository.retrieve(for: eventID)
+            return event
+        } catch {
+            print("Failed to retrieve Event \(error.localizedDescription)")
+            return nil
+        }
         
     }
     func markAsReaded() async -> Void {
