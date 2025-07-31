@@ -29,7 +29,7 @@ struct Notification: Codable {
     }
     
     mutating func addMessage(_ message: MessageNotification) {
-        messages.append(message)
+        messages.insert(message, at: 0)
         totalCount += 1
         if !message.isRead {
             unreadCount += 1

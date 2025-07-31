@@ -49,10 +49,6 @@ class NotificationViewController: UIViewController{
     
 }
 extension NotificationViewController: UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        self.viewModel.numberOfNotifications
-    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView
             .dequeueReusableCell(
@@ -62,7 +58,7 @@ extension NotificationViewController: UITableViewDataSource, UITableViewDelegate
             return UITableViewCell()
         }
         
-        let notification = self.viewModel.getNotificationByIndex(indexPath.row)
+        let notification = self.viewModel.getNotificationByIndex(indexPath.section)
         
         guard let notification = notification else {
             return UITableViewCell()
@@ -71,6 +67,30 @@ extension NotificationViewController: UITableViewDataSource, UITableViewDelegate
         cell.configure(with: notification )
         return cell
     }
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return viewModel.numberOfNotifications
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1 // Uma célula por seção
+    }
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 12 // Espaçamento entre as "células"
+    }
+
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let spacer = UIView()
+        spacer.backgroundColor = .clear
+        return spacer
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+
+        guard let notification = viewModel.getNotificationByIndex(indexPath.section) else { return }
+
+        let detailVC = NotificationDetailViewController(notification: notification)
+        present(detailVC, animated: true)
+    }
+
 }
 
 // MARK: - Preview Profile
