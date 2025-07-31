@@ -19,10 +19,7 @@ class MyEventsView: UIView {
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 16
         layout.minimumInteritemSpacing = 0
-        layout.estimatedItemSize = CGSize(
-            width: 350,
-            height: 145
-        )
+        layout.itemSize = CGSize(width: 320, height: 145) 
         
         let collectionView = UICollectionView(
             frame: .zero,

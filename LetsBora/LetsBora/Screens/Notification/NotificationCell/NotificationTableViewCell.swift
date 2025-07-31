@@ -77,10 +77,17 @@ class NotificationTableViewCell: UITableViewCell {
         notificationTextLabel.updateText(message.text)
         dataTextLabel.updateText(message.createdAt.toString())
         
-        if(!message.isRead){
-            addSubview(isReadedImage)
-            NSLayoutConstraint.activate(isReadedImageConstaints)
-        }
+        if !message.isRead {
+               if isReadedImage.superview == nil { // evita adicionar duplicado
+                   addSubview(isReadedImage)
+                   NSLayoutConstraint.activate(isReadedImageConstaints)
+               }
+           } else {
+               if isReadedImage.superview != nil {
+                   NSLayoutConstraint.deactivate(isReadedImageConstaints)
+                   isReadedImage.removeFromSuperview()
+               }
+           }
         
     }
 }

@@ -35,6 +35,12 @@ struct Notification: Codable {
             unreadCount += 1
         }
     }
+    mutating func setAsReaded(index: Int){
+        if(!messages[index].isRead){
+            messages[index].isRead = true
+            unreadCount -= 1
+        }
+    }
 }
 
 struct MessageNotification: Codable {

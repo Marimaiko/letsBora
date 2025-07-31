@@ -44,7 +44,7 @@ class HomeViewModel {
             guard let notification = notification else {
                 return 0
             }
-            return notification.totalCount
+            return notification.unreadCount
         } catch {
             return 0
         }

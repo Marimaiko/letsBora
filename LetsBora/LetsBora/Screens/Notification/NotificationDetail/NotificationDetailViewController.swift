@@ -10,10 +10,14 @@ class NotificationDetailViewController: UIViewController {
 
     private var screen: NotificationDetailView?
     private var viewModel: NotificationDetailViewModel
+    var onDismiss: (() -> Void)?
     
     // Init
-    init(notification: MessageNotification) {
-        self.viewModel = NotificationDetailViewModel(message: notification)
+    init(
+        notification: Notification,
+        index: Int
+    ) {
+        self.viewModel = NotificationDetailViewModel(notification: notification, index: index)
         
         super.init(nibName: nil, bundle: nil)
         modalPresentationStyle = .overFullScreen
@@ -48,7 +52,23 @@ class NotificationDetailViewController: UIViewController {
     
 }
 extension NotificationDetailViewController: NotificationDetailViewDelegate {
+    func didTapGoToEvent() {
+        
+    }
+    
+    func didTapMarkAsReaded() {
+        Task {[weak self] in
+            guard let self = self else {
+                return
+            }
+            await self.viewModel.markAsReaded()
+            onDismiss?()
+            dismiss(animated: true)
+        }
+    }
+    
     func didTapDismissButton() {
+        onDismiss?()
         dismiss(animated: true)
     }
 }

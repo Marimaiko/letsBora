@@ -8,6 +8,8 @@
 import UIKit
 protocol NotificationDetailViewDelegate: AnyObject {
     func didTapDismissButton()
+    func didTapGoToEvent()
+    func didTapMarkAsReaded()
 }
 class NotificationDetailView: UIView {
     private weak var delegate: NotificationDetailViewDelegate?
@@ -125,10 +127,10 @@ class NotificationDetailView: UIView {
         delegate?.didTapDismissButton()
     }
     @objc private func goToEvent() {
-        
+        delegate?.didTapGoToEvent()
     }
     @objc private func markAsReaded(){
-        
+        delegate?.didTapMarkAsReaded()
     }
     
     init() {

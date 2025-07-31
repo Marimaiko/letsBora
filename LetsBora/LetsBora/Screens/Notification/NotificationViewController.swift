@@ -10,6 +10,7 @@ import UIKit
 class NotificationViewController: UIViewController{
     private var screen: NotificationView?
     private var viewModel: NotificationViewModel
+    var onDismiss: (() -> Void)?
     
     // MARK: - Init
     init(){
@@ -46,6 +47,13 @@ class NotificationViewController: UIViewController{
             }
         }
     }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if self.isMovingFromParent { 
+            onDismiss?()
+        }
+    }
     
 }
 extension NotificationViewController: UITableViewDataSource, UITableViewDelegate {
@@ -76,7 +84,7 @@ extension NotificationViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 12 // Espaçamento entre as "células"
     }
-
+    
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let spacer = UIView()
         spacer.backgroundColor = .clear
@@ -84,13 +92,21 @@ extension NotificationViewController: UITableViewDataSource, UITableViewDelegate
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-
-        guard let notification = viewModel.getNotificationByIndex(indexPath.section) else { return }
-
-        let detailVC = NotificationDetailViewController(notification: notification)
+        guard let notificationGroup = viewModel.notificationGroup else {
+            return
+        }
+        let detailVC = NotificationDetailViewController(notification: notificationGroup, index: indexPath.section)
+        // Quando fechar, recarrega a tabela
+        detailVC.onDismiss = { [weak self] in
+            Task{
+                try await self?.viewModel.loadNotifications()
+                self?.screen?.reloadTable()
+            }
+            
+        }
         present(detailVC, animated: true)
     }
-
+    
 }
 
 // MARK: - Preview Profile

@@ -81,6 +81,13 @@ class HomeViewController: UIViewController {
     private func navigateToNotification(){
         let notificationViewController = NotificationViewController()
         notificationViewController.hidesBottomBarWhenPushed = true
+        notificationViewController.onDismiss = { [weak self] in
+            guard let self else {return}
+            Task{ 
+                await self.updateNotificationIcon()
+            }
+        }
+        
         navigationController?.pushViewController(notificationViewController, animated: true)
     }
 }
