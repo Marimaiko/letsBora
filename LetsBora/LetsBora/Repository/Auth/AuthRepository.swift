@@ -15,6 +15,7 @@ enum AuthRepositoryError: Error, LocalizedError {
     case logoutFailed
     case resetPasswordFail
     case signUpEmailAlreadyInUse
+    case updateFailed
     
     var errorDescription: String? {
         switch self {
@@ -32,6 +33,8 @@ enum AuthRepositoryError: Error, LocalizedError {
             return "Não foi possível resetar a senha. Tente novamente mais tarde."
         case .signUpEmailAlreadyInUse:
             return "Este e-mail já está em uso. Por favor, utilize outro e-mail."
+        case .updateFailed:
+            return "Não foi possível atualizar os dados. Tente novamente."
         }
     }
 }
@@ -43,4 +46,7 @@ protocol AuthRepository {
     func logout() async throws
     
     func resetPassword(email: String) async throws
+    
+    func updateEmail(to newEmail: String) async throws
+    func updatePassword(to newPassword: String) async throws
 }
