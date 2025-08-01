@@ -9,6 +9,14 @@ import GoogleSignIn
 import GoogleSignInSwift
 
 actor GoogleAuthRepository: AuthRepository {
+    func updateEmail(to newEmail: String) async throws {
+        
+    }
+    
+    func updatePassword(to newPassword: String) async throws {
+        
+    }
+    
     let authInstance: Auth
     
     init(auth: Auth = FirebaseFactory.makeAuth()) {

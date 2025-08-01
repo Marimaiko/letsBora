@@ -7,6 +7,14 @@
 import FirebaseAuth
 
 actor Facebook: AuthRepository {
+    func updateEmail(to newEmail: String) async throws {
+        
+    }
+    
+    func updatePassword(to newPassword: String) async throws {
+        
+    }
+    
     let authInstance: Auth
     
     init(authInstance: Auth = FirebaseFactory.makeAuth()) {
